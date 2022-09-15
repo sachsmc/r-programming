@@ -1,0 +1,40 @@
+---
+title: "Data structures in R"
+author: "Michael C Sachs"
+format: revealjs
+---
+
+## Types of data
+
+## Vectors
+
+## Indexing vectors
+
+## Lists
+
+## Indexing lists
+
+## Matrices
+
+## Indexing matrices
+
+## Data frames
+
+## Indexing data frames
+
+# Special structures
+
+## Environments -- how does R find things?
+
+## Packages
+
+## S4 objects
+
+## Tibbles
+
+## data.tables
+
+
+
+
+

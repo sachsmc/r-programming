@@ -1,0 +1,8 @@
+---
+title: "Lectures"
+---
+
+
+1. [Introduction](introduction.qmd)
+2. [Project organization and workflow](projects.qmd)
+

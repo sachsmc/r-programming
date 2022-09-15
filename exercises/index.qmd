@@ -1,0 +1,8 @@
+---
+title: "Exercises"
+---
+
+1. [Project organization and workflow](projects.qmd)
+
+
+

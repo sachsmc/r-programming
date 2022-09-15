@@ -1,0 +1,177 @@
+---
+title: "Introduction and Overview"
+author: "Michael C Sachs"
+format: revealjs
+---
+
+
+# Introduction
+
+## Learning objectives
+
+- Understand and apply programming principles to handle repetitive tasks
+- Understand how to use and make your own functions in R
+- Use loops in R
+- Apply these principles to perform efficient data manipulation, analysis, and reporting
+
+## Why? 
+::: {.r-fit-text}
+If your research involves any data analysis, it likely also involves: 
+
+- Data management and manipulation
+- Analysis
+- Reporting of results
+
+This means lots of __code__. 
+
+We can borrow some ideas from software development to 
+
+1. Make our lives easier -- repetitive tasks, updates with new data
+2. Make science better -- reproducible, understandable, reusable
+:::
+
+
+## Goals
+
+At a bare minimum, we want our code to be: 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### Organized
+
+- Coherent structure of 
+    + folders, files, and scripts
+
+### Transportable
+
+- Works on 
+    + my future computer
+    + other people's computers
+    
+:::
+
+::: {.column width="50%"}
+
+### Understandable
+
+- Clearly specified dependencies
+- Readable code, sensible naming of things
+- Written documentation explaining what and how
+
+:::
+
+::::
+
+
+
+## Extras
+
+Nice to have, but not absolutely necessary
+
+### Provably correct
+
+Through automated testing
+
+- Pieces of code correctly do what they should
+- Code works together correctly, not sensitive to minor changes in the data
+- Valid statistical properties
+
+### Version controlled
+
+- History of development is tracked and documented
+
+
+## Overview of this course
+
+### Lessons
+
+- 45 minutes
+- Work through a problem together, learn tools and strategies
+
+#### Sticky note system
+
+![red note](redsticky.png){width=10%} = "I need help!"
+
+![green note](greensticky.png){width=10%} = "Good to go!"
+
+No sticky = still working
+
+
+---
+
+### Lectures
+
+- 15--30 minutes
+- Highlighting concepts, principles
+
+### Exercises
+
+- Work on your own
+- Answers shared after the course
+
+
+
+## Schedule of topics
+
+
+:::: {.columns}
+
+::: {.column width="45%"}
+
+### Today
+
+1. Project organization
+2. Data structures and indexing
+
+### Friday
+
+1. Flow control and loops
+2. Creating and using functions
+
+:::
+
+::: {.column width="45%"}
+
+### Tuesday
+
+1. Working with data, merging and reshaping
+2. Working with data, dates and characters
+
+### Next Friday
+
+1. Reporting, dynamic documents
+2. Case study, analysis of register data
+
+:::
+::::
+
+# About me
+
+## What I do
+
+- Develop and evaluate statistical methods
+    + Write R packages
+    + Write R code to test the methods
+- Collaborate on research projects involving data analysis
+    + Use register and other data from stats Denmark
+    + Data analysis, visualization and reporting
+
+
+## My R philosophy
+
+- I started learning R in 2005 (version 2.2)
+- There is almost no problem that can't be solved with R
+    - Flexible and dynamic
+    - Plays nicely with almost any other programming language
+    
+## Course philosophy
+
+- There are no stupid questions
+- There are many ways to solve a problem, there is no single "right way"
+- I will not force you to learn any particular way, e.g., `tidyverse` vs `data.table`, we will focus on learning the general principles. 
+    + Try them out, then choose one and get good at it
+    + Same with project organization, choose a system and stick with it
+- Show up to class and participate, you will pass and hopefully learn something useful
+
+# Questions? 

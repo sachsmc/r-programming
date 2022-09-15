@@ -1,0 +1,310 @@
+[
+  {
+    "objectID": "lectures/introduction.html#learning-objectives",
+    "href": "lectures/introduction.html#learning-objectives",
+    "title": "Introduction and Overview",
+    "section": "Learning objectives",
+    "text": "Learning objectives\n\nUnderstand and apply programming principles to handle repetitive tasks\nUnderstand how to use and make your own functions in R\nUse loops in R\nApply these principles to perform efficient data manipulation, analysis, and reporting"
+  },
+  {
+    "objectID": "lectures/introduction.html#goals",
+    "href": "lectures/introduction.html#goals",
+    "title": "Introduction and Overview",
+    "section": "Goals",
+    "text": "Goals\nAt a bare minimum, we want our code to be:\n\n\nOrganized\n\nCoherent structure of\n\nfolders, files, and scripts\n\n\nTransportable\n\nWorks on\n\nmy future computer\nother people’s computers\n\n\n\nUnderstandable\n\nClearly specified dependencies\nReadable code, sensible naming of things\nWritten documentation explaining what and how"
+  },
+  {
+    "objectID": "lectures/introduction.html#extras",
+    "href": "lectures/introduction.html#extras",
+    "title": "Introduction and Overview",
+    "section": "Extras",
+    "text": "Extras\nNice to have, but not absolutely necessary\nProvably correct\nThrough automated testing\n\nPieces of code correctly do what they should\nCode works together correctly, not sensitive to minor changes in the data\nValid statistical properties\n\nVersion controlled\n\nHistory of development is tracked and documented"
+  },
+  {
+    "objectID": "lectures/introduction.html#how-to-achieve-these-goals",
+    "href": "lectures/introduction.html#how-to-achieve-these-goals",
+    "title": "Introduction and Overview",
+    "section": "How to achieve these goals?",
+    "text": "How to achieve these goals?\nBuilding an R package is one way, with many distinct advantages\nDocumented structure and community-based conventions\n\nLarge community who know how to use packages\nSmaller community who know the standards\nInfrastructure to make the process easier and better\n\nBuilding R extensions\n\n195 pages of standards and instructions\nChanges with every R release (every year in the Spring)"
+  },
+  {
+    "objectID": "lectures/introduction.html#infrastructure",
+    "href": "lectures/introduction.html#infrastructure",
+    "title": "Introduction and Overview",
+    "section": "Infrastructure",
+    "text": "Infrastructure\n\ndevtools\nusethis\nroxygen2\ntestthat\npkgdown\nCountless blog posts, books, workshops, etc."
+  },
+  {
+    "objectID": "lectures/introduction.html#what-is-an-r-package",
+    "href": "lectures/introduction.html#what-is-an-r-package",
+    "title": "Introduction and Overview",
+    "section": "What is an R package?",
+    "text": "What is an R package?\n\n“A directory of files that extend R”\nA package can be installed, which means\n\nthe directory is copied to your library which is your local directory of packages\n\nIt can be built, cleaned, documented, and source code compiled\nIt can be checked, tested for consistency and portability\n\n\nWoody: Buzz, you’re flying!\nBuzz Lightyear: This isn’t flying, this is R coding with style."
+  },
+  {
+    "objectID": "lectures/introduction.html#description",
+    "href": "lectures/introduction.html#description",
+    "title": "Introduction and Overview",
+    "section": "Description",
+    "text": "Description\nThe DESCRIPTION file contains basic information about the package in the following format:\nPackage: pkgname\nVersion: 0.5-1\nDate: 2015-01-01\nTitle: My First Collection of Functions\nAuthors@R: c(person(\"Joe\", \"Developer\", role = c(\"aut\", \"cre\"),\n                     email = \"Joe.Developer@some.domain.net\"),\n              person(\"Pat\", \"Developer\", role = \"aut\"),\n              person(\"A.\", \"User\", role = \"ctb\",\n                     email = \"A.User@whereever.net\"))\nAuthor: Joe Developer [aut, cre],\n  Pat Developer [aut],\n  A. User [ctb]\nMaintainer: Joe Developer <Joe.Developer@some.domain.net>\nDepends: R (>= 3.1.0), nlme\nSuggests: MASS\nDescription: A (one paragraph) description of what\n  the package does and why it may be useful.\nLicense: GPL (>= 2)\nURL: https://www.r-project.org, http://www.another.url\nBugReports: https://pkgname.bugtracker.url"
+  },
+  {
+    "objectID": "lectures/introduction.html#license",
+    "href": "lectures/introduction.html#license",
+    "title": "Introduction and Overview",
+    "section": "License",
+    "text": "License\nPick a license, any license\nFailing to include a license implicity declares a copyright without explaining if or how others can use your code\nI prefer the MIT license, it is short and understandable to lay people\nhttps://opensource.org/licenses/alphabetical"
+  },
+  {
+    "objectID": "lectures/introduction.html#r-code",
+    "href": "lectures/introduction.html#r-code",
+    "title": "Introduction and Overview",
+    "section": "R code",
+    "text": "R code\nThe R/ subdirectory contains your code\n\nOne or more .R source files\nDefines objects that are part of your package, usually functions"
+  },
+  {
+    "objectID": "lectures/introduction.html#namespace",
+    "href": "lectures/introduction.html#namespace",
+    "title": "Introduction and Overview",
+    "section": "Namespace",
+    "text": "Namespace\nA text file that specifies the directives of your package\n\nImports: which objects to include from other packages in yours\nExports: which objects to make available to users of your package"
+  },
+  {
+    "objectID": "lectures/introduction.html#documentation",
+    "href": "lectures/introduction.html#documentation",
+    "title": "Introduction and Overview",
+    "section": "Documentation",
+    "text": "Documentation\n\nThe man/ subdirectory contains documentation files in a specific format\nThe vignettes/ subdirectory contains long form documentation in pdf or html format"
+  },
+  {
+    "objectID": "lectures/introduction.html#everything-else",
+    "href": "lectures/introduction.html#everything-else",
+    "title": "Introduction and Overview",
+    "section": "Everything else",
+    "text": "Everything else\nFiles\n\nREADME, NEWS\nconfigure, cleanup, INDEX\n\nSubdirectories\n\ntests, data, inst, src\nexec, po, tools, demo"
+  },
+  {
+    "objectID": "lectures/introduction.html#lessons",
+    "href": "lectures/introduction.html#lessons",
+    "title": "Introduction and Overview",
+    "section": "Lessons",
+    "text": "Lessons\n\n60 minutes\nWork through a problem together, discuss issues and strategies\n\nSticky note system\n\n = “I need help!”\n = “Good to go!”\nNo sticky = still working"
+  },
+  {
+    "objectID": "lectures/introduction.html#lectures",
+    "href": "lectures/introduction.html#lectures",
+    "title": "Introduction and Overview",
+    "section": "Lectures",
+    "text": "Lectures\n\n30 minutes\nHighlighting concepts, resources, tools"
+  },
+  {
+    "objectID": "lectures/introduction.html#schedule",
+    "href": "lectures/introduction.html#schedule",
+    "title": "Introduction and Overview",
+    "section": "Schedule",
+    "text": "Schedule\nToday\n\nFunctions part I\nLunch\nFunctions part II\nDocumentation\nVersion control using git, and github\n\nTomorrow\n\nObjects and object oriented programming\nFunctional programming\nR ecosystem and sharing your package\nLunch\nDebugging\nApproaches to software development\nTesting\n\nFriday\n\nDesigning an R package\nPlaying nicely with others/being a good R citizen\nReleasing, promotion, and publications"
+  },
+  {
+    "objectID": "lectures/introduction.html#friday-afternoon",
+    "href": "lectures/introduction.html#friday-afternoon",
+    "title": "Introduction and Overview",
+    "section": "Friday afternoon",
+    "text": "Friday afternoon\n\nCase studies and discussion\n\nvolunteers needed!"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Programming and statistical modelling in R",
+    "section": "",
+    "text": "Programming and statistical modelling in R\n\n\n\nThe aim of the course is to make the participants able to - use programming principles (loops and functions) to handle repetitive tasks - use functions in R - use loops in R - do efficient data manipulation and aggregation\n\n\n\nThe course covers use of the statistical software package R. The aim is to take the intermediate R user to the next level, and make use of programming techniques for more efficient use of R. A key focus in on introducing loops and functions. The course will consist of lectures and exercises over 4 days. This will give the students a chance to use and work with different aspects of R.\n\n\n\nPh.D.-students and health researchers with a basic knowledge of statistics corresponding to the course on basic statistics for health researchers and with a good working knowledge of R, e.g., as obtained by having already followed an introductory course on R.\nParticipants are expected to bring their own laptop with R installed for the exercises.\n\n\n\nThe course is relevant to PhD students from the following graduate programmes at the Graduate School of Health and Medical Sciences, UCPH:\nALL GRADUATE PROGRAMMES\n\n\n\nEnglish.\n\n\n\nLectures in four half days, four optional exercise hours placed as one each week.\n\n\n\nMichael Sachs, Section of Biostatistics\n\n\n\nMichael Sachs and other members of the staff at the Section of Biostatistics.\n\n\n\n1, 4, 8, 11 November 2022, all days from 8.00-12.00.\n\n\n\nCSS"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "lectures/index.html",
+    "href": "lectures/index.html",
+    "title": "Lectures",
+    "section": "",
+    "text": "Introduction\nProject organization and workflow"
+  },
+  {
+    "objectID": "lectures/introduction.html#why",
+    "href": "lectures/introduction.html#why",
+    "title": "Introduction and Overview",
+    "section": "Why?",
+    "text": "Why?\n\nIf your research involves any data analysis, it likely also involves:\n\nData management and manipulation\nAnalysis\nReporting of results\n\nThis means lots of code.\nWe can borrow some ideas from software development to\n\nMake our lives easier – repetitive tasks, updates with new data\nMake science better – reproducible, understandable, reusable"
+  },
+  {
+    "objectID": "lectures/introduction.html#overview-of-this-course",
+    "href": "lectures/introduction.html#overview-of-this-course",
+    "title": "Introduction and Overview",
+    "section": "Overview of this course",
+    "text": "Overview of this course\nLessons\n\n45 minutes\nWork through a problem together, learn tools and strategies\n\nSticky note system\n = “I need help!”\n = “Good to go!”\nNo sticky = still working"
+  },
+  {
+    "objectID": "lectures/introduction.html#exercises",
+    "href": "lectures/introduction.html#exercises",
+    "title": "Introduction and Overview",
+    "section": "Exercises",
+    "text": "Exercises\n\nWork on your own\nAnswers shared after the course"
+  },
+  {
+    "objectID": "lectures/introduction.html#what-i-do",
+    "href": "lectures/introduction.html#what-i-do",
+    "title": "Introduction and Overview",
+    "section": "What I do",
+    "text": "What I do\n\nDevelop and evaluate statistical methods\n\nWrite R packages\nWrite R code to test the methods\n\nCollaborate on research projects involving data analysis\n\nUse register and other data from stats Denmark\nData analysis, visualization and reporting"
+  },
+  {
+    "objectID": "lectures/introduction.html#my-r-philosophy",
+    "href": "lectures/introduction.html#my-r-philosophy",
+    "title": "Introduction and Overview",
+    "section": "My R philosophy",
+    "text": "My R philosophy\n\nI started learning R in 2005 (version 2.2)\nThere is almost no problem that can’t be solved with R\n\nFlexible and dynamic\nPlays nicely with almost any other programming language"
+  },
+  {
+    "objectID": "lectures/introduction.html#course-philosophy",
+    "href": "lectures/introduction.html#course-philosophy",
+    "title": "Introduction and Overview",
+    "section": "Course philosophy",
+    "text": "Course philosophy\n\nThere are no stupid questions\nThere are many ways to solve a problem, there is no single “right way”\nI will not force you to learn any particular way, e.g., tidyverse vs data.table, we will focus on learning the general principles.\n\nTry them out, then choose one and get good at it\nSame with project organization, choose a system and stick with it\n\nShow up to class and participate, you will pass and hopefully learn something useful"
+  },
+  {
+    "objectID": "lectures/introduction.html#schedule-of-topics",
+    "href": "lectures/introduction.html#schedule-of-topics",
+    "title": "Introduction and Overview",
+    "section": "Schedule of topics",
+    "text": "Schedule of topics\n\n\nToday\n\nProject organization\nData structures and indexing\n\nFriday\n\nFlow control and loops\nCreating and using functions\n\n\nTuesday\n\nWorking with data, merging and reshaping\nWorking with data, dates and characters\n\nNext Friday\n\nReporting, dynamic documents\nCase study, analysis of register data"
+  },
+  {
+    "objectID": "lectures/projects.html#r-session-and-the-working-directory",
+    "href": "lectures/projects.html#r-session-and-the-working-directory",
+    "title": "Project organization and workflow",
+    "section": "R session and the working directory",
+    "text": "R session and the working directory\n\ngetwd()\n\n[1] \"/home/sachsmc/Teaching/Courses/r-programming/lectures\"\n\nlist.dirs(\".\", recursive = FALSE)\n\n[1] \"./projects_files\"\n\nlist.dirs(\"..\", recursive = FALSE)\n\n[1] \"../_site\"           \"../.git\"            \"../.quarto\"        \n[4] \"../.Rproj.user\"     \"../example-project\" \"../exercises\"      \n[7] \"../lectures\"       \n\n\n\nThe R session runs in the current working directory\nInput and output happens relative to that directory\n\".\" means “this directory”\n\"..\" means “the directory that this one is contained in”"
+  },
+  {
+    "objectID": "lectures/data-structures.html#types-of-data",
+    "href": "lectures/data-structures.html#types-of-data",
+    "title": "Data structures in R",
+    "section": "Types of data",
+    "text": "Types of data"
+  },
+  {
+    "objectID": "lectures/data-structures.html#vectors",
+    "href": "lectures/data-structures.html#vectors",
+    "title": "Data structures in R",
+    "section": "Vectors",
+    "text": "Vectors"
+  },
+  {
+    "objectID": "lectures/data-structures.html#indexing-vectors",
+    "href": "lectures/data-structures.html#indexing-vectors",
+    "title": "Data structures in R",
+    "section": "Indexing vectors",
+    "text": "Indexing vectors"
+  },
+  {
+    "objectID": "lectures/data-structures.html#lists",
+    "href": "lectures/data-structures.html#lists",
+    "title": "Data structures in R",
+    "section": "Lists",
+    "text": "Lists"
+  },
+  {
+    "objectID": "lectures/data-structures.html#indexing-lists",
+    "href": "lectures/data-structures.html#indexing-lists",
+    "title": "Data structures in R",
+    "section": "Indexing lists",
+    "text": "Indexing lists"
+  },
+  {
+    "objectID": "lectures/data-structures.html#matrices",
+    "href": "lectures/data-structures.html#matrices",
+    "title": "Data structures in R",
+    "section": "Matrices",
+    "text": "Matrices"
+  },
+  {
+    "objectID": "lectures/data-structures.html#indexing-matrices",
+    "href": "lectures/data-structures.html#indexing-matrices",
+    "title": "Data structures in R",
+    "section": "Indexing matrices",
+    "text": "Indexing matrices"
+  },
+  {
+    "objectID": "lectures/data-structures.html#data-frames",
+    "href": "lectures/data-structures.html#data-frames",
+    "title": "Data structures in R",
+    "section": "Data frames",
+    "text": "Data frames"
+  },
+  {
+    "objectID": "lectures/data-structures.html#indexing-data-frames",
+    "href": "lectures/data-structures.html#indexing-data-frames",
+    "title": "Data structures in R",
+    "section": "Indexing data frames",
+    "text": "Indexing data frames"
+  },
+  {
+    "objectID": "lectures/data-structures.html#environments-how-does-r-find-things",
+    "href": "lectures/data-structures.html#environments-how-does-r-find-things",
+    "title": "Data structures in R",
+    "section": "Environments – how does R find things?",
+    "text": "Environments – how does R find things?"
+  },
+  {
+    "objectID": "lectures/data-structures.html#packages",
+    "href": "lectures/data-structures.html#packages",
+    "title": "Data structures in R",
+    "section": "Packages",
+    "text": "Packages"
+  },
+  {
+    "objectID": "lectures/data-structures.html#s4-objects",
+    "href": "lectures/data-structures.html#s4-objects",
+    "title": "Data structures in R",
+    "section": "S4 objects",
+    "text": "S4 objects"
+  },
+  {
+    "objectID": "lectures/data-structures.html#tibbles",
+    "href": "lectures/data-structures.html#tibbles",
+    "title": "Data structures in R",
+    "section": "Tibbles",
+    "text": "Tibbles"
+  },
+  {
+    "objectID": "lectures/data-structures.html#data.tables",
+    "href": "lectures/data-structures.html#data.tables",
+    "title": "Data structures in R",
+    "section": "data.tables",
+    "text": "data.tables"
+  },
+  {
+    "objectID": "exercises/projects.html",
+    "href": "exercises/projects.html",
+    "title": "Project organization and workflow – exercises",
+    "section": "",
+    "text": "In this lesson you will\n\nUnderstand how R interacts with the current working directory\nPractice using relative paths in R input and output\nTry out using the here package for managing file paths in a project"
+  },
+  {
+    "objectID": "exercises/index.html",
+    "href": "exercises/index.html",
+    "title": "Exercises",
+    "section": "",
+    "text": "Project organization and workflow"
+  },
+  {
+    "objectID": "lectures/projects.html#an-example-project-structure",
+    "href": "lectures/projects.html#an-example-project-structure",
+    "title": "Project organization and workflow",
+    "section": "An example project structure",
+    "text": "An example project structure\n\n\n-- code\n   |__01-process-data.R\n   |__02-primary-analysis.R\n   |__03-sensitivity-analysis.R\n   |__project-report.Rmd\n-- data\n   |__merge-analysis-dataset.rds\n-- documents\n   |__background.docx\n   |__protocol.docx\n-- output\n   |__Figure1.png\n   |__Figure2.png\n   |__Table1.rds\n-- rawdata\n   |__lisa-2012-full.csv\n   |__lisa-2013-full.csv\n   |__lisa-2014-full.csv\n   |__lisa-2015-full.csv\n-- README"
+  }
+]

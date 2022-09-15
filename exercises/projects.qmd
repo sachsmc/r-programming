@@ -1,0 +1,13 @@
+---
+title: "Project organization and workflow -- exercises"
+author: Michael C Sachs
+---
+
+### Learning objectives {.alert .alert-success}
+
+In this lesson you will 
+
+1. Understand how R interacts with the current working directory
+2. Practice using relative paths in R input and output
+3. Try out using the `here` package for managing file paths in a project
+

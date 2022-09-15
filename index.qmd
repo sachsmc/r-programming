@@ -1,0 +1,52 @@
+---
+title: "Programming and statistical modelling in R"
+---
+
+# COURSE DESCRIPTION
+
+## Course title 
+
+Programming and statistical modelling in R
+
+## Learning objectives
+
+The aim of the course is to make the participants able to 
+- use programming principles (loops and functions) to handle repetitive tasks 
+- use functions in R 
+- use loops in R 
+- do efficient data manipulation and aggregation
+
+## Content
+
+The course covers use of the statistical software package R. The aim is to take the intermediate R user to the next level, and make use of programming techniques for more efficient use of R. A key focus in on introducing loops and functions. The course will consist of lectures and exercises over 4 days. This will give the students a chance to use and work with different aspects of R. 
+
+## Participants
+
+Ph.D.-students and health researchers with a basic knowledge of statistics corresponding to the course on basic statistics for health researchers and with a good working knowledge of R, e.g., as obtained by having already followed an introductory course on R. 
+
+_Participants are expected to bring their own laptop with R installed for the exercises._ 
+
+
+## Relevance to graduate programmes
+
+The course is relevant to PhD students from the following graduate programmes at the Graduate School of Health and Medical Sciences, UCPH:
+
+ALL GRADUATE PROGRAMMES
+
+## Language
+English.
+
+## Form
+Lectures in four half days, four optional exercise hours placed as one each week.
+
+## Course director
+Michael Sachs, Section of Biostatistics
+
+## Teachers
+Michael Sachs and other members of the staff at the Section of Biostatistics.
+
+## Dates
+1, 4, 8, 11 November 2022, all days from 8.00-12.00.
+
+## Course location
+CSS
