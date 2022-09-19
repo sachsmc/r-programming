@@ -11,6 +11,7 @@ Programming and statistical modelling in R
 ## Learning objectives
 
 The aim of the course is to make the participants able to 
+
 - use programming principles (loops and functions) to handle repetitive tasks 
 - use functions in R 
 - use loops in R 

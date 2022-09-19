@@ -116,7 +116,7 @@
     "href": "index.html",
     "title": "Programming and statistical modelling in R",
     "section": "",
-    "text": "Programming and statistical modelling in R\n\n\n\nThe aim of the course is to make the participants able to - use programming principles (loops and functions) to handle repetitive tasks - use functions in R - use loops in R - do efficient data manipulation and aggregation\n\n\n\nThe course covers use of the statistical software package R. The aim is to take the intermediate R user to the next level, and make use of programming techniques for more efficient use of R. A key focus in on introducing loops and functions. The course will consist of lectures and exercises over 4 days. This will give the students a chance to use and work with different aspects of R.\n\n\n\nPh.D.-students and health researchers with a basic knowledge of statistics corresponding to the course on basic statistics for health researchers and with a good working knowledge of R, e.g., as obtained by having already followed an introductory course on R.\nParticipants are expected to bring their own laptop with R installed for the exercises.\n\n\n\nThe course is relevant to PhD students from the following graduate programmes at the Graduate School of Health and Medical Sciences, UCPH:\nALL GRADUATE PROGRAMMES\n\n\n\nEnglish.\n\n\n\nLectures in four half days, four optional exercise hours placed as one each week.\n\n\n\nMichael Sachs, Section of Biostatistics\n\n\n\nMichael Sachs and other members of the staff at the Section of Biostatistics.\n\n\n\n1, 4, 8, 11 November 2022, all days from 8.00-12.00.\n\n\n\nCSS"
+    "text": "Programming and statistical modelling in R\n\n\n\nThe aim of the course is to make the participants able to\n\nuse programming principles (loops and functions) to handle repetitive tasks\nuse functions in R\nuse loops in R\ndo efficient data manipulation and aggregation\n\n\n\n\nThe course covers use of the statistical software package R. The aim is to take the intermediate R user to the next level, and make use of programming techniques for more efficient use of R. A key focus in on introducing loops and functions. The course will consist of lectures and exercises over 4 days. This will give the students a chance to use and work with different aspects of R.\n\n\n\nPh.D.-students and health researchers with a basic knowledge of statistics corresponding to the course on basic statistics for health researchers and with a good working knowledge of R, e.g., as obtained by having already followed an introductory course on R.\nParticipants are expected to bring their own laptop with R installed for the exercises.\n\n\n\nThe course is relevant to PhD students from the following graduate programmes at the Graduate School of Health and Medical Sciences, UCPH:\nALL GRADUATE PROGRAMMES\n\n\n\nEnglish.\n\n\n\nLectures in four half days, four optional exercise hours placed as one each week.\n\n\n\nMichael Sachs, Section of Biostatistics\n\n\n\nMichael Sachs and other members of the staff at the Section of Biostatistics.\n\n\n\n1, 4, 8, 11 November 2022, all days from 8.00-12.00.\n\n\n\nCSS"
   },
   {
     "objectID": "about.html",
@@ -130,7 +130,7 @@
     "href": "lectures/index.html",
     "title": "Lectures",
     "section": "",
-    "text": "Introduction\nProject organization and workflow"
+    "text": "Day 1\n\n\n\n\n \n\n\n\n\n\n\n\nDay 1, A\n\n\n\n\n \n\n\n\n\n\n\n\nDay 1, B\n\n\n\n\n \n\n\n\n\n\n\n\nDay 2, A\n\n\n\n\n \n\n\n\n\n\n\n\nDay 2, B\n\n\n\n\n \n\n\n\n\nNo matching items"
   },
   {
     "objectID": "lectures/introduction.html#why",
@@ -298,13 +298,167 @@
     "href": "exercises/index.html",
     "title": "Exercises",
     "section": "",
-    "text": "Project organization and workflow"
+    "text": "Day 1, A\n\n\nUnderstanding how R deals with the current working directory, practice using relative paths in R input and output, and testing out the here package for managing file paths in a project\n\n\n\n\n \n\n\n\n\nNo matching items"
   },
   {
     "objectID": "lectures/projects.html#an-example-project-structure",
     "href": "lectures/projects.html#an-example-project-structure",
     "title": "Project organization and workflow",
     "section": "An example project structure",
-    "text": "An example project structure\n\n\n-- code\n   |__01-process-data.R\n   |__02-primary-analysis.R\n   |__03-sensitivity-analysis.R\n   |__project-report.Rmd\n-- data\n   |__merge-analysis-dataset.rds\n-- documents\n   |__background.docx\n   |__protocol.docx\n-- output\n   |__Figure1.png\n   |__Figure2.png\n   |__Table1.rds\n-- rawdata\n   |__lisa-2012-full.csv\n   |__lisa-2013-full.csv\n   |__lisa-2014-full.csv\n   |__lisa-2015-full.csv\n-- README"
+    "text": "An example project structure\n\n\nexample-project\n\n\n-- code\n   |__01-process-data.R\n   |__02-primary-analysis.R\n   |__03-sensitivity-analysis.R\n   |__project-report.Rmd\n-- data\n   |__merge-analysis-dataset.rds\n-- documents\n   |__background.docx\n   |__protocol.docx\n-- output\n   |__Figure1.png\n   |__Figure2.png\n   |__Table1.rds\n-- rawdata\n   |__lisa-2012-full.csv\n   |__lisa-2013-full.csv\n   |__lisa-2014-full.csv\n   |__lisa-2015-full.csv\n-- README.md"
+  },
+  {
+    "objectID": "lectures/projects.html#set-up-projects",
+    "href": "lectures/projects.html#set-up-projects",
+    "title": "Project organization and workflow",
+    "section": "Set up projects",
+    "text": "Set up projects\nQuick review of the file system\n\nFile system discipline: put all the files related to a single project in a designated folder.\n\nThis applies to data, code, figures, notes, etc.\nDepending on project complexity, you might enforce further organization into subfolders.\n\nTools to facilitate this\n\nProjectTemplate package\nSeveral other packages: https://cran.r-project.org/web/views/ReproducibleResearch.html#project-workflows\nMake your own template structure and copy-paste"
+  },
+  {
+    "objectID": "lectures/projects.html#navigating-the-directory-from-r",
+    "href": "lectures/projects.html#navigating-the-directory-from-r",
+    "title": "Project organization and workflow",
+    "section": "Navigating the directory from R",
+    "text": "Navigating the directory from R\nCompose directories and files with file.path (it is safe and works in any OS)\n\nread.csv(file.path(\"..\", \"rawdata\", \"lisa-2012-full.csv\"))\nwrite.csv(analysis_file, file.path(\"..\", \"data\", \"analysis-data.rds\"))"
+  },
+  {
+    "objectID": "lectures/projects.html#get-comfortable",
+    "href": "lectures/projects.html#get-comfortable",
+    "title": "Project organization and workflow",
+    "section": "Get comfortable",
+    "text": "Get comfortable\nYour workflow does not matter, as long as you follow the principles.\nOptions for IDEs (all free):\n\nRstudio\nVScode\nemacs\n\nAll of these support projects, have integrated help files, code completion, and syntax highlighting."
+  },
+  {
+    "objectID": "lectures/flow-and-loops.html#what",
+    "href": "lectures/flow-and-loops.html#what",
+    "title": "Flow control and loops",
+    "section": "What?",
+    "text": "What?"
+  },
+  {
+    "objectID": "lectures/flow-and-loops.html#if-then-else",
+    "href": "lectures/flow-and-loops.html#if-then-else",
+    "title": "Flow control and loops",
+    "section": "If then else",
+    "text": "If then else"
+  },
+  {
+    "objectID": "lectures/flow-and-loops.html#ifelse-and-switch",
+    "href": "lectures/flow-and-loops.html#ifelse-and-switch",
+    "title": "Flow control and loops",
+    "section": "ifelse and switch",
+    "text": "ifelse and switch"
+  },
+  {
+    "objectID": "lectures/flow-and-loops.html#for-loops",
+    "href": "lectures/flow-and-loops.html#for-loops",
+    "title": "Flow control and loops",
+    "section": "For loops",
+    "text": "For loops"
+  },
+  {
+    "objectID": "lectures/flow-and-loops.html#while",
+    "href": "lectures/flow-and-loops.html#while",
+    "title": "Flow control and loops",
+    "section": "While",
+    "text": "While"
+  },
+  {
+    "objectID": "lectures/flow-and-loops.html#repeat",
+    "href": "lectures/flow-and-loops.html#repeat",
+    "title": "Flow control and loops",
+    "section": "Repeat",
+    "text": "Repeat"
+  },
+  {
+    "objectID": "lectures/flow-and-loops.html#examples",
+    "href": "lectures/flow-and-loops.html#examples",
+    "title": "Flow control and loops",
+    "section": "Examples",
+    "text": "Examples"
+  },
+  {
+    "objectID": "lectures/flow-and-loops.html#note-on-speed",
+    "href": "lectures/flow-and-loops.html#note-on-speed",
+    "title": "Flow control and loops",
+    "section": "Note on speed",
+    "text": "Note on speed"
+  },
+  {
+    "objectID": "lectures/projects.html#why",
+    "href": "lectures/projects.html#why",
+    "title": "Project organization and workflow",
+    "section": "Why?",
+    "text": "Why?\nSee the UCPH Policy for Research Data Management"
+  },
+  {
+    "objectID": "lectures/projects.html#the-here-package",
+    "href": "lectures/projects.html#the-here-package",
+    "title": "Project organization and workflow",
+    "section": "The here package",
+    "text": "The here package\n\nlibrary(here)\n\nread.csv(here(\"rawdata\", \"lisa-2012-full.csv\"))\nwrite.csv(analysis_file, here(\"data\", \"analysis-data.rds\"))\n\nThe first line figures out the root of your project directory: is there an .Rproj or .here file there?\nThen, here allows you to build paths to subdirectories, starting from the project root.\nUse this in your scripts, and everything will run nicely, both interactively and programmatically, no matter what your working directory is (as long as it is in the project)."
+  },
+  {
+    "objectID": "lectures/projects.html#what",
+    "href": "lectures/projects.html#what",
+    "title": "Project organization and workflow",
+    "section": "What?",
+    "text": "What?\nPersonal taste and habits (“workflow”) versus the logic and output that is the essence of your project (“product”)\n\nThe editor you use to write your R code.\nThe naming/specific structure of your project directory.\nThe R code you ran before lunch."
+  },
+  {
+    "objectID": "lectures/projects.html#setting-the-working-directory",
+    "href": "lectures/projects.html#setting-the-working-directory",
+    "title": "Project organization and workflow",
+    "section": "Setting the working directory",
+    "text": "Setting the working directory\n\nOpen the .Rproj file in a fresh R/Rstudio session\nOpen an .R file in a new session\nUse the drop down menu in Rstudio: Session > Set working directory\nUse setwd() in the terminal\n\nAvoid using setwd() in scripts"
+  },
+  {
+    "objectID": "lectures/projects.html#practical",
+    "href": "lectures/projects.html#practical",
+    "title": "Project organization and workflow",
+    "section": "Practical",
+    "text": "Practical\n\nCreate a toy project using your favorite tools\nSwap projects with your neighbor\nSee if you can reproduce each others results"
+  },
+  {
+    "objectID": "lectures/projects.html#the-importance-of-readme",
+    "href": "lectures/projects.html#the-importance-of-readme",
+    "title": "Project organization and workflow",
+    "section": "The importance of README",
+    "text": "The importance of README\n\nAlways include a README.txt or .md file at the root of the project\nPlan, Document, Share, and Preserve\nTo include: what and how:\n\nTitle of the project\nWhen it was last updated\nWhat is included in the project directory\nHow to run the analysis and use the results (including what dependencies are needed)\nA license describing the conditions of use"
+  },
+  {
+    "objectID": "lectures/projects.html#bad-vs-good-habits",
+    "href": "lectures/projects.html#bad-vs-good-habits",
+    "title": "Project organization and workflow",
+    "section": "Bad vs good habits",
+    "text": "Bad vs good habits\nDo not:\n\nuse setwd() in scripts\nrely on rm(list = ls())\nsave .RData when you quit R and don’t load .RData when you launch R.\n\nDo:\n\nRestart your R session frequently while working\nSet the working directory on launch or interactively\nUse relative paths, or here if your project directory is complex"
+  },
+  {
+    "objectID": "exercises/projects.html#create-your-project-directory",
+    "href": "exercises/projects.html#create-your-project-directory",
+    "title": "Project organization and workflow – exercises",
+    "section": "Create your project directory",
+    "text": "Create your project directory\nIn this lesson we will organize a toy project about the Palmer Penguins dataset. In the end you will share the project with your neighbor and ask them to reproduce your results, so keep that in mind.\n\nCreate a new folder on your computer for this project. Name it whatever you want but something short but informative.\nUsing a directory structure of your choice, set it up as a project template. Remember to include a README file. This project will involve some data input, manipulation, and some output of figures.\nAcquire the Palmer Penguins dataset from here"
+  },
+  {
+    "objectID": "exercises/projects.html#do-some-data-manipulation",
+    "href": "exercises/projects.html#do-some-data-manipulation",
+    "title": "Project organization and workflow – exercises",
+    "section": "Do some data manipulation",
+    "text": "Do some data manipulation\n\nCreate a new .R script in the appropriate directory of your project.\nOpen up the R script in your IDE\nRead in the penguins dataset and create a new variable called the “penguin body mass index”. It is the body mass in grams divided by the square of flipper length in millimeters\nSave the results in your project directory, try using the here function."
+  },
+  {
+    "objectID": "exercises/projects.html#do-some-data-analysis",
+    "href": "exercises/projects.html#do-some-data-analysis",
+    "title": "Project organization and workflow – exercises",
+    "section": "Do some data analysis",
+    "text": "Do some data analysis\n\nCreate another .R script\nMake a scatterplot of body mass index versus bill length, with color by species\nMake a boxplot of body mass index by sex.\nDo a t-test for body mass index by sex.\nSave the results in your project directory, try using the here function.\n\n\nStop and think\nYou are going to share this project with your friend. In order for them to reproduce the results that you obtained, they will need the same data. Think about different ways that they can obtain the dataset. What are the pros and cons?"
+  },
+  {
+    "objectID": "exercises/projects.html#share-with-your-neighbor",
+    "href": "exercises/projects.html#share-with-your-neighbor",
+    "title": "Project organization and workflow – exercises",
+    "section": "Share with your neighbor",
+    "text": "Share with your neighbor\n\nUpdate your README file.\nZip up the project folder and send it to your partner.\nWhen you recieve their project, unzip it, open it in a new R session and try to reproduce their results."
   }
 ]

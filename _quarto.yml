@@ -4,6 +4,8 @@ project:
 website:
   title: "Programming and statistical modelling in R"
   navbar:
+    logo: "ku-logo_400x400.png"
+    background: "#901a1e"
     left:
       - href: index.qmd
         text: Home
@@ -14,7 +16,8 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme: flatly
+    #backgroundcolor: "#901a1e"
     css: styles.css
     toc: true
 

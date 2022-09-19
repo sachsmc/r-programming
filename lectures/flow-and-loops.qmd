@@ -1,0 +1,26 @@
+---
+title: "Flow control and loops"
+subtitle: "Day 2, A"
+author: "Michael C Sachs"
+format: revealjs
+---
+
+# Flow control
+
+## What?
+
+## If then else
+
+## `ifelse` and `switch`
+
+# Loops
+
+## For loops
+
+## While
+
+## Repeat
+
+## Examples
+
+## Note on speed

@@ -1,5 +1,6 @@
 ---
 title: "Data structures in R"
+subtitle: "Day 1, B"
 author: "Michael C Sachs"
 format: revealjs
 ---

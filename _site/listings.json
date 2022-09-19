@@ -1,0 +1,18 @@
+[
+  {
+    "listing": "/lectures/index.html",
+    "items": [
+      "/lectures/introduction.html",
+      "/lectures/projects.html",
+      "/lectures/data-structures.html",
+      "/lectures/flow-and-loops.html",
+      "/lectures/functions.html"
+    ]
+  },
+  {
+    "listing": "/exercises/index.html",
+    "items": [
+      "/exercises/projects.html"
+    ]
+  }
+]

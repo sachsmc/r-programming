@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.0.37">
 
   <meta name="author" content="Michael C Sachs">
-  <title>Programming and statistical modelling in R - Introduction and Overview</title>
+  <title>Programming and statistical modelling in R - Flow control and loops</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -319,191 +319,49 @@
     <div class="slides">
 
 <section id="title-slide" class="center">
-  <h1 class="title">Introduction and Overview</h1>
-  <p class="subtitle">Day 1</p>
+  <h1 class="title">Flow control and loops</h1>
+  <p class="subtitle">Day 2, A</p>
   <p class="author">Michael C Sachs</p>
 </section>
 
 <section>
-<section id="introduction" class="title-slide slide level1 center">
-<h1>Introduction</h1>
+<section id="flow-control" class="title-slide slide level1 center">
+<h1>Flow control</h1>
 
 </section>
-<section id="learning-objectives" class="slide level2">
-<h2>Learning objectives</h2>
-<ul>
-<li>Understand and apply programming principles to handle repetitive tasks</li>
-<li>Understand how to use and make your own functions in R</li>
-<li>Use loops in R</li>
-<li>Apply these principles to perform efficient data manipulation, analysis, and reporting</li>
-</ul>
+<section id="what" class="slide level2">
+<h2>What?</h2>
 </section>
-<section id="why" class="slide level2">
-<h2>Why?</h2>
-<div class="r-fit-text">
-<p>If your research involves any data analysis, it likely also involves:</p>
-<ul>
-<li>Data management and manipulation</li>
-<li>Analysis</li>
-<li>Reporting of results</li>
-</ul>
-<p>This means lots of <strong>code</strong>.</p>
-<p>We can borrow some ideas from software development to</p>
-<ol type="1">
-<li>Make our lives easier – repetitive tasks, updates with new data</li>
-<li>Make science better – reproducible, understandable, reusable</li>
-</ol>
-</div>
+<section id="if-then-else" class="slide level2">
+<h2>If then else</h2>
 </section>
-<section id="goals" class="slide level2">
-<h2>Goals</h2>
-<p>At a bare minimum, we want our code to be:</p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<h3 id="organized">Organized</h3>
-<ul>
-<li>Coherent structure of
-<ul>
-<li>folders, files, and scripts</li>
-</ul></li>
-</ul>
-<h3 id="transportable">Transportable</h3>
-<ul>
-<li>Works on
-<ul>
-<li>my future computer</li>
-<li>other people’s computers</li>
-</ul></li>
-</ul>
-</div><div class="column" style="width:50%;">
-<h3 id="understandable">Understandable</h3>
-<ul>
-<li>Clearly specified dependencies</li>
-<li>Readable code, sensible naming of things</li>
-<li>Written documentation explaining what and how</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="extras" class="slide level2">
-<h2>Extras</h2>
-<p>Nice to have, but not absolutely necessary</p>
-<h3 id="provably-correct">Provably correct</h3>
-<p>Through automated testing</p>
-<ul>
-<li>Pieces of code correctly do what they should</li>
-<li>Code works together correctly, not sensitive to minor changes in the data</li>
-<li>Valid statistical properties</li>
-</ul>
-<h3 id="version-controlled">Version controlled</h3>
-<ul>
-<li>History of development is tracked and documented</li>
-</ul>
-</section>
-<section id="overview-of-this-course" class="slide level2">
-<h2>Overview of this course</h2>
-<h3 id="lessons">Lessons</h3>
-<ul>
-<li>45 minutes</li>
-<li>Work through a problem together, learn tools and strategies</li>
-</ul>
-<h4 id="sticky-note-system">Sticky note system</h4>
-<p><img data-src="redsticky.png" style="width:10.0%" alt="red note"> = “I need help!”</p>
-<p><img data-src="greensticky.png" style="width:10.0%" alt="green note"> = “Good to go!”</p>
-<p>No sticky = still working</p>
-</section>
-<section class="slide level2">
-
-<h3 id="lectures">Lectures</h3>
-<ul>
-<li>15–30 minutes</li>
-<li>Highlighting concepts, principles</li>
-</ul>
-<h3 id="exercises">Exercises</h3>
-<ul>
-<li>Work on your own</li>
-<li>Answers shared after the course</li>
-</ul>
-</section>
-<section id="schedule-of-topics" class="slide level2">
-<h2>Schedule of topics</h2>
-<div class="columns">
-<div class="column" style="width:45%;">
-<h3 id="today">Today</h3>
-<ol type="1">
-<li>Project organization</li>
-<li>Data structures and indexing</li>
-</ol>
-<h3 id="friday">Friday</h3>
-<ol type="1">
-<li>Flow control and loops</li>
-<li>Creating and using functions</li>
-</ol>
-</div><div class="column" style="width:45%;">
-<h3 id="tuesday">Tuesday</h3>
-<ol type="1">
-<li>Working with data, merging and reshaping</li>
-<li>Working with data, dates and characters</li>
-</ol>
-<h3 id="next-friday">Next Friday</h3>
-<ol type="1">
-<li>Reporting, dynamic documents</li>
-<li>Case study, analysis of register data</li>
-</ol>
-</div>
-</div>
+<section id="ifelse-and-switch" class="slide level2">
+<h2><code>ifelse</code> and <code>switch</code></h2>
 </section></section>
 <section>
-<section id="about-me" class="title-slide slide level1 center">
-<h1>About me</h1>
+<section id="loops" class="title-slide slide level1 center">
+<h1>Loops</h1>
 
 </section>
-<section id="what-i-do" class="slide level2">
-<h2>What I do</h2>
-<ul>
-<li>Develop and evaluate statistical methods
-<ul>
-<li>Write R packages</li>
-<li>Write R code to test the methods</li>
-</ul></li>
-<li>Collaborate on research projects involving data analysis
-<ul>
-<li>Use register and other data from stats Denmark</li>
-<li>Data analysis, visualization and reporting</li>
-</ul></li>
-</ul>
+<section id="for-loops" class="slide level2">
+<h2>For loops</h2>
 </section>
-<section id="my-r-philosophy" class="slide level2">
-<h2>My R philosophy</h2>
-<ul>
-<li>I started learning R in 2005 (version 2.2)</li>
-<li>There is almost no problem that can’t be solved with R
-<ul>
-<li>Flexible and dynamic</li>
-<li>Plays nicely with almost any other programming language</li>
-</ul></li>
-</ul>
+<section id="while" class="slide level2">
+<h2>While</h2>
 </section>
-<section id="course-philosophy" class="slide level2">
-<h2>Course philosophy</h2>
-<ul>
-<li>There are no stupid questions</li>
-<li>There are many ways to solve a problem, there is no single “right way”</li>
-<li>I will not force you to learn any particular way, e.g., <code>tidyverse</code> vs <code>data.table</code>, we will focus on learning the general principles.
-<ul>
-<li>Try them out, then choose one and get good at it</li>
-<li>Same with project organization, choose a system and stick with it</li>
-</ul></li>
-<li>Show up to class and participate, you will pass and hopefully learn something useful</li>
-</ul>
-</section></section>
-<section id="questions" class="title-slide slide level1 center">
-<h1>Questions?</h1>
+<section id="repeat" class="slide level2">
+<h2>Repeat</h2>
+</section>
+<section id="examples" class="slide level2">
+<h2>Examples</h2>
+</section>
+<section id="note-on-speed" class="slide level2">
+<h2>Note on speed</h2>
 
 <div class="footer footer-default">
 
 </div>
-</section>
+</section></section>
     </div>
   </div>
 

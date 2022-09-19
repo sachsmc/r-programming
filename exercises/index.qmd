@@ -1,8 +1,11 @@
 ---
 title: "Exercises"
+listing: 
+    type: default
+    fields: [title, subtitle, description]
+    sort: "subtitle"
+    max-description-length: 250
+    
 ---
-
-1. [Project organization and workflow](projects.qmd)
-
 
 

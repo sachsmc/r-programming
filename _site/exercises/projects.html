@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Michael C Sachs">
+<meta name="description" content="Understanding how R deals with the current working directory, practice using relative paths in R input and output, and testing out the here package for managing file paths in a project">
 
 <title>Programming and statistical modelling in R - Project organization and workflow – exercises</title>
 <style>
@@ -66,6 +67,7 @@ ul.task-list{list-style: none;}
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <a class="navbar-brand" href="../index.html">
+    <img src="../ku-logo_400x400.png" alt="">
     <span class="navbar-title">Programming and statistical modelling in R</span>
   </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -98,6 +100,10 @@ ul.task-list{list-style: none;}
    
   <ul>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning objectives</a></li>
+  <li><a href="#create-your-project-directory" id="toc-create-your-project-directory" class="nav-link" data-scroll-target="#create-your-project-directory">Create your project directory</a></li>
+  <li><a href="#do-some-data-manipulation" id="toc-do-some-data-manipulation" class="nav-link" data-scroll-target="#do-some-data-manipulation">Do some data manipulation</a></li>
+  <li><a href="#do-some-data-analysis" id="toc-do-some-data-analysis" class="nav-link" data-scroll-target="#do-some-data-analysis">Do some data analysis</a></li>
+  <li><a href="#share-with-your-neighbor" id="toc-share-with-your-neighbor" class="nav-link" data-scroll-target="#share-with-your-neighbor">Share with your neighbor</a></li>
   </ul>
 </nav>
     </div>
@@ -107,8 +113,14 @@ ul.task-list{list-style: none;}
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Project organization and workflow – exercises</h1>
+<p class="subtitle lead">Day 1, A</p>
 </div>
 
+<div>
+  <div class="description">
+    Understanding how R deals with the current working directory, practice using relative paths in R input and output, and testing out the <code>here</code> package for managing file paths in a project
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
@@ -133,6 +145,46 @@ ul.task-list{list-style: none;}
 <li>Understand how R interacts with the current working directory</li>
 <li>Practice using relative paths in R input and output</li>
 <li>Try out using the <code>here</code> package for managing file paths in a project</li>
+</ol>
+</section>
+<section id="create-your-project-directory" class="level2">
+<h2 class="anchored" data-anchor-id="create-your-project-directory">Create your project directory</h2>
+<p>In this lesson we will organize a toy project about the Palmer Penguins dataset. In the end you will share the project with your neighbor and ask them to reproduce your results, so keep that in mind.</p>
+<ol type="1">
+<li>Create a new folder on your computer for this project. Name it whatever you want but something short but informative.</li>
+<li>Using a directory structure of your choice, set it up as a project template. Remember to include a README file. This project will involve some data input, manipulation, and some output of figures.</li>
+<li>Acquire the Palmer Penguins dataset from <a href="https://allisonhorst.github.io/palmerpenguins/">here</a></li>
+</ol>
+</section>
+<section id="do-some-data-manipulation" class="level2">
+<h2 class="anchored" data-anchor-id="do-some-data-manipulation">Do some data manipulation</h2>
+<ol type="1">
+<li>Create a new <code>.R</code> script in the appropriate directory of your project.</li>
+<li>Open up the R script in your IDE</li>
+<li>Read in the <code>penguins</code> dataset and create a new variable called the “penguin body mass index”. It is the body mass in grams divided by the square of flipper length in millimeters</li>
+<li>Save the results in your project directory, try using the <code>here</code> function.</li>
+</ol>
+</section>
+<section id="do-some-data-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="do-some-data-analysis">Do some data analysis</h2>
+<ol type="1">
+<li>Create another <code>.R</code> script</li>
+<li>Make a scatterplot of body mass index versus bill length, with color by species</li>
+<li>Make a boxplot of body mass index by sex.</li>
+<li>Do a t-test for body mass index by sex.</li>
+<li>Save the results in your project directory, try using the <code>here</code> function.</li>
+</ol>
+<section id="stop-and-think" class="level4 alert alert-info">
+<h4 class="alert alert-info anchored" data-anchor-id="stop-and-think">Stop and think</h4>
+<p>You are going to share this project with your friend. In order for them to reproduce the results that you obtained, they will need the same data. Think about different ways that they can obtain the dataset. What are the pros and cons?</p>
+</section>
+</section>
+<section id="share-with-your-neighbor" class="level2">
+<h2 class="anchored" data-anchor-id="share-with-your-neighbor">Share with your neighbor</h2>
+<ol type="1">
+<li>Update your README file.</li>
+<li>Zip up the project folder and send it to your partner.</li>
+<li>When you recieve their project, unzip it, open it in a new R session and try to reproduce their results.</li>
 </ol>
 
 

@@ -1,6 +1,8 @@
 ---
 title: "Project organization and workflow -- exercises"
+subtitle: "Day 1, A"
 author: Michael C Sachs
+description: "Understanding how R deals with the current working directory, practice using relative paths in R input and output, and testing out the `here` package for managing file paths in a project"
 ---
 
 ### Learning objectives {.alert .alert-success}
@@ -11,3 +13,38 @@ In this lesson you will
 2. Practice using relative paths in R input and output
 3. Try out using the `here` package for managing file paths in a project
 
+## Create your project directory
+
+In this lesson we will organize a toy project about the Palmer Penguins dataset. In the end you will share the project with your neighbor and ask them to reproduce your results, so keep that in mind.
+
+1. Create a new folder on your computer for this project. Name it whatever you want but something short but informative. 
+2. Using a directory structure of your choice, set it up as a project template. Remember to include a README file. This project will involve some data input, manipulation, and some output of figures. 
+3. Acquire the Palmer Penguins dataset from [here](https://allisonhorst.github.io/palmerpenguins/)
+
+## Do some data manipulation
+
+1. Create a new `.R` script in the appropriate directory of your project. 
+2. Open up the R script in your IDE
+3. Read in the `penguins` dataset and create a new variable called the "penguin body mass index". It is the body mass in grams divided by the square of flipper length in millimeters
+4. Save the results in your project directory, try using the `here` function.
+
+
+## Do some data analysis
+
+1. Create another `.R` script
+2. Make a scatterplot of body mass index versus bill length, with color by species
+3. Make a boxplot of body mass index by sex. 
+4. Do a t-test for body mass index by sex. 
+5. Save the results in your project directory, try using the `here` function.
+
+
+#### Stop and think {.alert .alert-info}
+
+You are going to share this project with your friend. In order for them to reproduce the results that you obtained, they will need the same data. Think about different ways that they can obtain the dataset. What are the pros and cons? 
+
+
+## Share with your neighbor
+
+1. Update your README file. 
+2. Zip up the project folder and send it to your partner. 
+3. When you recieve their project, unzip it, open it in a new R session and try to reproduce their results. 

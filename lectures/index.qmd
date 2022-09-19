@@ -1,8 +1,9 @@
 ---
 title: "Lectures"
+listing: 
+    type: default
+    fields: [title, subtitle]
+    sort: "subtitle"
 ---
 
-
-1. [Introduction](introduction.qmd)
-2. [Project organization and workflow](projects.qmd)
 

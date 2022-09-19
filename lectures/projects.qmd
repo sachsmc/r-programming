@@ -1,24 +1,48 @@
 ---
 title: "Project organization and workflow"
+subtitle: "Day 1, A"
 author: "Michael C Sachs"
 format: revealjs
 ---
 
 
+# Project organization
 
-## R session and the working directory
 
-```{r}
-#| echo= TRUE
-getwd()
-list.dirs(".", recursive = FALSE)
-list.dirs("..", recursive = FALSE)
-```
+## Why? 
 
-- The R session runs in the current _working directory_ 
-- Input and output happens relative to that directory
-- `"."` means "this directory"
-- `".."` means "the directory that this one is contained in"
+
+See the __UCPH Policy for Research Data Management__
+
+![](DataLifecycle-default.png){width=20%}
+
+
+## Set up projects
+
+Quick review of the file system
+
+- File system discipline: put all the files related to a single project in a designated folder.
+    - This applies to data, code, figures, notes, etc.
+    - Depending on project complexity, you might enforce further organization into subfolders.
+- Tools to facilitate this
+    + `ProjectTemplate` package
+    + Several other packages: https://cran.r-project.org/web/views/ReproducibleResearch.html#project-workflows
+    + Make your own template structure and copy-paste
+
+
+## The importance of README
+
+- Always include a README.txt or .md file at the root of the project
+- Plan, Document, Share, and Preserve
+- To include: _what_ and _how_: 
+    + Title of the project
+    + When it was last updated
+    + What is included in the project directory
+    + How to run the analysis and use the results (including what dependencies are needed)
+    + A license describing the conditions of use
+    
+![Example 1](https://github.com/sachsmc/liger)
+![Example 2](https://github.com/pablogonzalezginestet/megalearner)
 
 
 ## An example project structure
@@ -52,3 +76,105 @@ cat("example-project\n")
 twee(here::here("example-project"))
 
 ```
+
+
+## R session and the working directory
+
+```{r}
+#| echo= TRUE
+getwd()
+list.dirs(".", recursive = FALSE)
+list.dirs("..", recursive = FALSE)
+```
+
+- The R session runs in the current _working directory_ 
+- Input and output happens relative to that directory
+- `"."` means "this directory"
+- `".."` means "the directory that this one is contained in"
+
+
+## Navigating the directory from R
+
+Compose directories and files with `file.path` (it is safe and works in any OS)
+
+```{r}
+#| eval=FALSE,
+#| echo=TRUE
+read.csv(file.path("..", "rawdata", "lisa-2012-full.csv"))
+write.csv(analysis_file, file.path("..", "data", "analysis-data.rds"))
+```
+
+## The `here` package
+
+
+```{r}
+#| echo = TRUE,
+#| eval = FALSE
+library(here)
+
+read.csv(here("rawdata", "lisa-2012-full.csv"))
+write.csv(analysis_file, here("data", "analysis-data.rds"))
+```
+
+The first line figures out the root of your project directory: is there an `.Rproj` or `.here` file there? 
+
+Then, `here` allows you to build paths to subdirectories, starting from the project root. 
+
+Use this in your scripts, and everything will run nicely, both interactively __and__ programmatically, no matter what your working directory is (as long as it is in the project).
+
+
+# Workflow
+
+
+## What?
+
+Personal taste and habits (“workflow”) versus the logic and output that is the essence of your project (“product”)
+
+- The editor you use to write your R code.
+- The naming/specific structure of your project directory.
+- The R code you ran before lunch.
+
+## Get comfortable
+
+Your workflow does not matter, as long as you follow the principles. 
+
+Options for IDEs (all free): 
+
+- [Rstudio](https://www.rstudio.com/products/rstudio/download/#download)
+- [VScode](https://code.visualstudio.com/docs/languages/r)
+- emacs
+
+All of these support projects, have integrated help files, code completion, and syntax highlighting.
+
+## Setting the working directory
+
+- Open the `.Rproj` file in a fresh R/Rstudio session
+- Open an `.R` file in a new session
+- Use the drop down menu in Rstudio: Session > Set working directory
+- Use `setwd()` in the terminal
+
+
+_Avoid using `setwd()` in scripts_
+
+
+## Bad vs good habits
+
+__Do not__:
+
+- use `setwd()` in scripts
+- rely on `rm(list = ls())`
+- save `.RData` when you quit R and don’t load `.RData` when you launch R.
+
+
+__Do__:
+
+- Restart your R session frequently while working
+- Set the working directory on launch or interactively
+- Use relative paths, or `here` if your project directory is complex
+
+
+## Practical
+
+- Create a toy project using your favorite tools
+- Swap projects with your neighbor
+- See if you can reproduce each others results
