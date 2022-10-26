@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Michael C Sachs">
+<meta name="description" content="Understanding basic data structures in R, including vectors, arrays, lists, and data frames">
+
+<title>Programming and statistical modelling in R - Data structures – exercises</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../index.html">
+    <img src="../ku-logo_400x400.png" alt="">
+    <span class="navbar-title">Programming and statistical modelling in R</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../lectures/index.html">Lectures</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../exercises/index.html">Exercises</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../resources.html">Links and Resources</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning objectives</a></li>
+  <li><a href="#vectors-and-matrices" id="toc-vectors-and-matrices" class="nav-link" data-scroll-target="#vectors-and-matrices">Vectors and matrices</a></li>
+  <li><a href="#organizing-output-from-a-statistical-analysis" id="toc-organizing-output-from-a-statistical-analysis" class="nav-link" data-scroll-target="#organizing-output-from-a-statistical-analysis">Organizing output from a statistical analysis</a></li>
+  <li><a href="#working-with-data-using-different-structures" id="toc-working-with-data-using-different-structures" class="nav-link" data-scroll-target="#working-with-data-using-different-structures">Working with data using different structures</a>
+  <ul class="collapse">
+  <li><a href="#try-it-yourself" id="toc-try-it-yourself" class="nav-link" data-scroll-target="#try-it-yourself">Try it yourself</a></li>
+  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
+  <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes">Notes</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Data structures – exercises</h1>
+<p class="subtitle lead">Day 1, B</p>
+</div>
+
+<div>
+  <div class="description">
+    Understanding basic data structures in R, including vectors, arrays, lists, and data frames
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Michael C Sachs </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="learning-objectives" class="level3 alert alert-success">
+<h3 class="alert alert-success anchored" data-anchor-id="learning-objectives">Learning objectives</h3>
+<p>In this lesson you will</p>
+<ol type="1">
+<li>Practice working with vectors and matrices</li>
+<li>Thing about ways to organize data and output into data structures</li>
+<li>Compare and contrast the base R, <code>data.table</code>, and <code>tibble</code> packages for working with data.</li>
+</ol>
+</section>
+<section id="vectors-and-matrices" class="level2">
+<h2 class="anchored" data-anchor-id="vectors-and-matrices">Vectors and matrices</h2>
+<p>The following code creates a matrix with some integers:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>M1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>, <span class="at">nrow =</span> <span class="dv">4</span>, <span class="at">ncol =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol type="1">
+<li>Take the sum of each row of <code>M1</code></li>
+<li>Create a new matrix called <code>M2</code> that is <code>M1</code> with the diagonal elements replaced by 0s</li>
+<li>Create a new matrix called <code>M3</code> that is <code>M1</code> but with all values less than 4 replaced by -1</li>
+<li>Append the three matrices into an array with dimensions 4, 4, 3.</li>
+</ol>
+</section>
+<section id="organizing-output-from-a-statistical-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="organizing-output-from-a-statistical-analysis">Organizing output from a statistical analysis</h2>
+<p>The Palmer penguins data are available in the package <code>palmerpenguins</code>. Install the package and inspect the data called <code>palmerpenguins</code>. You can read about the data in the help file:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 8
+  species island    bill_length_mm bill_depth_mm flipper_l…¹ body_…² sex    year
+  &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;       &lt;int&gt;   &lt;int&gt; &lt;fct&gt; &lt;int&gt;
+1 Adelie  Torgersen           39.1          18.7         181    3750 male   2007
+2 Adelie  Torgersen           39.5          17.4         186    3800 fema…  2007
+3 Adelie  Torgersen           40.3          18           195    3250 fema…  2007
+4 Adelie  Torgersen           NA            NA            NA      NA &lt;NA&gt;   2007
+5 Adelie  Torgersen           36.7          19.3         193    3450 fema…  2007
+6 Adelie  Torgersen           39.3          20.6         190    3650 male   2007
+# … with abbreviated variable names ¹​flipper_length_mm, ²​body_mass_g</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>?palmerpenguins<span class="sc">-</span>package</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s do some basic analyses on this dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">by</span>(penguins<span class="sc">$</span>body_mass_g, <span class="fu">list</span>(penguins<span class="sc">$</span>sex, penguins<span class="sc">$</span>species), summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>: female
+: Adelie
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   2850    3175    3400    3369    3550    3900 
+------------------------------------------------------------ 
+: male
+: Adelie
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   3325    3800    4000    4043    4300    4775 
+------------------------------------------------------------ 
+: female
+: Chinstrap
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   2700    3362    3550    3527    3694    4150 
+------------------------------------------------------------ 
+: male
+: Chinstrap
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   3250    3731    3950    3939    4100    4800 
+------------------------------------------------------------ 
+: female
+: Gentoo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   3950    4462    4700    4680    4875    5200 
+------------------------------------------------------------ 
+: male
+: Gentoo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   4750    5300    5500    5485    5700    6300 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>massfit <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> sex <span class="sc">*</span> species, <span class="at">data =</span> penguins)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(massfit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = body_mass_g ~ sex * species, data = penguins)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-827.21 -213.97   11.03  206.51  861.03 
+
+Coefficients:
+                         Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)               3368.84      36.21  93.030  &lt; 2e-16 ***
+sexmale                    674.66      51.21  13.174  &lt; 2e-16 ***
+speciesChinstrap           158.37      64.24   2.465  0.01420 *  
+speciesGentoo             1310.91      54.42  24.088  &lt; 2e-16 ***
+sexmale:speciesChinstrap  -262.89      90.85  -2.894  0.00406 ** 
+sexmale:speciesGentoo      130.44      76.44   1.706  0.08886 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 309.4 on 327 degrees of freedom
+  (11 observations deleted due to missingness)
+Multiple R-squared:  0.8546,    Adjusted R-squared:  0.8524 
+F-statistic: 384.3 on 5 and 327 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(body_mass_g <span class="sc">~</span> sex <span class="sc">*</span> species, <span class="at">data =</span> penguins, </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"slateblue"</span>, <span class="st">"salmon"</span>), <span class="dv">3</span>))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">fill =</span> <span class="fu">c</span>(<span class="st">"slateblue"</span>, <span class="st">"salmon"</span>), </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Female"</span>, <span class="st">"Male"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="data-structures_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Inspect the <code>massfit</code> object. What type of data structure is it, and what does it contain?</p>
+<p>You are planning a publication about the association/interaction between species and sex on body mass. The paper will include descriptive statistics, statistical inference, and some figures. You will likely present the results at a conference or in a lab meeting.</p>
+<ol type="1">
+<li>What are some different approaches to save the results?</li>
+<li>Discuss the pros and cons of your suggested approaches.</li>
+</ol>
+<section id="stop-and-think" class="level4 alert alert-info">
+<h4 class="alert alert-info anchored" data-anchor-id="stop-and-think">Stop and think</h4>
+<p>How do you plan to use the statistical output, immediately and in the future? Thinking about this question helps guide what and how I will store output from an analysis.</p>
+<ul>
+<li>Will I read the data into another program before putting it into tables for my paper?</li>
+<li>Is it a result of a computation that takes a long time to run that will be used in subsequent analyses?</li>
+<li>What about figures?</li>
+</ul>
+</section>
+</section>
+<section id="working-with-data-using-different-structures" class="level2">
+<h2 class="anchored" data-anchor-id="working-with-data-using-different-structures">Working with data using different structures</h2>
+<p>The <code>penguins</code> data is stored as a <em>tibble</em>, which is a special type of data structure that is an enhanced data frame. That is, a tibble is still a data.frame, but it is also more than that.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(penguins) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "tbl_df"     "tbl"        "data.frame"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.data.frame</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is_tibble</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<section id="try-it-yourself" class="level3 alert alert-warning">
+<h3 class="alert alert-warning anchored" data-anchor-id="try-it-yourself">Try it yourself</h3>
+<p>There are other packages out there that enhance data frames. In this exercise we will introduce and compare base data frames, data.tables, and tibbles. For these you will need the <code>tibble</code>, <code>dplyr</code>, and <code>data.table</code> packages.</p>
+<p>If you have used any of these before, try one of the others. Read the help files and try out some other functions.</p>
+</section>
+<section id="code" class="level3">
+<h3 class="anchored" data-anchor-id="code">Code</h3>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Base R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">tibble/dplyr</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">data.table</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">max.print =</span> <span class="dv">48</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>peng_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(penguins)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(peng_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "data.frame"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="do">## subset</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(peng_df, <span class="sc">!</span><span class="fu">is.na</span>(body_mass_g))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  species    island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+1  Adelie Torgersen           39.1          18.7               181        3750
+2  Adelie Torgersen           39.5          17.4               186        3800
+3  Adelie Torgersen           40.3          18.0               195        3250
+5  Adelie Torgersen           36.7          19.3               193        3450
+6  Adelie Torgersen           39.3          20.6               190        3650
+7  Adelie Torgersen           38.9          17.8               181        3625
+     sex year
+1   male 2007
+2 female 2007
+3 female 2007
+5 female 2007
+6   male 2007
+7 female 2007
+ [ reached 'max' / getOption("max.print") -- omitted 336 rows ]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(peng_df, sex <span class="sc">==</span> <span class="st">"male"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   species    island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+1   Adelie Torgersen           39.1          18.7               181        3750
+6   Adelie Torgersen           39.3          20.6               190        3650
+8   Adelie Torgersen           39.2          19.6               195        4675
+14  Adelie Torgersen           38.6          21.2               191        3800
+15  Adelie Torgersen           34.6          21.1               198        4400
+18  Adelie Torgersen           42.5          20.7               197        4500
+    sex year
+1  male 2007
+6  male 2007
+8  male 2007
+14 male 2007
+15 male 2007
+18 male 2007
+ [ reached 'max' / getOption("max.print") -- omitted 162 rows ]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>peng_df[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  species    island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+1  Adelie Torgersen           39.1          18.7               181        3750
+2  Adelie Torgersen           39.5          17.4               186        3800
+3  Adelie Torgersen           40.3          18.0               195        3250
+4  Adelie Torgersen             NA            NA                NA          NA
+5  Adelie Torgersen           36.7          19.3               193        3450
+6  Adelie Torgersen           39.3          20.6               190        3650
+     sex year
+1   male 2007
+2 female 2007
+3 female 2007
+4   &lt;NA&gt; 2007
+5 female 2007
+6   male 2007</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="do">## sort</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>peng_df[<span class="fu">order</span>(peng_df<span class="sc">$</span>year), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  species    island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+1  Adelie Torgersen           39.1          18.7               181        3750
+2  Adelie Torgersen           39.5          17.4               186        3800
+3  Adelie Torgersen           40.3          18.0               195        3250
+4  Adelie Torgersen             NA            NA                NA          NA
+5  Adelie Torgersen           36.7          19.3               193        3450
+6  Adelie Torgersen           39.3          20.6               190        3650
+     sex year
+1   male 2007
+2 female 2007
+3 female 2007
+4   &lt;NA&gt; 2007
+5 female 2007
+6   male 2007
+ [ reached 'max' / getOption("max.print") -- omitted 338 rows ]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>peng_df[<span class="fu">order</span>(peng_df<span class="sc">$</span>year, <span class="at">decreasing =</span> <span class="cn">TRUE</span>), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    species island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+101  Adelie Biscoe           35.0          17.9               192        3725
+102  Adelie Biscoe           41.0          20.0               203        4725
+103  Adelie Biscoe           37.7          16.0               183        3075
+104  Adelie Biscoe           37.8          20.0               190        4250
+105  Adelie Biscoe           37.9          18.6               193        2925
+106  Adelie Biscoe           39.7          18.9               184        3550
+       sex year
+101 female 2009
+102   male 2009
+103 female 2009
+104   male 2009
+105 female 2009
+106   male 2009
+ [ reached 'max' / getOption("max.print") -- omitted 338 rows ]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="do">## select columns</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>peng_df[<span class="fu">c</span>(<span class="st">"species"</span>, <span class="st">"sex"</span>, <span class="st">"year"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   species    sex year
+1   Adelie   male 2007
+2   Adelie female 2007
+3   Adelie female 2007
+4   Adelie   &lt;NA&gt; 2007
+5   Adelie female 2007
+6   Adelie   male 2007
+7   Adelie female 2007
+8   Adelie   male 2007
+9   Adelie   &lt;NA&gt; 2007
+10  Adelie   &lt;NA&gt; 2007
+11  Adelie   &lt;NA&gt; 2007
+12  Adelie   &lt;NA&gt; 2007
+13  Adelie female 2007
+14  Adelie   male 2007
+15  Adelie   male 2007
+16  Adelie female 2007
+ [ reached 'max' / getOption("max.print") -- omitted 328 rows ]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>peng_df[<span class="fu">grep</span>(<span class="st">"^bill"</span>, <span class="fu">names</span>(peng_df), <span class="at">value =</span> <span class="cn">TRUE</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   bill_length_mm bill_depth_mm
+1            39.1          18.7
+2            39.5          17.4
+3            40.3          18.0
+4              NA            NA
+5            36.7          19.3
+6            39.3          20.6
+7            38.9          17.8
+8            39.2          19.6
+9            34.1          18.1
+10           42.0          20.2
+11           37.8          17.1
+12           37.8          17.3
+13           41.1          17.6
+14           38.6          21.2
+15           34.6          21.1
+16           36.6          17.8
+17           38.7          19.0
+18           42.5          20.7
+19           34.4          18.4
+20           46.0          21.5
+21           37.8          18.3
+22           37.7          18.7
+23           35.9          19.2
+24           38.2          18.1
+ [ reached 'max' / getOption("max.print") -- omitted 320 rows ]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(peng_df, <span class="at">select =</span> bill_length_mm<span class="sc">:</span>body_mass_g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+1            39.1          18.7               181        3750
+2            39.5          17.4               186        3800
+3            40.3          18.0               195        3250
+4              NA            NA                NA          NA
+5            36.7          19.3               193        3450
+6            39.3          20.6               190        3650
+7            38.9          17.8               181        3625
+8            39.2          19.6               195        4675
+9            34.1          18.1               193        3475
+10           42.0          20.2               190        4250
+11           37.8          17.1               186        3300
+12           37.8          17.3               180        3700
+ [ reached 'max' / getOption("max.print") -- omitted 332 rows ]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="do">## create new columns</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>peng_df<span class="sc">$</span>bill_ratio <span class="ot">&lt;-</span> <span class="fu">with</span>(peng_df, bill_length_mm <span class="sc">/</span> bill_depth_mm)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>peng_df <span class="ot">&lt;-</span> <span class="fu">within</span>(peng_df, {</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  bill_ratio <span class="ot">&lt;-</span> bill_length_mm <span class="sc">/</span> bill_depth_mm</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co">#or</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>peng_df <span class="ot">&lt;-</span> <span class="fu">transform</span>(peng_df, <span class="at">bill_ratio =</span> bill_length_mm <span class="sc">/</span> bill_depth_mm)</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="co"># reorder</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>peng_df[<span class="fu">c</span>(<span class="st">"species"</span>, <span class="st">"island"</span>, <span class="st">"bill_length_mm"</span>, </span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"bill_depth_mm"</span>, <span class="st">"bill_ratio"</span>, <span class="st">"flipper_length_mm"</span>, </span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"body_mass_g"</span>, <span class="st">"sex"</span>, <span class="st">"year"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  species    island bill_length_mm bill_depth_mm bill_ratio flipper_length_mm
+1  Adelie Torgersen           39.1          18.7   2.090909               181
+2  Adelie Torgersen           39.5          17.4   2.270115               186
+3  Adelie Torgersen           40.3          18.0   2.238889               195
+4  Adelie Torgersen             NA            NA         NA                NA
+5  Adelie Torgersen           36.7          19.3   1.901554               193
+  body_mass_g    sex year
+1        3750   male 2007
+2        3800 female 2007
+3        3250 female 2007
+4          NA   &lt;NA&gt; 2007
+5        3450 female 2007
+ [ reached 'max' / getOption("max.print") -- omitted 339 rows ]</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>Tibble is often paired with <code>dplyr</code>, which is another package for data manipulation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="do">## subset</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins, <span class="sc">!</span><span class="fu">is.na</span>(body_mass_g))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 342 × 8
+   species island    bill_length_mm bill_depth_mm flipper_…¹ body_…² sex    year
+   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;      &lt;int&gt;   &lt;int&gt; &lt;fct&gt; &lt;int&gt;
+ 1 Adelie  Torgersen           39.1          18.7        181    3750 male   2007
+ 2 Adelie  Torgersen           39.5          17.4        186    3800 fema…  2007
+ 3 Adelie  Torgersen           40.3          18          195    3250 fema…  2007
+ 4 Adelie  Torgersen           36.7          19.3        193    3450 fema…  2007
+ 5 Adelie  Torgersen           39.3          20.6        190    3650 male   2007
+ 6 Adelie  Torgersen           38.9          17.8        181    3625 fema…  2007
+ 7 Adelie  Torgersen           39.2          19.6        195    4675 male   2007
+ 8 Adelie  Torgersen           34.1          18.1        193    3475 &lt;NA&gt;   2007
+ 9 Adelie  Torgersen           42            20.2        190    4250 &lt;NA&gt;   2007
+10 Adelie  Torgersen           37.8          17.1        186    3300 &lt;NA&gt;   2007
+# … with 332 more rows, and abbreviated variable names ¹​flipper_length_mm,
+#   ²​body_mass_g
+# ℹ Use `print(n = ...)` to see more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins, sex <span class="sc">==</span> <span class="st">"male"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 168 × 8
+   species island    bill_length_mm bill_depth_mm flipper_…¹ body_…² sex    year
+   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;      &lt;int&gt;   &lt;int&gt; &lt;fct&gt; &lt;int&gt;
+ 1 Adelie  Torgersen           39.1          18.7        181    3750 male   2007
+ 2 Adelie  Torgersen           39.3          20.6        190    3650 male   2007
+ 3 Adelie  Torgersen           39.2          19.6        195    4675 male   2007
+ 4 Adelie  Torgersen           38.6          21.2        191    3800 male   2007
+ 5 Adelie  Torgersen           34.6          21.1        198    4400 male   2007
+ 6 Adelie  Torgersen           42.5          20.7        197    4500 male   2007
+ 7 Adelie  Torgersen           46            21.5        194    4200 male   2007
+ 8 Adelie  Biscoe              37.7          18.7        180    3600 male   2007
+ 9 Adelie  Biscoe              38.2          18.1        185    3950 male   2007
+10 Adelie  Biscoe              38.8          17.2        180    3800 male   2007
+# … with 158 more rows, and abbreviated variable names ¹​flipper_length_mm,
+#   ²​body_mass_g
+# ℹ Use `print(n = ...)` to see more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slice</span>(penguins, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 8
+  species island    bill_length_mm bill_depth_mm flipper_l…¹ body_…² sex    year
+  &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;       &lt;int&gt;   &lt;int&gt; &lt;fct&gt; &lt;int&gt;
+1 Adelie  Torgersen           39.1          18.7         181    3750 male   2007
+2 Adelie  Torgersen           39.5          17.4         186    3800 fema…  2007
+3 Adelie  Torgersen           40.3          18           195    3250 fema…  2007
+4 Adelie  Torgersen           NA            NA            NA      NA &lt;NA&gt;   2007
+5 Adelie  Torgersen           36.7          19.3         193    3450 fema…  2007
+6 Adelie  Torgersen           39.3          20.6         190    3650 male   2007
+# … with abbreviated variable names ¹​flipper_length_mm, ²​body_mass_g</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="do">## sort</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(penguins, year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 344 × 8
+   species island    bill_length_mm bill_depth_mm flipper_…¹ body_…² sex    year
+   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;      &lt;int&gt;   &lt;int&gt; &lt;fct&gt; &lt;int&gt;
+ 1 Adelie  Torgersen           39.1          18.7        181    3750 male   2007
+ 2 Adelie  Torgersen           39.5          17.4        186    3800 fema…  2007
+ 3 Adelie  Torgersen           40.3          18          195    3250 fema…  2007
+ 4 Adelie  Torgersen           NA            NA           NA      NA &lt;NA&gt;   2007
+ 5 Adelie  Torgersen           36.7          19.3        193    3450 fema…  2007
+ 6 Adelie  Torgersen           39.3          20.6        190    3650 male   2007
+ 7 Adelie  Torgersen           38.9          17.8        181    3625 fema…  2007
+ 8 Adelie  Torgersen           39.2          19.6        195    4675 male   2007
+ 9 Adelie  Torgersen           34.1          18.1        193    3475 &lt;NA&gt;   2007
+10 Adelie  Torgersen           42            20.2        190    4250 &lt;NA&gt;   2007
+# … with 334 more rows, and abbreviated variable names ¹​flipper_length_mm,
+#   ²​body_mass_g
+# ℹ Use `print(n = ...)` to see more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(penguins, <span class="fu">desc</span>(year))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 344 × 8
+   species island bill_length_mm bill_depth_mm flipper_len…¹ body_…² sex    year
+   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;         &lt;int&gt;   &lt;int&gt; &lt;fct&gt; &lt;int&gt;
+ 1 Adelie  Biscoe           35            17.9           192    3725 fema…  2009
+ 2 Adelie  Biscoe           41            20             203    4725 male   2009
+ 3 Adelie  Biscoe           37.7          16             183    3075 fema…  2009
+ 4 Adelie  Biscoe           37.8          20             190    4250 male   2009
+ 5 Adelie  Biscoe           37.9          18.6           193    2925 fema…  2009
+ 6 Adelie  Biscoe           39.7          18.9           184    3550 male   2009
+ 7 Adelie  Biscoe           38.6          17.2           199    3750 fema…  2009
+ 8 Adelie  Biscoe           38.2          20             190    3900 male   2009
+ 9 Adelie  Biscoe           38.1          17             181    3175 fema…  2009
+10 Adelie  Biscoe           43.2          19             197    4775 male   2009
+# … with 334 more rows, and abbreviated variable names ¹​flipper_length_mm,
+#   ²​body_mass_g
+# ℹ Use `print(n = ...)` to see more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="do">## select columns</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, species, sex, year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 344 × 3
+   species sex     year
+   &lt;fct&gt;   &lt;fct&gt;  &lt;int&gt;
+ 1 Adelie  male    2007
+ 2 Adelie  female  2007
+ 3 Adelie  female  2007
+ 4 Adelie  &lt;NA&gt;    2007
+ 5 Adelie  female  2007
+ 6 Adelie  male    2007
+ 7 Adelie  female  2007
+ 8 Adelie  male    2007
+ 9 Adelie  &lt;NA&gt;    2007
+10 Adelie  &lt;NA&gt;    2007
+# … with 334 more rows
+# ℹ Use `print(n = ...)` to see more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, <span class="fu">starts_with</span>(<span class="st">"bill"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 344 × 2
+   bill_length_mm bill_depth_mm
+            &lt;dbl&gt;         &lt;dbl&gt;
+ 1           39.1          18.7
+ 2           39.5          17.4
+ 3           40.3          18  
+ 4           NA            NA  
+ 5           36.7          19.3
+ 6           39.3          20.6
+ 7           38.9          17.8
+ 8           39.2          19.6
+ 9           34.1          18.1
+10           42            20.2
+# … with 334 more rows
+# ℹ Use `print(n = ...)` to see more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, bill_length_mm<span class="sc">:</span>body_mass_g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 344 × 4
+   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+            &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+ 1           39.1          18.7               181        3750
+ 2           39.5          17.4               186        3800
+ 3           40.3          18                 195        3250
+ 4           NA            NA                  NA          NA
+ 5           36.7          19.3               193        3450
+ 6           39.3          20.6               190        3650
+ 7           38.9          17.8               181        3625
+ 8           39.2          19.6               195        4675
+ 9           34.1          18.1               193        3475
+10           42            20.2               190        4250
+# … with 334 more rows
+# ℹ Use `print(n = ...)` to see more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="do">## create new columns</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(penguins, <span class="at">bill_ratio =</span> bill_length_mm <span class="sc">/</span> bill_depth_mm) <span class="sc">|&gt;</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"bill"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 344 × 3
+   bill_length_mm bill_depth_mm bill_ratio
+            &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;
+ 1           39.1          18.7       2.09
+ 2           39.5          17.4       2.27
+ 3           40.3          18         2.24
+ 4           NA            NA        NA   
+ 5           36.7          19.3       1.90
+ 6           39.3          20.6       1.91
+ 7           38.9          17.8       2.19
+ 8           39.2          19.6       2   
+ 9           34.1          18.1       1.88
+10           42            20.2       2.08
+# … with 334 more rows
+# ℹ Use `print(n = ...)` to see more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(penguins, <span class="at">bill_ratio =</span> bill_length_mm <span class="sc">/</span> bill_depth_mm) <span class="sc">|&gt;</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(bill_ratio, <span class="at">.after =</span> bill_depth_mm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 344 × 9
+   species island    bill_length_mm bill_d…¹ bill_…² flipp…³ body_…⁴ sex    year
+   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt; &lt;fct&gt; &lt;int&gt;
+ 1 Adelie  Torgersen           39.1     18.7    2.09     181    3750 male   2007
+ 2 Adelie  Torgersen           39.5     17.4    2.27     186    3800 fema…  2007
+ 3 Adelie  Torgersen           40.3     18      2.24     195    3250 fema…  2007
+ 4 Adelie  Torgersen           NA       NA     NA         NA      NA &lt;NA&gt;   2007
+ 5 Adelie  Torgersen           36.7     19.3    1.90     193    3450 fema…  2007
+ 6 Adelie  Torgersen           39.3     20.6    1.91     190    3650 male   2007
+ 7 Adelie  Torgersen           38.9     17.8    2.19     181    3625 fema…  2007
+ 8 Adelie  Torgersen           39.2     19.6    2        195    4675 male   2007
+ 9 Adelie  Torgersen           34.1     18.1    1.88     193    3475 &lt;NA&gt;   2007
+10 Adelie  Torgersen           42       20.2    2.08     190    4250 &lt;NA&gt;   2007
+# … with 334 more rows, and abbreviated variable names ¹​bill_depth_mm,
+#   ²​bill_ratio, ³​flipper_length_mm, ⁴​body_mass_g
+# ℹ Use `print(n = ...)` to see more rows</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'data.table'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:dplyr':
+
+    between, first, last</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>peng_dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(penguins)</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="do">## subset</span></span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>peng_dt[<span class="sc">!</span><span class="fu">is.na</span>(body_mass_g)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       species    island bill_length_mm bill_depth_mm flipper_length_mm
+  1:    Adelie Torgersen           39.1          18.7               181
+  2:    Adelie Torgersen           39.5          17.4               186
+  3:    Adelie Torgersen           40.3          18.0               195
+  4:    Adelie Torgersen           36.7          19.3               193
+  5:    Adelie Torgersen           39.3          20.6               190
+ ---                                                                   
+     body_mass_g    sex year
+  1:        3750   male 2007
+  2:        3800 female 2007
+  3:        3250 female 2007
+  4:        3450 female 2007
+  5:        3650   male 2007
+ ---                        
+ [ reached getOption("max.print") -- omitted 5 rows ]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>peng_dt[sex <span class="sc">==</span> <span class="st">"male"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       species    island bill_length_mm bill_depth_mm flipper_length_mm
+  1:    Adelie Torgersen           39.1          18.7               181
+  2:    Adelie Torgersen           39.3          20.6               190
+  3:    Adelie Torgersen           39.2          19.6               195
+  4:    Adelie Torgersen           38.6          21.2               191
+  5:    Adelie Torgersen           34.6          21.1               198
+ ---                                                                   
+     body_mass_g  sex year
+  1:        3750 male 2007
+  2:        3650 male 2007
+  3:        4675 male 2007
+  4:        3800 male 2007
+  5:        4400 male 2007
+ ---                      
+ [ reached getOption("max.print") -- omitted 5 rows ]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>peng_dt[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   species    island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+1:  Adelie Torgersen           39.1          18.7               181        3750
+2:  Adelie Torgersen           39.5          17.4               186        3800
+3:  Adelie Torgersen           40.3          18.0               195        3250
+4:  Adelie Torgersen             NA            NA                NA          NA
+5:  Adelie Torgersen           36.7          19.3               193        3450
+6:  Adelie Torgersen           39.3          20.6               190        3650
+      sex year
+1:   male 2007
+2: female 2007
+3: female 2007
+4:   &lt;NA&gt; 2007
+5: female 2007
+6:   male 2007</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="do">## sort</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setorder</span>(peng_dt, year) <span class="co"># doesn't return anything but modifies the table</span></span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>peng_dt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       species    island bill_length_mm bill_depth_mm flipper_length_mm
+  1:    Adelie Torgersen           39.1          18.7               181
+  2:    Adelie Torgersen           39.5          17.4               186
+  3:    Adelie Torgersen           40.3          18.0               195
+  4:    Adelie Torgersen             NA            NA                NA
+  5:    Adelie Torgersen           36.7          19.3               193
+ ---                                                                   
+     body_mass_g    sex year
+  1:        3750   male 2007
+  2:        3800 female 2007
+  3:        3250 female 2007
+  4:          NA   &lt;NA&gt; 2007
+  5:        3450 female 2007
+ ---                        
+ [ reached getOption("max.print") -- omitted 5 rows ]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setorder</span>(peng_dt, <span class="sc">-</span>year)</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>peng_dt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       species island bill_length_mm bill_depth_mm flipper_length_mm
+  1:    Adelie Biscoe           35.0          17.9               192
+  2:    Adelie Biscoe           41.0          20.0               203
+  3:    Adelie Biscoe           37.7          16.0               183
+  4:    Adelie Biscoe           37.8          20.0               190
+  5:    Adelie Biscoe           37.9          18.6               193
+ ---                                                                
+     body_mass_g    sex year
+  1:        3725 female 2009
+  2:        4725   male 2009
+  3:        3075 female 2009
+  4:        4250   male 2009
+  5:        2925 female 2009
+ ---                        
+ [ reached getOption("max.print") -- omitted 5 rows ]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="do">## select columns</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>peng_dt[, .(species, sex, year)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       species    sex year
+  1:    Adelie female 2009
+  2:    Adelie   male 2009
+  3:    Adelie female 2009
+  4:    Adelie   male 2009
+  5:    Adelie female 2009
+ ---                      
+340: Chinstrap   male 2007
+341: Chinstrap female 2007
+342: Chinstrap   male 2007
+343: Chinstrap female 2007
+344: Chinstrap   male 2007</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>peng_dt[, <span class="fu">grep</span>(<span class="st">"^bill"</span>, <span class="fu">names</span>(peng_dt)), with <span class="ot">=</span> <span class="cn">FALSE</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     bill_length_mm bill_depth_mm
+  1:           35.0          17.9
+  2:           41.0          20.0
+  3:           37.7          16.0
+  4:           37.8          20.0
+  5:           37.9          18.6
+ ---                             
+340:           48.5          17.5
+341:           43.2          16.6
+342:           50.6          19.4
+343:           46.7          17.9
+344:           52.0          19.0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>peng_dt[, bill_length_mm<span class="sc">:</span>body_mass_g]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+  1:           35.0          17.9               192        3725
+  2:           41.0          20.0               203        4725
+  3:           37.7          16.0               183        3075
+  4:           37.8          20.0               190        4250
+  5:           37.9          18.6               193        2925
+ ---                                                           
+340:           48.5          17.5               191        3400
+341:           43.2          16.6               187        2900
+342:           50.6          19.4               193        3800
+343:           46.7          17.9               195        3300
+344:           52.0          19.0               197        4150</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="do">## create new columns</span></span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>peng_dt[, bill_ratio <span class="sc">:</span><span class="er">=</span> bill_length_mm <span class="sc">/</span> bill_depth_mm]</span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>peng_dt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       species island bill_length_mm bill_depth_mm flipper_length_mm
+  1:    Adelie Biscoe           35.0          17.9               192
+  2:    Adelie Biscoe           41.0          20.0               203
+  3:    Adelie Biscoe           37.7          16.0               183
+  4:    Adelie Biscoe           37.8          20.0               190
+  5:    Adelie Biscoe           37.9          18.6               193
+     body_mass_g    sex year bill_ratio
+  1:        3725 female 2009   1.955307
+  2:        4725   male 2009   2.050000
+  3:        3075 female 2009   2.356250
+  4:        4250   male 2009   1.890000
+  5:        2925 female 2009   2.037634
+ [ reached getOption("max.print") -- omitted 6 rows ]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># transform but doesn't modify the dt</span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>peng_dt[, .(<span class="at">bill_ratio =</span> bill_length_mm <span class="sc">/</span> bill_depth_mm)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     bill_ratio
+  1:   1.955307
+  2:   2.050000
+  3:   2.356250
+  4:   1.890000
+  5:   2.037634
+ ---           
+340:   2.771429
+341:   2.602410
+342:   2.608247
+343:   2.608939
+344:   2.736842</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># returns a vector</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>peng_dt[, (<span class="at">bill_ratio =</span> bill_length_mm <span class="sc">/</span> bill_depth_mm)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 1.955307 2.050000 2.356250 1.890000 2.037634 2.100529 2.244186 1.910000
+ [9] 2.241176 2.273684 2.309091 2.246305 2.242938 2.164103 1.913043 2.333333
+[17] 2.270588 1.819512 2.100000 2.209677 2.104651 1.904040 2.364706 2.237838
+[25] 2.213836 2.136842 2.204545 2.267760 2.280702 2.450000 2.150838 2.244792
+[33] 1.989189 2.027027 2.164773 2.348571 2.034286 2.000000 2.242424 2.217877
+[41] 2.350877 2.360465 2.070968 2.394118 2.220238 2.085561 2.107527 1.989130
+ [ reached getOption("max.print") -- omitted 296 entries ]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reorder columns</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="fu">setcolorder</span>(peng_dt, <span class="fu">c</span>(<span class="st">"species"</span>, <span class="st">"island"</span>, <span class="st">"bill_length_mm"</span>, </span>
+<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"bill_depth_mm"</span>, <span class="st">"bill_ratio"</span>))</span>
+<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a>peng_dt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       species island bill_length_mm bill_depth_mm bill_ratio flipper_length_mm
+  1:    Adelie Biscoe           35.0          17.9   1.955307               192
+  2:    Adelie Biscoe           41.0          20.0   2.050000               203
+  3:    Adelie Biscoe           37.7          16.0   2.356250               183
+  4:    Adelie Biscoe           37.8          20.0   1.890000               190
+  5:    Adelie Biscoe           37.9          18.6   2.037634               193
+     body_mass_g    sex year
+  1:        3725 female 2009
+  2:        4725   male 2009
+  3:        3075 female 2009
+  4:        4250   male 2009
+  5:        2925 female 2009
+ [ reached getOption("max.print") -- omitted 6 rows ]</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="notes" class="level3">
+<h3 class="anchored" data-anchor-id="notes">Notes</h3>
+<p>In the above we used the function <code>grep("^bill", names(penguins))</code>. The first string is called a ‘regular expression’, and in this case <code>"^bill"</code> can be translated to “starts with bill”. This defines a pattern that is checked against the <code>names(penguins)</code> which contains species, island, bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, sex, year. Which column names match the pattern?</p>
+<p><a href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/regex.html">Regular expressions</a> are very flexible in terms of how you can define patterns. We will use them again in more depth when we talk about working with character data.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

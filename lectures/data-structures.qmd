@@ -22,7 +22,7 @@ execute:
 
 > "Bad programmers worry about the code. Good programmers worry about data structures and their relationships."
 
-- Linus Torvalds, creator of Linux
+Linus Torvalds, creator of Linux
 
 ## Types of data
 
@@ -36,6 +36,8 @@ factor("low", levels = c("low", "med", "high"))
 as.Date("2022-05-11", format = "%Y-%m-%d")
 NULL
 ```
+
+
 
 ## Vectors
 
@@ -51,6 +53,23 @@ rep(TRUE, times = 5)
 x <- 1:4
 names(x) <- c("a", "b", "c", "d")
 x
+```
+
+
+## Missing and empty/null values
+
+`NA` for missing, and note that this has a data type. 
+
+`NaN` for "not a number", e.g., `0 / 0`
+
+`NULL` is empty, and has 0 length
+
+```{r}
+c(NA, 1) ## different from the next line
+c(NA, "a")
+
+c(NULL, "a")
+list(NULL, NULL, 1:3)
 ```
 
 
@@ -139,33 +158,420 @@ c(xl, AB = LETTERS[1:2]) # careful!
 
 ## Matrices
 
+Just like in math, R matrices are like vectors that have 2 dimensions, and are indexed also by square brackets.
+
+There are lots of matrix manipulation functions in base R
+
+```{r}
+M1 <- matrix(1:12, nrow = 3, ncol = 4)
+M1
+M2 <- matrix(1:12, nrow = 3, ncol = 4, 
+       dimnames = list(letters[1:3], LETTERS[1:4]))
+M2
+
+diag(M1)
+lower.tri(M1)
+row(M1)
+col(M2)
+
+diag(3) %*% M1
+```
+
+
 ## Indexing matrices
 
+Using square brackets, we get a single value by using two numbers or names separated by a comma: 
+
+```{r}
+M1[2, 3]
+M2["b", "C"]
+```
+
+A missing index means "everything", so this returns a vector
+```{r}
+M1[2,]
+
+## if you want the result to be a matrix (with 1 row)
+M1[2, , drop = FALSE]
+```
+
+Can also use a logical matrix or numeric as a single index
+```{r}
+M1[M1 < 7] ## but this returns a vector
+M1[M1 < 7] <- 0 ## when used with assignment, the matrix is preserved
+M1
+```
+
+Index matrices are convenient but hard to understand
+
+Before we used a single index for each dimension: 
+```{r}
+M2[1, 3]
+M2[2, 1]
+M2[3, 4]
+```
+
+If we create a series of paired single indices, and store them in a matrix with 2 columns, we can use that matrix as an index: 
+
+```{r}
+imat <- rbind(c(1, 3), 
+              c(2, 1), 
+              c(3, 4))
+imat
+M2[imat]
+M2[imat] <- NA
+M2
+```
+
+
 ## Matrix arithmetic
+
+Matrix transpose, multiplication, inversion, eigenvalues, etc, are all available in R
+
+```{r}
+S1 <- matrix(runif(9), nrow = 3, ncol = 3)
+S2 <- matrix(runif(9), nrow = 3, ncol = 3)
+x <- c(1, 1.5, 3)
+
+S1 %*% S2
+t(S1) %*% S2
+x %*% solve(S1) %*% x
+```
 
 
 ## Arrays
 
+Arrays are like matrices, but with more dimensions. A matrix is an array with 2 dimensions. Arrays can have more than 2 dimensions. 
+
+
+The data gets filled in by the first dimension, then the second, then the third, ...
+
+```{r}
+A1 <- array(1:32, dim = c(4, 4, 2))
+A1
+```
+
+The data also get "unrolled" in the same way. 
+
+```{r}
+c(A1)
+```
+
+Indexing works like it does with matrices:
+
+```{r}
+A1[2, 4, 2] # value
+A1[2, 4, ] # vector
+A1[, , 2] # matrix
+
+A1[, , 2, drop = FALSE] ## still an array
+
+i3 <- rbind(c(2, 4, 2), 
+            c(2, 4, 1), 
+            c(3, 2, 1))
+
+A1[i3]
+```
+
 ## Data frames
 
-## Indexing data frames
+Data frames look like matrices, but the columns can be different data types: 
+
+```{r}
+d1 <- data.frame(logical = c(FALSE, TRUE, FALSE), 
+                 numeric = c(1, 2, 3), 
+                 char = c("a", "b", "c"))
+d1
+d1[, "char"]
+d1[, "numeric"]
+```
+
+While they look like matrices, they act more like lists: 
+
+```{r}
+d1$numeric
+d1[["char"]]
+d1[[1]]
+names(d1)
+d1$missing <- c(NA, NA, NA)
+d1
+```
+
+
+## Indexing and manipulating data frames
+
+Multiple ways to refer to a particular column: 
+
+```{r}
+d1$numeric
+d1[["numeric"]]
+d1[, "numeric"]
+d1[, 2]
+d1[[2]]
+```
+
+Subsetting
+
+```{r}
+subset(d1, logical == TRUE) ## knows where to find logical
+d1[d1$numeric <= 2, ] ## need to tell it that numeric is in d1
+```
+
+Manipulation
+
+```{r}
+#| error: true
+d1$numeric.squared <- d1$numeric^2
+d1
+
+d1 <- within(d1, {
+  numeric.cubed <- numeric^3
+  not.logical <- !logical
+})
+d1
+
+with(d1, {
+  
+  sqrt(numeric)
+  
+})
+
+attach(d1) ## this is like a global with/within
+### many texts recommend not using attach
+
+numeric
+!logical
+
+numeric.squared
+og.num <- sqrt(numeric.squared) ## this does not work like within
+
+detach(d1)
+og.num ## still here
+numeric.squared ## not attached anymore
+
+```
+
+
+# Two important data gotchas
 
 ## Coercion
 
+Coercion is what happens when two different types of data meet during an operation. In order to perform the operation, one of the data types may need to be coerced into the other data type. This can also be done explicitly using the `as.` family of functions. 
 
-# Special structures
+Examples
+```{r}
+c(FALSE, TRUE, FALSE) * 1.0
+1 - c(FALSE, TRUE)
+as.logical(1 - c(FALSE, TRUE))
+
+paste("A", 1:4, sep = "_")
+```
+
+This is useful sometimes, other times it can cause problems: 
+```{r}
+as.numeric(c("1.35", "2.5", "<.01"))
+```
+
+## Recycling
+
+Vector and array arithmetic works elementwise, as long as the things have the same dimension. 
+
+If not, the shorter one is sometimes _recycled_ to match the larger dimension thing
+
+```{r}
+c(1, 2) * c(1:6)
+c(1, 2) * c(1:5)
+```
+
+I often make this mistake when calculating proportions from a table: 
+```{r}
+t1 <- table(mtcars$cyl, mtcars$gear)
+t1
+## I want column proportions
+t1 / colSums(t1)  ## this is wrong because of recycling rowwise
+
+## create matrix of the same dimensions
+t1 / rbind(colSums(t1), colSums(t1), colSums(t1))
+
+## or use a built-in function
+proportions(t1, margin = 2)
+```
+
+
+# Special data structures
 
 ## Environments -- how does R find things?
 
+An environment is kind of like a list, it contains a number of arbitrary objects. 
+
+The _global environment_ is a special one, look at the upper right pane of Rstudio, or run
+
+```{r}
+## all of the objects in the global environment
+ls()
+```
+
+When you type a name in the console, it will first look for it in the global environment. If it cannot find it there, it will then look in the attached packages. 
+
+We will come back to environments when we talk about functions. 
+
 ## Packages
+
+Add on packages can be installed from a few different places, CRAN, Bioconductor, github, R-forge, and locally from package files. 
+
+They are installed to your system with `install.packages("pkgname")`
+
+When you use `library("pkgname")`, the package is _attached_, so that objects in the package can be found just by typing the name:
+
+```{r}
+library(palmerpenguins)
+penguins
+```
+
+You can use objects from packages without attaching them with `::` (two colons)
+
+```{r}
+head(survival::aml)
+```
+
+and you can get internal objects from a package with `:::` (three colons)
+
+```{r}
+#| error: true
+library(survival)
+plot.aareg ## error
+
+head(survival:::plot.aareg) ## finds it
+```
 
 ## S4 objects
 
+Some packages you may use (e.g., from Bioconductor) return _S4 objects_. These are kind of like lists, but to access objects (called 'slots') inside, use `@` (the at symbol). 
+
+For example
+
+```{r}
+## A simple class with two slots
+track <- setClass("track", slots = c(x="numeric", y="numeric"))
+## an object from the class
+ts1 <- track(x = 1:10, y = 1:10 + rnorm(10))
+ts1
+ts1@x
+```
+
+
+
 ## Tibbles
+
+Tibbles (cute name for 'table') are data frames with enhanced printing. 
+
+```{r}
+library(tibble)
+library(palmerpenguins)
+class(penguins)
+
+penguins
+``` 
+
+You can convert a regular data.frame to a tibble
+```{r}
+mttbl <- as_tibble(mtcars)
+mttbl
+```
+
+The indexing behavior is slightly different from data frames: 
+
+```{r}
+mttbl[, "mpg"] ## still a tibble
+mtcars[, "mpg"]
+
+mttbl[["mpg"]] ## gives a vector
+mttbl$mpg ## same as data.frame
+```
+
+
+
 
 ## data.tables
 
+`data.table` is a package that provides another data.frame extension. 
+
+It has many features for data manipulation and management with a focus on __speed__, both typing and computer speed for large datasets. 
+
+There is a special syntax for indexing and merging using square brackets, we will come back to this (because it is my favorite tool for data management)
+
+```{r}
+library(data.table)
+
+mtdt <- data.table(mtcars)
+class(mtdt)
+head(mtdt)
+
+setkey(mtdt, "mpg")
+head(mtdt)
+
+mtdt[, .(meanwt = mean(wt)), by = .(cyl)]
+```
 
 
+# Data import and export
+
+## Reading in external data
+
+The basic functions are `read.table, read.csv, read.csv2`
+
+Via add on packages, R supports import of any data format I can think of. 
+
+The most flexible way to read in data is with the `rio` package. It guesses what the format is and uses the correct import tool (most of the time)
+
+```{r}
+library(rio)
+
+df <- import("https://github.com/leeper/rio/blob/main/inst/examples/iris.xls?raw=true")
+head(df)
+```
+
+
+## Big datasets
+
+The slowness of reading in data usually comes from format guessing. 
+
+Supplying known column types can dramatically speed up import: 
+
+```{r}
+df1 <- read.csv("https://raw.githubusercontent.com/leeper/rio/main/inst/examples/noheader.csv", 
+                header = FALSE)
+
+df1b <- read.csv("https://raw.githubusercontent.com/leeper/rio/main/inst/examples/noheader.csv", 
+                header = FALSE, 
+                colClasses = c("integer", "character", "factor", "factor", 
+                               "numeric", "numeric"))
+
+```
+
+
+`fread` from the data.table package is fast and also flexible: 
+
+```{r}
+fread("https://raw.githubusercontent.com/leeper/rio/main/inst/examples/noheader.csv", 
+      header = FALSE)
+```
+
+
+## Exporting data
+
+Most import functions have their output counterparts, e.g., `write.table, write.csv, write.csv2, fwrite`. These are useful for writing out rectangular data for use in other programs. 
+
+Another under-used way of exporting objects is to use `saveRDS`, this saves any R object to a file, which then gives you exactly the same object when read into R using `readRDS`. I use this frequently for intermediate datasets, analysis results stored in a list, and even functions. 
+
+Example
+```{r}
+lmfit <- lm(mpg ~ wt, data = mtcars)
+lmfit
+
+saveRDS(lmfit, file = "reg-ex.rds")
+
+readRDS("reg-ex.rds")
+```
 
 

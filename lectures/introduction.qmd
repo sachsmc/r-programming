@@ -2,7 +2,11 @@
 title: "Introduction and Overview"
 subtitle: "Day 1"
 author: "Michael C Sachs"
-format: revealjs
+format: 
+    revealjs:
+      scrollable: true
+execute:
+  echo: true
 ---
 
 
@@ -85,10 +89,11 @@ Through automated testing
 
 ## Overview of this course
 
+### Lectures
+
 ### Lessons
 
-- 45 minutes
-- Work through a problem together, learn tools and strategies
+Work through a problem together, learn tools and strategies
 
 #### Sticky note system
 
@@ -98,20 +103,13 @@ Through automated testing
 
 No sticky = still working
 
+Share solutions/questions/responses on padlet: 
 
----
+https://padlet.com/sachsmc/rprog
 
-### Lectures
+Course website: 
 
-- 15--30 minutes
-- Highlighting concepts, principles
-
-### Exercises
-
-- Work on your own
-- Answers shared after the course
-
-
+https://sachsmc.github.io/r-programming/
 
 ## Schedule of topics
 

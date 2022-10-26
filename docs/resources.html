@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Programming and statistical modelling in R - Lectures</title>
+<title>Programming and statistical modelling in R - Resources and tools about R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -18,24 +18,22 @@ ul.task-list{list-style: none;}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -55,39 +53,9 @@ ul.task-list{list-style: none;}
     "search-submit-button-title": "Submit"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-title','listing-subtitle',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-subtitle","listing-image","listing-description"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -96,8 +64,8 @@ ul.task-list{list-style: none;}
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="../index.html">
-    <img src="../ku-logo_400x400.png" alt="">
+      <a class="navbar-brand" href="./index.html">
+    <img src="./ku-logo_400x400.png" alt="">
     <span class="navbar-title">Programming and statistical modelling in R</span>
   </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -106,16 +74,16 @@ ul.task-list{list-style: none;}
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html">Home</a>
+    <a class="nav-link" href="./index.html">Home</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../lectures/index.html" aria-current="page">Lectures</a>
+    <a class="nav-link" href="./lectures/index.html">Lectures</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../exercises/index.html">Exercises</a>
+    <a class="nav-link" href="./exercises/index.html">Exercises</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../resources.html">Links and Resources</a>
+    <a class="nav-link active" href="./resources.html" aria-current="page">Links and Resources</a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -128,14 +96,30 @@ ul.task-list{list-style: none;}
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#cheatsheets" id="toc-cheatsheets" class="nav-link active" data-scroll-target="#cheatsheets">Cheatsheets</a>
+  <ul class="collapse">
+  <li><a href="#curated-list-of-cheatsheets" id="toc-curated-list-of-cheatsheets" class="nav-link" data-scroll-target="#curated-list-of-cheatsheets">Curated list of cheatsheets</a></li>
+  </ul></li>
+  <li><a href="#online-books" id="toc-online-books" class="nav-link" data-scroll-target="#online-books">Online books</a>
+  <ul class="collapse">
+  <li><a href="#introductory" id="toc-introductory" class="nav-link" data-scroll-target="#introductory">Introductory</a></li>
+  <li><a href="#data-analysis" id="toc-data-analysis" class="nav-link" data-scroll-target="#data-analysis">Data analysis</a></li>
+  <li><a href="#programming" id="toc-programming" class="nav-link" data-scroll-target="#programming">Programming</a></li>
+  <li><a href="#graphics-and-dynamic-documents" id="toc-graphics-and-dynamic-documents" class="nav-link" data-scroll-target="#graphics-and-dynamic-documents">Graphics and dynamic documents</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lectures</h1>
+<h1 class="title">Resources and tools about R</h1>
 </div>
 
 
@@ -149,106 +133,59 @@ ul.task-list{list-style: none;}
 
 </header>
 
+<section id="cheatsheets" class="level2">
+<h2 class="anchored" data-anchor-id="cheatsheets">Cheatsheets</h2>
+<p>Long list of cheatsheets:</p>
+<p>https://www.rstudio.com/resources/cheatsheets/</p>
+<section id="curated-list-of-cheatsheets" class="level3">
+<h3 class="anchored" data-anchor-id="curated-list-of-cheatsheets">Curated list of cheatsheets</h3>
+<ul>
+<li><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/base-r.pdf">Base R</a></li>
+<li><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/rstudio-ide.pdf">Using Rstudio</a></li>
+<li><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-transformation.pdf">Data manipulation with <code>dplyr</code></a></li>
+<li><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/datatable.pdf">Data manipulation with <code>data.table</code></a></li>
+<li><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/strings.pdf">Strings and regular expressions</a></li>
+<li><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/lubridate.pdf">Dates and times</a></li>
+<li><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf">Rmarkdown and dynamic documents</a></li>
+</ul>
+</section>
+</section>
+<section id="online-books" class="level2">
+<h2 class="anchored" data-anchor-id="online-books">Online books</h2>
+<section id="introductory" class="level3">
+<h3 class="anchored" data-anchor-id="introductory">Introductory</h3>
+<ul>
+<li><a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.html">Introduction to R, by the R core team</a></li>
+<li><a href="http://r.sund.ku.dk/">Introduction to R, by Susanne Rosthøj</a></li>
+</ul>
+</section>
+<section id="data-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="data-analysis">Data analysis</h3>
+<ul>
+<li><a href="https://r4ds.had.co.nz/">R for Data Science, by Hadley Wickham and Garret Grolemund</a></li>
+<li><a href="https://moderndive.com/">Statistical Inference via Data Science, by Chester Ismay and Albert Y. Kim</a></li>
+</ul>
+</section>
+<section id="programming" class="level3">
+<h3 class="anchored" data-anchor-id="programming">Programming</h3>
+<ul>
+<li><a href="https://rstudio-education.github.io/hopr/">Hands-On Programming with R, by Garrett Grolemund</a></li>
+<li><a href="https://adv-r.hadley.nz/">Advanced R, by Hadley Wickham</a></li>
+</ul>
+</section>
+<section id="graphics-and-dynamic-documents" class="level3">
+<h3 class="anchored" data-anchor-id="graphics-and-dynamic-documents">Graphics and dynamic documents</h3>
+<ul>
+<li><a href="https://r-graphics.org/">R Graphics Cookbook, 2nd edition, by Winston Chang</a></li>
+<li><a href="https://bookdown.org/yihui/rmarkdown/">R Markdown: The Definitive Guide, by Yihui Xie, J. J. Allaire, Garrett Grolemund</a></li>
+<li><a href="https://bookdown.org/yihui/rmarkdown-cookbook/">R Markdown Cookbook, by Yihui Xie, Christophe Dervieux, Emily Riederer</a></li>
+</ul>
 
 
+</section>
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-file-modified-sort="1666789573515" data-listing-reading-time-sort="2.38">
-<div class="body">
-<a href="../lectures/introduction.html">
-<h3 class="no-anchor listing-title">
-Introduction and Overview
-</h3>
-<div class="listing-subtitle">
-Day 1
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="../lectures/introduction.html"> </a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-listing-file-modified-sort="1663582422934" data-listing-reading-time-sort="3.275">
-<div class="body">
-<a href="../lectures/projects.html">
-<h3 class="no-anchor listing-title">
-Project organization and workflow
-</h3>
-<div class="listing-subtitle">
-Day 1, A
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="../lectures/projects.html"> </a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-listing-file-modified-sort="1666778610066" data-listing-reading-time-sort="8.745">
-<div class="body">
-<a href="../lectures/data-structures.html">
-<h3 class="no-anchor listing-title">
-Data structures in R
-</h3>
-<div class="listing-subtitle">
-Day 1, B
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="../lectures/data-structures.html"> </a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-listing-file-modified-sort="1663300828547" data-listing-reading-time-sort="0.085">
-<div class="body">
-<a href="../lectures/flow-and-loops.html">
-<h3 class="no-anchor listing-title">
-Flow control and loops
-</h3>
-<div class="listing-subtitle">
-Day 2, A
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="../lectures/flow-and-loops.html"> </a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-listing-file-modified-sort="1663300688914" data-listing-reading-time-sort="0.005">
-<div class="body">
-<a href="../lectures/functions.html">
-<h3 class="no-anchor listing-title">
-Functions
-</h3>
-<div class="listing-subtitle">
-Day 2, B
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="../lectures/functions.html"> </a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-listing-file-modified-sort="1663927328763" data-listing-reading-time-sort="0">
-<div class="body">
-<a href="../lectures/merge-reshape.html">
-<h3 class="no-anchor listing-title">
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="../lectures/merge-reshape.html"> </a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

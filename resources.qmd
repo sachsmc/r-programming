@@ -1,0 +1,44 @@
+---
+title: "Resources and tools about R"
+---
+
+## Cheatsheets
+
+Long list of cheatsheets: 
+
+https://www.rstudio.com/resources/cheatsheets/
+
+### Curated list of cheatsheets
+
+
+- [Base R](https://raw.githubusercontent.com/rstudio/cheatsheets/main/base-r.pdf)
+- [Using Rstudio](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rstudio-ide.pdf)
+- [Data manipulation with `dplyr`](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-transformation.pdf)
+- [Data manipulation with `data.table`](https://raw.githubusercontent.com/rstudio/cheatsheets/main/datatable.pdf)
+- [Strings and regular expressions](https://raw.githubusercontent.com/rstudio/cheatsheets/main/strings.pdf)
+- [Dates and times](https://raw.githubusercontent.com/rstudio/cheatsheets/main/lubridate.pdf)
+- [Rmarkdown and dynamic documents](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf)
+
+## Online books
+
+
+### Introductory
+
+- [Introduction to R, by the R core team](https://cran.r-project.org/doc/manuals/r-release/R-intro.html)
+- [Introduction to R, by Susanne Rosthøj](http://r.sund.ku.dk/)
+
+### Data analysis
+
+- [R for Data Science, by Hadley Wickham and Garret Grolemund](https://r4ds.had.co.nz/)
+- [Statistical Inference via Data Science, by Chester Ismay and Albert Y. Kim](https://moderndive.com/)
+
+### Programming
+
+- [Hands-On Programming with R, by Garrett Grolemund](https://rstudio-education.github.io/hopr/)
+- [Advanced R, by Hadley Wickham](https://adv-r.hadley.nz/)
+
+### Graphics and dynamic documents
+
+- [R Graphics Cookbook, 2nd edition, by Winston Chang](https://r-graphics.org/)
+- [R Markdown: The Definitive Guide, by Yihui Xie, J. J. Allaire, Garrett Grolemund](https://bookdown.org/yihui/rmarkdown/)
+- [R Markdown Cookbook, by Yihui Xie, Christophe Dervieux, Emily Riederer](https://bookdown.org/yihui/rmarkdown-cookbook/)

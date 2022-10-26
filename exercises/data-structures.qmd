@@ -1,0 +1,216 @@
+---
+title: "Data structures -- exercises"
+subtitle: "Day 1, B"
+author: Michael C Sachs
+description: "Understanding basic data structures in R, including vectors, arrays, lists, and data frames"
+---
+
+
+### Learning objectives {.alert .alert-success}
+
+In this lesson you will 
+
+1. Practice working with vectors and matrices
+2. Thing about ways to organize data and output into data structures
+3. Compare and contrast the base R, `data.table`, and `tibble` packages for working with data. 
+
+## Vectors and matrices
+
+The following code creates a matrix with some integers: 
+
+```{r}
+M1 <- matrix(1:16, nrow = 4, ncol = 4)
+```
+
+1. Take the sum of each row of `M1`
+2. Create a new matrix called `M2` that is `M1` with the diagonal elements replaced by 0s
+3. Create a new matrix called `M3` that is `M1` but with all values less than 4 replaced by -1
+4. Append the three matrices into an array with dimensions 4, 4, 3. 
+
+
+## Organizing output from a statistical analysis
+
+The Palmer penguins data are available in the package `palmerpenguins`. Install the package and inspect the data called `palmerpenguins`. You can read about the data in the help file: 
+
+```{r}
+library(palmerpenguins)
+head(penguins)
+
+?palmerpenguins-package
+```
+
+Let's do some basic analyses on this dataset. 
+
+
+```{r}
+by(penguins$body_mass_g, list(penguins$sex, penguins$species), summary)
+
+massfit <- lm(body_mass_g ~ sex * species, data = penguins)
+summary(massfit)
+
+boxplot(body_mass_g ~ sex * species, data = penguins, 
+        col = rep(c("slateblue", "salmon"), 3))
+legend("topleft", fill = c("slateblue", "salmon"), 
+       legend = c("Female", "Male"))
+```
+
+
+Inspect the `massfit` object. What type of data structure is it, and what does it contain? 
+
+You are planning a publication about the association/interaction between species and sex on body mass. The paper will include descriptive statistics, statistical inference, and some figures. You will likely present the results at a conference or in a lab meeting. 
+
+
+1. What are some different approaches to save the results? 
+2. Discuss the pros and cons of your suggested approaches. 
+
+
+#### Stop and think {.alert .alert-info}
+
+How do you plan to use the statistical output, immediately and in the future? Thinking about this question helps guide what and how I will store output from an analysis. 
+
+- Will I read the data into another program before putting it into tables for my paper? 
+- Is it a result of a computation that takes a long time to run that will be used in subsequent analyses? 
+- What about figures? 
+
+
+## Working with data using different structures
+
+The `penguins` data is stored as a _tibble_, which is a special type of data structure that is an enhanced data frame. That is, a tibble is still a data.frame, but it is also more than that. 
+
+```{r}
+library(tibble)
+class(penguins) 
+is.data.frame(penguins)
+is_tibble(penguins)
+```
+
+
+### Try it yourself {.alert .alert-warning}
+
+There are other packages out there that enhance data frames. In this exercise we will introduce and compare base data frames, data.tables, and tibbles. For these you will need the `tibble`, `dplyr`, and `data.table` packages. 
+
+If you have used any of these before, try one of the others. Read the help files and try out some other functions. 
+
+
+
+### Code
+
+
+::: {.panel-tabset}
+## Base R
+  
+```{r}
+options(max.print = 48)
+
+peng_df <- as.data.frame(penguins)
+class(peng_df)
+
+## subset
+subset(peng_df, !is.na(body_mass_g))
+subset(peng_df, sex == "male")
+peng_df[1:6, ]
+
+## sort
+peng_df[order(peng_df$year), ]
+peng_df[order(peng_df$year, decreasing = TRUE), ]
+
+## select columns
+peng_df[c("species", "sex", "year")]
+peng_df[grep("^bill", names(peng_df), value = TRUE)]
+subset(peng_df, select = bill_length_mm:body_mass_g)
+
+## create new columns
+peng_df$bill_ratio <- with(peng_df, bill_length_mm / bill_depth_mm)
+# or
+peng_df <- within(peng_df, {
+  bill_ratio <- bill_length_mm / bill_depth_mm
+})
+#or
+peng_df <- transform(peng_df, bill_ratio = bill_length_mm / bill_depth_mm)
+
+# reorder
+peng_df[c("species", "island", "bill_length_mm", 
+                     "bill_depth_mm", "bill_ratio", "flipper_length_mm", 
+                     "body_mass_g", "sex", "year")]
+
+```
+  
+  
+## tibble/dplyr
+  
+Tibble is often paired with `dplyr`, which is another package for data manipulation. 
+  
+```{r}
+library(dplyr)
+
+## subset
+filter(penguins, !is.na(body_mass_g))
+filter(penguins, sex == "male")
+slice(penguins, 1:6)
+
+## sort
+arrange(penguins, year)
+arrange(penguins, desc(year))
+
+## select columns
+select(penguins, species, sex, year)
+select(penguins, starts_with("bill"))
+select(penguins, bill_length_mm:body_mass_g)
+
+## create new columns
+mutate(penguins, bill_ratio = bill_length_mm / bill_depth_mm) |>
+  select(starts_with("bill"))
+
+mutate(penguins, bill_ratio = bill_length_mm / bill_depth_mm) |>
+  relocate(bill_ratio, .after = bill_depth_mm)
+```
+  
+  
+## data.table
+
+
+```{r}
+library(data.table)
+
+peng_dt <- data.table(penguins)
+
+## subset
+peng_dt[!is.na(body_mass_g)]
+peng_dt[sex == "male"]
+peng_dt[1:6]
+
+## sort
+setorder(peng_dt, year) # doesn't return anything but modifies the table
+peng_dt
+setorder(peng_dt, -year)
+peng_dt
+
+## select columns
+peng_dt[, .(species, sex, year)]
+peng_dt[, grep("^bill", names(peng_dt)), with = FALSE]
+peng_dt[, bill_length_mm:body_mass_g]
+
+## create new columns
+peng_dt[, bill_ratio := bill_length_mm / bill_depth_mm]
+peng_dt
+
+# transform but doesn't modify the dt
+peng_dt[, .(bill_ratio = bill_length_mm / bill_depth_mm)]
+# returns a vector
+peng_dt[, (bill_ratio = bill_length_mm / bill_depth_mm)]
+
+# reorder columns
+
+setcolorder(peng_dt, c("species", "island", "bill_length_mm", 
+                     "bill_depth_mm", "bill_ratio"))
+peng_dt
+```
+
+:::
+
+
+### Notes
+
+In the above we used the function `grep("^bill", names(penguins))`. The first string is called a 'regular expression', and in this case `"^bill"` can be translated to "starts with bill". This defines a pattern that is checked against the `names(penguins)` which contains `r names(penguins)`. Which column names match the pattern? 
+
+[Regular expressions](https://stat.ethz.ch/R-manual/R-patched/library/base/html/regex.html) are very flexible in terms of how you can define patterns. We will use them again in more depth when we talk about working with character data. 
