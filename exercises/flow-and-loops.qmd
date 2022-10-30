@@ -1,0 +1,15 @@
+---
+title: "Flow control and loops -- exercises"
+subtitle: "Day 2, A"
+author: Michael C Sachs
+description: "Understanding conditional and repeated execution of R expressions"
+image: loops.jpeg
+---
+
+
+### Learning objectives {.alert .alert-success}
+
+In this lesson you will 
+
+1. Practice working with `if` and `else` statements for conditional execution
+2. Practice working with loops for repeated execution

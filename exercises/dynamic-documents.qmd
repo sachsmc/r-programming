@@ -1,0 +1,15 @@
+---
+title: "Dynamic documents -- exercises"
+author: "Michael C Sachs"
+subtitle: "Day 4, A"
+description: "Using rmarkdown and quarto to create reproducible and dynamic documents for reporting statistical analyses"
+image: dynamic-documents.jpeg
+---
+
+
+### Learning objectives {.alert .alert-success}
+
+In this lesson you will 
+
+1. Learn how to set up a quarto or rmarkdown document
+2. Practice managing code chunks to get output to look the way you want

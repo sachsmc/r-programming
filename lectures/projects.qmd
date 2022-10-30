@@ -2,7 +2,9 @@
 title: "Project organization and workflow"
 subtitle: "Day 1, A"
 author: "Michael C Sachs"
-format: revealjs
+format: 
+    revealjs:
+      scrollable: true
 ---
 
 
@@ -130,9 +132,9 @@ Use this in your scripts, and everything will run nicely, both interactively __a
 
 Personal taste and habits (“workflow”) versus the logic and output that is the essence of your project (“product”)
 
-- The editor you use to write your R code.
 - The naming/specific structure of your project directory.
-- The R code you ran before lunch.
+- The editor you use to write your R code.
+
 
 ## Get comfortable
 
@@ -178,3 +180,7 @@ __Do__:
 - Create a toy project using your favorite tools
 - Swap projects with your neighbor
 - See if you can reproduce each others results
+
+[Link to lesson](../exercises/projects.html)
+
+[Link home](../index.html)

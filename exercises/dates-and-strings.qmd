@@ -1,0 +1,15 @@
+---
+title: "Dates and character strings -- exercises"
+author: "Michael C Sachs"
+subtitle: "Day 3, B"
+description: "Understanding the pitfalls of dealing with dates, times, and manipulating strings with regular expressions"
+image: dates.jpeg
+---
+
+
+### Learning objectives {.alert .alert-success}
+
+In this lesson you will 
+
+1. Manipulate dates and times with `lubridate`
+2. Learn some basic regular expressions for matching ICD-10 code

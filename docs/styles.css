@@ -1,1 +1,12 @@
 /* css styles */
+
+.quarto-post:hover {
+  transition: .5s;
+  background-color: #ad000040;
+}
+
+.listing-title {
+  
+  color: #18bc9c;
+  text-decoration: underline;
+}

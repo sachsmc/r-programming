@@ -14,7 +14,12 @@
     "listing": "/exercises/index.html",
     "items": [
       "/exercises/projects.html",
-      "/exercises/data-structures.html"
+      "/exercises/data-structures.html",
+      "/exercises/flow-and-loops.html",
+      "/exercises/functions.html",
+      "/exercises/merge-and-reshape.html",
+      "/exercises/dates-and-strings.html",
+      "/exercises/dynamic-documents.html"
     ]
   }
 ]

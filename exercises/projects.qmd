@@ -3,6 +3,7 @@ title: "Project organization and workflow -- exercises"
 subtitle: "Day 1, A"
 author: Michael C Sachs
 description: "Understanding how R deals with the current working directory, practice using relative paths in R input and output, and testing out the `here` package for managing file paths in a project"
+image: projects.jpeg
 ---
 
 ### Learning objectives {.alert .alert-success}
@@ -24,7 +25,7 @@ In this lesson we will organize a toy project about the Palmer Penguins dataset.
 ## Do some data manipulation
 
 1. Create a new `.R` script in the appropriate directory of your project. 
-2. Open up the R script in your IDE
+2. Open up the R script in your favorite integrated development environment (IDE, aka script editor, e.g., Rstudio or vscode)
 3. Read in the `penguins` dataset and create a new variable called the "penguin body mass index". It is the body mass in grams divided by the square of flipper length in millimeters
 4. Save the results in your project directory, try using the `here` function.
 
@@ -47,4 +48,4 @@ You are going to share this project with your friend. In order for them to repro
 
 1. Update your README file. 
 2. Zip up the project folder and send it to your partner. 
-3. When you recieve their project, unzip it, open it in a new R session and try to reproduce their results. 
+3. When you receive their project, unzip it, open it in a new R session and try to reproduce their results. 

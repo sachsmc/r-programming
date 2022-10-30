@@ -2,7 +2,7 @@
 title: "Exercises"
 listing: 
     type: default
-    fields: [title, subtitle, description]
+    fields: [image, title, subtitle, description]
     sort: "subtitle"
     max-description-length: 250
     

@@ -1,0 +1,15 @@
+---
+title: "Functions -- exercises"
+author: "Michael C Sachs"
+subtitle: "Day 2, B"
+description: "Understanding how to create and use your own functions"
+image: functions.jpeg
+---
+
+
+### Learning objectives {.alert .alert-success}
+
+In this lesson you will 
+
+1. Learn how the `apply` family of functions works
+2. Practice writing and reusing your own functions

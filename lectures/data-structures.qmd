@@ -575,3 +575,12 @@ readRDS("reg-ex.rds")
 ```
 
 
+## Practical
+
+1. Practice working with vectors and matrices
+2. Thing about ways to organize data and output into data structures
+3. Compare and contrast the base R, `data.table`, and `tibble` packages for working with data. 
+
+[Link to lesson](../exercises/data-structures.html)
+
+[Link home](../index.html)

@@ -16,6 +16,8 @@ website:
         text: Exercises
       - href: resources.qmd
         text: Links and Resources
+  repo-url: https://github.com/sachsmc/r-programming
+  repo-actions: [issue]
 
 format:
   html:

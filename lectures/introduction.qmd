@@ -21,7 +21,7 @@ execute:
 
 ## Why? 
 ::: {.r-fit-text}
-If your research involves any data analysis, it likely also involves: 
+If your research involves any data, it likely also involves: 
 
 - Data management and manipulation
 - Analysis
@@ -174,3 +174,6 @@ https://sachsmc.github.io/r-programming/
 - Show up to class and participate, you will pass and hopefully learn something useful
 
 # Questions? 
+
+
+[Link home](../index.html)

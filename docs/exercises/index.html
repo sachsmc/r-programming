@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.37">
+<meta name="generator" content="quarto-1.2.247">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,10 +11,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 </style>
 
 
@@ -65,9 +70,9 @@ ul.task-list{list-style: none;}
     }
 
     const options = {
-      valueNames: ['listing-title','listing-subtitle','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-image','listing-title','listing-subtitle','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-title","listing-author","listing-subtitle","listing-description"],
+      searchColumns: ["listing-title","listing-author","listing-subtitle","listing-image","listing-description"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -96,26 +101,34 @@ ul.task-list{list-style: none;}
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="../index.html">
-    <img src="../ku-logo_400x400.png" alt="">
+      <div class="navbar-brand-container">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../ku-logo_400x400.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Programming and statistical modelling in R</span>
-  </a>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html">Home</a>
+    <a class="nav-link" href="../index.html">
+ <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../lectures/index.html">Lectures</a>
+    <a class="nav-link" href="../lectures/index.html">
+ <span class="menu-text">Lectures</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../exercises/index.html" aria-current="page">Exercises</a>
+    <a class="nav-link active" href="../exercises/index.html" aria-current="page">
+ <span class="menu-text">Exercises</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../resources.html">Links and Resources</a>
+    <a class="nav-link" href="../resources.html">
+ <span class="menu-text">Links and Resources</span></a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -143,6 +156,7 @@ ul.task-list{list-style: none;}
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
@@ -155,7 +169,10 @@ ul.task-list{list-style: none;}
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-file-modified-sort="1663584974413" data-listing-reading-time-sort="1.76">
+<div class="quarto-post image-right" data-index="0" data-listing-file-modified-sort="1667124817762" data-listing-reading-time-sort="1.815">
+<div class="thumbnail">
+<p><a href="../exercises/projects.html"> <img src="../exercises/projects.jpeg" class="thumnail-image"> </a></p>
+</div>
 <div class="body">
 <a href="../exercises/projects.html">
 <h3 class="no-anchor listing-title">
@@ -173,7 +190,10 @@ Day 1, A
 <a href="../exercises/projects.html"> </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-listing-file-modified-sort="1666786418937" data-listing-reading-time-sort="4">
+<div class="quarto-post image-right" data-index="1" data-listing-file-modified-sort="1667130922103" data-listing-reading-time-sort="4">
+<div class="thumbnail">
+<p><a href="../exercises/data-structures.html"> <img src="../exercises/data-structures.jpeg" class="thumnail-image"> </a></p>
+</div>
 <div class="body">
 <a href="../exercises/data-structures.html">
 <h3 class="no-anchor listing-title">
@@ -189,6 +209,111 @@ Day 1, B
 </div>
 <div class="metadata">
 <a href="../exercises/data-structures.html"> </a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-listing-file-modified-sort="1667130875865" data-listing-reading-time-sort="0.115">
+<div class="thumbnail">
+<p><a href="../exercises/flow-and-loops.html"> <img src="../exercises/loops.jpeg" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="../exercises/flow-and-loops.html">
+<h3 class="no-anchor listing-title">
+Flow control and loops – exercises
+</h3>
+<div class="listing-subtitle">
+Day 2, A
+</div>
+<div class="listing-description">
+<p>Understanding conditional and repeated execution of R expressions</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="../exercises/flow-and-loops.html"> </a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="3" data-listing-file-modified-sort="1667142329612" data-listing-reading-time-sort="0.105">
+<div class="thumbnail">
+<p><a href="../exercises/functions.html"> <img src="../exercises/functions.jpeg" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="../exercises/functions.html">
+<h3 class="no-anchor listing-title">
+Functions – exercises
+</h3>
+<div class="listing-subtitle">
+Day 2, B
+</div>
+<div class="listing-description">
+<p>Understanding how to create and use your own functions</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="../exercises/functions.html"> </a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="4" data-listing-file-modified-sort="1667149325412" data-listing-reading-time-sort="0.145">
+<div class="thumbnail">
+<p><a href="../exercises/merge-and-reshape.html"> <img src="../exercises/reshape.jpeg" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="../exercises/merge-and-reshape.html">
+<h3 class="no-anchor listing-title">
+Merging and reshaping – exercises
+</h3>
+<div class="listing-subtitle">
+Day 3, B
+</div>
+<div class="listing-description">
+<p>Practice manipulating data by merging and reshaping</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="../exercises/merge-and-reshape.html"> </a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="5" data-listing-file-modified-sort="1667149066622" data-listing-reading-time-sort="0.105">
+<div class="thumbnail">
+<p><a href="../exercises/dates-and-strings.html"> <img src="../exercises/dates.jpeg" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="../exercises/dates-and-strings.html">
+<h3 class="no-anchor listing-title">
+Dates and character strings – exercises
+</h3>
+<div class="listing-subtitle">
+Day 3, B
+</div>
+<div class="listing-description">
+<p>Understanding the pitfalls of dealing with dates, times, and manipulating strings with regular expressions</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="../exercises/dates-and-strings.html"> </a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="6" data-listing-file-modified-sort="1667148370926" data-listing-reading-time-sort="0.145">
+<div class="thumbnail">
+<p><a href="../exercises/dynamic-documents.html"> <img src="../exercises/dynamic-documents.jpeg" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="../exercises/dynamic-documents.html">
+<h3 class="no-anchor listing-title">
+Dynamic documents – exercises
+</h3>
+<div class="listing-subtitle">
+Day 4, A
+</div>
+<div class="listing-description">
+<p>Using rmarkdown and quarto to create reproducible and dynamic documents for reporting statistical analyses</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="../exercises/dynamic-documents.html"> </a>
 </div>
 </div>
 </div>
@@ -237,7 +362,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -265,31 +407,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
