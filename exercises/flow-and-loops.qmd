@@ -13,3 +13,31 @@ In this lesson you will
 
 1. Practice working with `if` and `else` statements for conditional execution
 2. Practice working with loops for repeated execution
+
+
+## Simple loops and conditional statements
+
+1. Use a loop to print every number from 1 to 10
+2. Modify the loop to print every _even_ number from 1 to 10 (hint: add an `if` statement)
+
+
+## Loops to do data manipulation
+
+Load the `palmerpenguins` dataset: 
+
+```{r}
+library(palmerpenguins)
+penguins
+```
+
+You may notice that some of the variables have missing values. We would like to replace the missing values with the "typical" value that is observed. 
+
+1. Write a loop that goes through the variables in `penguins` and replaces missing values with the mean for numeric variables, and the most frequent value for characters or factors. 
+
+## Loops for statistical analysis
+
+1. Write a loop that prints out the mean for each numeric variable in the `penguins` dataset
+2. Modify your loop in 1 so that it prints out the mean, standard deviation, median, and interquartile range for each numeric variable in `penguins`. Hint: use a nested loop where one of the iterators is a function. 
+3. Write a loop to compute 500 bootstrap replicates of the means of bill length, bill depth, and flipper length. Remember to pre-allocate a data structure to store the 500 times 3 values. What is the correlation of the means? 
+
+

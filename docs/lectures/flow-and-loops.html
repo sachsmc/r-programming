@@ -446,6 +446,7 @@ Michael C Sachs
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>num_reps <span class="ot">&lt;-</span> <span class="cf">if</span>(final_report) <span class="dv">5000</span> <span class="cf">else</span> <span class="dv">200</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>brackets are helpful for understanding and clarity</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>p_value <span class="ot">&lt;-</span> <span class="cf">if</span>(nonparametric) {</span>
 <span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">wilcox.test</span>(mpg <span class="sc">~</span> vs, <span class="at">data =</span> mtcars, <span class="at">exact =</span> <span class="cn">FALSE</span>)<span class="sc">$</span>p.value</span>
@@ -453,6 +454,7 @@ Michael C Sachs
 <span id="cb3-4"><a href="#cb3-4"></a>  <span class="fu">t.test</span>(mpg <span class="sc">~</span> vs, <span class="at">data =</span> mtcars)<span class="sc">$</span>p.value</span>
 <span id="cb3-5"><a href="#cb3-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>There does not need to be anything returned from the expression</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="cf">if</span>(log_transform) {</span>
 <span id="cb4-2"><a href="#cb4-2"></a>  </span>
@@ -662,7 +664,7 @@ Gentoo    5076.016       NA        NA</code></pre>
 <span id="cb21-6"><a href="#cb21-6"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
- 13.191   0.096  13.316 </code></pre>
+ 13.659   0.048  13.725 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">system.time</span>({</span>
 <span id="cb23-2"><a href="#cb23-2"></a>A2 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">100000</span>)</span>
@@ -675,6 +677,15 @@ Gentoo    5076.016       NA        NA</code></pre>
   0.167   0.000   0.167 </code></pre>
 </div>
 </div>
+</section>
+<section id="practical" class="slide level2">
+<h2>Practical</h2>
+<ol type="1">
+<li>Practice working if and else statements</li>
+<li>Practice working with loops</li>
+</ol>
+<p><a href="../exercises/flow-and-loops.html">Link to lesson</a></p>
+<p><a href="../index.html">Link home</a></p>
 
 <div class="footer footer-default">
 

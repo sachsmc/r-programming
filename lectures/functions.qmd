@@ -2,6 +2,255 @@
 title: "Functions"
 subtitle: "Day 2, B"
 author: "Michael C Sachs"
-format: revealjs
+format: 
+    revealjs:
+      scrollable: true
+execute:
+  echo: true
 ---
+
+## A function and its components
+
+Almost everything you do in R involves functions. You call a function by typing its name with its arguments (inputs) inside the parentheses: 
+
+```{r}
+sample(x = 1:5, size = 2)
+```
+
+The function takes the arguments you provide, does something, and then returns an object. To see what a function does, you can type its name without parentheses to see the source: 
+```{r}
+sample
+```
+
+The source shows you the arguments, their default values, and the expression defining the function. You can also look at the help file for the documentation: 
+
+```{r}
+help("sample")
+# or
+?sample
+```
+
+
+## Using functions -- arguments
+
+Functions can have 0 or more arguments, with or without defaults. 
+
+The arguments can be given in order, or by name
+```{r}
+set.seed(100)
+sample(1:5, 2, FALSE)
+## same as
+set.seed(100)
+sample(size = 2, replace = FALSE, x = 1:5)
+```
+
+Names can be partially matched, which can be confusing: 
+```{r}
+set.seed(100)
+sample(si = 2, re = FALSE, x = 1:5)
+```
+
+
+## The ellipsis argument
+
+Some functions take `...` as an argument, e.g., `paste`, `list`, also the `apply` family. 
+
+There are 2 reasons for this: 
+
+1. There could be varying numbers of arguments
+```{r}
+c(1, 2, 3)
+##
+c(1, 2)
+```
+
+
+2. To pass optional arguments to other functions
+```{r}
+library(palmerpenguins)
+summary(penguins)
+## digits gets passed to "format"
+summary(penguins, digits = 1)
+```
+
+
+## Using functions -- composition
+
+Often we want to use the result of one function as the argument to another function. There are many ways to do this: 
+
+1. Intermediate variables
+```{r}
+set.seed(100)
+x <- rgamma(100, shape = 1, rate = 2)
+logx <- log(x)
+stdlogx <- scale(logx)
+quantile(stdlogx, c(.25, .75))
+```
+
+2. Nested function calls
+```{r}
+quantile(scale(log(x)), c(.25, .75))
+```
+
+
+3. The pipe operator `|>` (available in R 4.0.1)
+```{r}
+x |> log() |> scale() |> quantile(c(.25, .75))
+  
+```
+
+## Using functions -- the apply family
+
+Some functions will take other functions as arguments. An example is the `apply` family of functions, which applies a function over an index or iterator. See `help(apply)`
+
+`apply` repeated applies a function over the dimensions of an array. `MARGIN` indicates which dimension, and then for each index in that dimension, it applies `FUN` to the sub-array
+```{r}
+M1 <- matrix(rnorm(1000), nrow = 100, ncol = 10)
+colnames(M1) <- paste0("X", 1:10)
+apply(M1, MARGIN = 2, FUN = median)
+```
+
+## Apply continued
+
+`tapply` is commonly used with data. It subsets the data `X` based on the `INDEX` argument, then applies a function to each subset: 
+```{r}
+library(palmerpenguins)
+tapply(X = penguins$bill_depth_mm, INDEX = penguins$species, 
+       FUN = mean)
+
+```
+
+`lapply` is more general, in that it can take any index and apply any function that takes the index as an argument. It always returns a list. 
+```{r}
+lapply(split(penguins$bill_depth_mm, penguins$species), 
+       FUN = mean)
+```
+
+
+## Notes on speed and flexibility
+
+The apply family of functions is computationally equivalent to a loop (with pre-allocation)
+
+Using apply instead of a for loop will not be faster computationally
+
+It may be faster to write, but it may also be much harder to understand
+
+You can do whatever you want inside a for loop, how would you do something more complex with `lapply`?
+
+# Writing your own functions
+
+
+## A simple function
+
+```{r}
+hello <- function() {
+  
+  "Hello"
+  
+}
+
+hello()
+```
+
+## A function with arguments
+
+
+```{r}
+hello <- function(name) {
+  
+  paste("Hello", name)
+  
+}
+hello("Jim")
+lapply(c("Jim", "Heather", "Bob"), hello)
+```
+
+
+## Local variables and scoping
+
+```{r}
+#| error: true
+hello <- function(name) {
+  
+  name2 <- "Mike"
+  paste("Hello", name, "meet", name2)
+  
+}
+hello("Jim")
+name2
+``` 
+
+`name2` is a local variable. It exists only inside the function.
+
+```{r}
+name2 <- "Billie"
+hello("Jim")
+```
+
+Modifying local variables outside the function has no effect. But be careful: 
+
+```{r}
+hello2 <- function(name) {
+  
+  paste("Hello", name, "meet", name2)
+  
+}
+hello2("Jim")
+```
+
+## Lexical scoping
+
+This is called _lexical scoping_: it means how does R look for objects when they are referred to by name? 
+
+If R sees a variable and needs to use it inside a function, it follows these rules to find the object with that name: 
+
+1. Look in the current function environment first.
+2. If not found, look in the environment where the function was called.
+3. If not found, look in the global environment.
+4. Finally, look in the loaded packages.
+
+Note the specification sees a variable _and needs to use it_. This is called _lazy evaluation_: R does not evaluate anything until it needs to use it
+
+
+## Lexical scoping example
+
+This can be used to your advantage, e.g., 
+
+```{r}
+least_squares <- function(beta) {
+  
+  sum((penguins$flipper_length_mm - 
+          (beta[1] + beta[2] * penguins$body_mass_g))^2, na.rm  =TRUE)
+  
+}
+
+optim(par = c(0,0), fn = least_squares)
+```
+
+
+## Anonymous functions
+
+Your own functions do not need to be saved and assigned names. If a function does not have a name it is `anonymous`, I use these often with the apply family: 
+
+```{r}
+bootmeans <- sapply(1:1000, function(i) {
+  mean(penguins$body_mass_g[sample(1:nrow(penguins), 
+                                   nrow(penguins), replace = TRUE)],
+       na.rm = TRUE)
+})
+summary(bootmeans)
+```
+
+Since R 4.0.1, `\()` can be used as shorthand for `function()`: 
+```{r}
+bootmeans <- sapply(1:1000, \(i) {
+   mean(penguins$body_mass_g[sample(1:nrow(penguins), 
+                                   nrow(penguins), replace = TRUE)],
+       na.rm = TRUE)
+})
+summary(bootmeans)
+```
+
+
+## Operators
 

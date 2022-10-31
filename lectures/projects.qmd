@@ -28,7 +28,7 @@ Quick review of the file system
     - Depending on project complexity, you might enforce further organization into subfolders.
 - Tools to facilitate this
     + `ProjectTemplate` package
-    + Several other packages: https://cran.r-project.org/web/views/ReproducibleResearch.html#project-workflows
+    + Several other packages: [CRAN task view on Reproducible Research](https://cran.r-project.org/web/views/ReproducibleResearch.html#project-workflows)
     + Make your own template structure and copy-paste
 
 
@@ -43,8 +43,8 @@ Quick review of the file system
     + How to run the analysis and use the results (including what dependencies are needed)
     + A license describing the conditions of use
     
-![Example 1](https://github.com/sachsmc/liger)
-![Example 2](https://github.com/pablogonzalezginestet/megalearner)
+[Example 1](https://github.com/sachsmc/liger)
+[Example 2](https://github.com/pablogonzalezginestet/megalearner)
 
 
 ## An example project structure

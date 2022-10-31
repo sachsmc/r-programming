@@ -53,7 +53,7 @@ If the `<condition>` evaluates to `TRUE`, then `something` gets executed, otherw
 num_reps <- if(final_report) 5000 else 200
 ```
 
-
+brackets are helpful for understanding and clarity
 ```{r}
 #| eval: false
 p_value <- if(nonparametric) {
@@ -63,6 +63,7 @@ p_value <- if(nonparametric) {
 }
 ```
 
+There does not need to be anything returned from the expression
 ```{r}
 #| eval: false
 
@@ -280,3 +281,11 @@ for(i in 1:length(A2)) {
 
 
 
+## Practical
+
+1. Practice working if and else statements
+2. Practice working with loops
+
+[Link to lesson](../exercises/flow-and-loops.html)
+
+[Link home](../index.html)

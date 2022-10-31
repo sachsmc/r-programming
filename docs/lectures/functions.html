@@ -28,6 +28,70 @@
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css" id="theme">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -242,6 +306,7 @@
     }
     .reveal .slide:not(.center) {
       height: 100%;
+      overflow-y: auto;
     }
     .reveal .slide.scrollable {
       overflow-y: auto;
@@ -336,13 +401,386 @@ Michael C Sachs
 </div>
 
 </section>
-<section class="slide level2">
+<section id="a-function-and-its-components" class="slide level2">
+<h2>A function and its components</h2>
+<p>Almost everything you do in R involves functions. You call a function by typing its name with its arguments (inputs) inside the parentheses:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">size =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4 2</code></pre>
+</div>
+</div>
+<p>The function takes the arguments you provide, does something, and then returns an object. To see what a function does, you can type its name without parentheses to see the source:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>sample</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>function (x, size, replace = FALSE, prob = NULL) 
+{
+    if (length(x) == 1L &amp;&amp; is.numeric(x) &amp;&amp; is.finite(x) &amp;&amp; x &gt;= 
+        1) {
+        if (missing(size)) 
+            size &lt;- x
+        sample.int(x, size, replace, prob)
+    }
+    else {
+        if (missing(size)) 
+            size &lt;- length(x)
+        x[sample.int(length(x), size, replace, prob)]
+    }
+}
+&lt;bytecode: 0x559fb1559650&gt;
+&lt;environment: namespace:base&gt;</code></pre>
+</div>
+</div>
+<p>The source shows you the arguments, their default values, and the expression defining the function. You can also look at the help file for the documentation:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">help</span>(<span class="st">"sample"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co"># or</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>?sample</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="using-functions-arguments" class="slide level2">
+<h2>Using functions – arguments</h2>
+<p>Functions can have 0 or more arguments, with or without defaults.</p>
+<p>The arguments can be given in order, or by name</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">2</span>, <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="do">## same as</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="fu">sample</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>, <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2 3</code></pre>
+</div>
+</div>
+<p>Names can be partially matched, which can be confusing:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="fu">sample</span>(<span class="at">si =</span> <span class="dv">2</span>, <span class="at">re =</span> <span class="cn">FALSE</span>, <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2 3</code></pre>
+</div>
+</div>
+</section>
+<section id="the-ellipsis-argument" class="slide level2">
+<h2>The ellipsis argument</h2>
+<p>Some functions take <code>...</code> as an argument, e.g., <code>paste</code>, <code>list</code>, also the <code>apply</code> family.</p>
+<p>There are 2 reasons for this:</p>
+<ol type="1">
+<li>There could be varying numbers of arguments</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="do">##</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2</code></pre>
+</div>
+</div>
+<ol start="2" type="1">
+<li>To pass optional arguments to other functions</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="fu">summary</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      species          island    bill_length_mm  bill_depth_mm  
+ Adelie   :152   Biscoe   :168   Min.   :32.10   Min.   :13.10  
+ Chinstrap: 68   Dream    :124   1st Qu.:39.23   1st Qu.:15.60  
+ Gentoo   :124   Torgersen: 52   Median :44.45   Median :17.30  
+                                 Mean   :43.92   Mean   :17.15  
+                                 3rd Qu.:48.50   3rd Qu.:18.70  
+                                 Max.   :59.60   Max.   :21.50  
+                                 NA's   :2       NA's   :2      
+ flipper_length_mm  body_mass_g       sex           year     
+ Min.   :172.0     Min.   :2700   female:165   Min.   :2007  
+ 1st Qu.:190.0     1st Qu.:3550   male  :168   1st Qu.:2007  
+ Median :197.0     Median :4050   NA's  : 11   Median :2008  
+ Mean   :200.9     Mean   :4202                Mean   :2008  
+ 3rd Qu.:213.0     3rd Qu.:4750                3rd Qu.:2009  
+ Max.   :231.0     Max.   :6300                Max.   :2009  
+ NA's   :2         NA's   :2                                 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="do">## digits gets passed to "format"</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="fu">summary</span>(penguins, <span class="at">digits =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      species          island    bill_length_mm bill_depth_mm flipper_length_mm
+ Adelie   :152   Biscoe   :168   Min.   :32     Min.   :13    Min.   :172      
+ Chinstrap: 68   Dream    :124   1st Qu.:39     1st Qu.:16    1st Qu.:190      
+ Gentoo   :124   Torgersen: 52   Median :44     Median :17    Median :197      
+                                 Mean   :44     Mean   :17    Mean   :201      
+                                 3rd Qu.:48     3rd Qu.:19    3rd Qu.:213      
+                                 Max.   :60     Max.   :22    Max.   :231      
+                                 NA's   :2      NA's   :2     NA's   :2        
+  body_mass_g       sex           year     
+ Min.   :2700   female:165   Min.   :2007  
+ 1st Qu.:3550   male  :168   1st Qu.:2007  
+ Median :4050   NA's  : 11   Median :2008  
+ Mean   :4202                Mean   :2008  
+ 3rd Qu.:4750                3rd Qu.:2009  
+ Max.   :6300                Max.   :2009  
+ NA's   :2                                 </code></pre>
+</div>
+</div>
+</section>
+<section id="using-functions-composition" class="slide level2">
+<h2>Using functions – composition</h2>
+<p>Often we want to use the result of one function as the argument to another function. There are many ways to do this:</p>
+<ol type="1">
+<li>Intermediate variables</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
+<span id="cb20-2"><a href="#cb20-2"></a>x <span class="ot">&lt;-</span> <span class="fu">rgamma</span>(<span class="dv">100</span>, <span class="at">shape =</span> <span class="dv">1</span>, <span class="at">rate =</span> <span class="dv">2</span>)</span>
+<span id="cb20-3"><a href="#cb20-3"></a>logx <span class="ot">&lt;-</span> <span class="fu">log</span>(x)</span>
+<span id="cb20-4"><a href="#cb20-4"></a>stdlogx <span class="ot">&lt;-</span> <span class="fu">scale</span>(logx)</span>
+<span id="cb20-5"><a href="#cb20-5"></a><span class="fu">quantile</span>(stdlogx, <span class="fu">c</span>(.<span class="dv">25</span>, .<span class="dv">75</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       25%        75% 
+-0.3425622  0.5746209 </code></pre>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Nested function calls</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">quantile</span>(<span class="fu">scale</span>(<span class="fu">log</span>(x)), <span class="fu">c</span>(.<span class="dv">25</span>, .<span class="dv">75</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       25%        75% 
+-0.3425622  0.5746209 </code></pre>
+</div>
+</div>
+<ol start="3" type="1">
+<li>The pipe operator <code>|&gt;</code> (available in R 4.0.1)</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>x <span class="sc">|&gt;</span> <span class="fu">log</span>() <span class="sc">|&gt;</span> <span class="fu">scale</span>() <span class="sc">|&gt;</span> <span class="fu">quantile</span>(<span class="fu">c</span>(.<span class="dv">25</span>, .<span class="dv">75</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       25%        75% 
+-0.3425622  0.5746209 </code></pre>
+</div>
+</div>
+</section>
+<section id="using-functions-the-apply-family" class="slide level2">
+<h2>Using functions – the apply family</h2>
+<p>Some functions will take other functions as arguments. An example is the <code>apply</code> family of functions, which applies a function over an index or iterator. See <code>help(apply)</code></p>
+<p><code>apply</code> repeated applies a function over the dimensions of an array. <code>MARGIN</code> indicates which dimension, and then for each index in that dimension, it applies <code>FUN</code> to the sub-array</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>M1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">1000</span>), <span class="at">nrow =</span> <span class="dv">100</span>, <span class="at">ncol =</span> <span class="dv">10</span>)</span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="fu">colnames</span>(M1) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"X"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb26-3"><a href="#cb26-3"></a><span class="fu">apply</span>(M1, <span class="at">MARGIN =</span> <span class="dv">2</span>, <span class="at">FUN =</span> median)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         X1          X2          X3          X4          X5          X6 
+ 0.04874658  0.01365005  0.16552784  0.17273307 -0.14850050  0.21945219 
+         X7          X8          X9         X10 
+-0.23723207 -0.26703323 -0.07315224  0.01336232 </code></pre>
+</div>
+</div>
+</section>
+<section id="apply-continued" class="slide level2">
+<h2>Apply continued</h2>
+<p><code>tapply</code> is commonly used with data. It subsets the data <code>X</code> based on the <code>INDEX</code> argument, then applies a function to each subset:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="fu">tapply</span>(<span class="at">X =</span> penguins<span class="sc">$</span>bill_depth_mm, <span class="at">INDEX =</span> penguins<span class="sc">$</span>species, </span>
+<span id="cb28-3"><a href="#cb28-3"></a>       <span class="at">FUN =</span> mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Adelie Chinstrap    Gentoo 
+       NA  18.42059        NA </code></pre>
+</div>
+</div>
+<p><code>lapply</code> is more general, in that it can take any index and apply any function that takes the index as an argument. It always returns a list.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">lapply</span>(<span class="fu">split</span>(penguins<span class="sc">$</span>bill_depth_mm, penguins<span class="sc">$</span>species), </span>
+<span id="cb30-2"><a href="#cb30-2"></a>       <span class="at">FUN =</span> mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$Adelie
+[1] NA
 
+$Chinstrap
+[1] 18.42059
+
+$Gentoo
+[1] NA</code></pre>
+</div>
+</div>
+</section>
+<section id="notes-on-speed-and-flexibility" class="slide level2">
+<h2>Notes on speed and flexibility</h2>
+<p>The apply family of functions is computationally equivalent to a loop (with pre-allocation)</p>
+<p>Using apply instead of a for loop will not be faster computationally</p>
+<p>It may be faster to write, but it may also be much harder to understand</p>
+<p>You can do whatever you want inside a for loop, how would you do something more complex with <code>lapply</code>?</p>
+</section>
+<section>
+<section id="writing-your-own-functions" class="title-slide slide level1 center">
+<h1>Writing your own functions</h1>
+
+</section>
+<section id="a-simple-function" class="slide level2">
+<h2>A simple function</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>hello <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb32-2"><a href="#cb32-2"></a>  </span>
+<span id="cb32-3"><a href="#cb32-3"></a>  <span class="st">"Hello"</span></span>
+<span id="cb32-4"><a href="#cb32-4"></a>  </span>
+<span id="cb32-5"><a href="#cb32-5"></a>}</span>
+<span id="cb32-6"><a href="#cb32-6"></a></span>
+<span id="cb32-7"><a href="#cb32-7"></a><span class="fu">hello</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Hello"</code></pre>
+</div>
+</div>
+</section>
+<section id="a-function-with-arguments" class="slide level2">
+<h2>A function with arguments</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>hello <span class="ot">&lt;-</span> <span class="cf">function</span>(name) {</span>
+<span id="cb34-2"><a href="#cb34-2"></a>  </span>
+<span id="cb34-3"><a href="#cb34-3"></a>  <span class="fu">paste</span>(<span class="st">"Hello"</span>, name)</span>
+<span id="cb34-4"><a href="#cb34-4"></a>  </span>
+<span id="cb34-5"><a href="#cb34-5"></a>}</span>
+<span id="cb34-6"><a href="#cb34-6"></a><span class="fu">hello</span>(<span class="st">"Jim"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Hello Jim"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">lapply</span>(<span class="fu">c</span>(<span class="st">"Jim"</span>, <span class="st">"Heather"</span>, <span class="st">"Bob"</span>), hello)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] "Hello Jim"
+
+[[2]]
+[1] "Hello Heather"
+
+[[3]]
+[1] "Hello Bob"</code></pre>
+</div>
+</div>
+</section>
+<section id="local-variables-and-scoping" class="slide level2">
+<h2>Local variables and scoping</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>hello <span class="ot">&lt;-</span> <span class="cf">function</span>(name) {</span>
+<span id="cb38-2"><a href="#cb38-2"></a>  </span>
+<span id="cb38-3"><a href="#cb38-3"></a>  name2 <span class="ot">&lt;-</span> <span class="st">"Mike"</span></span>
+<span id="cb38-4"><a href="#cb38-4"></a>  <span class="fu">paste</span>(<span class="st">"Hello"</span>, name, <span class="st">"meet"</span>, name2)</span>
+<span id="cb38-5"><a href="#cb38-5"></a>  </span>
+<span id="cb38-6"><a href="#cb38-6"></a>}</span>
+<span id="cb38-7"><a href="#cb38-7"></a><span class="fu">hello</span>(<span class="st">"Jim"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Hello Jim meet Mike"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>name2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in eval(expr, envir, enclos): object 'name2' not found</code></pre>
+</div>
+</div>
+<p><code>name2</code> is a local variable. It exists only inside the function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>name2 <span class="ot">&lt;-</span> <span class="st">"Billie"</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="fu">hello</span>(<span class="st">"Jim"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Hello Jim meet Mike"</code></pre>
+</div>
+</div>
+<p>Modifying local variables outside the function has no effect. But be careful:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>hello2 <span class="ot">&lt;-</span> <span class="cf">function</span>(name) {</span>
+<span id="cb44-2"><a href="#cb44-2"></a>  </span>
+<span id="cb44-3"><a href="#cb44-3"></a>  <span class="fu">paste</span>(<span class="st">"Hello"</span>, name, <span class="st">"meet"</span>, name2)</span>
+<span id="cb44-4"><a href="#cb44-4"></a>  </span>
+<span id="cb44-5"><a href="#cb44-5"></a>}</span>
+<span id="cb44-6"><a href="#cb44-6"></a><span class="fu">hello2</span>(<span class="st">"Jim"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Hello Jim meet Billie"</code></pre>
+</div>
+</div>
+</section>
+<section id="lexical-scoping" class="slide level2">
+<h2>Lexical scoping</h2>
+<p>This is called <em>lexical scoping</em>: it means how does R look for objects when they are referred to by name?</p>
+<p>If R sees a variable and needs to use it inside a function, it follows these rules to find the object with that name:</p>
+<ol type="1">
+<li>Look in the current function environment first.</li>
+<li>If not found, look in the environment where the function was called.</li>
+<li>If not found, look in the global environment.</li>
+<li>Finally, look in the loaded packages.</li>
+</ol>
+<p>Note the specification sees a variable <em>and needs to use it</em>. This is called <em>lazy evaluation</em>: R does not evaluate anything until it needs to use it</p>
+</section>
+<section id="lexical-scoping-example" class="slide level2">
+<h2>Lexical scoping example</h2>
+<p>This can be used to your advantage, e.g.,</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>least_squares <span class="ot">&lt;-</span> <span class="cf">function</span>(beta) {</span>
+<span id="cb46-2"><a href="#cb46-2"></a>  </span>
+<span id="cb46-3"><a href="#cb46-3"></a>  <span class="fu">sum</span>((penguins<span class="sc">$</span>flipper_length_mm <span class="sc">-</span> </span>
+<span id="cb46-4"><a href="#cb46-4"></a>          (beta[<span class="dv">1</span>] <span class="sc">+</span> beta[<span class="dv">2</span>] <span class="sc">*</span> penguins<span class="sc">$</span>body_mass_g))<span class="sc">^</span><span class="dv">2</span>, <span class="at">na.rm  =</span><span class="cn">TRUE</span>)</span>
+<span id="cb46-5"><a href="#cb46-5"></a>  </span>
+<span id="cb46-6"><a href="#cb46-6"></a>}</span>
+<span id="cb46-7"><a href="#cb46-7"></a></span>
+<span id="cb46-8"><a href="#cb46-8"></a><span class="fu">optim</span>(<span class="at">par =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">fn =</span> least_squares)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$par
+[1] 136.74979325   0.01527274
+
+$value
+[1] 16250.32
+
+$counts
+function gradient 
+     113       NA 
+
+$convergence
+[1] 0
+
+$message
+NULL</code></pre>
+</div>
+</div>
+</section>
+<section id="anonymous-functions" class="slide level2">
+<h2>Anonymous functions</h2>
+<p>Your own functions do not need to be saved and assigned names. If a function does not have a name it is <code>anonymous</code>, I use these often with the apply family:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>bootmeans <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>, <span class="cf">function</span>(i) {</span>
+<span id="cb48-2"><a href="#cb48-2"></a>  <span class="fu">mean</span>(penguins<span class="sc">$</span>body_mass_g[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(penguins), </span>
+<span id="cb48-3"><a href="#cb48-3"></a>                                   <span class="fu">nrow</span>(penguins), <span class="at">replace =</span> <span class="cn">TRUE</span>)],</span>
+<span id="cb48-4"><a href="#cb48-4"></a>       <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb48-5"><a href="#cb48-5"></a>})</span>
+<span id="cb48-6"><a href="#cb48-6"></a><span class="fu">summary</span>(bootmeans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   4053    4176    4203    4204    4230    4327 </code></pre>
+</div>
+</div>
+<p>Since R 4.0.1, <code>\()</code> can be used as shorthand for <code>function()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>bootmeans <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>, \(i) {</span>
+<span id="cb50-2"><a href="#cb50-2"></a>   <span class="fu">mean</span>(penguins<span class="sc">$</span>body_mass_g[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(penguins), </span>
+<span id="cb50-3"><a href="#cb50-3"></a>                                   <span class="fu">nrow</span>(penguins), <span class="at">replace =</span> <span class="cn">TRUE</span>)],</span>
+<span id="cb50-4"><a href="#cb50-4"></a>       <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb50-5"><a href="#cb50-5"></a>})</span>
+<span id="cb50-6"><a href="#cb50-6"></a><span class="fu">summary</span>(bootmeans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   4080    4173    4201    4201    4228    4357 </code></pre>
+</div>
+</div>
+</section>
+<section id="operators" class="slide level2">
+<h2>Operators</h2>
 
 <div class="footer footer-default">
 
 </div>
-</section>
+</section></section>
     </div>
   </div>
 
@@ -554,6 +992,44 @@ Michael C Sachs
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
