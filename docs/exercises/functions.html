@@ -61,6 +61,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -116,6 +117,13 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning objectives</a></li>
+  <li><a href="#iterating-over-data-with-functions" id="toc-iterating-over-data-with-functions" class="nav-link" data-scroll-target="#iterating-over-data-with-functions">Iterating over data with functions</a>
+  <ul class="collapse">
+  <li><a href="#stop-and-think" id="toc-stop-and-think" class="nav-link" data-scroll-target="#stop-and-think">Stop and think</a></li>
+  </ul></li>
+  <li><a href="#using-the-function" id="toc-using-the-function" class="nav-link" data-scroll-target="#using-the-function">Using the function</a></li>
+  <li><a href="#more-functions" id="toc-more-functions" class="nav-link" data-scroll-target="#more-functions">More functions</a></li>
+  <li><a href="#classes-and-custom-generics" id="toc-classes-and-custom-generics" class="nav-link" data-scroll-target="#classes-and-custom-generics">Classes and custom generics</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/sachsmc/r-programming/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -155,8 +163,57 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="alert alert-success anchored" data-anchor-id="learning-objectives">Learning objectives</h3>
 <p>In this lesson you will</p>
 <ol type="1">
-<li>Learn how the <code>apply</code> family of functions works</li>
+<li>Learn how the <code>apply</code> family of functions works, and the alternatives using <code>dplyr</code> and <code>data.table</code></li>
 <li>Practice writing and reusing your own functions</li>
+</ol>
+</section>
+<section id="iterating-over-data-with-functions" class="level2">
+<h2 class="anchored" data-anchor-id="iterating-over-data-with-functions">Iterating over data with functions</h2>
+<ol type="1">
+<li>Load the Palmer penguins dataset.</li>
+<li>Write a function to compute the mean and standard deviation of a numeric vector. We will apply this function to the numeric variables in <code>penguins</code>, and also by different subgroups</li>
+</ol>
+<section id="stop-and-think" class="level3 alert alert-info">
+<h3 class="alert alert-info anchored" data-anchor-id="stop-and-think">Stop and think</h3>
+<ol type="a">
+<li>What are the components of a function?</li>
+<li>Do I have to worry about missing data? How can I deal with it?</li>
+<li>What sort of data structure should I return?</li>
+</ol>
+</section>
+</section>
+<section id="using-the-function" class="level2">
+<h2 class="anchored" data-anchor-id="using-the-function">Using the function</h2>
+<ol type="1">
+<li>Use your function to compute the mean and sd of all the numeric variables in <code>penguins</code>.</li>
+<li>Use your function to compute the mean and sd of body mass by species and sex
+<ol type="a">
+<li>Try using one of the apply functions</li>
+<li>Try using <code>dplyr</code>: check out the functions <code>group_by</code> and <code>summarize</code></li>
+<li>Try using <code>data.table</code>: use the <code>.by</code> argument in the <code>[</code></li>
+</ol></li>
+</ol>
+</section>
+<section id="more-functions" class="level2">
+<h2 class="anchored" data-anchor-id="more-functions">More functions</h2>
+<ol type="1">
+<li>Write another function that constructs a one-sample t-statistic from an estimated mean and standard deviation. Recall that the t-statistic to test the null hypothesis that <span class="math inline">\(\mu = \mu_0\)</span> is <span class="math display">\[
+T = \frac{\overline{X} - \mu_0}{\hat{\sigma}/\sqrt{n}}
+\]</span> where <span class="math inline">\(\overline{X}\)</span> is the sample mean and <span class="math inline">\(\hat{\sigma}\)</span> is the sample standard deviation and <span class="math inline">\(n\)</span> is the sample size.</li>
+<li>Write another function that takes the t-statistic and calculates a p-value</li>
+<li>Compose your custom functions in order to test the null hypothesis that the mean body mass of penguins is 4000g. Try using the pipe operator <code>|&gt;</code>.</li>
+</ol>
+</section>
+<section id="classes-and-custom-generics" class="level2">
+<h2 class="anchored" data-anchor-id="classes-and-custom-generics">Classes and custom generics</h2>
+<p>Now that you have some functions to do something interesting, let’s create a “class” to indicate that the object has a specific meaning.</p>
+<ol type="1">
+<li>Modify your mean and sd function so that the data structure that is returned has class “meansd”. There are two ways to do this:
+<ol type="a">
+<li>Say the object you currently return is called <code>x</code>, instead of <code>x</code>, return <code>structure(x, class = "meansd")</code></li>
+<li>Add the line <code>class(x) &lt;- "meansd"</code> before returning <code>x</code></li>
+</ol></li>
+<li>Write a custom print function <code>print.meansd</code> that nicely prints the mean and standard deviation. Use the functions <code>sprintf</code>, <code>round</code>, and/or <code>format</code>.</li>
 </ol>
 
 

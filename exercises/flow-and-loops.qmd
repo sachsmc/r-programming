@@ -38,6 +38,6 @@ You may notice that some of the variables have missing values. We would like to 
 
 1. Write a loop that prints out the mean for each numeric variable in the `penguins` dataset
 2. Modify your loop in 1 so that it prints out the mean, standard deviation, median, and interquartile range for each numeric variable in `penguins`. Hint: use a nested loop where one of the iterators is a function. 
-3. Write a loop to compute 500 bootstrap replicates of the means of bill length, bill depth, and flipper length. Remember to pre-allocate a data structure to store the 500 times 3 values. What is the correlation of the means? 
+3. Write a loop to compute 500 bootstrap replicates of the means of bill length, bill depth, and flipper length. Remember to pre-allocate a data structure to store the 500 times 3 values. Provide an estimate of the correlation of the sample means.
 
 

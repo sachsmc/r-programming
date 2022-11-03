@@ -9,6 +9,8 @@ execute:
   echo: true
 ---
 
+# Using functions
+
 ## A function and its components
 
 Almost everything you do in R involves functions. You call a function by typing its name with its arguments (inputs) inside the parentheses: 
@@ -227,6 +229,34 @@ least_squares <- function(beta) {
 optim(par = c(0,0), fn = least_squares)
 ```
 
+## Lazy evaluation example
+
+```{r}
+h01 <- function(x) {
+    
+    "Hello world!"
+    
+}
+h01()
+h01(stop("Error"))
+```
+
+One way to manually check for arguments is with `missing`: 
+
+```{r}
+h02 <- function(x) {
+    
+    if(missing(x)) {
+        return("Missing x!")
+    }
+    "Hello world!"
+    
+}
+
+h02()
+h02(1)
+```
+
 
 ## Anonymous functions
 
@@ -234,9 +264,10 @@ Your own functions do not need to be saved and assigned names. If a function doe
 
 ```{r}
 bootmeans <- sapply(1:1000, function(i) {
-  mean(penguins$body_mass_g[sample(1:nrow(penguins), 
-                                   nrow(penguins), replace = TRUE)],
-       na.rm = TRUE)
+  
+  sample(penguins$body_mass_g, replace = TRUE) |>
+    mean(na.rm = TRUE)
+
 })
 summary(bootmeans)
 ```
@@ -244,9 +275,10 @@ summary(bootmeans)
 Since R 4.0.1, `\()` can be used as shorthand for `function()`: 
 ```{r}
 bootmeans <- sapply(1:1000, \(i) {
-   mean(penguins$body_mass_g[sample(1:nrow(penguins), 
-                                   nrow(penguins), replace = TRUE)],
-       na.rm = TRUE)
+  
+   sample(penguins$body_mass_g, replace = TRUE) |>
+    mean(na.rm = TRUE)
+  
 })
 summary(bootmeans)
 ```
@@ -254,3 +286,100 @@ summary(bootmeans)
 
 ## Operators
 
+Operators are symbols like `+`, `<-`, `%*%`, `[`. 
+
+These are functions! To treat them like functions instead of operators, use backticks:
+```{r}
+2 + 2
+`+`(2, 2)
+```
+
+You can then treat operators as you would any other function, using them in apply or otherwise
+
+You can also define your own operators: 
+
+```{r}
+`% %` <- function(a, b) {
+    
+    paste(a, b)
+    
+}
+
+"my" % % "name"
+"my" % % "name" % % "is" % % "Mike"
+```
+
+
+Assignment operators have a special syntax: 
+
+```{r}
+`second<-` <- function(x, value){
+    
+    x[2] <- value
+    x
+    
+}
+
+x <- 1:10
+second(x) <- 11
+x
+```
+
+
+
+## Generic methods/functions
+
+Look at the function `print`
+
+```{r}
+print
+```
+
+It is a _generic function_. `UseMethod` says depending on the _class_ of argument `object`, R will call a suitable _method_ (a function) that does something designed for whatever `object` is.
+
+You can find all the special methods by running `methods("print")` (try it now). 
+
+The class of the object is a simple attribute and the method is defined by appending the class name after the function name separated by a dot. This is called the __S3 class system__: 
+
+```{r}
+x <- 1:4
+class(x)
+class(x) <- "myclass"
+
+inherits(x, "myclass")
+
+print.myclass <- function(x, ...) {
+  
+  cat(x, sep = "\n")
+  
+}
+
+x
+```
+
+
+## Summary
+
+In R, everything that happens is due to a function, and everything that exists is an object. Functions themselves are objects.
+
+How do functions work together? We can classify functions according to their inputs and outputs: 
+
+Input/Output | Data             | Function 
+-------------|------------------|-----------------
+Data         | Regular function | Function factory
+Function     | Functional       | Function operator
+
+
+These concepts are loosely defined, because functions can take both data and function arguments and return data and function results.
+
+
+## Practical
+
+1. Modify and write functions
+2. Use apply to iterate functions over data
+3. Write your own class and generic print function
+
+
+[Link to lesson](../exercises/functions.html)
+
+[Link home](../index.html)

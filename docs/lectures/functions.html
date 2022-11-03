@@ -401,13 +401,18 @@ Michael C Sachs
 </div>
 
 </section>
+<section>
+<section id="using-functions" class="title-slide slide level1 center">
+<h1>Using functions</h1>
+
+</section>
 <section id="a-function-and-its-components" class="slide level2">
 <h2>A function and its components</h2>
 <p>Almost everything you do in R involves functions. You call a function by typing its name with its arguments (inputs) inside the parentheses:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">size =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 4 2</code></pre>
+<pre><code>[1] 5 1</code></pre>
 </div>
 </div>
 <p>The function takes the arguments you provide, does something, and then returns an object. To see what a function does, you can type its name without parentheses to see the source:</p>
@@ -428,7 +433,7 @@ Michael C Sachs
         x[sample.int(length(x), size, replace, prob)]
     }
 }
-&lt;bytecode: 0x559fb1559650&gt;
+&lt;bytecode: 0x55754fb81370&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -617,7 +622,7 @@ $Gentoo
 <p>Using apply instead of a for loop will not be faster computationally</p>
 <p>It may be faster to write, but it may also be much harder to understand</p>
 <p>You can do whatever you want inside a for loop, how would you do something more complex with <code>lapply</code>?</p>
-</section>
+</section></section>
 <section>
 <section id="writing-your-own-functions" class="title-slide slide level1 center">
 <h1>Writing your own functions</h1>
@@ -745,16 +750,55 @@ NULL</code></pre>
 </div>
 </div>
 </section>
+<section id="lazy-evaluation-example" class="slide level2">
+<h2>Lazy evaluation example</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>h01 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb48-2"><a href="#cb48-2"></a>    </span>
+<span id="cb48-3"><a href="#cb48-3"></a>    <span class="st">"Hello world!"</span></span>
+<span id="cb48-4"><a href="#cb48-4"></a>    </span>
+<span id="cb48-5"><a href="#cb48-5"></a>}</span>
+<span id="cb48-6"><a href="#cb48-6"></a><span class="fu">h01</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Hello world!"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="fu">h01</span>(<span class="fu">stop</span>(<span class="st">"Error"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Hello world!"</code></pre>
+</div>
+</div>
+<p>One way to manually check for arguments is with <code>missing</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>h02 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb52-2"><a href="#cb52-2"></a>    </span>
+<span id="cb52-3"><a href="#cb52-3"></a>    <span class="cf">if</span>(<span class="fu">missing</span>(x)) {</span>
+<span id="cb52-4"><a href="#cb52-4"></a>        <span class="fu">return</span>(<span class="st">"Missing x!"</span>)</span>
+<span id="cb52-5"><a href="#cb52-5"></a>    }</span>
+<span id="cb52-6"><a href="#cb52-6"></a>    <span class="st">"Hello world!"</span></span>
+<span id="cb52-7"><a href="#cb52-7"></a>    </span>
+<span id="cb52-8"><a href="#cb52-8"></a>}</span>
+<span id="cb52-9"><a href="#cb52-9"></a></span>
+<span id="cb52-10"><a href="#cb52-10"></a><span class="fu">h02</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Missing x!"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="fu">h02</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Hello world!"</code></pre>
+</div>
+</div>
+</section>
 <section id="anonymous-functions" class="slide level2">
 <h2>Anonymous functions</h2>
 <p>Your own functions do not need to be saved and assigned names. If a function does not have a name it is <code>anonymous</code>, I use these often with the apply family:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>bootmeans <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>, <span class="cf">function</span>(i) {</span>
-<span id="cb48-2"><a href="#cb48-2"></a>  <span class="fu">mean</span>(penguins<span class="sc">$</span>body_mass_g[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(penguins), </span>
-<span id="cb48-3"><a href="#cb48-3"></a>                                   <span class="fu">nrow</span>(penguins), <span class="at">replace =</span> <span class="cn">TRUE</span>)],</span>
-<span id="cb48-4"><a href="#cb48-4"></a>       <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb48-5"><a href="#cb48-5"></a>})</span>
-<span id="cb48-6"><a href="#cb48-6"></a><span class="fu">summary</span>(bootmeans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>bootmeans <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>, <span class="cf">function</span>(i) {</span>
+<span id="cb56-2"><a href="#cb56-2"></a>  </span>
+<span id="cb56-3"><a href="#cb56-3"></a>  <span class="fu">sample</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">replace =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb56-4"><a href="#cb56-4"></a>    <span class="fu">mean</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb56-5"><a href="#cb56-5"></a></span>
+<span id="cb56-6"><a href="#cb56-6"></a>})</span>
+<span id="cb56-7"><a href="#cb56-7"></a><span class="fu">summary</span>(bootmeans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
    4053    4176    4203    4204    4230    4327 </code></pre>
@@ -762,12 +806,13 @@ NULL</code></pre>
 </div>
 <p>Since R 4.0.1, <code>\()</code> can be used as shorthand for <code>function()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>bootmeans <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>, \(i) {</span>
-<span id="cb50-2"><a href="#cb50-2"></a>   <span class="fu">mean</span>(penguins<span class="sc">$</span>body_mass_g[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(penguins), </span>
-<span id="cb50-3"><a href="#cb50-3"></a>                                   <span class="fu">nrow</span>(penguins), <span class="at">replace =</span> <span class="cn">TRUE</span>)],</span>
-<span id="cb50-4"><a href="#cb50-4"></a>       <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb50-5"><a href="#cb50-5"></a>})</span>
-<span id="cb50-6"><a href="#cb50-6"></a><span class="fu">summary</span>(bootmeans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>bootmeans <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>, \(i) {</span>
+<span id="cb58-2"><a href="#cb58-2"></a>  </span>
+<span id="cb58-3"><a href="#cb58-3"></a>   <span class="fu">sample</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">replace =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb58-4"><a href="#cb58-4"></a>    <span class="fu">mean</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb58-5"><a href="#cb58-5"></a>  </span>
+<span id="cb58-6"><a href="#cb58-6"></a>})</span>
+<span id="cb58-7"><a href="#cb58-7"></a><span class="fu">summary</span>(bootmeans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
    4080    4173    4201    4201    4228    4357 </code></pre>
@@ -776,6 +821,131 @@ NULL</code></pre>
 </section>
 <section id="operators" class="slide level2">
 <h2>Operators</h2>
+<p>Operators are symbols like <code>+</code>, <code>&lt;-</code>, <code>%*%</code>, <code>[</code>.</p>
+<p>These are functions! To treat them like functions instead of operators, use backticks:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a><span class="st">`</span><span class="at">+</span><span class="st">`</span>(<span class="dv">2</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+</div>
+<p>You can then treat operators as you would any other function, using them in apply or otherwise</p>
+<p>You can also define your own operators:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a><span class="st">`</span><span class="at">% %</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) {</span>
+<span id="cb64-2"><a href="#cb64-2"></a>    </span>
+<span id="cb64-3"><a href="#cb64-3"></a>    <span class="fu">paste</span>(a, b)</span>
+<span id="cb64-4"><a href="#cb64-4"></a>    </span>
+<span id="cb64-5"><a href="#cb64-5"></a>}</span>
+<span id="cb64-6"><a href="#cb64-6"></a></span>
+<span id="cb64-7"><a href="#cb64-7"></a><span class="st">"my"</span> <span class="sc">% %</span> <span class="st">"name"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "my name"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a><span class="st">"my"</span> <span class="sc">% %</span> <span class="st">"name"</span> <span class="sc">% %</span> <span class="st">"is"</span> <span class="sc">% %</span> <span class="st">"Mike"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "my name is Mike"</code></pre>
+</div>
+</div>
+<p>Assignment operators have a special syntax:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="st">`</span><span class="at">second&lt;-</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="cf">function</span>(x, value){</span>
+<span id="cb68-2"><a href="#cb68-2"></a>    </span>
+<span id="cb68-3"><a href="#cb68-3"></a>    x[<span class="dv">2</span>] <span class="ot">&lt;-</span> value</span>
+<span id="cb68-4"><a href="#cb68-4"></a>    x</span>
+<span id="cb68-5"><a href="#cb68-5"></a>    </span>
+<span id="cb68-6"><a href="#cb68-6"></a>}</span>
+<span id="cb68-7"><a href="#cb68-7"></a></span>
+<span id="cb68-8"><a href="#cb68-8"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb68-9"><a href="#cb68-9"></a><span class="fu">second</span>(x) <span class="ot">&lt;-</span> <span class="dv">11</span></span>
+<span id="cb68-10"><a href="#cb68-10"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  1 11  3  4  5  6  7  8  9 10</code></pre>
+</div>
+</div>
+</section>
+<section id="generic-methodsfunctions" class="slide level2">
+<h2>Generic methods/functions</h2>
+<p>Look at the function <code>print</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a>print</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>function (x, ...) 
+UseMethod("print")
+&lt;bytecode: 0x55754edbcca8&gt;
+&lt;environment: namespace:base&gt;</code></pre>
+</div>
+</div>
+<p>It is a <em>generic function</em>. <code>UseMethod</code> says depending on the <em>class</em> of argument <code>object</code>, R will call a suitable <em>method</em> (a function) that does something designed for whatever <code>object</code> is.</p>
+<p>You can find all the special methods by running <code>methods("print")</code> (try it now).</p>
+<p>The class of the object is a simple attribute and the method is defined by appending the class name after the function name separated by a dot. This is called the <strong>S3 class system</strong>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span></span>
+<span id="cb72-2"><a href="#cb72-2"></a><span class="fu">class</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "integer"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a><span class="fu">class</span>(x) <span class="ot">&lt;-</span> <span class="st">"myclass"</span></span>
+<span id="cb74-2"><a href="#cb74-2"></a></span>
+<span id="cb74-3"><a href="#cb74-3"></a><span class="fu">inherits</span>(x, <span class="st">"myclass"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a>print.myclass <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb76-2"><a href="#cb76-2"></a>  </span>
+<span id="cb76-3"><a href="#cb76-3"></a>  <span class="fu">cat</span>(x, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb76-4"><a href="#cb76-4"></a>  </span>
+<span id="cb76-5"><a href="#cb76-5"></a>}</span>
+<span id="cb76-6"><a href="#cb76-6"></a></span>
+<span id="cb76-7"><a href="#cb76-7"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1
+2
+3
+4</code></pre>
+</div>
+</div>
+</section>
+<section id="summary" class="slide level2">
+<h2>Summary</h2>
+<p>In R, everything that happens is due to a function, and everything that exists is an object. Functions themselves are objects.</p>
+<p>How do functions work together? We can classify functions according to their inputs and outputs:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Input/Output</th>
+<th>Data</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Data</td>
+<td>Regular function</td>
+<td>Function factory</td>
+</tr>
+<tr class="even">
+<td>Function</td>
+<td>Functional</td>
+<td>Function operator</td>
+</tr>
+</tbody>
+</table>
+<p>These concepts are loosely defined, because functions can take both data and function arguments and return data and function results.</p>
+</section>
+<section id="practical" class="slide level2">
+<h2>Practical</h2>
+<ol type="1">
+<li>Modify and write functions</li>
+<li>Use apply to iterate functions over data</li>
+<li>Write your own class and generic print function</li>
+</ol>
+<p><a href="../exercises/functions.html">Link to lesson</a></p>
+<p><a href="../index.html">Link home</a></p>
 
 <div class="footer footer-default">
 

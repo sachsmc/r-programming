@@ -11,5 +11,51 @@ image: functions.jpeg
 
 In this lesson you will 
 
-1. Learn how the `apply` family of functions works
+1. Learn how the `apply` family of functions works, and the alternatives using `dplyr` and `data.table`
 2. Practice writing and reusing your own functions
+
+
+## Iterating over data with functions
+
+1. Load the Palmer penguins dataset. 
+2. Write a function to compute the mean and standard deviation of a numeric vector. We will apply this function to the numeric variables in `penguins`, and also by different subgroups
+    
+### Stop and think {.alert .alert-info}    
+a. What are the components of a function? 
+b. Do I have to worry about missing data? How can I deal with it? 
+c. What sort of data structure should I return? 
+    
+
+## Using the function
+    
+1. Use your function to compute the mean and sd of all the numeric variables in `penguins`. 
+2. Use your function to compute the mean and sd of body mass by species and sex
+    a. Try using one of the apply functions
+    b. Try using `dplyr`: check out the functions `group_by` and `summarize`
+    c. Try using `data.table`: use the `.by` argument in the `[`
+
+
+## More functions
+
+
+1. Write another function that constructs a one-sample t-statistic from an estimated mean and standard deviation. Recall that the t-statistic to test the null hypothesis that $\mu = \mu_0$ is 
+$$
+T = \frac{\overline{X} - \mu_0}{\hat{\sigma}/\sqrt{n}}
+$$
+where $\overline{X}$ is the sample mean and $\hat{\sigma}$ is the sample standard deviation and $n$ is the sample size.
+2. Write another function that takes the t-statistic and calculates a p-value
+3. Compose your custom functions in order to test the null hypothesis that the mean body mass of penguins is 4000g. Try using the pipe operator `|>`. 
+
+
+## Classes and custom generics
+
+Now that you have some functions to do something interesting, let's create a "class" to indicate that the object has a specific meaning. 
+
+1. Modify your mean and sd function so that the data structure that is returned has class "meansd". There are two ways to do this: 
+    a. Say the object you currently return is called `x`, instead of `x`, return `structure(x, class = "meansd")`
+    b. Add the line `class(x) <- "meansd"` before returning `x`
+2. Write a custom print function `print.meansd` that nicely prints the mean and standard deviation. Use the functions `sprintf`, `round`, and/or `format`. 
+
+
+
+
