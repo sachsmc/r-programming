@@ -202,14 +202,13 @@ hello2("Jim")
 
 ## Lexical scoping
 
-This is called _lexical scoping_: it means how does R look for objects when they are referred to by name? 
+This is called _lexical scoping_: it defines how R looks for objects when they are referred to by name 
 
-If R sees a variable and needs to use it inside a function, it follows these rules to find the object with that name: 
+If R sees a variable it needs to use inside a function, and it is not an argument or local variable, then it follows these rules to find the object with that name: 
 
-1. Look in the current function environment first.
-2. If not found, look in the environment where the function was called.
-3. If not found, look in the global environment.
-4. Finally, look in the loaded packages.
+1. Look in the environment where the function was defined.
+2. If not found, look in the parent environment of 1
+3. If not found continue going down into parents until there are no more.
 
 Note the specification sees a variable _and needs to use it_. This is called _lazy evaluation_: R does not evaluate anything until it needs to use it
 
@@ -219,14 +218,20 @@ Note the specification sees a variable _and needs to use it_. This is called _la
 This can be used to your advantage, e.g., 
 
 ```{r}
-least_squares <- function(beta) {
+least_squares_constructor <- function(dataY, dataX) {
   
-  sum((penguins$flipper_length_mm - 
-          (beta[1] + beta[2] * penguins$body_mass_g))^2, na.rm  =TRUE)
-  
+  function(beta) {
+    sum((dataY - (beta[1] + beta[2] * dataX))^2, na.rm  =TRUE)
+  }
+    
 }
 
-optim(par = c(0,0), fn = least_squares)
+model_penguin <- least_squares_constructor(penguins$flipper_length_mm, 
+                                        penguins$body_mass_g)
+model_penguin
+ls(environment(model_penguin))
+
+optim(par = c(0,0), fn = model_penguin)
 ```
 
 ## Lazy evaluation example
@@ -383,3 +388,29 @@ These concepts are loosely defined, because functions can take both data and fun
 [Link to lesson](../exercises/functions.html)
 
 [Link home](../index.html)
+
+
+# Extra slides
+
+## Recursive functions
+
+Functions that call themselves are possible. 
+
+As with repeat loops, they need to have a _break condition_ 
+
+```{r}
+
+fibbo <- function(n) {
+  
+  if(n <= 2) {  ## exit condition
+    1
+  } else {
+    n + fibbo(n - 1)
+  }
+  
+}
+```
+
+
+These are actually useful when working with nested lists and directed acyclic graphs, for example. 
+

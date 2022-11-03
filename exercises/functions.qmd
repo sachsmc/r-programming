@@ -57,5 +57,14 @@ Now that you have some functions to do something interesting, let's create a "cl
 2. Write a custom print function `print.meansd` that nicely prints the mean and standard deviation. Use the functions `sprintf`, `round`, and/or `format`. 
 
 
+### If you have time or on your own
+
+1. Expand your class to include confidence interval and p-value calculation/printing
+2. Look at the `t.test` function. What type of object does this return? 
+3. Look at the print method for the class of the object returned by `t.test`. How does it work? How would you modify it? 
+4. Are there any other methods are available for that class? Use the `methods` function. 
+
+
+
 
 

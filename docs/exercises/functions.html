@@ -123,7 +123,10 @@ ul.task-list li input[type="checkbox"] {
   </ul></li>
   <li><a href="#using-the-function" id="toc-using-the-function" class="nav-link" data-scroll-target="#using-the-function">Using the function</a></li>
   <li><a href="#more-functions" id="toc-more-functions" class="nav-link" data-scroll-target="#more-functions">More functions</a></li>
-  <li><a href="#classes-and-custom-generics" id="toc-classes-and-custom-generics" class="nav-link" data-scroll-target="#classes-and-custom-generics">Classes and custom generics</a></li>
+  <li><a href="#classes-and-custom-generics" id="toc-classes-and-custom-generics" class="nav-link" data-scroll-target="#classes-and-custom-generics">Classes and custom generics</a>
+  <ul class="collapse">
+  <li><a href="#if-you-have-time-or-on-your-own" id="toc-if-you-have-time-or-on-your-own" class="nav-link" data-scroll-target="#if-you-have-time-or-on-your-own">If you have time or on your own</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/sachsmc/r-programming/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -215,8 +218,17 @@ T = \frac{\overline{X} - \mu_0}{\hat{\sigma}/\sqrt{n}}
 </ol></li>
 <li>Write a custom print function <code>print.meansd</code> that nicely prints the mean and standard deviation. Use the functions <code>sprintf</code>, <code>round</code>, and/or <code>format</code>.</li>
 </ol>
+<section id="if-you-have-time-or-on-your-own" class="level3">
+<h3 class="anchored" data-anchor-id="if-you-have-time-or-on-your-own">If you have time or on your own</h3>
+<ol type="1">
+<li>Expand your class to include confidence interval and p-value calculation/printing</li>
+<li>Look at the <code>t.test</code> function. What type of object does this return?</li>
+<li>Look at the print method for the class of the object returned by <code>t.test</code>. How does it work? How would you modify it?</li>
+<li>Are there any other methods are available for that class? Use the <code>methods</code> function.</li>
+</ol>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
