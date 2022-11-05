@@ -21,7 +21,8 @@ In this lesson you will
 2. Modify the loop to print every _even_ number from 1 to 10 (hint: add an `if` statement)
 
 
-## Loops to do data manipulation
+
+## Loops for statistical analysis
 
 Load the `palmerpenguins` dataset: 
 
@@ -30,14 +31,53 @@ library(palmerpenguins)
 penguins
 ```
 
+
+1. Write a loop that calculates and prints out the mean for each numeric variable in the `penguins` dataset
+
+<details>
+<summary>Hints</summary>
+- How do you determine if a variable is numeric? You can use the `is.numeric` function, which returns TRUE or FALSE
+- Inside a loop, sometimes `R` does not print things to the console, so you need to wrap them in the `print` function, e.g., `print(mean(x))` inside the loop. 
+</details>
+
+2. Modify your loop in 1 so that it prints out the mean, standard deviation, median, and interquartile range for each numeric variable in `penguins`. 
+
+<details>
+<summary>Hints</summary>
+- Use a nested loop where one of the iterators is the name of a function. To retrieve a function by name, use the `get` function, e.g., `get("mean")` returns the mean function, which can then saved as an intermediate object and be used like any other function. 
+</details>
+
+3. Write a loop to compute 500 bootstrap replicates of the means of bill length, bill depth, and flipper length. Remember to pre-allocate a data structure to store the 500 times 3 values. Provide an estimate of the correlation of the sample means.
+
+<details>
+<summary>Hints</summary>
+- To get a bootstrap sample of a vector, use the `sample` function with the argument `replace = TRUE`.
+- You can store the replicates in a matrix with 500 rows and 3 columns. Refer to the [data structures lecture](../lectures/data-structures.html) for information about indexing matrices.
+</details>
+
+
+## Loops to do data manipulation
+
 You may notice that some of the variables have missing values. We would like to replace the missing values with the "typical" value that is observed. 
 
-1. Write a loop that goes through the variables in `penguins` and replaces missing values with the mean for numeric variables, and the most frequent value for characters or factors. 
+1. Write a loop that contains an `if` then `else` statement that goes through the variables in `penguins` and replaces missing values with the mean for numeric double variables, and the most frequent value for characters or factors. 
 
-## Loops for statistical analysis
+<details>
+<summary>Hints</summary>
+- Use this function to calculate the mode in a way that returns the same data type.
 
-1. Write a loop that prints out the mean for each numeric variable in the `penguins` dataset
-2. Modify your loop in 1 so that it prints out the mean, standard deviation, median, and interquartile range for each numeric variable in `penguins`. Hint: use a nested loop where one of the iterators is a function. 
-3. Write a loop to compute 500 bootstrap replicates of the means of bill length, bill depth, and flipper length. Remember to pre-allocate a data structure to store the 500 times 3 values. Provide an estimate of the correlation of the sample means.
+```{r}
+my_mode <- function(x) {
+  
+  converter <- get(paste0("as.", class(x)))
+  tab <- table(x) |> sort(decreasing = TRUE) 
+  names(tab)[1] |> converter()
+  
+}
+```
+
+- Inside the loop you will need to check whether the variable is of type "double". Do this using the `is.double` function, which returns a TRUE or FALSE.
+- To assign a new value `m` to only the missing elements of a vector `x`, you can do the following `x[is.na(x)] <- m`. Refer to the [data structures lecture](../lectures/data-structures.html) for information about indexing vectors
+</details>
 
 

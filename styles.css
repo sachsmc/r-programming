@@ -10,3 +10,8 @@
   color: #18bc9c;
   text-decoration: underline;
 }
+
+details {
+  background-color: #fdf2d2;
+  padding: 1em;
+}

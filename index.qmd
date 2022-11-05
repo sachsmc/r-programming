@@ -2,6 +2,11 @@
 title: "Programming and statistical modelling in R"
 ---
 
+## Link to padlet for ongoing class: 
+
+[https://padlet.com/sachsmc/rprog](https://padlet.com/sachsmc/rprog)
+
+
 # COURSE DESCRIPTION
 
 ## Course title 

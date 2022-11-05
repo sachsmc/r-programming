@@ -180,8 +180,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning objectives</a></li>
   <li><a href="#simple-loops-and-conditional-statements" id="toc-simple-loops-and-conditional-statements" class="nav-link" data-scroll-target="#simple-loops-and-conditional-statements">Simple loops and conditional statements</a></li>
-  <li><a href="#loops-to-do-data-manipulation" id="toc-loops-to-do-data-manipulation" class="nav-link" data-scroll-target="#loops-to-do-data-manipulation">Loops to do data manipulation</a></li>
   <li><a href="#loops-for-statistical-analysis" id="toc-loops-for-statistical-analysis" class="nav-link" data-scroll-target="#loops-for-statistical-analysis">Loops for statistical analysis</a></li>
+  <li><a href="#loops-to-do-data-manipulation" id="toc-loops-to-do-data-manipulation" class="nav-link" data-scroll-target="#loops-to-do-data-manipulation">Loops to do data manipulation</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/sachsmc/r-programming/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -232,8 +232,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Modify the loop to print every <em>even</em> number from 1 to 10 (hint: add an <code>if</code> statement)</li>
 </ol>
 </section>
-<section id="loops-to-do-data-manipulation" class="level2">
-<h2 class="anchored" data-anchor-id="loops-to-do-data-manipulation">Loops to do data manipulation</h2>
+<section id="loops-for-statistical-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="loops-for-statistical-analysis">Loops for statistical analysis</h2>
 <p>Load the <code>palmerpenguins</code> dataset:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
@@ -257,18 +257,69 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 # ℹ Use `print(n = ...)` to see more rows</code></pre>
 </div>
 </div>
-<p>You may notice that some of the variables have missing values. We would like to replace the missing values with the “typical” value that is observed.</p>
 <ol type="1">
-<li>Write a loop that goes through the variables in <code>penguins</code> and replaces missing values with the mean for numeric variables, and the most frequent value for characters or factors.</li>
+<li>Write a loop that calculates and prints out the mean for each numeric variable in the <code>penguins</code> dataset</li>
 </ol>
-</section>
-<section id="loops-for-statistical-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="loops-for-statistical-analysis">Loops for statistical analysis</h2>
-<ol type="1">
-<li>Write a loop that prints out the mean for each numeric variable in the <code>penguins</code> dataset</li>
-<li>Modify your loop in 1 so that it prints out the mean, standard deviation, median, and interquartile range for each numeric variable in <code>penguins</code>. Hint: use a nested loop where one of the iterators is a function.</li>
+<details>
+<summary>
+Hints
+</summary>
+<ul>
+<li>How do you determine if a variable is numeric? You can use the <code>is.numeric</code> function, which returns TRUE or FALSE</li>
+<li>Inside a loop, sometimes <code>R</code> does not print things to the console, so you need to wrap them in the <code>print</code> function, e.g., <code>print(mean(x))</code> inside the loop.</li>
+</ul>
+</details>
+<ol start="2" type="1">
+<li>Modify your loop in 1 so that it prints out the mean, standard deviation, median, and interquartile range for each numeric variable in <code>penguins</code>.</li>
+</ol>
+<details>
+<summary>
+Hints
+</summary>
+<ul>
+<li>Use a nested loop where one of the iterators is the name of a function. To retrieve a function by name, use the <code>get</code> function, e.g., <code>get("mean")</code> returns the mean function, which can then saved as an intermediate object and be used like any other function.</li>
+</ul>
+</details>
+<ol start="3" type="1">
 <li>Write a loop to compute 500 bootstrap replicates of the means of bill length, bill depth, and flipper length. Remember to pre-allocate a data structure to store the 500 times 3 values. Provide an estimate of the correlation of the sample means.</li>
 </ol>
+<details>
+<summary>
+Hints
+</summary>
+<ul>
+<li>To get a bootstrap sample of a vector, use the <code>sample</code> function with the argument <code>replace = TRUE</code>.</li>
+<li>You can store the replicates in a matrix with 500 rows and 3 columns. Refer to the <a href="../lectures/data-structures.html">data structures lecture</a> for information about indexing matrices.</li>
+</ul>
+</details>
+</section>
+<section id="loops-to-do-data-manipulation" class="level2">
+<h2 class="anchored" data-anchor-id="loops-to-do-data-manipulation">Loops to do data manipulation</h2>
+<p>You may notice that some of the variables have missing values. We would like to replace the missing values with the “typical” value that is observed.</p>
+<ol type="1">
+<li>Write a loop that contains an <code>if</code> then <code>else</code> statement that goes through the variables in <code>penguins</code> and replaces missing values with the mean for numeric double variables, and the most frequent value for characters or factors.</li>
+</ol>
+<details>
+<summary>
+Hints
+</summary>
+<ul>
+<li>Use this function to calculate the mode in a way that returns the same data type.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>my_mode <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  converter <span class="ot">&lt;-</span> <span class="fu">get</span>(<span class="fu">paste0</span>(<span class="st">"as."</span>, <span class="fu">class</span>(x)))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  tab <span class="ot">&lt;-</span> <span class="fu">table</span>(x) <span class="sc">|&gt;</span> <span class="fu">sort</span>(<span class="at">decreasing =</span> <span class="cn">TRUE</span>) </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(tab)[<span class="dv">1</span>] <span class="sc">|&gt;</span> <span class="fu">converter</span>()</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Inside the loop you will need to check whether the variable is of type “double”. Do this using the <code>is.double</code> function, which returns a TRUE or FALSE.</li>
+<li>To assign a new value <code>m</code> to only the missing elements of a vector <code>x</code>, you can do the following <code>x[is.na(x)] &lt;- m</code>. Refer to the <a href="../lectures/data-structures.html">data structures lecture</a> for information about indexing vectors</li>
+</ul>
+</details>
 
 
 </section>
