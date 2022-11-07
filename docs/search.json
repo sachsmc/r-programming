@@ -193,7 +193,7 @@
     "href": "lectures/functions.html#a-function-and-its-components",
     "title": "Functions",
     "section": "A function and its components",
-    "text": "A function and its components\nAlmost everything you do in R involves functions. You call a function by typing its name with its arguments (inputs) inside the parentheses:\n\nsample(x = 1:5, size = 2)\n\n[1] 1 2\n\n\nThe function takes the arguments you provide, does something, and then returns an object. To see what a function does, you can type its name without parentheses to see the source:\n\nsample\n\nfunction (x, size, replace = FALSE, prob = NULL) \n{\n    if (length(x) == 1L && is.numeric(x) && is.finite(x) && x >= \n        1) {\n        if (missing(size)) \n            size <- x\n        sample.int(x, size, replace, prob)\n    }\n    else {\n        if (missing(size)) \n            size <- length(x)\n        x[sample.int(length(x), size, replace, prob)]\n    }\n}\n<bytecode: 0x55c37275b6a8>\n<environment: namespace:base>\n\n\nThe source shows you the arguments, their default values, and the expression defining the function. You can also look at the help file for the documentation:\n\nhelp(\"sample\")\n# or\n?sample"
+    "text": "A function and its components\nAlmost everything you do in R involves functions. You call a function by typing its name with its arguments (inputs) inside the parentheses:\n\nsample(x = 1:5, size = 2)\n\n[1] 3 1\n\n\nThe function takes the arguments you provide, does something, and then returns an object. To see what a function does, you can type its name without parentheses to see the source:\n\nsample\n\nfunction (x, size, replace = FALSE, prob = NULL) \n{\n    if (length(x) == 1L && is.numeric(x) && is.finite(x) && x >= \n        1) {\n        if (missing(size)) \n            size <- x\n        sample.int(x, size, replace, prob)\n    }\n    else {\n        if (missing(size)) \n            size <- length(x)\n        x[sample.int(length(x), size, replace, prob)]\n    }\n}\n<bytecode: 0x558ceaeb06a8>\n<environment: namespace:base>\n\n\nThe source shows you the arguments, their default values, and the expression defining the function. You can also look at the help file for the documentation:\n\nhelp(\"sample\")\n# or\n?sample"
   },
   {
     "objectID": "lectures/functions.html#using-functions-arguments",
@@ -270,7 +270,7 @@
     "href": "lectures/functions.html#lexical-scoping-example",
     "title": "Functions",
     "section": "Lexical scoping example",
-    "text": "Lexical scoping example\nThis can be used to your advantage, e.g.,\n\nleast_squares_constructor <- function(dataY, dataX) {\n  \n  function(beta) {\n    sum((dataY - (beta[1] + beta[2] * dataX))^2, na.rm  =TRUE)\n  }\n    \n}\n\nmodel_penguin <- least_squares_constructor(penguins$flipper_length_mm, \n                                        penguins$body_mass_g)\nmodel_penguin\n\nfunction(beta) {\n    sum((dataY - (beta[1] + beta[2] * dataX))^2, na.rm  =TRUE)\n  }\n<environment: 0x55c37630b2d0>\n\nls(environment(model_penguin))\n\n[1] \"dataX\" \"dataY\"\n\noptim(par = c(0,0), fn = model_penguin)\n\n$par\n[1] 136.74979325   0.01527274\n\n$value\n[1] 16250.32\n\n$counts\nfunction gradient \n     113       NA \n\n$convergence\n[1] 0\n\n$message\nNULL"
+    "text": "Lexical scoping example\nThis can be used to your advantage, e.g.,\n\nleast_squares_constructor <- function(dataY, dataX) {\n  \n  function(beta) {\n    sum((dataY - (beta[1] + beta[2] * dataX))^2, na.rm  =TRUE)\n  }\n    \n}\n\nmodel_penguin <- least_squares_constructor(penguins$flipper_length_mm, \n                                        penguins$body_mass_g)\nmodel_penguin\n\nfunction(beta) {\n    sum((dataY - (beta[1] + beta[2] * dataX))^2, na.rm  =TRUE)\n  }\n<environment: 0x558ceea602d0>\n\nls(environment(model_penguin))\n\n[1] \"dataX\" \"dataY\"\n\noptim(par = c(0,0), fn = model_penguin)\n\n$par\n[1] 136.74979325   0.01527274\n\n$value\n[1] 16250.32\n\n$counts\nfunction gradient \n     113       NA \n\n$convergence\n[1] 0\n\n$message\nNULL"
   },
   {
     "objectID": "lectures/functions.html#lazy-evaluation-example",
@@ -298,7 +298,7 @@
     "href": "lectures/functions.html#generic-methodsfunctions",
     "title": "Functions",
     "section": "Generic methods/functions",
-    "text": "Generic methods/functions\nLook at the function print\n\nprint\n\nfunction (x, ...) \nUseMethod(\"print\")\n<bytecode: 0x55c372816c98>\n<environment: namespace:base>\n\n\nIt is a generic function. UseMethod says depending on the class of argument object, R will call a suitable method (a function) that does something designed for whatever object is.\nYou can find all the special methods by running methods(\"print\") (try it now).\nThe class of the object is a simple attribute and the method is defined by appending the class name after the function name separated by a dot. This is called the S3 class system:\n\nx <- 1:4\nclass(x)\n\n[1] \"integer\"\n\nclass(x) <- \"myclass\"\n\ninherits(x, \"myclass\")\n\n[1] TRUE\n\nprint.myclass <- function(x, ...) {\n  \n  cat(x, sep = \"\\n\")\n  \n}\n\nx\n\n1\n2\n3\n4"
+    "text": "Generic methods/functions\nLook at the function print\n\nprint\n\nfunction (x, ...) \nUseMethod(\"print\")\n<bytecode: 0x558ceaf6bc98>\n<environment: namespace:base>\n\n\nIt is a generic function. UseMethod says depending on the class of argument object, R will call a suitable method (a function) that does something designed for whatever object is.\nYou can find all the special methods by running methods(\"print\") (try it now).\nThe class of the object is a simple attribute and the method is defined by appending the class name after the function name separated by a dot. This is called the S3 class system:\n\nx <- 1:4\nclass(x)\n\n[1] \"integer\"\n\nclass(x) <- \"myclass\"\n\ninherits(x, \"myclass\")\n\n[1] TRUE\n\nprint.myclass <- function(x, ...) {\n  \n  cat(x, sep = \"\\n\")\n  \n}\n\nx\n\n1\n2\n3\n4"
   },
   {
     "objectID": "lectures/functions.html#summary",
@@ -319,7 +319,7 @@
     "href": "lectures/functions.html#get-and-assign",
     "title": "Functions",
     "section": "get and assign",
-    "text": "get and assign\nRecall that we can retrieve a variable from a data frame by using a character string, e.g., penguins[[\"species\"]].\nWe can use a character string to get or assign any other object using these functions. For example, this returns the function called mean\n\nget(\"mean\")\n\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x55c373c9a8e0>\n<environment: namespace:base>\n\n\nwhich we can use like a function\n\nget(\"mean\")(penguins$body_mass_g, na.rm = TRUE)\n\n[1] 4201.754\n\n\nLikewise, an object can be created with assign\n\nassign(\"mean.body.mass\", mean(penguins$body_mass_g, na.rm = TRUE))\nmean.body.mass\n\n[1] 4201.754"
+    "text": "get and assign\nRecall that we can retrieve a variable from a data frame by using a character string, e.g., penguins[[\"species\"]].\nWe can use a character string to get or assign any other object using these functions. For example, this returns the function called mean\n\nget(\"mean\")\n\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x558cec3ef8e0>\n<environment: namespace:base>\n\n\nwhich we can use like a function\n\nget(\"mean\")(penguins$body_mass_g, na.rm = TRUE)\n\n[1] 4201.754\n\n\nLikewise, an object can be created with assign\n\nassign(\"mean.body.mass\", mean(penguins$body_mass_g, na.rm = TRUE))\nmean.body.mass\n\n[1] 4201.754"
   },
   {
     "objectID": "lectures/functions.html#uses-of-get-and-assign",
@@ -382,21 +382,21 @@
     "href": "lectures/data-structures.html#lists",
     "title": "Data structures in R",
     "section": "Lists",
-    "text": "Lists\nA list is a collection of things not required to be the same type. An element of a list can be any R object. Can also be named or not.\n\nlist(1:4, letters[1:4], mean)\n\n[[1]]\n[1] 1 2 3 4\n\n[[2]]\n[1] \"a\" \"b\" \"c\" \"d\"\n\n[[3]]\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x55f53ff508e0>\n<environment: namespace:base>\n\nlist(numbers = 1:4, \n     letters = letters[1:4], \n     mean = mean,\n     list = list(\"a\", 1, TRUE))\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x55f53ff508e0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n## an empty list\nlist()\n\nlist()\n\n## a list of 3 placeholders\nvector(mode = \"list\", length = 3)\n\n[[1]]\nNULL\n\n[[2]]\nNULL\n\n[[3]]\nNULL"
+    "text": "Lists\nA list is a collection of things not required to be the same type. An element of a list can be any R object. Can also be named or not.\n\nlist(1:4, letters[1:4], mean)\n\n[[1]]\n[1] 1 2 3 4\n\n[[2]]\n[1] \"a\" \"b\" \"c\" \"d\"\n\n[[3]]\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x55644dbf18e0>\n<environment: namespace:base>\n\nlist(numbers = 1:4, \n     letters = letters[1:4], \n     mean = mean,\n     list = list(\"a\", 1, TRUE))\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x55644dbf18e0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n## an empty list\nlist()\n\nlist()\n\n## a list of 3 placeholders\nvector(mode = \"list\", length = 3)\n\n[[1]]\nNULL\n\n[[2]]\nNULL\n\n[[3]]\nNULL"
   },
   {
     "objectID": "lectures/data-structures.html#indexing-lists",
     "href": "lectures/data-structures.html#indexing-lists",
     "title": "Data structures in R",
     "section": "Indexing lists",
-    "text": "Indexing lists\n\nxl <- list(numbers = 1:4, \n     letters = letters[1:4], \n     mean = mean,\n     list = list(\"a\", 1, TRUE))\n\nA list can be indexed with square brackets [] or double-square brackets [[]], but there is a difference!\n\nxl[[1]] ## returns the first element of the list (vector in this case)\n\n[1] 1 2 3 4\n\nxl[1] ## returns a sublist\n\n$numbers\n[1] 1 2 3 4\n\nxl[-1]\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x55f53ff508e0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\nxl[1:2] ## works with vectors\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\nxl[[1:2]] ## works but does something different\n\n[1] 2\n\nxl$numbers\n\n[1] 1 2 3 4\n\nxl[[\"numbers\"]]\n\n[1] 1 2 3 4"
+    "text": "Indexing lists\n\nxl <- list(numbers = 1:4, \n     letters = letters[1:4], \n     mean = mean,\n     list = list(\"a\", 1, TRUE))\n\nA list can be indexed with square brackets [] or double-square brackets [[]], but there is a difference!\n\nxl[[1]] ## returns the first element of the list (vector in this case)\n\n[1] 1 2 3 4\n\nxl[1] ## returns a sublist\n\n$numbers\n[1] 1 2 3 4\n\nxl[-1]\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x55644dbf18e0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\nxl[1:2] ## works with vectors\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\nxl[[1:2]] ## works but does something different\n\n[1] 2\n\nxl$numbers\n\n[1] 1 2 3 4\n\nxl[[\"numbers\"]]\n\n[1] 1 2 3 4"
   },
   {
     "objectID": "lectures/data-structures.html#concatenating-lists",
     "href": "lectures/data-structures.html#concatenating-lists",
     "title": "Data structures in R",
     "section": "Concatenating lists",
-    "text": "Concatenating lists\nNew elements can be added by name or number\n\nxl$LETTERS <- LETTERS[1:4]\nxl[[length(xl) + 1]] <- LETTERS[1:5]\nxl\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x55f53ff508e0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n\n$LETTERS\n[1] \"A\" \"B\" \"C\" \"D\"\n\n[[6]]\n[1] \"A\" \"B\" \"C\" \"D\" \"E\"\n\n\nThe c function concatenates new elements to the list\n\nc(xl, AB = list(LETTERS[1:2]))\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x55f53ff508e0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n\n$LETTERS\n[1] \"A\" \"B\" \"C\" \"D\"\n\n[[6]]\n[1] \"A\" \"B\" \"C\" \"D\" \"E\"\n\n$AB\n[1] \"A\" \"B\"\n\nc(xl, AB = LETTERS[1:2]) # careful!\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x55f53ff508e0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n\n$LETTERS\n[1] \"A\" \"B\" \"C\" \"D\"\n\n[[6]]\n[1] \"A\" \"B\" \"C\" \"D\" \"E\"\n\n$AB1\n[1] \"A\"\n\n$AB2\n[1] \"B\""
+    "text": "Concatenating lists\nNew elements can be added by name or number\n\nxl$LETTERS <- LETTERS[1:4]\nxl[[length(xl) + 1]] <- LETTERS[1:5]\nxl\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x55644dbf18e0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n\n$LETTERS\n[1] \"A\" \"B\" \"C\" \"D\"\n\n[[6]]\n[1] \"A\" \"B\" \"C\" \"D\" \"E\"\n\n\nThe c function concatenates new elements to the list\n\nc(xl, AB = list(LETTERS[1:2]))\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x55644dbf18e0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n\n$LETTERS\n[1] \"A\" \"B\" \"C\" \"D\"\n\n[[6]]\n[1] \"A\" \"B\" \"C\" \"D\" \"E\"\n\n$AB\n[1] \"A\" \"B\"\n\nc(xl, AB = LETTERS[1:2]) # careful!\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x55644dbf18e0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n\n$LETTERS\n[1] \"A\" \"B\" \"C\" \"D\"\n\n[[6]]\n[1] \"A\" \"B\" \"C\" \"D\" \"E\"\n\n$AB1\n[1] \"A\"\n\n$AB2\n[1] \"B\""
   },
   {
     "objectID": "lectures/data-structures.html#matrices",
@@ -417,7 +417,7 @@
     "href": "lectures/data-structures.html#matrix-arithmetic",
     "title": "Data structures in R",
     "section": "Matrix arithmetic",
-    "text": "Matrix arithmetic\nMatrix transpose, multiplication, inversion, eigenvalues, etc, are all available in R\n\nS1 <- matrix(runif(9), nrow = 3, ncol = 3)\nS2 <- matrix(runif(9), nrow = 3, ncol = 3)\nx <- c(1, 1.5, 3)\n\nS1 %*% S2\n\n          [,1]      [,2]      [,3]\n[1,] 1.2774511 0.8959700 0.9543531\n[2,] 0.5987795 0.2919473 0.3617015\n[3,] 1.0673380 0.6377583 0.7328682\n\nt(S1) %*% S2\n\n          [,1]      [,2]      [,3]\n[1,] 0.8241480 0.5371651 0.5813943\n[2,] 0.8717274 0.4340392 0.5178360\n[3,] 1.1341302 0.6474997 0.7479141\n\nx %*% solve(S1) %*% x\n\n         [,1]\n[1,] 19.52612"
+    "text": "Matrix arithmetic\nMatrix transpose, multiplication, inversion, eigenvalues, etc, are all available in R\n\nS1 <- matrix(runif(9), nrow = 3, ncol = 3)\nS2 <- matrix(runif(9), nrow = 3, ncol = 3)\nx <- c(1, 1.5, 3)\n\nS1 %*% S2\n\n          [,1]      [,2]      [,3]\n[1,] 1.6427851 0.7500402 1.0870384\n[2,] 1.4563114 0.7273649 1.1136100\n[3,] 0.9093052 0.4792704 0.4302915\n\nt(S1) %*% S2\n\n          [,1]      [,2]      [,3]\n[1,] 0.6492029 0.3744044 0.3524866\n[2,] 1.7228615 1.1195544 1.1745184\n[3,] 1.6393064 1.1142261 0.8022666\n\nx %*% solve(S1) %*% x\n\n          [,1]\n[1,] 0.6436953"
   },
   {
     "objectID": "lectures/data-structures.html#arrays",
@@ -473,7 +473,7 @@
     "href": "lectures/data-structures.html#s4-objects",
     "title": "Data structures in R",
     "section": "S4 objects",
-    "text": "S4 objects\nSome packages you may use (e.g., from Bioconductor) return S4 objects. These are kind of like lists, but to access objects (called ‘slots’) inside, use @ (the at symbol).\nFor example\n\n## A simple class with two slots\ntrack <- setClass(\"track\", slots = c(x=\"numeric\", y=\"numeric\"))\n## an object from the class\nts1 <- track(x = 1:10, y = 1:10 + rnorm(10))\nts1\n\nAn object of class \"track\"\nSlot \"x\":\n [1]  1  2  3  4  5  6  7  8  9 10\n\nSlot \"y\":\n [1]  1.674682  1.679948  3.999059  4.953501  5.827432  4.914466  6.703978\n [8]  5.200808  6.177280 11.647390\n\nts1@x\n\n [1]  1  2  3  4  5  6  7  8  9 10"
+    "text": "S4 objects\nSome packages you may use (e.g., from Bioconductor) return S4 objects. These are kind of like lists, but to access objects (called ‘slots’) inside, use @ (the at symbol).\nFor example\n\n## A simple class with two slots\ntrack <- setClass(\"track\", slots = c(x=\"numeric\", y=\"numeric\"))\n## an object from the class\nts1 <- track(x = 1:10, y = 1:10 + rnorm(10))\nts1\n\nAn object of class \"track\"\nSlot \"x\":\n [1]  1  2  3  4  5  6  7  8  9 10\n\nSlot \"y\":\n [1] 2.144285 1.555925 4.514887 3.760558 5.148309 5.099437 7.407375 8.096666\n [9] 8.087633 9.936409\n\nts1@x\n\n [1]  1  2  3  4  5  6  7  8  9 10"
   },
   {
     "objectID": "lectures/data-structures.html#tibbles",
@@ -606,7 +606,7 @@
     "href": "lectures/flow-and-loops.html#note-on-speed",
     "title": "Flow control and loops",
     "section": "Note on speed",
-    "text": "Note on speed\nYou may see people warn you not to use for loops in R, “because they are slow”.\nThat is partially true, but speed is not the only thing, for loops can be much clearer and more understandable than the alternatives.\nBut, the slow thing in R is changing the size of an object, so you can avoid that by creating a vector/matrix/array of the correct size to hold the results of the loop:\n\nsystem.time({\nA1 <- NULL\nfor(i in 1:100000) {\n  A1 <- c(A1, rnorm(1))\n}\n})\n\n   user  system elapsed \n 14.030   0.100  14.145 \n\nsystem.time({\nA2 <- rep(NA, 100000)\nfor(i in 1:length(A2)) {\n  A2[i] <- rnorm(1)\n}\n})\n\n   user  system elapsed \n  0.163   0.000   0.164"
+    "text": "Note on speed\nYou may see people warn you not to use for loops in R, “because they are slow”.\nThat is partially true, but speed is not the only thing, for loops can be much clearer and more understandable than the alternatives.\nBut, the slow thing in R is changing the size of an object, so you can avoid that by creating a vector/matrix/array of the correct size to hold the results of the loop:\n\nsystem.time({\nA1 <- NULL\nfor(i in 1:100000) {\n  A1 <- c(A1, rnorm(1))\n}\n})\n\n   user  system elapsed \n 13.190   0.084  13.287 \n\nsystem.time({\nA2 <- rep(NA, 100000)\nfor(i in 1:length(A2)) {\n  A2[i] <- rnorm(1)\n}\n})\n\n   user  system elapsed \n  0.161   0.004   0.166"
   },
   {
     "objectID": "lectures/flow-and-loops.html#practical",
@@ -683,7 +683,14 @@
     "href": "resources.html",
     "title": "Resources and tools about R",
     "section": "",
-    "text": "Long list of cheatsheets:\nhttps://www.rstudio.com/resources/cheatsheets/\n\n\n\nBase R\nUsing Rstudio\nData manipulation with dplyr\nData manipulation with data.table\nStrings and regular expressions\nDates and times\nRmarkdown and dynamic documents"
+    "text": "Tidy data, Hadley Wickham, 2014, JSS"
+  },
+  {
+    "objectID": "resources.html#cheatsheets",
+    "href": "resources.html#cheatsheets",
+    "title": "Resources and tools about R",
+    "section": "Cheatsheets",
+    "text": "Cheatsheets\nLong list of cheatsheets:\nhttps://www.rstudio.com/resources/cheatsheets/\n\nCurated list of cheatsheets\n\nBase R\nUsing Rstudio\nData manipulation with dplyr\nData manipulation with data.table\nStrings and regular expressions\nDates and times\nRmarkdown and dynamic documents"
   },
   {
     "objectID": "resources.html#online-books",
@@ -746,7 +753,7 @@
     "href": "exercises/merge-and-reshape.html#tidying-our-mean-sd-function",
     "title": "Tidying and reshaping – exercises",
     "section": "Tidying our mean sd function",
-    "text": "Tidying our mean sd function\nLoad the broom package and look at the source code for tidy.lm\n\nbroom:::tidy.lm\n\nfunction (x, conf.int = FALSE, conf.level = 0.95, exponentiate = FALSE, \n    ...) \n{\n    warn_on_subclass(x, \"tidy\")\n    ret <- as_tibble(summary(x)$coefficients, rownames = \"term\")\n    colnames(ret) <- c(\"term\", \"estimate\", \"std.error\", \"statistic\", \n        \"p.value\")\n    coefs <- tibble::enframe(stats::coef(x), name = \"term\", value = \"estimate\")\n    ret <- left_join(coefs, ret, by = c(\"term\", \"estimate\"))\n    if (conf.int) {\n        ci <- broom_confint_terms(x, level = conf.level)\n        ret <- dplyr::left_join(ret, ci, by = \"term\")\n    }\n    if (exponentiate) {\n        ret <- exponentiate(ret)\n    }\n    ret\n}\n<bytecode: 0x558b80d84688>\n<environment: namespace:broom>\n\n\n\nWrite a tidy method for our mean_sd function and try it out on the penguins dataset.\nApply the mean_sd function to the penguins body mass in grams by species and sex. Organize the results into a table suitable for publication, where it is easy to compare the two sexes."
+    "text": "Tidying our mean sd function\nLoad the broom package and look at the source code for tidy.lm\n\nbroom:::tidy.lm\n\nfunction (x, conf.int = FALSE, conf.level = 0.95, exponentiate = FALSE, \n    ...) \n{\n    warn_on_subclass(x, \"tidy\")\n    ret <- as_tibble(summary(x)$coefficients, rownames = \"term\")\n    colnames(ret) <- c(\"term\", \"estimate\", \"std.error\", \"statistic\", \n        \"p.value\")\n    coefs <- tibble::enframe(stats::coef(x), name = \"term\", value = \"estimate\")\n    ret <- left_join(coefs, ret, by = c(\"term\", \"estimate\"))\n    if (conf.int) {\n        ci <- broom_confint_terms(x, level = conf.level)\n        ret <- dplyr::left_join(ret, ci, by = \"term\")\n    }\n    if (exponentiate) {\n        ret <- exponentiate(ret)\n    }\n    ret\n}\n<bytecode: 0x5565c0541688>\n<environment: namespace:broom>\n\n\n\nWrite a tidy method for our mean_sd function and try it out on the penguins dataset.\nApply the mean_sd function to the penguins body mass in grams by species and sex. Organize the results into a table suitable for publication, where it is easy to compare the two sexes."
   },
   {
     "objectID": "exercises/merge-and-reshape.html#tidying-the-national-patient-register-dataset",
