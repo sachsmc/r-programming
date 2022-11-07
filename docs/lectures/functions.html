@@ -412,7 +412,7 @@ Michael C Sachs
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">size =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2 3</code></pre>
+<pre><code>[1] 1 2</code></pre>
 </div>
 </div>
 <p>The function takes the arguments you provide, does something, and then returns an object. To see what a function does, you can type its name without parentheses to see the source:</p>
@@ -433,7 +433,7 @@ Michael C Sachs
         x[sample.int(length(x), size, replace, prob)]
     }
 }
-&lt;bytecode: 0x55e7833fc168&gt;
+&lt;bytecode: 0x55c37275b6a8&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -737,7 +737,7 @@ $Gentoo
 <pre><code>function(beta) {
     sum((dataY - (beta[1] + beta[2] * dataX))^2, na.rm  =TRUE)
   }
-&lt;environment: 0x55e78605fd48&gt;</code></pre>
+&lt;environment: 0x55c37630b2d0&gt;</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">ls</span>(<span class="fu">environment</span>(model_penguin))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -889,7 +889,7 @@ NULL</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>function (x, ...) 
 UseMethod("print")
-&lt;bytecode: 0x55e782677ca8&gt;
+&lt;bytecode: 0x55c372816c98&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -965,20 +965,105 @@ UseMethod("print")
 <h1>Extra slides</h1>
 
 </section>
+<section id="get-and-assign" class="slide level2">
+<h2><code>get</code> and <code>assign</code></h2>
+<p>Recall that we can retrieve a variable from a data frame by using a character string, e.g., <code>penguins[["species"]]</code>.</p>
+<p>We can use a character string to get or assign any other object using these functions. For example, this returns the function called mean</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1"></a><span class="fu">get</span>(<span class="st">"mean"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>function (x, ...) 
+UseMethod("mean")
+&lt;bytecode: 0x55c373c9a8e0&gt;
+&lt;environment: namespace:base&gt;</code></pre>
+</div>
+</div>
+<p>which we can use like a function</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a><span class="fu">get</span>(<span class="st">"mean"</span>)(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4201.754</code></pre>
+</div>
+</div>
+<p>Likewise, an object can be created with <code>assign</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1"></a><span class="fu">assign</span>(<span class="st">"mean.body.mass"</span>, <span class="fu">mean</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb86-2"><a href="#cb86-2"></a>mean.body.mass</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4201.754</code></pre>
+</div>
+</div>
+</section>
+<section id="uses-of-get-and-assign" class="slide level2">
+<h2>Uses of <code>get</code> and <code>assign</code></h2>
+<p>Example, iterating over functions by name:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1"></a>summary_funcs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"median"</span>)</span>
+<span id="cb88-2"><a href="#cb88-2"></a><span class="cf">for</span>(fn <span class="cf">in</span> summary_funcs) {</span>
+<span id="cb88-3"><a href="#cb88-3"></a>  <span class="fu">cat</span>(fn, <span class="st">"body mass: "</span>)</span>
+<span id="cb88-4"><a href="#cb88-4"></a>  <span class="fu">cat</span>(<span class="fu">get</span>(fn)(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb88-5"><a href="#cb88-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>mean body mass: 4201.754 
+sd body mass: 801.9545 
+median body mass: 4050 </code></pre>
+</div>
+</div>
+<p>Example, retrieving a function programmatically,</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1"></a>converter <span class="ot">&lt;-</span> <span class="fu">get</span>(<span class="fu">paste0</span>(<span class="st">"as."</span>, <span class="fu">class</span>(penguins<span class="sc">$</span>flipper_length_mm)))</span>
+<span id="cb90-2"><a href="#cb90-2"></a><span class="fu">converter</span>(<span class="fu">mean</span>(penguins<span class="sc">$</span>flipper_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 200</code></pre>
+</div>
+</div>
+<p>Example, programmatically creating new variables,</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1"></a>numeric_cols <span class="ot">&lt;-</span> <span class="fu">names</span>(penguins)[<span class="fu">sapply</span>(penguins, is.numeric)]</span>
+<span id="cb92-2"><a href="#cb92-2"></a><span class="cf">for</span>(col <span class="cf">in</span> numeric_cols){</span>
+<span id="cb92-3"><a href="#cb92-3"></a>  <span class="fu">assign</span>(<span class="fu">paste0</span>(col, <span class="st">".scaled"</span>), </span>
+<span id="cb92-4"><a href="#cb92-4"></a>         <span class="fu">scale</span>(penguins[[col]]))</span>
+<span id="cb92-5"><a href="#cb92-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="do.call" class="slide level2">
+<h2><code>do.call</code></h2>
+<p>A variant on <code>get</code> is <code>do.call</code>. This takes a function as the first argument, then a list containing the arguments for the function, <code>do.call(&lt;function&gt;, &lt;list of arguments to function&gt;)</code>.</p>
+<p>A common use for this is with functions that take a variable number of arguments, e.g., <code>cbind</code>, <code>paste</code>, where the arguments are created programmatically.</p>
+<p>simple example,</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1"></a><span class="fu">do.call</span>(<span class="st">"paste"</span>, <span class="fu">list</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="at">sep =</span> <span class="st">"."</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "A.B"</code></pre>
+</div>
+</div>
+<p>arranging a list into a matrix</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1"></a>mean.sd.by.species <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">split</span>(penguins<span class="sc">$</span>flipper_length_mm, penguins<span class="sc">$</span>species), </span>
+<span id="cb95-2"><a href="#cb95-2"></a>                             <span class="cf">function</span>(x) <span class="fu">c</span>(<span class="at">mean =</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">sd =</span> <span class="fu">sd</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)))</span>
+<span id="cb95-3"><a href="#cb95-3"></a><span class="fu">do.call</span>(<span class="st">"rbind"</span>, mean.sd.by.species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              mean       sd
+Adelie    189.9536 6.539457
+Chinstrap 195.8235 7.131894
+Gentoo    217.1870 6.484976</code></pre>
+</div>
+</div>
+</section>
 <section id="recursive-functions" class="slide level2">
 <h2>Recursive functions</h2>
 <p>Functions that call themselves are possible.</p>
 <p>As with repeat loops, they need to have a <em>break condition</em></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1"></a>fibbo <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
-<span id="cb82-2"><a href="#cb82-2"></a>  </span>
-<span id="cb82-3"><a href="#cb82-3"></a>  <span class="cf">if</span>(n <span class="sc">&lt;=</span> <span class="dv">2</span>) {  <span class="do">## exit condition</span></span>
-<span id="cb82-4"><a href="#cb82-4"></a>    <span class="dv">1</span></span>
-<span id="cb82-5"><a href="#cb82-5"></a>  } <span class="cf">else</span> {</span>
-<span id="cb82-6"><a href="#cb82-6"></a>    n <span class="sc">+</span> <span class="fu">fibbo</span>(n <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb82-7"><a href="#cb82-7"></a>  }</span>
-<span id="cb82-8"><a href="#cb82-8"></a>  </span>
-<span id="cb82-9"><a href="#cb82-9"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1"></a>fibbo <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb97-2"><a href="#cb97-2"></a>  </span>
+<span id="cb97-3"><a href="#cb97-3"></a>  <span class="cf">if</span>(n <span class="sc">&lt;=</span> <span class="dv">2</span>) {  <span class="do">## exit condition</span></span>
+<span id="cb97-4"><a href="#cb97-4"></a>    <span class="dv">1</span></span>
+<span id="cb97-5"><a href="#cb97-5"></a>  } <span class="cf">else</span> {</span>
+<span id="cb97-6"><a href="#cb97-6"></a>    n <span class="sc">+</span> <span class="fu">fibbo</span>(n <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb97-7"><a href="#cb97-7"></a>  }</span>
+<span id="cb97-8"><a href="#cb97-8"></a>  </span>
+<span id="cb97-9"><a href="#cb97-9"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>These are actually useful when working with nested lists and directed acyclic graphs, for example.</p>
 

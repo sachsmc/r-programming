@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.2.247">
 
   <meta name="author" content="Michael C Sachs">
-  <title>Programming and statistical modelling in R - Flow control and loops</title>
+  <title>Programming and statistical modelling in R - Tidy data</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -389,8 +389,8 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Flow control and loops</h1>
-  <p class="subtitle">Day 2, A</p>
+  <h1 class="title">Tidy data</h1>
+  <p class="subtitle">Day 3, B</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -402,289 +402,472 @@ Michael C Sachs
 
 </section>
 <section>
-<section id="flow-control" class="title-slide slide level1 center">
-<h1>Flow control</h1>
+<section id="illustration" class="title-slide slide level1 center">
+<h1>Illustration</h1>
 
 </section>
-<section id="what" class="slide level2">
-<h2>What?</h2>
-<ul>
-<li><p>Normally the code gets run line by line, in order, top to bottom</p></li>
-<li><p>There are special commands that allow you change that</p></li>
-<li><p><em>Conditional execution</em>, choose which code to run depending on logical conditions</p>
-<ul>
-<li><code>if(&lt;condition&gt;)</code></li>
-<li><code>else if</code></li>
-<li><code>else</code></li>
-</ul></li>
-<li><p><em>Loops</em>, repeat a chunk of code several times</p>
-<ul>
-<li><code>repeat</code></li>
-<li><code>for</code></li>
-<li><code>while</code></li>
-</ul></li>
-</ul>
-</section>
-<section id="if-then-else" class="slide level2">
-<h2>If then else</h2>
+<section id="our-mean_sd-function" class="slide level2">
+<h2>Our <code>mean_sd</code> function</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="cf">if</span>(<span class="sc">&lt;</span>condition<span class="sc">&gt;</span>) {</span>
-<span id="cb1-2"><a href="#cb1-2"></a>  </span>
-<span id="cb1-3"><a href="#cb1-3"></a>  <span class="sc">&lt;</span>do something<span class="sc">&gt;</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a>    </span>
-<span id="cb1-5"><a href="#cb1-5"></a>} <span class="cf">else</span> {</span>
-<span id="cb1-6"><a href="#cb1-6"></a>  </span>
-<span id="cb1-7"><a href="#cb1-7"></a>  <span class="sc">&lt;</span>do something <span class="cf">else</span><span class="sc">&gt;</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a>  </span>
-<span id="cb1-9"><a href="#cb1-9"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>If the <code>&lt;condition&gt;</code> evaluates to <code>TRUE</code>, then <code>something</code> gets executed, otherwise <code>something else</code> gets executed.</p>
-<p><code>&lt;condition&gt;</code> must be length one. No vectors allowed.</p>
-</section>
-<section id="examples" class="slide level2">
-<h2>Examples</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>num_reps <span class="ot">&lt;-</span> <span class="cf">if</span>(final_report) <span class="dv">5000</span> <span class="cf">else</span> <span class="dv">200</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>brackets are helpful for understanding and clarity</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>p_value <span class="ot">&lt;-</span> <span class="cf">if</span>(nonparametric) {</span>
-<span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">wilcox.test</span>(mpg <span class="sc">~</span> vs, <span class="at">data =</span> mtcars, <span class="at">exact =</span> <span class="cn">FALSE</span>)<span class="sc">$</span>p.value</span>
-<span id="cb3-3"><a href="#cb3-3"></a>} <span class="cf">else</span> {</span>
-<span id="cb3-4"><a href="#cb3-4"></a>  <span class="fu">t.test</span>(mpg <span class="sc">~</span> vs, <span class="at">data =</span> mtcars)<span class="sc">$</span>p.value</span>
-<span id="cb3-5"><a href="#cb3-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>There does not need to be anything returned from the expression</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="cf">if</span>(log_transform) {</span>
-<span id="cb4-2"><a href="#cb4-2"></a>  </span>
-<span id="cb4-3"><a href="#cb4-3"></a>  data<span class="sc">$</span>Y <span class="ot">&lt;-</span> <span class="fu">log</span>(data<span class="sc">$</span>Y)</span>
-<span id="cb4-4"><a href="#cb4-4"></a>  </span>
-<span id="cb4-5"><a href="#cb4-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="ifelse" class="slide level2">
-<h2><code>ifelse</code></h2>
-<p>This is a function, not a statement like <code>if</code> and <code>else</code>.</p>
-<p>It is vectorized and hence better suited for working with data.</p>
-<p><code>ifelse(&lt;logical vector&gt;, &lt;yes vector&gt;, &lt;no vector&gt;)</code>. All three vectors should be the same length or recycling happens.</p>
-<p>It returns a vector with elements from <code>yes</code> when TRUE, and elements from <code>no</code> when FALSE.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>rawdata <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"12.63"</span>, <span class="st">"62.45"</span>, <span class="st">"&lt;2"</span>) <span class="do">## lower limit of detection</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="fu">as.numeric</span>(<span class="fu">ifelse</span>(rawdata <span class="sc">==</span> <span class="st">"&lt;2"</span>, <span class="dv">1</span>, rawdata))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a>mean_sd <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb1-5"><a href="#cb1-5"></a>  <span class="fu">c</span>(<span class="at">mean =</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> na.rm), </span>
+<span id="cb1-6"><a href="#cb1-6"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(x, <span class="at">na.rm =</span> na.rm))</span>
+<span id="cb1-7"><a href="#cb1-7"></a>}</span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a></span>
+<span id="cb1-10"><a href="#cb1-10"></a>penguins <span class="sc">|&gt;</span> <span class="fu">group_by</span>(species, sex) <span class="sc">|&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>  <span class="fu">summarize</span>(<span class="fu">mean_sd</span>(body_mass_g))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 12.63 62.45  1.00</code></pre>
+<pre><code># A tibble: 16 × 3
+# Groups:   species, sex [8]
+   species   sex    `mean_sd(body_mass_g)`
+   &lt;fct&gt;     &lt;fct&gt;                   &lt;dbl&gt;
+ 1 Adelie    female                  3369.
+ 2 Adelie    female                   269.
+ 3 Adelie    male                    4043.
+ 4 Adelie    male                     347.
+ 5 Adelie    &lt;NA&gt;                    3540 
+ 6 Adelie    &lt;NA&gt;                     477.
+ 7 Chinstrap female                  3527.
+ 8 Chinstrap female                   285.
+ 9 Chinstrap male                    3939.
+10 Chinstrap male                     362.
+11 Gentoo    female                  4680.
+12 Gentoo    female                   282.
+13 Gentoo    male                    5485.
+14 Gentoo    male                     313.
+15 Gentoo    &lt;NA&gt;                    4588.
+16 Gentoo    &lt;NA&gt;                     338.</code></pre>
+</div>
+</div>
+<p>This is not so nice to work with because we cannot see which row is the mean and which is the sd.</p>
+</section>
+<section id="alternative-1" class="slide level2">
+<h2>Alternative 1</h2>
+<p>Return a data frame instead</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>mean_sd_df <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb3-3"><a href="#cb3-3"></a>    <span class="at">variable =</span> <span class="fu">deparse1</span>(<span class="fu">substitute</span>(x)),</span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> na.rm), </span>
+<span id="cb3-5"><a href="#cb3-5"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(x, <span class="at">na.rm =</span> na.rm))</span>
+<span id="cb3-6"><a href="#cb3-6"></a>}</span>
+<span id="cb3-7"><a href="#cb3-7"></a></span>
+<span id="cb3-8"><a href="#cb3-8"></a>penguins <span class="sc">|&gt;</span> <span class="fu">group_by</span>(species, sex) <span class="sc">|&gt;</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a>  <span class="fu">summarize</span>(<span class="fu">mean_sd_df</span>(body_mass_g))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 5
+# Groups:   species [3]
+  species   sex    variable     mean    sd
+  &lt;fct&gt;     &lt;fct&gt;  &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;
+1 Adelie    female body_mass_g 3369.  269.
+2 Adelie    male   body_mass_g 4043.  347.
+3 Adelie    &lt;NA&gt;   body_mass_g 3540   477.
+4 Chinstrap female body_mass_g 3527.  285.
+5 Chinstrap male   body_mass_g 3939.  362.
+6 Gentoo    female body_mass_g 4680.  282.
+7 Gentoo    male   body_mass_g 5485.  313.
+8 Gentoo    &lt;NA&gt;   body_mass_g 4588.  338.</code></pre>
+</div>
+</div>
+</section>
+<section id="alternative-2" class="slide level2">
+<h2>Alternative 2</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>mean_sd_ldf <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb5-3"><a href="#cb5-3"></a>    <span class="at">variable =</span> <span class="fu">deparse1</span>(<span class="fu">substitute</span>(x)),</span>
+<span id="cb5-4"><a href="#cb5-4"></a>    <span class="at">stat =</span> <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"sd"</span>), </span>
+<span id="cb5-5"><a href="#cb5-5"></a>    <span class="at">value =</span> <span class="fu">c</span>(<span class="fu">mean</span>(x, <span class="at">na.rm =</span> na.rm), </span>
+<span id="cb5-6"><a href="#cb5-6"></a>             <span class="fu">sd</span>(x, <span class="at">na.rm =</span> na.rm)))</span>
+<span id="cb5-7"><a href="#cb5-7"></a>}</span>
+<span id="cb5-8"><a href="#cb5-8"></a></span>
+<span id="cb5-9"><a href="#cb5-9"></a>penguins <span class="sc">|&gt;</span> <span class="fu">group_by</span>(species, sex) <span class="sc">|&gt;</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a>  <span class="fu">summarize</span>(<span class="fu">mean_sd_ldf</span>(body_mass_g))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 16 × 5
+# Groups:   species, sex [8]
+   species   sex    variable    stat  value
+   &lt;fct&gt;     &lt;fct&gt;  &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt;
+ 1 Adelie    female body_mass_g mean  3369.
+ 2 Adelie    female body_mass_g sd     269.
+ 3 Adelie    male   body_mass_g mean  4043.
+ 4 Adelie    male   body_mass_g sd     347.
+ 5 Adelie    &lt;NA&gt;   body_mass_g mean  3540 
+ 6 Adelie    &lt;NA&gt;   body_mass_g sd     477.
+ 7 Chinstrap female body_mass_g mean  3527.
+ 8 Chinstrap female body_mass_g sd     285.
+ 9 Chinstrap male   body_mass_g mean  3939.
+10 Chinstrap male   body_mass_g sd     362.
+11 Gentoo    female body_mass_g mean  4680.
+12 Gentoo    female body_mass_g sd     282.
+13 Gentoo    male   body_mass_g mean  5485.
+14 Gentoo    male   body_mass_g sd     313.
+15 Gentoo    &lt;NA&gt;   body_mass_g mean  4588.
+16 Gentoo    &lt;NA&gt;   body_mass_g sd     338.</code></pre>
 </div>
 </div>
 </section></section>
 <section>
-<section id="loops" class="title-slide slide level1 center">
-<h1>Loops</h1>
+<section id="definitions" class="title-slide slide level1 center">
+<h1>Definitions</h1>
 
 </section>
-<section id="basic-concepts" class="slide level2">
-<h2>Basic concepts</h2>
-<p>A loop repeatedly and sequentially evaluates an expression, i.e.,</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>{</span>
-<span id="cb7-2"><a href="#cb7-2"></a>  <span class="sc">&lt;</span>stuff contained inside curly brackets<span class="sc">&gt;</span></span>
-<span id="cb7-3"><a href="#cb7-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>A loop will continue forever unless you tell it to stop. You tell it to stop in different ways for different loop expressions</p>
+<section id="tidy-data" class="slide level2">
+<h2>Tidy data</h2>
+<p>These are two different ways to represent the same data. This is to illustrate the concept of <em>tidy data</em></p>
+<p>Tidy data is a standard way of mapping the meaning of a dataset to its structure. A dataset is messy or tidy depending on how rows, columns and tables are matched up with observations, variables and types. In tidy data:</p>
+<ol type="1">
+<li>Each variable forms a column.</li>
+<li>Each observation forms a row.</li>
+<li>Each type of observational unit forms a table.</li>
+</ol>
+<p>Wickham, H. (2014). Tidy Data. <em>Journal of Statistical Software</em>, 59(10), 1–23. https://doi.org/10.18637/jss.v059.i10</p>
 </section>
-<section id="repeat" class="slide level2">
-<h2>Repeat</h2>
-<p>This is the simplest of loops, it will repeat an expression until it encounters <code>break</code></p>
-<p>This will run forever</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="cf">repeat</span> {</span>
-<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">print</span>(<span class="st">"hello"</span>)</span>
-<span id="cb8-3"><a href="#cb8-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>This will run exactly once</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="cf">repeat</span> {</span>
-<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">print</span>(<span class="st">"hello"</span>)</span>
-<span id="cb9-3"><a href="#cb9-3"></a>  <span class="cf">break</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>This will run 5 times</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="cf">repeat</span> {</span>
-<span id="cb10-3"><a href="#cb10-3"></a>  <span class="fu">print</span>(<span class="st">"hello"</span>)</span>
-<span id="cb10-4"><a href="#cb10-4"></a>  <span class="cf">if</span>(i <span class="sc">==</span> <span class="dv">5</span>) <span class="cf">break</span></span>
-<span id="cb10-5"><a href="#cb10-5"></a>  i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb10-6"><a href="#cb10-6"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="while" class="slide level2">
-<h2>While</h2>
-<p>Notice the pattern, repeat an expression until a condition is met.</p>
-<p>The condition usually depends on a variable that changes at each iteration, in this case <code>i</code>, the <em>iterator</em></p>
-<p><code>while</code> loops explicitly state the condition at the start:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="cf">while</span>(i <span class="sc">&lt;=</span> <span class="dv">5</span>) {</span>
-<span id="cb11-3"><a href="#cb11-3"></a>  <span class="fu">print</span>(<span class="st">"hello"</span>)</span>
-<span id="cb11-4"><a href="#cb11-4"></a>  i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb11-5"><a href="#cb11-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "hello"
-[1] "hello"
-[1] "hello"
-[1] "hello"
-[1] "hello"</code></pre>
-</div>
-</div>
-</section>
-<section id="for-loops" class="slide level2">
-<h2>For loops</h2>
-<p>A <code>for</code> loop explicitly states the sequence of the iterator at the start. Then the “end condition” is that the loop has reached the end of the sequence.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) {</span>
-<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">print</span>(<span class="st">"hello"</span>)</span>
-<span id="cb13-3"><a href="#cb13-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "hello"
-[1] "hello"
-[1] "hello"
-[1] "hello"
-[1] "hello"</code></pre>
-</div>
-</div>
-<p>In this case, it is the most concise. I personally use <code>for</code> loops more than any other loop.</p>
-<p><code>break</code> can be used inside any loop to end it. <code>next</code> can be used to go to the next iteration.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) {</span>
-<span id="cb15-2"><a href="#cb15-2"></a>  <span class="cf">if</span>(i <span class="sc">==</span> <span class="dv">2</span>) <span class="cf">next</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"hello"</span>, i))</span>
-<span id="cb15-4"><a href="#cb15-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "hello 1"
-[1] "hello 3"
-[1] "hello 4"
-[1] "hello 5"</code></pre>
-</div>
-</div>
-</section>
-<section id="examples-1" class="slide level2">
-<h2>Examples</h2>
-<h3 id="bootstrap">Bootstrap</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">library</span>(palmerpenguins)</span>
-<span id="cb17-2"><a href="#cb17-2"></a></span>
-<span id="cb17-3"><a href="#cb17-3"></a>mu.body_mass <span class="ot">&lt;-</span> <span class="fu">mean</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb17-4"><a href="#cb17-4"></a>bsmeans <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"numeric"</span>, <span class="at">length =</span> <span class="dv">2000</span>)</span>
-<span id="cb17-5"><a href="#cb17-5"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(bsmeans)) {</span>
-<span id="cb17-6"><a href="#cb17-6"></a>  resampled.body_mass <span class="ot">&lt;-</span> <span class="fu">sample</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb17-7"><a href="#cb17-7"></a>  bsmeans[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(resampled.body_mass, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb17-8"><a href="#cb17-8"></a>}</span>
-<span id="cb17-9"><a href="#cb17-9"></a><span class="fu">hist</span>(bsmeans)</span>
-<span id="cb17-10"><a href="#cb17-10"></a><span class="fu">abline</span>(<span class="at">v =</span> mu.body_mass, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="variables-and-observations" class="slide level2">
+<h2>Variables and observations</h2>
+<p>In general,</p>
+<ul>
+<li>It is easier to describe and create functional relationships between variables (columns), than between observations.
+<ul>
+<li>Think of our mean, sd example. Relationship between mean and sd?</li>
+<li>Regression</li>
+</ul></li>
+<li>It is easier to make comparisons between groups of observations than across variables
+<ul>
+<li>T-tests, anova, compare means across species</li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="in-practice" class="title-slide slide level1 center">
+<h1>In practice</h1>
 
-</div>
-<img data-src="flow-and-loops_files/figure-revealjs/unnamed-chunk-13-1.png" width="960" class="r-stretch"></section>
-<section id="example-2" class="slide level2">
-<h2>Example 2</h2>
-<p>Iterating through species</p>
+</section>
+<section id="making-statistical-output-tidy" class="slide level2">
+<h2>Making statistical output tidy</h2>
+<p>If you are writing the function that does the calculations, you are in control.</p>
+<p>Tips and tricks:</p>
+<ul>
+<li>Assemble things in a data frame, the columns you group by will appear on their own.</li>
+<li><code>deparse1(substitute(x))</code> creates a character string from the name of the object used as the argument <code>x</code></li>
+</ul>
+</section>
+<section id="the-broom-package" class="slide level2">
+<h2>The <code>broom</code> package</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">library</span>(colorspace)</span>
-<span id="cb18-2"><a href="#cb18-2"></a></span>
-<span id="cb18-3"><a href="#cb18-3"></a>species_names <span class="ot">&lt;-</span> <span class="fu">levels</span>(penguins<span class="sc">$</span>species)</span>
-<span id="cb18-4"><a href="#cb18-4"></a>colors <span class="ot">&lt;-</span> colorspace<span class="sc">::</span><span class="fu">qualitative_hcl</span>(<span class="fu">length</span>(species_names))</span>
-<span id="cb18-5"><a href="#cb18-5"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(species_names)){</span>
-<span id="cb18-6"><a href="#cb18-6"></a>  </span>
-<span id="cb18-7"><a href="#cb18-7"></a>  <span class="cf">if</span>(i <span class="sc">==</span> <span class="dv">1</span>) {</span>
-<span id="cb18-8"><a href="#cb18-8"></a>    </span>
-<span id="cb18-9"><a href="#cb18-9"></a>    <span class="fu">plot</span>(bill_length_mm <span class="sc">~</span> bill_depth_mm, </span>
-<span id="cb18-10"><a href="#cb18-10"></a>         <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">col =</span> colors[i],</span>
-<span id="cb18-11"><a href="#cb18-11"></a>         <span class="at">data =</span> <span class="fu">subset</span>(penguins, species <span class="sc">==</span> species_names[i]), </span>
-<span id="cb18-12"><a href="#cb18-12"></a>         <span class="at">xlim =</span> <span class="fu">range</span>(penguins<span class="sc">$</span>bill_depth_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb18-13"><a href="#cb18-13"></a>         <span class="at">ylim =</span> <span class="fu">range</span>(penguins<span class="sc">$</span>bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb18-14"><a href="#cb18-14"></a>         )</span>
-<span id="cb18-15"><a href="#cb18-15"></a>    </span>
-<span id="cb18-16"><a href="#cb18-16"></a>  } <span class="cf">else</span> {</span>
-<span id="cb18-17"><a href="#cb18-17"></a>    </span>
-<span id="cb18-18"><a href="#cb18-18"></a>    <span class="fu">points</span>(bill_length_mm <span class="sc">~</span> bill_depth_mm, </span>
-<span id="cb18-19"><a href="#cb18-19"></a>         <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">col =</span> colors[i],</span>
-<span id="cb18-20"><a href="#cb18-20"></a>         <span class="at">data =</span> <span class="fu">subset</span>(penguins, species <span class="sc">==</span> species_names[i]))</span>
-<span id="cb18-21"><a href="#cb18-21"></a>    </span>
-<span id="cb18-22"><a href="#cb18-22"></a>  }</span>
-<span id="cb18-23"><a href="#cb18-23"></a>  </span>
-<span id="cb18-24"><a href="#cb18-24"></a>}</span>
-<span id="cb18-25"><a href="#cb18-25"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">fill =</span> colors, <span class="at">legend =</span> species_names)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img data-src="flow-and-loops_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" height="600"></p>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">library</span>(broom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Broom provides a <code>tidy</code> function, which is a generic, it can be applied to lots of different objects:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">methods</span>(<span class="st">"tidy"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] tidy.aareg*                    tidy.acf*                     
+  [3] tidy.anova*                    tidy.aov*                     
+  [5] tidy.aovlist*                  tidy.Arima*                   
+  [7] tidy.betamfx*                  tidy.betareg*                 
+  [9] tidy.biglm*                    tidy.binDesign*               
+ [11] tidy.binWidth*                 tidy.boot*                    
+ [13] tidy.btergm*                   tidy.cch*                     
+ [15] tidy.character*                tidy.cld*                     
+ [17] tidy.clm*                      tidy.clmm*                    
+ [19] tidy.coeftest*                 tidy.confint.glht*            
+ [21] tidy.confusionMatrix*          tidy.coxph*                   
+ [23] tidy.crr*                      tidy.cv.glmnet*               
+ [25] tidy.data.frame*               tidy.default*                 
+ [27] tidy.density*                  tidy.dgCMatrix*               
+ [29] tidy.dgTMatrix*                tidy.dist*                    
+ [31] tidy.drc*                      tidy.durbinWatsonTest*        
+ [33] tidy.emmGrid*                  tidy.epi.2by2*                
+ [35] tidy.ergm*                     tidy.factanal*                
+ [37] tidy.felm*                     tidy.fitdistr*                
+ [39] tidy.fixest*                   tidy.ftable*                  
+ [41] tidy.gam*                      tidy.Gam*                     
+ [43] tidy.garch*                    tidy.geeglm*                  
+ [45] tidy.glht*                     tidy.glm*                     
+ [47] tidy.glmnet*                   tidy.glmrob*                  
+ [49] tidy.glmRob*                   tidy.gmm*                     
+ [51] tidy.htest*                    tidy.ivreg*                   
+ [53] tidy.kappa*                    tidy.kde*                     
+ [55] tidy.Kendall*                  tidy.kmeans*                  
+ [57] tidy.lavaan*                   tidy.leveneTest*              
+ [59] tidy.Line*                     tidy.Lines*                   
+ [61] tidy.list*                     tidy.lm*                      
+ [63] tidy.lm.beta*                  tidy.lmodel2*                 
+ [65] tidy.lmrob*                    tidy.lmRob*                   
+ [67] tidy.logical*                  tidy.logitmfx*                
+ [69] tidy.lsmobj*                   tidy.manova*                  
+ [71] tidy.map*                      tidy.margins*                 
+ [73] tidy.Mclust*                   tidy.mediate*                 
+ [75] tidy.mfx*                      tidy.mjoint*                  
+ [77] tidy.mle2*                     tidy.mlm*                     
+ [79] tidy.mlogit*                   tidy.muhaz*                   
+ [81] tidy.multinom*                 tidy.negbin*                  
+ [83] tidy.negbinmfx*                tidy.nlrq*                    
+ [85] tidy.nls*                      tidy.NULL*                    
+ [87] tidy.numeric*                  tidy.orcutt*                  
+ [89] tidy.pairwise.htest*           tidy.pam*                     
+ [91] tidy.plm*                      tidy.poissonmfx*              
+ [93] tidy.poLCA*                    tidy.polr*                    
+ [95] tidy.Polygon*                  tidy.Polygons*                
+ [97] tidy.power.htest*              tidy.prcomp*                  
+ [99] tidy.probitmfx*                tidy.pyears*                  
+[101] tidy.rcorr*                    tidy.ref.grid*                
+[103] tidy.regsubsets*               tidy.ridgelm*                 
+[105] tidy.rlm*                      tidy.rma*                     
+[107] tidy.roc*                      tidy.rq*                      
+[109] tidy.rqs*                      tidy.sarlm*                   
+[111] tidy.Sarlm*                    tidy.sparseMatrix*            
+[113] tidy.SpatialLinesDataFrame*    tidy.SpatialPolygons*         
+[115] tidy.SpatialPolygonsDataFrame* tidy.spec*                    
+[117] tidy.speedglm*                 tidy.speedlm*                 
+[119] tidy.summary_emm*              tidy.summary.glht*            
+[121] tidy.summary.lm*               tidy.summary.plm*             
+[123] tidy.summaryDefault*           tidy.survdiff*                
+[125] tidy.survexp*                  tidy.survfit*                 
+[127] tidy.survreg*                  tidy.svyglm*                  
+[129] tidy.svyolr*                   tidy.systemfit*               
+[131] tidy.table*                    tidy.tobit*                   
+[133] tidy.ts*                       tidy.TukeyHSD*                
+[135] tidy.varest*                   tidy.zoo*                     
+see '?methods' for accessing help and source code</code></pre>
+</div>
+</div>
+<p>It attempts to do organize statistical output into a tidy tibble.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>lmfit <span class="ot">&lt;-</span> <span class="fu">lm</span>(flipper_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> species <span class="sc">+</span> sex, </span>
+<span id="cb10-2"><a href="#cb10-2"></a>            <span class="at">data =</span> penguins)</span>
+<span id="cb10-3"><a href="#cb10-3"></a>lmfit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = flipper_length_mm ~ body_mass_g + species + sex, 
+    data = penguins)
+
+Coefficients:
+     (Intercept)       body_mass_g  speciesChinstrap     speciesGentoo  
+       164.58872           0.00655           5.54444          18.02132  
+         sexmale  
+         2.47772  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">tidy</span>(lmfit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 5
+  term              estimate std.error statistic   p.value
+  &lt;chr&gt;                &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)      165.       3.18         51.7  1.01e-159
+2 body_mass_g        0.00655  0.000931      7.04 1.15e- 11
+3 speciesChinstrap   5.54     0.785         7.06 9.92e- 12
+4 speciesGentoo     18.0      1.44         12.5  1.46e- 29
+5 sexmale            2.48     0.854         2.90 3.97e-  3</code></pre>
 </div>
 </div>
 </section>
-<section id="nested-loops" class="slide level2">
-<h2>Nested loops</h2>
-<p>A loop can itself contain a loop, or multiple loops.</p>
+<section id="more-functions-from-broom" class="slide level2">
+<h2>More functions from <code>broom</code></h2>
+<p><code>tidy</code> returns data about the model coefficients, what about the other components of the model?</p>
+<ul>
+<li><code>tidy()</code> summarizes information about model components</li>
+<li><code>glance()</code> reports information about the entire model</li>
+<li><code>augment()</code> adds information about observations to a dataset</li>
+</ul>
+</section>
+<section id="benefits-of-tidy-statistical-output" class="slide level2">
+<h2>Benefits of tidy statistical output</h2>
+<p>The main reason for being tidy is to help with subsequent analysis and reporting. <code>lmfit</code> prints the necessary results, but look at <code>tidy(lmfit)</code>.</p>
+<ul>
+<li>Easier to organize into a table or figure</li>
+<li>Easier to merge or append with results from different models</li>
+<li>Possibly easier to store/save the results</li>
+</ul>
+</section></section>
+<section>
+<section id="tidy-data-for-analysis" class="title-slide slide level1 center">
+<h1>Tidy data for analysis</h1>
+
+</section>
+<section id="messy-data-example" class="slide level2">
+<h2>Messy data example</h2>
+<p>Real data is often messy, and we want that to be tidy as well for easier analysis. Example of messy data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>species_names <span class="ot">&lt;-</span> <span class="fu">levels</span>(penguins<span class="sc">$</span>species)</span>
-<span id="cb19-2"><a href="#cb19-2"></a>island_names <span class="ot">&lt;-</span> <span class="fu">levels</span>(penguins<span class="sc">$</span>island)</span>
-<span id="cb19-3"><a href="#cb19-3"></a>mean_bm_matrix <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="fu">length</span>(species_names), </span>
-<span id="cb19-4"><a href="#cb19-4"></a>                         <span class="at">ncol =</span> <span class="fu">length</span>(island_names), </span>
-<span id="cb19-5"><a href="#cb19-5"></a>                         <span class="at">dimnames =</span> <span class="fu">list</span>(species_names, island_names))</span>
-<span id="cb19-6"><a href="#cb19-6"></a></span>
-<span id="cb19-7"><a href="#cb19-7"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(mean_bm_matrix)) {</span>
-<span id="cb19-8"><a href="#cb19-8"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(mean_bm_matrix)) {</span>
-<span id="cb19-9"><a href="#cb19-9"></a>   </span>
-<span id="cb19-10"><a href="#cb19-10"></a>    thisset <span class="ot">&lt;-</span> <span class="fu">subset</span>(penguins, species <span class="sc">==</span> species_names[i] <span class="sc">&amp;</span> </span>
-<span id="cb19-11"><a href="#cb19-11"></a>                        island <span class="sc">==</span> island_names[j])</span>
-<span id="cb19-12"><a href="#cb19-12"></a>    </span>
-<span id="cb19-13"><a href="#cb19-13"></a>    <span class="cf">if</span>(<span class="fu">nrow</span>(thisset) <span class="sc">==</span> <span class="dv">0</span>) <span class="cf">next</span></span>
-<span id="cb19-14"><a href="#cb19-14"></a>    </span>
-<span id="cb19-15"><a href="#cb19-15"></a>    mean_bm_matrix[i, j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(thisset<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb19-16"><a href="#cb19-16"></a>     </span>
-<span id="cb19-17"><a href="#cb19-17"></a>  }</span>
-<span id="cb19-18"><a href="#cb19-18"></a>}</span>
-<span id="cb19-19"><a href="#cb19-19"></a>mean_bm_matrix</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb14-2"><a href="#cb14-2"></a>billboard <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="sc">~</span>artist, <span class="sc">~</span>wk1, <span class="sc">~</span>wk2,</span>
+<span id="cb14-4"><a href="#cb14-4"></a>   <span class="st">"2 Pac"</span>,     <span class="dv">1</span>,     <span class="dv">2</span>,</span>
+<span id="cb14-5"><a href="#cb14-5"></a>   <span class="st">"Creed"</span>,     <span class="dv">3</span>,     <span class="dv">4</span>,</span>
+<span id="cb14-6"><a href="#cb14-6"></a>   <span class="st">"Mos Def"</span>,     <span class="dv">5</span>,     <span class="dv">6</span>,</span>
+<span id="cb14-7"><a href="#cb14-7"></a>  <span class="st">"Aaliyah"</span>, <span class="dv">2</span>, <span class="cn">NA</span></span>
+<span id="cb14-8"><a href="#cb14-8"></a>)</span>
+<span id="cb14-9"><a href="#cb14-9"></a>billboard</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>            Biscoe    Dream Torgersen
-Adelie    3709.659 3688.393  3706.373
-Chinstrap       NA 3733.088        NA
-Gentoo    5076.016       NA        NA</code></pre>
+<pre><code># A tibble: 4 × 3
+  artist    wk1   wk2
+  &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
+1 2 Pac       1     2
+2 Creed       3     4
+3 Mos Def     5     6
+4 Aaliyah     2    NA</code></pre>
+</div>
+</div>
+<ul>
+<li>A variable is encoded in columns (week)</li>
+<li>This is also called “wide format”</li>
+</ul>
+</section>
+<section id="pivoting-data" class="slide level2">
+<h2>Pivoting data</h2>
+<p>Converting from wide to long (<code>tidyr</code> package):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>billboard <span class="sc">|&gt;</span> </span>
+<span id="cb16-2"><a href="#cb16-2"></a>    <span class="fu">pivot_longer</span>(</span>
+<span id="cb16-3"><a href="#cb16-3"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"wk"</span>), </span>
+<span id="cb16-4"><a href="#cb16-4"></a>    <span class="at">names_to =</span> <span class="st">"week"</span>, </span>
+<span id="cb16-5"><a href="#cb16-5"></a>    <span class="at">values_to =</span> <span class="st">"rank"</span>,</span>
+<span id="cb16-6"><a href="#cb16-6"></a>    <span class="at">values_drop_na =</span> <span class="cn">TRUE</span></span>
+<span id="cb16-7"><a href="#cb16-7"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 3
+  artist  week   rank
+  &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt;
+1 2 Pac   wk1       1
+2 2 Pac   wk2       2
+3 Creed   wk1       3
+4 Creed   wk2       4
+5 Mos Def wk1       5
+6 Mos Def wk2       6
+7 Aaliyah wk1       2</code></pre>
+</div>
+</div>
+<p>Base R</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>longbb <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(billboard) <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">reshape</span>(<span class="at">direction =</span> <span class="st">"long"</span>, </span>
+<span id="cb18-3"><a href="#cb18-3"></a>          <span class="at">varying =</span> <span class="fu">colnames</span>(billboard)[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>)], </span>
+<span id="cb18-4"><a href="#cb18-4"></a>          <span class="at">timevar =</span> <span class="st">"week"</span>, <span class="at">sep =</span> <span class="st">""</span>,</span>
+<span id="cb18-5"><a href="#cb18-5"></a>          <span class="at">v.names =</span> <span class="st">"rank"</span>,</span>
+<span id="cb18-6"><a href="#cb18-6"></a>          <span class="at">idvar =</span> <span class="st">"artist"</span>)</span>
+<span id="cb18-7"><a href="#cb18-7"></a><span class="fu">subset</span>(longbb, <span class="sc">!</span><span class="fu">is.na</span>(rank))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           artist week rank
+2 Pac.1     2 Pac    1    1
+Creed.1     Creed    1    3
+Mos Def.1 Mos Def    1    5
+Aaliyah.1 Aaliyah    1    2
+2 Pac.2     2 Pac    2    2
+Creed.2     Creed    2    4
+Mos Def.2 Mos Def    2    6</code></pre>
 </div>
 </div>
 </section>
-<section id="note-on-speed" class="slide level2">
-<h2>Note on speed</h2>
-<p>You may see people warn you not to use for loops in R, “because they are slow”.</p>
-<p>That is partially true, but speed is not the only thing, for loops can be much clearer and more understandable than the alternatives.</p>
-<p><strong>But</strong>, the slow thing in R is changing the size of an object, so you can avoid that by creating a vector/matrix/array of the correct size to hold the results of the loop:</p>
+<section id="melting-data.table-and-old-tidyverse" class="slide level2">
+<h2>Melting (data.table and old tidyverse)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">system.time</span>({</span>
-<span id="cb21-2"><a href="#cb21-2"></a>A1 <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb21-3"><a href="#cb21-3"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100000</span>) {</span>
-<span id="cb21-4"><a href="#cb21-4"></a>  A1 <span class="ot">&lt;-</span> <span class="fu">c</span>(A1, <span class="fu">rnorm</span>(<span class="dv">1</span>))</span>
-<span id="cb21-5"><a href="#cb21-5"></a>}</span>
-<span id="cb21-6"><a href="#cb21-6"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb20-2"><a href="#cb20-2"></a></span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="fu">data.table</span>(billboard) <span class="sc">|&gt;</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a>  <span class="fu">melt</span>(<span class="at">measure.vars =</span> <span class="fu">patterns</span>(<span class="st">"^wk"</span>),</span>
+<span id="cb20-5"><a href="#cb20-5"></a>       <span class="at">variable.name =</span> <span class="st">"week"</span>, </span>
+<span id="cb20-6"><a href="#cb20-6"></a>       <span class="at">value.name =</span> <span class="st">"rank"</span>, </span>
+<span id="cb20-7"><a href="#cb20-7"></a>       <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   user  system elapsed 
- 14.030   0.100  14.145 </code></pre>
+<pre><code>    artist week rank
+1:   2 Pac  wk1    1
+2:   Creed  wk1    3
+3: Mos Def  wk1    5
+4: Aaliyah  wk1    2
+5:   2 Pac  wk2    2
+6:   Creed  wk2    4
+7: Mos Def  wk2    6</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">system.time</span>({</span>
-<span id="cb23-2"><a href="#cb23-2"></a>A2 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">100000</span>)</span>
-<span id="cb23-3"><a href="#cb23-3"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(A2)) {</span>
-<span id="cb23-4"><a href="#cb23-4"></a>  A2[i] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>)</span>
-<span id="cb23-5"><a href="#cb23-5"></a>}</span>
-<span id="cb23-6"><a href="#cb23-6"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This makes it easier to compute summary statistics, or make figures of ranks by artist.</p>
+<p>Most longitudinal data analyses will expect data in “long” format.</p>
+</section>
+<section id="pivoting-from-long-to-wide" class="slide level2">
+<h2>Pivoting from long to wide</h2>
+<p>This also has its uses. Examples include computing correlation matrices, doing derived variable analysis, and tables are often more readable in wide or partial wide format.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>dfw <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="sc">~</span>id, <span class="sc">~</span>time, <span class="sc">~</span>value,</span>
+<span id="cb22-3"><a href="#cb22-3"></a>  <span class="st">"A"</span>, <span class="dv">1</span>, <span class="fl">8.6</span>,</span>
+<span id="cb22-4"><a href="#cb22-4"></a>  <span class="st">"A"</span>, <span class="dv">3</span>, <span class="fl">4.5</span>,</span>
+<span id="cb22-5"><a href="#cb22-5"></a>  <span class="st">"B"</span>, <span class="dv">1</span>, <span class="fl">1.01</span>,</span>
+<span id="cb22-6"><a href="#cb22-6"></a>  <span class="st">"B"</span>, <span class="dv">2</span>, <span class="fl">3.3</span>, </span>
+<span id="cb22-7"><a href="#cb22-7"></a>  <span class="st">"C"</span>, <span class="dv">1</span>, <span class="fl">4.1</span>,</span>
+<span id="cb22-8"><a href="#cb22-8"></a>  <span class="st">"C"</span>, <span class="dv">2</span>, <span class="fl">5.2</span>,</span>
+<span id="cb22-9"><a href="#cb22-9"></a>  <span class="st">"C"</span>, <span class="dv">3</span>, <span class="fl">3.2</span></span>
+<span id="cb22-10"><a href="#cb22-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>tidyr</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>dfw <span class="sc">|&gt;</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"time"</span>, </span>
+<span id="cb23-2"><a href="#cb23-2"></a>                   <span class="at">names_prefix =</span> <span class="st">"time"</span>,</span>
+<span id="cb23-3"><a href="#cb23-3"></a>                   <span class="at">values_from =</span> <span class="st">"value"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   user  system elapsed 
-  0.163   0.000   0.164 </code></pre>
+<pre><code># A tibble: 3 × 4
+  id    time1 time3 time2
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 A      8.6    4.5  NA  
+2 B      1.01  NA     3.3
+3 C      4.1    3.2   5.2</code></pre>
+</div>
+</div>
+<p>base R</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">as.data.frame</span>(dfw) <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">reshape</span>(<span class="at">direction =</span> <span class="st">"wide"</span>, </span>
+<span id="cb25-3"><a href="#cb25-3"></a>          <span class="at">idvar =</span> <span class="st">"id"</span> ,</span>
+<span id="cb25-4"><a href="#cb25-4"></a>          <span class="at">timevar =</span> <span class="st">"time"</span></span>
+<span id="cb25-5"><a href="#cb25-5"></a>          )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  id value.1 value.3 value.2
+1  A    8.60     4.5      NA
+3  B    1.01      NA     3.3
+5  C    4.10     3.2     5.2</code></pre>
+</div>
+</div>
+<p><code>data.table</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">data.table</span>(dfw) <span class="sc">|&gt;</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">dcast</span>(id <span class="sc">~</span> time, <span class="at">value.var =</span> <span class="st">"value"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   id    1   2   3
+1:  A 8.60  NA 4.5
+2:  B 1.01 3.3  NA
+3:  C 4.10 5.2 3.2</code></pre>
+</div>
+</div>
+</section>
+<section id="real-data" class="slide level2">
+<h2>Real data</h2>
+<p>Are often much more complex, and can be messier. Here is one example we will use in the lesson:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">"lpr-ex.rds"</span>)) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    pid      indat visit hdia diag1 diag2 diag3 diag4 diag5 diag6
+1  A001 2006-05-25     1 K981  K541  H429  H021  C500  F151  &lt;NA&gt;
+2  A001 2008-01-26     2 K261  I440  H791  I689  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;
+3  A001 2008-12-13     3 D562  B189  I332  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;
+4  A001 2013-11-14     4 A899  G369  C039  G212  A702  &lt;NA&gt;  &lt;NA&gt;
+5  A001 2013-12-16     5 G020  I712  A000  A079  B552  J049  I192
+6  A001 2015-06-18     6 K019  F942  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;
+7  A001 2015-09-12     7 E152  D281  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;
+8  A002 2007-11-09     1 D182  D582  K060  J200  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;
+9  A002 2009-05-03     2 C531  G299  I221  K392  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;
+10 A002 2012-12-28     3 K260  B111  A791  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;
+11 A002 2015-06-09     4 F642  G452  E962  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;
+12 A002 2015-07-07     5 B891  C460  A302  A041  A230  &lt;NA&gt;  &lt;NA&gt;</code></pre>
 </div>
 </div>
 </section>
 <section id="practical" class="slide level2">
 <h2>Practical</h2>
-<ol type="1">
-<li>Practice working if and else statements</li>
-<li>Practice working with loops</li>
-</ol>
-<p><a href="../exercises/flow-and-loops.html">Link to lesson</a></p>
+<p>We will practice creating tidy data continuing with our mean sd function, and using the register data example to practice pivoting and doing grouped analyses.</p>
+<p><a href="../lessons/tidy-data.html">Link to lesson</a></p>
 <p><a href="../index.html">Link home</a></p>
 
 <div class="footer footer-default">

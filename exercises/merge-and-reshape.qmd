@@ -1,8 +1,8 @@
 ---
-title: "Merging and reshaping -- exercises"
+title: "Tidying and reshaping -- exercises"
 author: "Michael C Sachs"
 subtitle: "Day 3, B"
-description: "Practice manipulating data by merging and reshaping"
+description: "Practice manipulating data by tidying and reshaping"
 image: reshape.jpeg
 ---
 
@@ -11,5 +11,36 @@ image: reshape.jpeg
 
 In this lesson you will 
 
-1. Practice doing the different types of data merges/joins
+1. Practice tidying statistical results
 2. See and understand how to reshape data from wide to long and long to wide
+
+
+## Tidying our mean sd function
+
+Load the `broom` package and look at the source code for `tidy.lm`
+```{r}
+broom:::tidy.lm
+```
+
+
+1. Write a tidy method for our `mean_sd` function and try it out on the penguins dataset. 
+2. Apply the `mean_sd` function to the penguins body mass in grams by species and sex. Organize the results into a table suitable for publication, where it is easy to compare the two sexes.
+
+
+## Tidying the national patient register dataset
+
+Load the LPR data example from `"https://sachsmc.github.io/r-programming/lpr-ex.rds"`
+
+```{r}
+library(here)
+lpr <- readRDS(here("lpr-ex.rds"))
+```
+
+Use the tidy principles to do the following: 
+
+1. Reshape the data into wide, where the columns are the primary diagnosis (hdia) at each visit number
+2. Reshape the data into longer format, where all of the diagnoses are stored in a single variable, with another variable indicating the primary diagnosis. 
+3. Create a new variable for each participant which equals TRUE if they had any diagnosis of either D150, D152, or D159 before the date 1 January 2010.
+
+
+

@@ -18,7 +18,7 @@ In this lesson you will
 ## Simple loops and conditional statements
 
 1. Use a loop to print every number from 1 to 10
-2. Modify the loop to print every _even_ number from 1 to 10 (hint: add an `if` statement)
+2. Modify the loop to print every _even_ number from 1 to 10 (hint: add an `if` statement and use `(i %% 2) == 0` to check whether `i` is divisible by 2).
 
 
 

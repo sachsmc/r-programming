@@ -392,6 +392,74 @@ These concepts are loosely defined, because functions can take both data and fun
 
 # Extra slides
 
+## `get` and `assign`
+
+Recall that we can retrieve a variable from a data frame by using a character string, e.g., `penguins[["species"]]`. 
+
+We can use a character string to get or assign any other object using these functions. For example, this returns the function called mean
+```{r}
+get("mean")
+```
+
+which we can use like a function
+```{r}
+get("mean")(penguins$body_mass_g, na.rm = TRUE)
+```
+
+Likewise, an object can be created with `assign`
+```{r}
+assign("mean.body.mass", mean(penguins$body_mass_g, na.rm = TRUE))
+mean.body.mass
+```
+
+## Uses of `get` and `assign`
+
+Example, iterating over functions by name:
+```{r}
+summary_funcs <- c("mean", "sd", "median")
+for(fn in summary_funcs) {
+  cat(fn, "body mass: ")
+  cat(get(fn)(penguins$body_mass_g, na.rm = TRUE), "\n")
+}
+```
+
+Example, retrieving a function programmatically, 
+```{r}
+converter <- get(paste0("as.", class(penguins$flipper_length_mm)))
+converter(mean(penguins$flipper_length_mm, na.rm = TRUE))
+```
+
+Example, programmatically creating new variables, 
+```{r}
+numeric_cols <- names(penguins)[sapply(penguins, is.numeric)]
+for(col in numeric_cols){
+  assign(paste0(col, ".scaled"), 
+         scale(penguins[[col]]))
+}
+```
+
+
+
+## `do.call` 
+
+A variant on `get` is `do.call`. This takes a function as the first argument, then a list containing the arguments for the function, `do.call(<function>, <list of arguments to function>)`. 
+
+A common use for this is with functions that take a variable number of arguments, e.g., `cbind`, `paste`, where the arguments are created programmatically.
+
+simple example, 
+```{r}
+do.call("paste", list("A", "B", sep = "."))
+```
+
+
+arranging a list into a matrix 
+```{r}
+mean.sd.by.species <- lapply(split(penguins$flipper_length_mm, penguins$species), 
+                             function(x) c(mean = mean(x, na.rm = TRUE), sd = sd(x, na.rm = TRUE)))
+do.call("rbind", mean.sd.by.species)
+```
+
+
 ## Recursive functions
 
 Functions that call themselves are possible. 

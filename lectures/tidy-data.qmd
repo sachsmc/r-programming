@@ -1,0 +1,267 @@
+---
+title: "Tidy data"
+subtitle: "Day 3, B"
+author: "Michael C Sachs"
+format: 
+    revealjs:
+      scrollable: true
+execute:
+  echo: true
+---
+
+# Illustration
+
+## Our `mean_sd` function
+
+```{r}
+library(palmerpenguins)
+library(dplyr)
+
+mean_sd <- function(x, na.rm = TRUE) {
+  c(mean = mean(x, na.rm = na.rm), 
+    sd = sd(x, na.rm = na.rm))
+}
+
+
+penguins |> group_by(species, sex) |>
+  summarize(mean_sd(body_mass_g))
+```
+
+This is not so nice to work with because we cannot see which row is the mean and which is the sd. 
+
+
+## Alternative 1
+Return a data frame instead
+
+```{r}
+mean_sd_df <- function(x, na.rm = TRUE) {
+  data.frame(
+    variable = deparse1(substitute(x)),
+    mean = mean(x, na.rm = na.rm), 
+    sd = sd(x, na.rm = na.rm))
+}
+
+penguins |> group_by(species, sex) |>
+  summarize(mean_sd_df(body_mass_g))
+```
+
+## Alternative 2
+```{r}
+mean_sd_ldf <- function(x, na.rm = TRUE) {
+  data.frame(
+    variable = deparse1(substitute(x)),
+    stat = c("mean", "sd"), 
+    value = c(mean(x, na.rm = na.rm), 
+             sd(x, na.rm = na.rm)))
+}
+
+penguins |> group_by(species, sex) |>
+  summarize(mean_sd_ldf(body_mass_g))
+```
+
+# Definitions 
+
+## Tidy data
+
+These are two different ways to represent the same data. This is to illustrate the concept of _tidy data_ 
+
+Tidy data is a standard way of mapping the meaning of a dataset to its structure. A dataset is
+messy or tidy depending on how rows, columns and tables are matched up with observations,
+variables and types. In tidy data:
+
+1. Each variable forms a column.
+2. Each observation forms a row.
+3. Each type of observational unit forms a table.
+
+Wickham, H. (2014). Tidy Data. _Journal of Statistical Software_, 59(10), 1–23. https://doi.org/10.18637/jss.v059.i10
+
+
+## Variables and observations
+
+In general, 
+
+- It is easier to describe and create functional relationships between variables (columns), than between observations. 
+    + Think of our mean, sd example. Relationship between mean and sd? 
+    + Regression
+- It is easier to make comparisons between groups of observations than across variables
+    + T-tests, anova, compare means across species
+
+# In practice
+
+## Making statistical output tidy
+
+If you are writing the function that does the calculations, you are in control. 
+
+Tips and tricks: 
+
+- Assemble things in a data frame, the columns you group by will appear on their own. 
+- `deparse1(substitute(x))` creates a character string from the name of the object used as the argument `x`
+
+
+
+## The `broom` package
+
+```{r}
+library(broom)
+```
+
+Broom provides a `tidy` function, which is a generic, it can be applied to lots of different objects:
+
+```{r}
+methods("tidy")
+```
+
+It attempts to do organize statistical output into a tidy tibble. 
+
+```{r}
+lmfit <- lm(flipper_length_mm ~ body_mass_g + species + sex, 
+            data = penguins)
+lmfit
+tidy(lmfit)
+```
+
+
+## More functions from `broom` 
+
+`tidy` returns data about the model coefficients, what about the other components of the model? 
+
+- `tidy()` summarizes information about model components
+- `glance()` reports information about the entire model
+- `augment()` adds information about observations to a dataset
+
+
+
+## Benefits of tidy statistical output
+
+The main reason for being tidy is to help with subsequent analysis and reporting. `lmfit` prints the necessary results, but look at `tidy(lmfit)`. 
+
+- Easier to organize into a table or figure
+- Easier to merge or append with results from different models
+- Possibly easier to store/save the results
+
+
+# Tidy data for analysis
+
+## Messy data example
+
+Real data is often messy, and we want that to be tidy as well for easier analysis. Example of messy data: 
+
+```{r}
+library(tidyr)
+billboard <- tribble(
+  ~artist, ~wk1, ~wk2,
+   "2 Pac",     1,     2,
+   "Creed",     3,     4,
+   "Mos Def",     5,     6,
+  "Aaliyah", 2, NA
+)
+billboard
+```
+
+- A variable is encoded in columns (week)
+- This is also called "wide format"
+
+## Pivoting data
+
+Converting from wide to long (`tidyr` package): 
+```{r}
+billboard |> 
+    pivot_longer(
+    cols = starts_with("wk"), 
+    names_to = "week", 
+    values_to = "rank",
+    values_drop_na = TRUE
+  )
+```
+
+Base R
+```{r}
+longbb <- as.data.frame(billboard) |>
+  reshape(direction = "long", 
+          varying = colnames(billboard)[-c(1)], 
+          timevar = "week", sep = "",
+          v.names = "rank",
+          idvar = "artist")
+subset(longbb, !is.na(rank))
+```
+
+
+## Melting (data.table and old tidyverse)
+
+
+```{r}
+library(data.table)
+
+data.table(billboard) |>
+  melt(measure.vars = patterns("^wk"),
+       variable.name = "week", 
+       value.name = "rank", 
+       na.rm = TRUE)
+
+```
+
+This makes it easier to compute summary statistics, or make figures of ranks by artist. 
+
+Most longitudinal data analyses will expect data in "long" format.
+
+
+## Pivoting from long to wide
+
+This also has its uses. Examples include computing correlation matrices, doing derived variable analysis, and tables are often more readable in wide or partial wide format. 
+
+```{r}
+dfw <- tribble(
+  ~id, ~time, ~value,
+  "A", 1, 8.6,
+  "A", 3, 4.5,
+  "B", 1, 1.01,
+  "B", 2, 3.3, 
+  "C", 1, 4.1,
+  "C", 2, 5.2,
+  "C", 3, 3.2
+)
+```
+
+
+`tidyr` 
+
+```{r}
+dfw |> pivot_wider(names_from = "time", 
+                   names_prefix = "time",
+                   values_from = "value")
+```
+
+base R 
+```{r}
+as.data.frame(dfw) |>
+  reshape(direction = "wide", 
+          idvar = "id" ,
+          timevar = "time"
+          )
+```
+
+`data.table`
+```{r}
+data.table(dfw) |>
+  dcast(id ~ time, value.var = "value")
+```
+
+
+## Real data
+
+Are often much more complex, and can be messier. Here is one example we will use in the lesson: 
+
+```{r}
+library(here)
+readRDS(here("lpr-ex.rds")) |> head(12)
+```
+
+
+
+## Practical
+
+We will practice creating tidy data continuing with our mean sd function, and using the register data example to practice pivoting and doing grouped analyses.
+
+[Link to lesson](../lessons/tidy-data.html)
+
+[Link home](../index.html)

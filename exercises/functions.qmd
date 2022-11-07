@@ -31,8 +31,88 @@ c. What sort of data structure should I return?
 1. Use your function to compute the mean and sd of all the numeric variables in `penguins`. 
 2. Use your function to compute the mean and sd of body mass by species and sex
     a. Try using one of the apply functions
-    b. Try using `dplyr`: check out the functions `group_by` and `summarize`
-    c. Try using `data.table`: use the `.by` argument in the `[`
+
+<details>
+<summary>Hints</summary>
+```{r}
+#| eval: false
+split(penguins$body_mass_g, list(penguins$species, penguins$sex)) |>
+  lapply(FUN = mean_sd)
+```
+Try `sapply` instead of `lapply`. What about `tapply`?
+</details>
+
+b. Try using `dplyr`: check out the functions `group_by` and `summarize`
+
+<details>
+<summary>Hints</summary>
+```{r}
+#| eval: false
+library(dplyr)
+penguins |> group_by(species, sex) |>
+  summarize(mean_sd(body_mass_g))
+```
+</details>
+
+c. Try using `data.table`: use the `.by` argument in the `[`
+
+<details>
+<summary>Hints</summary>
+```{r}
+#| eval: false
+library(data.table)
+pengdt <- data.table(penguins)
+
+pengdt[, mean_sd(body_mass_g), by = list(species, sex)]
+## . can be used as shorthand for list in data table
+pengdt[, mean_sd(body_mass_g), by = .(species, sex)]
+```
+</details>
+
+
+
+## Classes and custom generics
+
+Now that you have some functions to do something interesting, let's create a "class" to indicate that the object has a specific meaning. 
+
+1. Modify your mean and sd function so that the data structure that is returned has class "meansd". There are two ways to do this: 
+    a. Say the object you currently return is called `res`, instead of `res`, return `structure(res, class = "meansd")`
+    b. Add the line `class(res) <- "meansd"` before returning `res``
+    c. Use the `attr` function to create and assign additional information, for example the name of the variable,  You can get the name of the object passed to `x` using `deparse1(substitute(x))`. 
+
+<details>
+<summary>Hints</summary>
+```{r}
+#| eval: false
+mean_sd2 <- function(x, na.rm = TRUE) {
+  res <- c(mean = mean(x, na.rm = na.rm), 
+           sd = sd(x, na.rm = na.rm))
+  
+  attr(res, "variable") <- deparse1(substitute(x))
+  class(res) <- "meansd"
+  res
+}
+```
+</details>
+
+2. Write a custom print function `print.meansd` that nicely prints the mean and standard deviation. Use the functions `round` and `paste` functions to create a string, then print it out using the `cat` function. 
+
+<details>
+<summary>Hints</summary>
+```{r}
+#| eval: false
+print.meansd <- function(x, digits = 2) {
+  
+  msd <- paste0(round(x["mean"], digits = digits), " (", 
+                round(x["sd"], digits = digits), ")")
+  
+  cat("mean (sd) of ", 
+      attr(x, "variable"), ":", 
+      msd, "\n")
+  
+}
+```
+</details>
 
 
 ## More functions
@@ -47,22 +127,13 @@ where $\overline{X}$ is the sample mean and $\hat{\sigma}$ is the sample standar
 3. Compose your custom functions in order to test the null hypothesis that the mean body mass of penguins is 4000g. Try using the pipe operator `|>`. 
 
 
-## Classes and custom generics
-
-Now that you have some functions to do something interesting, let's create a "class" to indicate that the object has a specific meaning. 
-
-1. Modify your mean and sd function so that the data structure that is returned has class "meansd". There are two ways to do this: 
-    a. Say the object you currently return is called `x`, instead of `x`, return `structure(x, class = "meansd")`
-    b. Add the line `class(x) <- "meansd"` before returning `x`
-2. Write a custom print function `print.meansd` that nicely prints the mean and standard deviation. Use the functions `sprintf`, `round`, and/or `format`. 
-
 
 ### If you have time or on your own
 
-1. Expand your class to include confidence interval and p-value calculation/printing
+1. Expand your class to include confidence interval and p-value calculation/printing. Check out the `scales::pvalue` function. 
 2. Look at the `t.test` function. What type of object does this return? 
-3. Look at the print method for the class of the object returned by `t.test`. How does it work? How would you modify it? 
-4. Are there any other methods are available for that class? Use the `methods` function. 
+3. Look at the print method for the class of the object returned by `t.test`, use the command `stats:::print.htest` to find the source. How does it work? How would you modify it? 
+4. Are there any other methods are available for that class? Use the `methods` function to find out. What would be another useful method for this class? 
 
 
 
