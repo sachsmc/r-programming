@@ -31,7 +31,11 @@ generate_lpr <- function(pid) {
 }
 
 
+
+
 pids <- sprintf("A%.03i", 1:400)
 saveRDS(do.call(rbind, lapply(pids, generate_lpr)), 
-  "lpr-ex.rds")
+  "data/lpr-ex.rds")
+
+
 

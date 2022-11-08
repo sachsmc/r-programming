@@ -29,7 +29,7 @@ broom:::tidy.lm
 
 ## Tidying the national patient register dataset
 
-Load the LPR data example from `"https://sachsmc.github.io/r-programming/lpr-ex.rds"`
+Load the LPR data example from `"https://sachsmc.github.io/r-programming/data/lpr-ex.rds"`
 
 ```{r}
 library(here)

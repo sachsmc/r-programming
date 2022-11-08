@@ -2,7 +2,7 @@ project:
   type: website
   output-dir: docs
   resources: 
-    - lpr-ex.rds
+    - data/*
 
 website:
   title: "Programming and statistical modelling in R"
