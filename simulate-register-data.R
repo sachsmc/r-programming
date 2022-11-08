@@ -30,7 +30,18 @@ generate_lpr <- function(pid) {
   
 }
 
-
+generate_lakmedel <- function(pid, year) {
+  
+  ntimes <- max(1, rpois(1, lambda = 10))
+  
+  idates <- dates[format(dates, "%Y") == as.character(year)]
+  indat <- sort(sample(idates, ntimes))
+  atc <- sample(atccodes, length(indat))
+  ddd <- round(rexp(length(atc), .0025))
+  data.frame(pid = pid, date = indat, atc = atc, dose = ddd)
+  
+  
+}
 
 
 pids <- sprintf("A%.03i", 1:400)
@@ -38,4 +49,9 @@ saveRDS(do.call(rbind, lapply(pids, generate_lpr)),
   "data/lpr-ex.rds")
 
 
-
+for(year in 2005:2010) {
+  saveRDS(do.call(rbind, lapply(pids, generate_lakmedel, year = year)), 
+          sprintf("data/med-%s-ex.rds", year))
+  
+  
+}

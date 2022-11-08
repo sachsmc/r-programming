@@ -1,0 +1,15 @@
+---
+title: "Data"
+---
+
+All datasets are rds files and can be read into R with `readRDS`
+
+- [National patient register](lpr-ex.rds)
+
+- Prescribed drug register (organized by year)
+    - [med-2005-ex.rds](med-2005-ex.rds)
+    - [med-2006-ex.rds](med-2006-ex.rds)
+    - [med-2007-ex.rds](med-2007-ex.rds)
+    - [med-2008-ex.rds](med-2008-ex.rds)
+    - [med-2009-ex.rds](med-2009-ex.rds)
+    - [med-2010-ex.rds](med-2010-ex.rds)
