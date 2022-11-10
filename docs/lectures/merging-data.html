@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.2.247">
 
   <meta name="author" content="Michael C Sachs">
-  <title>Programming and statistical modelling in R - Project organization and workflow</title>
+  <title>Programming and statistical modelling in R - Merging/joining data</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -383,14 +383,17 @@
       margin-right: 0; 
     }
   </style>
+  <script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+  <script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+  <link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Project organization and workflow</h1>
-  <p class="subtitle">Day 1, A</p>
+  <h1 class="title">Merging/joining data</h1>
+  <p class="subtitle">Day 4, B</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -401,182 +404,361 @@ Michael C Sachs
 </div>
 
 </section>
+<section id="register-data-example" class="slide level2">
+<h2>Register data example</h2>
+<p>We’ve worked a bit with the patient register data defining possible exposures/outcomes using ICD codes and dates</p>
+<ul>
+<li>There are other registers, drug, cause of death, social welfare, etc.</li>
+<li>We want to obtain data from these other data sets and match it to individuals we already have</li>
+</ul>
+</section>
+<section id="keys" class="slide level2">
+<h2>Keys</h2>
+<ul>
+<li>A <em>key</em> is one or more variables that can be used to identify observations</li>
+<li>Examples, CPR number, hospital code, drug codes</li>
+</ul>
+</section>
+<section id="example" class="slide level2">
+<h2>Example</h2>
+<div class="cell" data-reveal="true">
+<div class="cell-output-display">
+<div>
+<p>
+</p><pre class="mermaid mermaid-js" data-tooltip-selector="#mermaid-tooltip-1">classDiagram
+  direction RL
+  class Person {
+    - PID
+    - Birthdate
+    - Deathdate
+  }
+  class Hospitalization {
+    - PID
+    - Date
+    - Diagnosis
+    - Procedures
+  }
+  class Prescription {
+    -PID
+    -Date
+    -ATC
+    -Dose
+  }
+  class Drug{
+    -ATC
+    -Class
+  }
+  Person &lt;|-- Hospitalization
+  Person &lt;|-- Prescription
+  Prescription &lt;|-- Drug
+</pre>
+<div id="mermaid-tooltip-1" class="mermaidTooltip">
+
+</div>
+<p></p>
+</div>
+</div>
+</div>
+</section>
 <section>
-<section id="project-organization" class="title-slide slide level1 center">
-<h1>Project organization</h1>
+<section id="joins" class="title-slide slide level1 center">
+<h1>Joins</h1>
 
 </section>
-<section id="why" class="slide level2">
-<h2>Why?</h2>
-<p>See the <strong>UCPH Policy for Research Data Management</strong></p>
-
-<img data-src="DataLifecycle-default.png" style="width:20.0%" class="r-stretch"></section>
-<section id="set-up-projects" class="slide level2">
-<h2>Set up projects</h2>
-<p>Quick review of the file system</p>
+<section id="types-of-joins" class="slide level2">
+<h2>Types of joins</h2>
+<p>Often the goal of a join or merge is to add new variables to an existing data table</p>
+<p>Example, given a table of hospitalization diagnoses, I want to know the drug dispensations that happened for each person after the hospitalization date</p>
+</section>
+<section id="left-join" class="slide level2">
+<h2>Left join</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb1-3"><a href="#cb1-3"></a>x <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb1-4"><a href="#cb1-4"></a>  <span class="sc">~</span>key, <span class="sc">~</span>val_x,</span>
+<span id="cb1-5"><a href="#cb1-5"></a>     <span class="dv">1</span>, <span class="st">"x1"</span>,</span>
+<span id="cb1-6"><a href="#cb1-6"></a>     <span class="dv">2</span>, <span class="st">"x2"</span>,</span>
+<span id="cb1-7"><a href="#cb1-7"></a>     <span class="dv">3</span>, <span class="st">"x3"</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>)</span>
+<span id="cb1-9"><a href="#cb1-9"></a>y <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb1-10"><a href="#cb1-10"></a>  <span class="sc">~</span>key, <span class="sc">~</span>val_y,</span>
+<span id="cb1-11"><a href="#cb1-11"></a>     <span class="dv">1</span>, <span class="st">"y1"</span>,</span>
+<span id="cb1-12"><a href="#cb1-12"></a>     <span class="dv">2</span>, <span class="st">"y2"</span>,</span>
+<span id="cb1-13"><a href="#cb1-13"></a>     <span class="dv">4</span>, <span class="st">"y3"</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>)</span>
+<span id="cb1-15"><a href="#cb1-15"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+    key val_x
+  &lt;dbl&gt; &lt;chr&gt;
+1     1 x1   
+2     2 x2   
+3     3 x3   </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+    key val_y
+  &lt;dbl&gt; &lt;chr&gt;
+1     1 y1   
+2     2 y2   
+3     4 y3   </code></pre>
+</div>
+</div>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<h3 id="tidyverse">Tidyverse</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>x <span class="sc">|&gt;</span> <span class="fu">left_join</span>(y, <span class="at">by =</span> <span class="st">"key"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+    key val_x val_y
+  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
+1     1 x1    y1   
+2     2 x2    y2   
+3     3 x3    &lt;NA&gt; </code></pre>
+</div>
+</div>
+<h3 id="base-r">Base R</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">merge</span>(x, y, <span class="at">by =</span> <span class="st">"key"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  key val_x val_y
+1   1    x1    y1
+2   2    x2    y2
+3   3    x3  &lt;NA&gt;</code></pre>
+</div>
+</div>
+<h3 id="data.table">data.table</h3>
+<p>same as base R.</p>
+<p>Slightly different (right join):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>xdt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(x)</span>
+<span id="cb9-2"><a href="#cb9-2"></a>ydt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(y)</span>
+<span id="cb9-3"><a href="#cb9-3"></a></span>
+<span id="cb9-4"><a href="#cb9-4"></a>ydt[xdt, on <span class="ot">=</span> .(key)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   key val_y val_x
+1:   1    y1    x1
+2:   2    y2    x2
+3:   3  &lt;NA&gt;    x3</code></pre>
+</div>
+</div>
+</section>
+<section id="many-to-one" class="slide level2">
+<h2>Many-to-one</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>x <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb11-2"><a href="#cb11-2"></a>  <span class="sc">~</span>key, <span class="sc">~</span>val_x,</span>
+<span id="cb11-3"><a href="#cb11-3"></a>     <span class="dv">1</span>, <span class="st">"x1"</span>,</span>
+<span id="cb11-4"><a href="#cb11-4"></a>     <span class="dv">2</span>, <span class="st">"x2"</span>,</span>
+<span id="cb11-5"><a href="#cb11-5"></a>     <span class="dv">3</span>, <span class="st">"x3"</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a>)</span>
+<span id="cb11-7"><a href="#cb11-7"></a>y <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb11-8"><a href="#cb11-8"></a>  <span class="sc">~</span>key, <span class="sc">~</span>val_y,</span>
+<span id="cb11-9"><a href="#cb11-9"></a>     <span class="dv">1</span>, <span class="st">"y1"</span>,</span>
+<span id="cb11-10"><a href="#cb11-10"></a>     <span class="dv">1</span>, <span class="st">"y1b"</span>,</span>
+<span id="cb11-11"><a href="#cb11-11"></a>     <span class="dv">2</span>, <span class="st">"y2"</span>,</span>
+<span id="cb11-12"><a href="#cb11-12"></a>     <span class="dv">4</span>, <span class="st">"y3"</span></span>
+<span id="cb11-13"><a href="#cb11-13"></a>)</span>
+<span id="cb11-14"><a href="#cb11-14"></a></span>
+<span id="cb11-15"><a href="#cb11-15"></a><span class="fu">merge</span>(x, y, <span class="at">by =</span> <span class="st">"key"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  key val_x val_y
+1   1    x1    y1
+2   1    x1   y1b
+3   2    x2    y2
+4   3    x3  &lt;NA&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="one-to-many" class="slide level2">
+<h2>One-to-many</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>x <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb13-2"><a href="#cb13-2"></a>  <span class="sc">~</span>key, <span class="sc">~</span>val_x,</span>
+<span id="cb13-3"><a href="#cb13-3"></a>     <span class="dv">1</span>, <span class="st">"x1"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4"></a>     <span class="dv">1</span>, <span class="st">"x1b"</span>,</span>
+<span id="cb13-5"><a href="#cb13-5"></a>     <span class="dv">2</span>, <span class="st">"x2"</span>,</span>
+<span id="cb13-6"><a href="#cb13-6"></a>     <span class="dv">3</span>, <span class="st">"x3"</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a>)</span>
+<span id="cb13-8"><a href="#cb13-8"></a>y <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb13-9"><a href="#cb13-9"></a>  <span class="sc">~</span>key, <span class="sc">~</span>val_y,</span>
+<span id="cb13-10"><a href="#cb13-10"></a>     <span class="dv">1</span>, <span class="st">"y1"</span>,</span>
+<span id="cb13-11"><a href="#cb13-11"></a>     <span class="dv">2</span>, <span class="st">"y2"</span>,</span>
+<span id="cb13-12"><a href="#cb13-12"></a>     <span class="dv">4</span>, <span class="st">"y3"</span></span>
+<span id="cb13-13"><a href="#cb13-13"></a>)</span>
+<span id="cb13-14"><a href="#cb13-14"></a></span>
+<span id="cb13-15"><a href="#cb13-15"></a><span class="fu">merge</span>(x, y, <span class="at">by =</span> <span class="st">"key"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  key val_x val_y
+1   1    x1    y1
+2   1   x1b    y1
+3   2    x2    y2
+4   3    x3  &lt;NA&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="many-to-many" class="slide level2">
+<h2>Many-to-many</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>x <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb15-2"><a href="#cb15-2"></a>  <span class="sc">~</span>key, <span class="sc">~</span>val_x,</span>
+<span id="cb15-3"><a href="#cb15-3"></a>     <span class="dv">1</span>, <span class="st">"x1"</span>,</span>
+<span id="cb15-4"><a href="#cb15-4"></a>     <span class="dv">1</span>, <span class="st">"x1b"</span>,</span>
+<span id="cb15-5"><a href="#cb15-5"></a>     <span class="dv">2</span>, <span class="st">"x2"</span>,</span>
+<span id="cb15-6"><a href="#cb15-6"></a>     <span class="dv">3</span>, <span class="st">"x3"</span></span>
+<span id="cb15-7"><a href="#cb15-7"></a>)</span>
+<span id="cb15-8"><a href="#cb15-8"></a>y <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb15-9"><a href="#cb15-9"></a>  <span class="sc">~</span>key, <span class="sc">~</span>val_y,</span>
+<span id="cb15-10"><a href="#cb15-10"></a>     <span class="dv">1</span>, <span class="st">"y1"</span>,</span>
+<span id="cb15-11"><a href="#cb15-11"></a>     <span class="dv">1</span>, <span class="st">"y1b"</span>,</span>
+<span id="cb15-12"><a href="#cb15-12"></a>     <span class="dv">2</span>, <span class="st">"y2"</span>,</span>
+<span id="cb15-13"><a href="#cb15-13"></a>     <span class="dv">4</span>, <span class="st">"y3"</span></span>
+<span id="cb15-14"><a href="#cb15-14"></a>)</span>
+<span id="cb15-15"><a href="#cb15-15"></a></span>
+<span id="cb15-16"><a href="#cb15-16"></a><span class="fu">merge</span>(x, y, <span class="at">by =</span> <span class="st">"key"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  key val_x val_y
+1   1    x1    y1
+2   1    x1   y1b
+3   1   x1b    y1
+4   1   x1b   y1b
+5   2    x2    y2
+6   3    x3  &lt;NA&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="other-merge-types" class="slide level2">
+<h2>Other merge types</h2>
 <ul>
-<li>File system discipline: put all the files related to a single project in a designated folder.
-<ul>
-<li>This applies to data, code, figures, notes, etc.</li>
-<li>Depending on project complexity, you might enforce further organization into subfolders.</li>
-</ul></li>
-<li>Tools to facilitate this
-<ul>
-<li><code>ProjectTemplate</code> package</li>
-<li>Several other packages: <a href="https://cran.r-project.org/web/views/ReproducibleResearch.html#project-workflows">CRAN task view on Reproducible Research</a></li>
-<li>Make your own template structure and copy-paste</li>
-</ul></li>
+<li>Right join: <code>merge(x, y, by = "key", all.y = TRUE)</code></li>
+<li>Inner join: <code>merge(x, y, by = "key", all = FALSE)</code> (the default)</li>
+<li>Full join: <code>merge(x, y, by = "key", all = TRUE)</code></li>
 </ul>
-</section>
-<section id="the-importance-of-readme" class="slide level2">
-<h2>The importance of README</h2>
-<ul>
-<li>Always include a README.txt or .md file at the root of the project</li>
-<li>Plan, Document, Share, and Preserve</li>
-<li>To include: <em>what</em> and <em>how</em>:
-<ul>
-<li>Title of the project</li>
-<li>When it was last updated</li>
-<li>What is included in the project directory</li>
-<li>How to run the analysis and use the results (including what dependencies are needed)</li>
-<li>A license describing the conditions of use</li>
-</ul></li>
-</ul>
-<p><a href="https://github.com/sachsmc/liger">Example 1</a> <a href="https://github.com/pablogonzalezginestet/megalearner">Example 2</a></p>
-</section>
-<section id="an-example-project-structure" class="slide level2">
-<h2>An example project structure</h2>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>example-project</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>-- code
-   |__01-process-data.R
-   |__02-primary-analysis.R
-   |__03-sensitivity-analysis.R
-   |__project-report.Rmd
--- data
-   |__merge-analysis-dataset.rds
--- documents
-   |__background.docx
-   |__protocol.docx
--- output
-   |__Figure1.png
-   |__Figure2.png
-   |__Table1.rds
--- rawdata
-   |__lisa-2012-full.csv
-   |__lisa-2013-full.csv
-   |__lisa-2014-full.csv
-   |__lisa-2015-full.csv
--- README.md</code></pre>
-</div>
-</div>
-</section>
-<section id="r-session-and-the-working-directory" class="slide level2">
-<h2>R session and the working directory</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">getwd</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "/home/sachsmc/Teaching/Courses/r-programming/lectures"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">list.dirs</span>(<span class="st">"."</span>, <span class="at">recursive =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>character(0)</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">list.dirs</span>(<span class="st">".."</span>, <span class="at">recursive =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] "../.git"              "../.quarto"           "../.Rproj.user"      
- [4] "../data"              "../docs"              "../example-project"  
- [7] "../exercises"         "../lectures"          "../penguins-analysis"
-[10] "../site_libs"        </code></pre>
-</div>
-</div>
-<ul>
-<li>The R session runs in the current <em>working directory</em></li>
-<li>Input and output happens relative to that directory</li>
-<li><code>"."</code> means “this directory”</li>
-<li><code>".."</code> means “the directory that this one is contained in”</li>
-</ul>
-</section>
-<section id="navigating-the-directory-from-r" class="slide level2">
-<h2>Navigating the directory from R</h2>
-<p>Compose directories and files with <code>file.path</code> (it is safe and works in any OS)</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">read.csv</span>(<span class="fu">file.path</span>(<span class="st">".."</span>, <span class="st">"rawdata"</span>, <span class="st">"lisa-2012-full.csv"</span>))</span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="fu">write.csv</span>(analysis_file, <span class="fu">file.path</span>(<span class="st">".."</span>, <span class="st">"data"</span>, <span class="st">"analysis-data.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="the-here-package" class="slide level2">
-<h2>The <code>here</code> package</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">library</span>(here)</span>
-<span id="cb10-2"><a href="#cb10-2"></a></span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">"rawdata"</span>, <span class="st">"lisa-2012-full.csv"</span>))</span>
-<span id="cb10-4"><a href="#cb10-4"></a><span class="fu">write.csv</span>(analysis_file, <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"analysis-data.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>The first line figures out the root of your project directory: is there an <code>.Rproj</code> or <code>.here</code> file there?</p>
-<p>Then, <code>here</code> allows you to build paths to subdirectories, starting from the project root.</p>
-<p>Use this in your scripts, and everything will run nicely, both interactively <strong>and</strong> programmatically, no matter what your working directory is (as long as it is in the project).</p>
 </section></section>
 <section>
-<section id="workflow" class="title-slide slide level1 center">
-<h1>Workflow</h1>
+<section id="real-data-is-harder" class="title-slide slide level1 center">
+<h1>Real data is harder</h1>
 
 </section>
-<section id="what" class="slide level2">
-<h2>What?</h2>
-<p>Personal taste and habits (“workflow”) versus the logic and output that is the essence of your project (“product”)</p>
+<section id="examples-from-the-register" class="slide level2">
+<h2>Examples from the register</h2>
 <ul>
-<li>The naming/specific structure of your project directory.</li>
-<li>The editor you use to write your R code.</li>
+<li>Inpatient and outpatient hospitalizations are in different tables, outpatient has only admission date, inpatient also has discharge date</li>
+<li>Drugs are large in number, so drug registers are stored in different files by year</li>
+<li>Dates do not match exactly in different registers, often want to match within a range of dates</li>
 </ul>
 </section>
-<section id="get-comfortable" class="slide level2">
-<h2>Get comfortable</h2>
-<p>Your workflow does not matter, as long as you follow the principles.</p>
-<p>Options for IDEs (all free):</p>
-<ul>
-<li><a href="https://www.rstudio.com/products/rstudio/download/#download">Rstudio</a></li>
-<li><a href="https://code.visualstudio.com/docs/languages/r">VScode</a></li>
-<li>emacs</li>
-</ul>
-<p>All of these support projects, have integrated help files, code completion, and syntax highlighting.</p>
+<section id="non-exact-joins" class="slide level2">
+<h2>Non exact joins</h2>
+<p>I want to merge these two tables where <code>key1</code> matches exactly, and <code>key2</code> in <code>y</code> is less than <code>key2</code> in <code>x</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>x <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="sc">~</span>key1, <span class="sc">~</span>key2x, <span class="sc">~</span>val_x,</span>
+<span id="cb17-3"><a href="#cb17-3"></a>     <span class="dv">1</span>, <span class="dv">20</span>, <span class="st">"x1"</span>,</span>
+<span id="cb17-4"><a href="#cb17-4"></a>     <span class="dv">1</span>, <span class="dv">50</span>, <span class="st">"x1b"</span>,</span>
+<span id="cb17-5"><a href="#cb17-5"></a>     <span class="dv">2</span>, <span class="dv">35</span>, <span class="st">"x2"</span>,</span>
+<span id="cb17-6"><a href="#cb17-6"></a>     <span class="dv">3</span>, <span class="dv">10</span>, <span class="st">"x3"</span></span>
+<span id="cb17-7"><a href="#cb17-7"></a>)</span>
+<span id="cb17-8"><a href="#cb17-8"></a>y <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb17-9"><a href="#cb17-9"></a>  <span class="sc">~</span>key1, <span class="sc">~</span>key2y, <span class="sc">~</span>val_y,</span>
+<span id="cb17-10"><a href="#cb17-10"></a>     <span class="dv">1</span>, <span class="dv">10</span>, <span class="st">"y1"</span>,</span>
+<span id="cb17-11"><a href="#cb17-11"></a>     <span class="dv">1</span>, <span class="dv">25</span>, <span class="st">"y1b"</span>,</span>
+<span id="cb17-12"><a href="#cb17-12"></a>     <span class="dv">1</span>, <span class="dv">35</span>, <span class="st">"y1c"</span>,</span>
+<span id="cb17-13"><a href="#cb17-13"></a>     <span class="dv">2</span>, <span class="dv">20</span>, <span class="st">"y2"</span>,</span>
+<span id="cb17-14"><a href="#cb17-14"></a>     <span class="dv">2</span>, <span class="dv">50</span>, <span class="st">"y2b"</span>,</span>
+<span id="cb17-15"><a href="#cb17-15"></a>     <span class="dv">3</span>, <span class="dv">30</span>, <span class="st">"y3"</span></span>
+<span id="cb17-16"><a href="#cb17-16"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
-<section id="setting-the-working-directory" class="slide level2">
-<h2>Setting the working directory</h2>
-<ul>
-<li>Open the <code>.Rproj</code> file in a fresh R/Rstudio session</li>
-<li>Open an <code>.R</code> file in a new session</li>
-<li>Use the drop down menu in Rstudio: Session &gt; Set working directory</li>
-<li>Use <code>setwd()</code> in the terminal</li>
-</ul>
-<p><em>Avoid using <code>setwd()</code> in scripts</em></p>
+<section id="base-r-1" class="slide level2">
+<h2>Base R</h2>
+<p>Multi step process in base R</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">merge</span>(x, y, <span class="at">by =</span> <span class="st">"key1"</span>, <span class="at">all =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">subset</span>(key2y <span class="sc">&lt;=</span> key2x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  key1 key2x val_x key2y val_y
+1    1    20    x1    10    y1
+4    1    50   x1b    10    y1
+5    1    50   x1b    25   y1b
+6    1    50   x1b    35   y1c
+7    2    35    x2    20    y2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="do">## merge allows multiple keys, but only exact matching</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="fu">merge</span>(x, y, </span>
+<span id="cb20-3"><a href="#cb20-3"></a>      <span class="at">by.x =</span> <span class="fu">c</span>(<span class="st">"key1"</span>, <span class="st">"key2x"</span>), </span>
+<span id="cb20-4"><a href="#cb20-4"></a>      <span class="at">by.y =</span> <span class="fu">c</span>(<span class="st">"key1"</span>, <span class="st">"key2y"</span>), <span class="at">all =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] key1  key2x val_x val_y
+&lt;0 rows&gt; (or 0-length row.names)</code></pre>
+</div>
+</div>
 </section>
-<section id="bad-vs-good-habits" class="slide level2">
-<h2>Bad vs good habits</h2>
-<p><strong>Do not</strong>:</p>
+<section id="data.table-1" class="slide level2">
+<h2>data.table</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>xdt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(x, <span class="at">key =</span> <span class="st">"key1"</span>)</span>
+<span id="cb22-2"><a href="#cb22-2"></a>ydt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(y, <span class="at">key =</span> <span class="st">"key1"</span>)</span>
+<span id="cb22-3"><a href="#cb22-3"></a></span>
+<span id="cb22-4"><a href="#cb22-4"></a>ydt[xdt, on <span class="ot">=</span> .(key1, key2y <span class="sc">&lt;=</span> key2x), nomatch <span class="ot">=</span> <span class="cn">NULL</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   key1 key2y val_y val_x
+1:    1    20    y1    x1
+2:    1    50    y1   x1b
+3:    1    50   y1b   x1b
+4:    1    50   y1c   x1b
+5:    2    35    y2    x2</code></pre>
+</div>
+</div>
+</section>
+<section id="rolling-joins-with-data.table" class="slide level2">
+<h2>Rolling joins with data.table</h2>
+<p>The previous example returns all matches satisfying the inequality, what if we only want the <em>closest</em> one?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="do">## return all </span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>ydt[xdt, on <span class="ot">=</span> .(key1, key2y <span class="sc">&lt;=</span> key2x), nomatch <span class="ot">=</span> <span class="cn">NULL</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   key1 key2y val_y val_x
+1:    1    20    y1    x1
+2:    1    50    y1   x1b
+3:    1    50   y1b   x1b
+4:    1    50   y1c   x1b
+5:    2    35    y2    x2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="do">## only closest match</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a>ydt[xdt, on <span class="ot">=</span> .(key1, key2y <span class="sc">==</span> key2x), roll <span class="ot">=</span> <span class="cn">TRUE</span>, nomatch <span class="ot">=</span> <span class="cn">NULL</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   key1 key2y val_y val_x
+1:    1    20    y1    x1
+2:    1    50   y1c   x1b
+3:    2    35    y2    x2</code></pre>
+</div>
+</div>
+</section>
+<section id="tidyverse-1" class="slide level2">
+<h2>Tidyverse</h2>
+<p><strong>Note</strong>: this is not yet available in the <code>dplyr</code> release version (coming in version 1.1.0)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>x <span class="sc">|&gt;</span> <span class="fu">left_join</span>(y, <span class="fu">join_by</span>(key2 <span class="sc">&lt;=</span> key2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="remember" class="slide level2">
+<h2>Remember</h2>
+<p>When working with real data, remember these principles when merging</p>
 <ul>
-<li>use <code>setwd()</code> in scripts</li>
-<li>rely on <code>rm(list = ls())</code></li>
-<li>save <code>.RData</code> when you quit R and don’t load <code>.RData</code> when you launch R.</li>
-</ul>
-<p><strong>Do</strong>:</p>
-<ul>
-<li>Restart your R session frequently while working</li>
-<li>Set the working directory on launch or interactively</li>
-<li>Use relative paths, or <code>here</code> if your project directory is complex</li>
+<li>What is the key? Is it named something else in the other table?</li>
+<li>Does the key define unique observations? If not (e.g., multiple rows per individual), then you will have a non one-to-one merge.</li>
+<li>Working with dates and ranges is possible, but be careful and <strong>check the results</strong> carefully</li>
 </ul>
 </section>
 <section id="practical" class="slide level2">
 <h2>Practical</h2>
-<ul>
-<li>Create a toy project using your favorite tools</li>
-<li>Swap projects with your neighbor</li>
-<li>See if you can reproduce each others results</li>
-</ul>
-<p><a href="../exercises/projects.html">Link to lesson</a></p>
+<p>We will continue using the register data example to practice merging and defining new variables based on dates and strings.</p>
+<p><a href="../lessons/merge-and-process.html">Link to lesson</a></p>
 <p><a href="../index.html">Link home</a></p>
 
 <div class="footer footer-default">

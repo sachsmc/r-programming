@@ -1,0 +1,152 @@
+---
+title: "Strings and dates"
+subtitle: "Day 4, A"
+author: "Michael C Sachs"
+format: 
+    revealjs:
+      scrollable: true
+execute:
+  echo: true
+---
+
+# Basic string stuff
+
+
+## Special characters
+
+- Strings are enclosed in single or double quotes
+- "\\" is treated as an "escape character" in strings, meaning whatever comes after it is treated as special, e.g., "\\n" for newline, "\\t" for tab
+- To get quotes inside quotes, you can 
+    + mix single and double: `"'Woof', he barked"`
+    + escape with backslash: `"\"Woof\", he barked"`
+- To get a backslash, you need to escape the backslash: `"\\"`
+
+
+## Combining strings
+
+You know about `paste` and `paste0`. I like to use `sprintf(<format>, ...)`
+
+The format contains special characters starting with "%" to determine how the character should look, and data passed to the `...` gets inserted into the format: 
+```{r}
+library(palmerpenguins)
+sprintf("mean and sd of %s: %.2f (%.2f)", "bill depth (mm)", 
+        mean(penguins$bill_depth_mm, na.rm = TRUE), 
+        sd(penguins$bill_depth_mm, na.rm = TRUE))
+```
+
+"%s" means string, "%.2f" means a float with 2 digits after the decimal
+
+Use "%%" to get a literal percent
+```{r}
+sprintf("n and percent male: %.0f (%.1f%%)", 
+        sum(penguins$sex == "male", na.rm = TRUE), 
+        100 * sum(penguins$sex == "male", na.rm = TRUE) / nrow(penguins) )
+```
+
+
+See also the `glue` package for a different way to do this.
+
+
+# Regular expressions
+
+## Register example
+
+"... any diagnosis of either D150, D152, or D159 before the date 1 January 2010"
+
+```{r}
+#| eval: false
+lpr$diag[lpr$date <= as.Date("2010-01-01")] %in% 
+  c("D150", "D152", "D159")
+```
+
+- We can save typing by being clever matching the codes (e.g., "starts with D15")
+- Dates and times are tricky, though this example is unambiguous
+
+
+
+## Character matching
+
+_Regular expressions_ are abstract patterns of characters that describe a text sequence
+
+You can use them with `grep` and related functions in base R. Also see the `stringr` package.
+
+Example "starts with"
+```{r}
+grepl(pattern= "^D15", 
+      c("D150", "D152", "D159", 
+        "A250", "Z149"))
+```
+
+
+## Regexp operators
+
+Certain characters in regexps have special meaning
+
+- `^`: starts with
+- `$`: ends with
+- `|`: or
+- `*`: 0 or more times
+- `+`: 1 or more times
+- `{n}`: n times
+- `(...)`: sub-expression
+- `[...]`: character classes
+
+examples
+```{r}
+#| eval: false
+"^[A-Z][0-9]{3}$" ## match all ICD codes
+"^D15[029]$" ## our codes of interest
+```
+
+
+## Get help
+
+Regexps can be very complex, but for simple patterns they can save you time
+
+Write and double-check your pattern: 
+
+- The cheatsheet on strings and regular expressions
+- R 4 Data Science, chapter on regular expressions
+- https://regex101.com/
+
+
+# Dates and times
+
+## Some faulty assumptions about dates and times
+
+- All days have 24 hours
+- All years have 365 days (ok not an assumption, but which ones?)
+- Dates are always written "day - month - year"
+
+## Use `lubridate`
+
+`lubridate` will solve most of these problems:
+
+- Importing dates from character strings
+- Printing dates in a nice format
+- Computing time intervals
+
+## Register example
+
+```{r}
+as.Date("2010-01-01")
+as.Date("2010-05-10") ## ambiguous!
+
+library(lubridate)
+
+ymd("2010-05-10")
+
+ymd("2010-05-10") - ymd("2010-01-01")
+
+as.numeric(ymd("2010-05-10") - ymd("2010-01-01"))
+```
+
+
+
+## Practical
+
+We will continue using the register data example to practice merging and defining new variables based on dates and strings.
+
+[Link to lesson](../lessons/merge-and-process.html)
+
+[Link home](../index.html)

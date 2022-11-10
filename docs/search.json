@@ -1,5 +1,68 @@
 [
   {
+    "objectID": "lectures/dynamic-documents.html#code-and-prose",
+    "href": "lectures/dynamic-documents.html#code-and-prose",
+    "title": "Dynamic Documents",
+    "section": "Code and prose",
+    "text": "Code and prose\nA “literate document” or “dynamic document” is a file that contains code and prose\nThe idea was developed by Donald Knuth in the 1980s; his motivation was to use it for software development, but allowing programmers to “concentrate … on explaining to humans what we want the computer to do”.\nWhen the document is rendered the code also gets run, from top to bottom in the order it appears in the document, and the output inserted dynamically into the output document"
+  },
+  {
+    "objectID": "lectures/dynamic-documents.html#how-does-it-work",
+    "href": "lectures/dynamic-documents.html#how-does-it-work",
+    "title": "Dynamic Documents",
+    "section": "How does it work?",
+    "text": "How does it work?\nIn an rmarkdown (.Rmd) or Quarto (.qmd) document, at the top you have the yaml header, with key: value pairs listed inside a start and end fence (“---”). These key: value pairs contain information about the document and control how it is rendered.\nProse is written in markdown. This is a lightweight markup language (headers, bold, italics, links, figures, tables).\nCode is inserted in between start and end fences (“```”), called chunks. Options controlling how the code is run and output can be added to each chunk."
+  },
+  {
+    "objectID": "lectures/dynamic-documents.html#markdown",
+    "href": "lectures/dynamic-documents.html#markdown",
+    "title": "Dynamic Documents",
+    "section": "Markdown",
+    "text": "Markdown\n\n# First level header\n## Second level \n### etc\n\n*italics* for emphasis, **bold** for highlighting\n\n- Lists\n- can \n- also\n    + be \n    + nested\n\n1. Or enumerated\n2. B\n3. C\n\n\n![alt text](path-to-image.png)\n\n[text](link.html)"
+  },
+  {
+    "objectID": "lectures/dynamic-documents.html#code-chunks",
+    "href": "lectures/dynamic-documents.html#code-chunks",
+    "title": "Dynamic Documents",
+    "section": "Code chunks",
+    "text": "Code chunks\nLook like this, and the output is below\n\n```{r}\nrnorm(1)\n```\n\n[1] 1.335214\n\n\nYou can also have code inline:\n\nFor example this `r rnorm(1)` will show up inline\n\nwhich will put the output -1.1449009 without showing the code."
+  },
+  {
+    "objectID": "lectures/dynamic-documents.html#rendering",
+    "href": "lectures/dynamic-documents.html#rendering",
+    "title": "Dynamic Documents",
+    "section": "Rendering",
+    "text": "Rendering\n\nThe code chunks will be run sequentially in the same, fresh R session (remember when I said restart R frequently when developing)\nThe code and output will be inserted into an intermediate document, as directed by the code chunk options\nThat document is then processed by pandoc which turns it into a format designed for human readability, as directed by the document yaml header\n\nhtml web pages\npdf documents (requires Latex)\nword documents\nhtml presentations (like this one)\n…"
+  },
+  {
+    "objectID": "lectures/dynamic-documents.html#getting-output-to-look-nice",
+    "href": "lectures/dynamic-documents.html#getting-output-to-look-nice",
+    "title": "Dynamic Documents",
+    "section": "Getting output to look nice",
+    "text": "Getting output to look nice\nTools of the trade\n\nFigures are straightforward, can use captions and cross-references\nFor inline output, write custom print methods, like our meansd example\nTables are the hardest, there are some packages that help\n\nknitr and the function kable, also the package kableExtra\nxtable (designed for pdf output)\ngtsummary"
+  },
+  {
+    "objectID": "lectures/dynamic-documents.html#table-example",
+    "href": "lectures/dynamic-documents.html#table-example",
+    "title": "Dynamic Documents",
+    "section": "Table example",
+    "text": "Table example\nThis function outputs the data in a markdown table, which is then interpreted and rendered nicely when the intermediate document is processed by pandoc\n\nknitr::kable(head(palmerpenguins::penguins))\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nspecies\nisland\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nsex\nyear\n\n\n\n\nAdelie\nTorgersen\n39.1\n18.7\n181\n3750\nmale\n2007\n\n\nAdelie\nTorgersen\n39.5\n17.4\n186\n3800\nfemale\n2007\n\n\nAdelie\nTorgersen\n40.3\n18.0\n195\n3250\nfemale\n2007\n\n\nAdelie\nTorgersen\nNA\nNA\nNA\nNA\nNA\n2007\n\n\nAdelie\nTorgersen\n36.7\n19.3\n193\n3450\nfemale\n2007\n\n\nAdelie\nTorgersen\n39.3\n20.6\n190\n3650\nmale\n2007"
+  },
+  {
+    "objectID": "lectures/dynamic-documents.html#endless-possibilities",
+    "href": "lectures/dynamic-documents.html#endless-possibilities",
+    "title": "Dynamic Documents",
+    "section": "Endless possibilities",
+    "text": "Endless possibilities\n\nIn theory, in your paper/presentation, every number and figure that is a result of your analysis can be generated from code\nEasy to update if the data change\nCan inspect the source document to determine where the number came from\nIn practice, do the best you can, and sometimes a well-documented “business process” is just as good"
+  },
+  {
+    "objectID": "lectures/dynamic-documents.html#practical",
+    "href": "lectures/dynamic-documents.html#practical",
+    "title": "Dynamic Documents",
+    "section": "Practical",
+    "text": "Practical\nWe will continue using the register data example, and try out rmarkdown or quarto.\nLink to lesson\nLink home"
+  },
+  {
     "objectID": "lectures/projects.html#why",
     "href": "lectures/projects.html#why",
     "title": "Project organization and workflow",
@@ -32,7 +95,7 @@
     "href": "lectures/projects.html#r-session-and-the-working-directory",
     "title": "Project organization and workflow",
     "section": "R session and the working directory",
-    "text": "R session and the working directory\n\ngetwd()\n\n[1] \"/home/sachsmc/Teaching/Courses/r-programming/lectures\"\n\nlist.dirs(\".\", recursive = FALSE)\n\ncharacter(0)\n\nlist.dirs(\"..\", recursive = FALSE)\n\n[1] \"../.git\"              \"../.quarto\"           \"../.Rproj.user\"      \n[4] \"../data\"              \"../docs\"              \"../example-project\"  \n[7] \"../exercises\"         \"../lectures\"          \"../penguins-analysis\"\n\n\n\nThe R session runs in the current working directory\nInput and output happens relative to that directory\n\".\" means “this directory”\n\"..\" means “the directory that this one is contained in”"
+    "text": "R session and the working directory\n\ngetwd()\n\n[1] \"/home/sachsmc/Teaching/Courses/r-programming/lectures\"\n\nlist.dirs(\".\", recursive = FALSE)\n\ncharacter(0)\n\nlist.dirs(\"..\", recursive = FALSE)\n\n [1] \"../.git\"              \"../.quarto\"           \"../.Rproj.user\"      \n [4] \"../data\"              \"../docs\"              \"../example-project\"  \n [7] \"../exercises\"         \"../lectures\"          \"../penguins-analysis\"\n[10] \"../site_libs\"        \n\n\n\nThe R session runs in the current working directory\nInput and output happens relative to that directory\n\".\" means “this directory”\n\"..\" means “the directory that this one is contained in”"
   },
   {
     "objectID": "lectures/projects.html#navigating-the-directory-from-r",
@@ -179,7 +242,7 @@
     "href": "lectures/tidy-data.html#real-data",
     "title": "Tidy data",
     "section": "Real data",
-    "text": "Real data\nAre often much more complex, and can be messier. Here is one example we will use in the lesson:\n\nlibrary(here)\nreadRDS(here(\"lpr-ex.rds\")) |> head(12)\n\n    pid      indat visit hdia diag1 diag2 diag3 diag4 diag5 diag6\n1  A001 2006-05-25     1 K981  K541  H429  H021  C500  F151  <NA>\n2  A001 2008-01-26     2 K261  I440  H791  I689  <NA>  <NA>  <NA>\n3  A001 2008-12-13     3 D562  B189  I332  <NA>  <NA>  <NA>  <NA>\n4  A001 2013-11-14     4 A899  G369  C039  G212  A702  <NA>  <NA>\n5  A001 2013-12-16     5 G020  I712  A000  A079  B552  J049  I192\n6  A001 2015-06-18     6 K019  F942  <NA>  <NA>  <NA>  <NA>  <NA>\n7  A001 2015-09-12     7 E152  D281  <NA>  <NA>  <NA>  <NA>  <NA>\n8  A002 2007-11-09     1 D182  D582  K060  J200  <NA>  <NA>  <NA>\n9  A002 2009-05-03     2 C531  G299  I221  K392  <NA>  <NA>  <NA>\n10 A002 2012-12-28     3 K260  B111  A791  <NA>  <NA>  <NA>  <NA>\n11 A002 2015-06-09     4 F642  G452  E962  <NA>  <NA>  <NA>  <NA>\n12 A002 2015-07-07     5 B891  C460  A302  A041  A230  <NA>  <NA>"
+    "text": "Real data\nAre often much more complex, and can be messier. Here is one example we will use in the lesson:\n\nlibrary(here)\nreadRDS(here(\"data\", \"lpr-ex.rds\")) |> head(12)\n\n    pid      indat visit hdia diag1 diag2 diag3 diag4 diag5 diag6\n1  A001 2005-03-17     1 B452  A630  F192  <NA>  <NA>  <NA>  <NA>\n2  A001 2009-06-29     2 B382  A022  J500  <NA>  <NA>  <NA>  <NA>\n3  A001 2011-12-17     3 I819  H570  B630  <NA>  <NA>  <NA>  <NA>\n4  A001 2012-01-16     4 B190  E759  H592  J961  F459  <NA>  <NA>\n5  A002 2005-09-26     1 E550  C342  <NA>  <NA>  <NA>  <NA>  <NA>\n6  A002 2006-02-05     2 J789  H151  K299  J979  J910  <NA>  <NA>\n7  A002 2006-05-15     3 K872  I819  F002  F750  I670  E171  <NA>\n8  A002 2009-01-29     4 E379  F730  F539  C030  B469  <NA>  <NA>\n9  A002 2009-02-11     5 D481  E862  A502  H989  J460  A270  <NA>\n10 A002 2010-09-08     6 F119  J699  I759  E249  I622  K121  <NA>\n11 A002 2014-06-28     7 J942  A042  F849  K169  A542  <NA>  <NA>\n12 A003 2010-02-08     1 E669  G231  B950  E290  <NA>  <NA>  <NA>"
   },
   {
     "objectID": "lectures/tidy-data.html#practical",
@@ -193,7 +256,7 @@
     "href": "lectures/functions.html#a-function-and-its-components",
     "title": "Functions",
     "section": "A function and its components",
-    "text": "A function and its components\nAlmost everything you do in R involves functions. You call a function by typing its name with its arguments (inputs) inside the parentheses:\n\nsample(x = 1:5, size = 2)\n\n[1] 4 5\n\n\nThe function takes the arguments you provide, does something, and then returns an object. To see what a function does, you can type its name without parentheses to see the source:\n\nsample\n\nfunction (x, size, replace = FALSE, prob = NULL) \n{\n    if (length(x) == 1L && is.numeric(x) && is.finite(x) && x >= \n        1) {\n        if (missing(size)) \n            size <- x\n        sample.int(x, size, replace, prob)\n    }\n    else {\n        if (missing(size)) \n            size <- length(x)\n        x[sample.int(length(x), size, replace, prob)]\n    }\n}\n<bytecode: 0x5609644d4da8>\n<environment: namespace:base>\n\n\nThe source shows you the arguments, their default values, and the expression defining the function. You can also look at the help file for the documentation:\n\nhelp(\"sample\")\n# or\n?sample"
+    "text": "A function and its components\nAlmost everything you do in R involves functions. You call a function by typing its name with its arguments (inputs) inside the parentheses:\n\nsample(x = 1:5, size = 2)\n\n[1] 2 1\n\n\nThe function takes the arguments you provide, does something, and then returns an object. To see what a function does, you can type its name without parentheses to see the source:\n\nsample\n\nfunction (x, size, replace = FALSE, prob = NULL) \n{\n    if (length(x) == 1L && is.numeric(x) && is.finite(x) && x >= \n        1) {\n        if (missing(size)) \n            size <- x\n        sample.int(x, size, replace, prob)\n    }\n    else {\n        if (missing(size)) \n            size <- length(x)\n        x[sample.int(length(x), size, replace, prob)]\n    }\n}\n<bytecode: 0x55ffe75e7db8>\n<environment: namespace:base>\n\n\nThe source shows you the arguments, their default values, and the expression defining the function. You can also look at the help file for the documentation:\n\nhelp(\"sample\")\n# or\n?sample"
   },
   {
     "objectID": "lectures/functions.html#using-functions-arguments",
@@ -270,7 +333,7 @@
     "href": "lectures/functions.html#lexical-scoping-example",
     "title": "Functions",
     "section": "Lexical scoping example",
-    "text": "Lexical scoping example\nThis can be used to your advantage, e.g.,\n\nleast_squares_constructor <- function(dataY, dataX) {\n  \n  function(beta) {\n    sum((dataY - (beta[1] + beta[2] * dataX))^2, na.rm  =TRUE)\n  }\n    \n}\n\nmodel_penguin <- least_squares_constructor(penguins$flipper_length_mm, \n                                        penguins$body_mass_g)\nmodel_penguin\n\nfunction(beta) {\n    sum((dataY - (beta[1] + beta[2] * dataX))^2, na.rm  =TRUE)\n  }\n<environment: 0x56096808d818>\n\nls(environment(model_penguin))\n\n[1] \"dataX\" \"dataY\"\n\noptim(par = c(0,0), fn = model_penguin)\n\n$par\n[1] 136.74979325   0.01527274\n\n$value\n[1] 16250.32\n\n$counts\nfunction gradient \n     113       NA \n\n$convergence\n[1] 0\n\n$message\nNULL"
+    "text": "Lexical scoping example\nThis can be used to your advantage, e.g.,\n\nleast_squares_constructor <- function(dataY, dataX) {\n  \n  function(beta) {\n    sum((dataY - (beta[1] + beta[2] * dataX))^2, na.rm  =TRUE)\n  }\n    \n}\n\nmodel_penguin <- least_squares_constructor(penguins$flipper_length_mm, \n                                        penguins$body_mass_g)\nmodel_penguin\n\nfunction(beta) {\n    sum((dataY - (beta[1] + beta[2] * dataX))^2, na.rm  =TRUE)\n  }\n<environment: 0x55ffeb19ef98>\n\nls(environment(model_penguin))\n\n[1] \"dataX\" \"dataY\"\n\noptim(par = c(0,0), fn = model_penguin)\n\n$par\n[1] 136.74979325   0.01527274\n\n$value\n[1] 16250.32\n\n$counts\nfunction gradient \n     113       NA \n\n$convergence\n[1] 0\n\n$message\nNULL"
   },
   {
     "objectID": "lectures/functions.html#lazy-evaluation-example",
@@ -298,7 +361,7 @@
     "href": "lectures/functions.html#generic-methodsfunctions",
     "title": "Functions",
     "section": "Generic methods/functions",
-    "text": "Generic methods/functions\nLook at the function print\n\nprint\n\nfunction (x, ...) \nUseMethod(\"print\")\n<bytecode: 0x560964598de8>\n<environment: namespace:base>\n\n\nIt is a generic function. UseMethod says depending on the class of argument object, R will call a suitable method (a function) that does something designed for whatever object is.\nYou can find all the special methods by running methods(\"print\") (try it now).\nThe class of the object is a simple attribute and the method is defined by appending the class name after the function name separated by a dot. This is called the S3 class system:\n\nx <- 1:4\nclass(x)\n\n[1] \"integer\"\n\nclass(x) <- \"myclass\"\n\ninherits(x, \"myclass\")\n\n[1] TRUE\n\nprint.myclass <- function(x, ...) {\n  \n  cat(x, sep = \"\\n\")\n  \n}\n\nx\n\n1\n2\n3\n4"
+    "text": "Generic methods/functions\nLook at the function print\n\nprint\n\nfunction (x, ...) \nUseMethod(\"print\")\n<bytecode: 0x55ffe76abdf8>\n<environment: namespace:base>\n\n\nIt is a generic function. UseMethod says depending on the class of argument object, R will call a suitable method (a function) that does something designed for whatever object is.\nYou can find all the special methods by running methods(\"print\") (try it now).\nThe class of the object is a simple attribute and the method is defined by appending the class name after the function name separated by a dot. This is called the S3 class system:\n\nx <- 1:4\nclass(x)\n\n[1] \"integer\"\n\nclass(x) <- \"myclass\"\n\ninherits(x, \"myclass\")\n\n[1] TRUE\n\nprint.myclass <- function(x, ...) {\n  \n  cat(x, sep = \"\\n\")\n  \n}\n\nx\n\n1\n2\n3\n4"
   },
   {
     "objectID": "lectures/functions.html#summary",
@@ -319,7 +382,7 @@
     "href": "lectures/functions.html#get-and-assign",
     "title": "Functions",
     "section": "get and assign",
-    "text": "get and assign\nRecall that we can retrieve a variable from a data frame by using a character string, e.g., penguins[[\"species\"]].\nWe can use a character string to get or assign any other object using these functions. For example, this returns the function called mean\n\nget(\"mean\")\n\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x560965a208e0>\n<environment: namespace:base>\n\n\nwhich we can use like a function\n\nget(\"mean\")(penguins$body_mass_g, na.rm = TRUE)\n\n[1] 4201.754\n\n\nLikewise, an object can be created with assign\n\nassign(\"mean.body.mass\", mean(penguins$body_mass_g, na.rm = TRUE))\nmean.body.mass\n\n[1] 4201.754"
+    "text": "get and assign\nRecall that we can retrieve a variable from a data frame by using a character string, e.g., penguins[[\"species\"]].\nWe can use a character string to get or assign any other object using these functions. For example, this returns the function called mean\n\nget(\"mean\")\n\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x55ffe8b338f0>\n<environment: namespace:base>\n\n\nwhich we can use like a function\n\nget(\"mean\")(penguins$body_mass_g, na.rm = TRUE)\n\n[1] 4201.754\n\n\nLikewise, an object can be created with assign\n\nassign(\"mean.body.mass\", mean(penguins$body_mass_g, na.rm = TRUE))\nmean.body.mass\n\n[1] 4201.754"
   },
   {
     "objectID": "lectures/functions.html#uses-of-get-and-assign",
@@ -382,21 +445,21 @@
     "href": "lectures/data-structures.html#lists",
     "title": "Data structures in R",
     "section": "Lists",
-    "text": "Lists\nA list is a collection of things not required to be the same type. An element of a list can be any R object. Can also be named or not.\n\nlist(1:4, letters[1:4], mean)\n\n[[1]]\n[1] 1 2 3 4\n\n[[2]]\n[1] \"a\" \"b\" \"c\" \"d\"\n\n[[3]]\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x5644d7ce98e0>\n<environment: namespace:base>\n\nlist(numbers = 1:4, \n     letters = letters[1:4], \n     mean = mean,\n     list = list(\"a\", 1, TRUE))\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x5644d7ce98e0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n## an empty list\nlist()\n\nlist()\n\n## a list of 3 placeholders\nvector(mode = \"list\", length = 3)\n\n[[1]]\nNULL\n\n[[2]]\nNULL\n\n[[3]]\nNULL"
+    "text": "Lists\nA list is a collection of things not required to be the same type. An element of a list can be any R object. Can also be named or not.\n\nlist(1:4, letters[1:4], mean)\n\n[[1]]\n[1] 1 2 3 4\n\n[[2]]\n[1] \"a\" \"b\" \"c\" \"d\"\n\n[[3]]\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x557f9ad7d8f0>\n<environment: namespace:base>\n\nlist(numbers = 1:4, \n     letters = letters[1:4], \n     mean = mean,\n     list = list(\"a\", 1, TRUE))\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x557f9ad7d8f0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n## an empty list\nlist()\n\nlist()\n\n## a list of 3 placeholders\nvector(mode = \"list\", length = 3)\n\n[[1]]\nNULL\n\n[[2]]\nNULL\n\n[[3]]\nNULL"
   },
   {
     "objectID": "lectures/data-structures.html#indexing-lists",
     "href": "lectures/data-structures.html#indexing-lists",
     "title": "Data structures in R",
     "section": "Indexing lists",
-    "text": "Indexing lists\n\nxl <- list(numbers = 1:4, \n     letters = letters[1:4], \n     mean = mean,\n     list = list(\"a\", 1, TRUE))\n\nA list can be indexed with square brackets [] or double-square brackets [[]], but there is a difference!\n\nxl[[1]] ## returns the first element of the list (vector in this case)\n\n[1] 1 2 3 4\n\nxl[1] ## returns a sublist\n\n$numbers\n[1] 1 2 3 4\n\nxl[-1]\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x5644d7ce98e0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\nxl[1:2] ## works with vectors\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\nxl[[1:2]] ## works but does something different\n\n[1] 2\n\nxl$numbers\n\n[1] 1 2 3 4\n\nxl[[\"numbers\"]]\n\n[1] 1 2 3 4"
+    "text": "Indexing lists\n\nxl <- list(numbers = 1:4, \n     letters = letters[1:4], \n     mean = mean,\n     list = list(\"a\", 1, TRUE))\n\nA list can be indexed with square brackets [] or double-square brackets [[]], but there is a difference!\n\nxl[[1]] ## returns the first element of the list (vector in this case)\n\n[1] 1 2 3 4\n\nxl[1] ## returns a sublist\n\n$numbers\n[1] 1 2 3 4\n\nxl[-1]\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x557f9ad7d8f0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\nxl[1:2] ## works with vectors\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\nxl[[1:2]] ## works but does something different\n\n[1] 2\n\nxl$numbers\n\n[1] 1 2 3 4\n\nxl[[\"numbers\"]]\n\n[1] 1 2 3 4"
   },
   {
     "objectID": "lectures/data-structures.html#concatenating-lists",
     "href": "lectures/data-structures.html#concatenating-lists",
     "title": "Data structures in R",
     "section": "Concatenating lists",
-    "text": "Concatenating lists\nNew elements can be added by name or number\n\nxl$LETTERS <- LETTERS[1:4]\nxl[[length(xl) + 1]] <- LETTERS[1:5]\nxl\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x5644d7ce98e0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n\n$LETTERS\n[1] \"A\" \"B\" \"C\" \"D\"\n\n[[6]]\n[1] \"A\" \"B\" \"C\" \"D\" \"E\"\n\n\nThe c function concatenates new elements to the list\n\nc(xl, AB = list(LETTERS[1:2]))\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x5644d7ce98e0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n\n$LETTERS\n[1] \"A\" \"B\" \"C\" \"D\"\n\n[[6]]\n[1] \"A\" \"B\" \"C\" \"D\" \"E\"\n\n$AB\n[1] \"A\" \"B\"\n\nc(xl, AB = LETTERS[1:2]) # careful!\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x5644d7ce98e0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n\n$LETTERS\n[1] \"A\" \"B\" \"C\" \"D\"\n\n[[6]]\n[1] \"A\" \"B\" \"C\" \"D\" \"E\"\n\n$AB1\n[1] \"A\"\n\n$AB2\n[1] \"B\""
+    "text": "Concatenating lists\nNew elements can be added by name or number\n\nxl$LETTERS <- LETTERS[1:4]\nxl[[length(xl) + 1]] <- LETTERS[1:5]\nxl\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x557f9ad7d8f0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n\n$LETTERS\n[1] \"A\" \"B\" \"C\" \"D\"\n\n[[6]]\n[1] \"A\" \"B\" \"C\" \"D\" \"E\"\n\n\nThe c function concatenates new elements to the list\n\nc(xl, AB = list(LETTERS[1:2]))\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x557f9ad7d8f0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n\n$LETTERS\n[1] \"A\" \"B\" \"C\" \"D\"\n\n[[6]]\n[1] \"A\" \"B\" \"C\" \"D\" \"E\"\n\n$AB\n[1] \"A\" \"B\"\n\nc(xl, AB = LETTERS[1:2]) # careful!\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x557f9ad7d8f0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n\n$LETTERS\n[1] \"A\" \"B\" \"C\" \"D\"\n\n[[6]]\n[1] \"A\" \"B\" \"C\" \"D\" \"E\"\n\n$AB1\n[1] \"A\"\n\n$AB2\n[1] \"B\""
   },
   {
     "objectID": "lectures/data-structures.html#matrices",
@@ -417,7 +480,7 @@
     "href": "lectures/data-structures.html#matrix-arithmetic",
     "title": "Data structures in R",
     "section": "Matrix arithmetic",
-    "text": "Matrix arithmetic\nMatrix transpose, multiplication, inversion, eigenvalues, etc, are all available in R\n\nS1 <- matrix(runif(9), nrow = 3, ncol = 3)\nS2 <- matrix(runif(9), nrow = 3, ncol = 3)\nx <- c(1, 1.5, 3)\n\nS1 %*% S2\n\n          [,1]      [,2]      [,3]\n[1,] 0.5814141 0.4163831 0.1874433\n[2,] 1.2548283 0.6488332 0.4492581\n[3,] 1.1573701 0.6762286 0.3832830\n\nt(S1) %*% S2\n\n          [,1]      [,2]      [,3]\n[1,] 1.7875359 1.1194432 0.6680484\n[2,] 1.0970310 0.6125367 0.4055880\n[3,] 0.6336669 0.5177646 0.2252410\n\nx %*% solve(S1) %*% x\n\n          [,1]\n[1,] -6.856572"
+    "text": "Matrix arithmetic\nMatrix transpose, multiplication, inversion, eigenvalues, etc, are all available in R\n\nS1 <- matrix(runif(9), nrow = 3, ncol = 3)\nS2 <- matrix(runif(9), nrow = 3, ncol = 3)\nx <- c(1, 1.5, 3)\n\nS1 %*% S2\n\n         [,1]     [,2]     [,3]\n[1,] 1.620953 1.725515 1.418411\n[2,] 1.783931 1.903793 1.575605\n[3,] 1.162668 1.096265 1.076481\n\nt(S1) %*% S2\n\n          [,1]     [,2]      [,3]\n[1,] 1.7962201 1.936036 1.5401036\n[2,] 0.9248062 1.171074 0.7697316\n[3,] 2.0007389 1.968125 1.7526846\n\nx %*% solve(S1) %*% x\n\n         [,1]\n[1,] 9.385049"
   },
   {
     "objectID": "lectures/data-structures.html#arrays",
@@ -473,7 +536,7 @@
     "href": "lectures/data-structures.html#s4-objects",
     "title": "Data structures in R",
     "section": "S4 objects",
-    "text": "S4 objects\nSome packages you may use (e.g., from Bioconductor) return S4 objects. These are kind of like lists, but to access objects (called ‘slots’) inside, use @ (the at symbol).\nFor example\n\n## A simple class with two slots\ntrack <- setClass(\"track\", slots = c(x=\"numeric\", y=\"numeric\"))\n## an object from the class\nts1 <- track(x = 1:10, y = 1:10 + rnorm(10))\nts1\n\nAn object of class \"track\"\nSlot \"x\":\n [1]  1  2  3  4  5  6  7  8  9 10\n\nSlot \"y\":\n [1] -0.1935860  0.6914801  1.6819578  4.8151273  5.6080607  5.1329274\n [7]  4.9730414  7.0788439  9.4098997 10.0081854\n\nts1@x\n\n [1]  1  2  3  4  5  6  7  8  9 10"
+    "text": "S4 objects\nSome packages you may use (e.g., from Bioconductor) return S4 objects. These are kind of like lists, but to access objects (called ‘slots’) inside, use @ (the at symbol).\nFor example\n\n## A simple class with two slots\ntrack <- setClass(\"track\", slots = c(x=\"numeric\", y=\"numeric\"))\n## an object from the class\nts1 <- track(x = 1:10, y = 1:10 + rnorm(10))\nts1\n\nAn object of class \"track\"\nSlot \"x\":\n [1]  1  2  3  4  5  6  7  8  9 10\n\nSlot \"y\":\n [1] 0.1079623 1.8140647 4.1222643 2.4970740 3.3037573 5.4399455 6.4771524\n [8] 8.7272150 7.3109384 7.7713877\n\nts1@x\n\n [1]  1  2  3  4  5  6  7  8  9 10"
   },
   {
     "objectID": "lectures/data-structures.html#tibbles",
@@ -518,11 +581,53 @@
     "text": "Practical\n\nPractice working with vectors and matrices\nThing about ways to organize data and output into data structures\nCompare and contrast the base R, data.table, and tibble packages for working with data.\n\nLink to lesson\nLink home"
   },
   {
+    "objectID": "lectures/conclusion.html#project-organization",
+    "href": "lectures/conclusion.html#project-organization",
+    "title": "Summary and conclusion",
+    "section": "Project organization",
+    "text": "Project organization\n\nSetting up your project structure\nDocumentation and readme\nWorking directories and file paths"
+  },
+  {
+    "objectID": "lectures/conclusion.html#basic-programming-principles",
+    "href": "lectures/conclusion.html#basic-programming-principles",
+    "title": "Summary and conclusion",
+    "section": "Basic programming principles",
+    "text": "Basic programming principles\n\nData structures\nLoops and conditionals\nFunctions, classes, generics"
+  },
+  {
+    "objectID": "lectures/conclusion.html#working-with-data",
+    "href": "lectures/conclusion.html#working-with-data",
+    "title": "Summary and conclusion",
+    "section": "Working with data",
+    "text": "Working with data\n\nTidying\nReshaping\nMerging\nDealing with dates and strings"
+  },
+  {
+    "objectID": "lectures/conclusion.html#where-to-go-from-here",
+    "href": "lectures/conclusion.html#where-to-go-from-here",
+    "title": "Summary and conclusion",
+    "section": "Where to go from here?",
+    "text": "Where to go from here?\n\nResearch project management and reproducibility\n\ntargets package\nproject templates\ngit and/or github\n\nR package development\n\nGreat way to share code, data, and documentation\nPackages for personal and internal use\n\nHigh performance computing\n\nParallelization, using computing servers\nUsing C/C++ in R (or other languages)\n\nVisualization and interactivity\n\nshiny package\nDynamic documents and graphics"
+  },
+  {
+    "objectID": "lectures/conclusion.html#how-to-get-help",
+    "href": "lectures/conclusion.html#how-to-get-help",
+    "title": "Summary and conclusion",
+    "section": "How to get help?",
+    "text": "How to get help?\n\nUse the linked resources to get some background\nCRAN task views, help files, vignettes\nGoogle “how do I do x in R”, or the exact error message\nStackoverflow, Rstudio forums, R mailing lists"
+  },
+  {
+    "objectID": "lectures/conclusion.html#course-feedback",
+    "href": "lectures/conclusion.html#course-feedback",
+    "title": "Summary and conclusion",
+    "section": "Course feedback",
+    "text": "Course feedback\n\nWhat did you like about the course?\nWhat did you dislike about the course?\nDid you knowledge about R programming inprove during the course?\nAre there topics you wanted to be covered but were not?"
+  },
+  {
     "objectID": "lectures/index.html",
     "href": "lectures/index.html",
     "title": "Lectures",
     "section": "",
-    "text": "Introduction and Overview\n\n\nDay 1\n\n\n\n\n \n\n\n\n\n\n\nProject organization and workflow\n\n\nDay 1, A\n\n\n\n\n \n\n\n\n\n\n\nData structures in R\n\n\nDay 1, B\n\n\n\n\n \n\n\n\n\n\n\nFlow control and loops\n\n\nDay 2, A\n\n\n\n\n \n\n\n\n\n\n\nFunctions\n\n\nDay 2, B\n\n\n\n\n \n\n\n\n\n\n\nTidy data\n\n\nDay 3, B\n\n\n\n\n \n\n\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\nNo matching items"
+    "text": "Introduction and Overview\n\n\nDay 1\n\n\n\n\n \n\n\n\n\n\n\nProject organization and workflow\n\n\nDay 1, A\n\n\n\n\n \n\n\n\n\n\n\nData structures in R\n\n\nDay 1, B\n\n\n\n\n \n\n\n\n\n\n\nFlow control and loops\n\n\nDay 2, A\n\n\n\n\n \n\n\n\n\n\n\nFunctions\n\n\nDay 2, B\n\n\n\n\n \n\n\n\n\n\n\nTidy data\n\n\nDay 3, B\n\n\n\n\n \n\n\n\n\n\n\nStrings and dates\n\n\nDay 4, A\n\n\n\n\n \n\n\n\n\n\n\nMerging/joining data\n\n\nDay 4, B\n\n\n\n\n \n\n\n\n\n\n\nDynamic Documents\n\n\nDay 4, C\n\n\n\n\n \n\n\n\n\n\n\nSummary and conclusion\n\n\nDay 4, D\n\n\n\n\n \n\n\n\n\nNo matching items"
   },
   {
     "objectID": "lectures/flow-and-loops.html#what",
@@ -606,7 +711,7 @@
     "href": "lectures/flow-and-loops.html#note-on-speed",
     "title": "Flow control and loops",
     "section": "Note on speed",
-    "text": "Note on speed\nYou may see people warn you not to use for loops in R, “because they are slow”.\nThat is partially true, but speed is not the only thing, for loops can be much clearer and more understandable than the alternatives.\nBut, the slow thing in R is changing the size of an object, so you can avoid that by creating a vector/matrix/array of the correct size to hold the results of the loop:\n\nsystem.time({\nA1 <- NULL\nfor(i in 1:100000) {\n  A1 <- c(A1, rnorm(1))\n}\n})\n\n   user  system elapsed \n 13.032   0.040  13.088 \n\nsystem.time({\nA2 <- rep(NA, 100000)\nfor(i in 1:length(A2)) {\n  A2[i] <- rnorm(1)\n}\n})\n\n   user  system elapsed \n  0.167   0.000   0.167"
+    "text": "Note on speed\nYou may see people warn you not to use for loops in R, “because they are slow”.\nThat is partially true, but speed is not the only thing, for loops can be much clearer and more understandable than the alternatives.\nBut, the slow thing in R is changing the size of an object, so you can avoid that by creating a vector/matrix/array of the correct size to hold the results of the loop:\n\nsystem.time({\nA1 <- NULL\nfor(i in 1:100000) {\n  A1 <- c(A1, rnorm(1))\n}\n})\n\n   user  system elapsed \n 12.629   0.096  12.756 \n\nsystem.time({\nA2 <- rep(NA, 100000)\nfor(i in 1:length(A2)) {\n  A2[i] <- rnorm(1)\n}\n})\n\n   user  system elapsed \n  0.162   0.004   0.166"
   },
   {
     "objectID": "lectures/flow-and-loops.html#practical",
@@ -679,6 +784,202 @@
     "text": "Course philosophy\n\nThere are no stupid questions\nThere are many ways to solve a problem, there is no single “right way”\nI will not force you to learn any particular way, e.g., tidyverse vs data.table, we will focus on learning the general principles.\n\nTry them out, then choose one and get good at it\nSame with project organization, choose a system and stick with it\n\nShow up to class and participate, you will pass and hopefully learn something useful"
   },
   {
+    "objectID": "lectures/dates-and-strings.html#special-characters",
+    "href": "lectures/dates-and-strings.html#special-characters",
+    "title": "Strings and dates",
+    "section": "Special characters",
+    "text": "Special characters\n\nStrings are enclosed in single or double quotes\n“\\” is treated as an “escape character” in strings, meaning whatever comes after it is treated as special, e.g., “\\n” for newline, “\\t” for tab\nTo get quotes inside quotes, you can\n\nmix single and double: \"'Woof', he barked\"\nescape with backslash: \"\\\"Woof\\\", he barked\"\n\nTo get a backslash, you need to escape the backslash: \"\\\\\""
+  },
+  {
+    "objectID": "lectures/dates-and-strings.html#combining-strings",
+    "href": "lectures/dates-and-strings.html#combining-strings",
+    "title": "Strings and dates",
+    "section": "Combining strings",
+    "text": "Combining strings\nYou know about paste and paste0. I like to use sprintf(<format>, ...)\nThe format contains special characters starting with “%” to determine how the character should look, and data passed to the ... gets inserted into the format:\n\nlibrary(palmerpenguins)\nsprintf(\"mean and sd of %s: %.2f (%.2f)\", \"bill depth (mm)\", \n        mean(penguins$bill_depth_mm, na.rm = TRUE), \n        sd(penguins$bill_depth_mm, na.rm = TRUE))\n\n[1] \"mean and sd of bill depth (mm): 17.15 (1.97)\"\n\n\n“%s” means string, “%.2f” means a float with 2 digits after the decimal\nUse “%%” to get a literal percent\n\nsprintf(\"n and percent male: %.0f (%.1f%%)\", \n        sum(penguins$sex == \"male\", na.rm = TRUE), \n        100 * sum(penguins$sex == \"male\", na.rm = TRUE) / nrow(penguins) )\n\n[1] \"n and percent male: 168 (48.8%)\"\n\n\nSee also the glue package for a different way to do this."
+  },
+  {
+    "objectID": "lectures/dates-and-strings.html#register-example",
+    "href": "lectures/dates-and-strings.html#register-example",
+    "title": "Strings and dates",
+    "section": "Register example",
+    "text": "Register example\n“… any diagnosis of either D150, D152, or D159 before the date 1 January 2010”\n\nlpr$diag[lpr$date <= as.Date(\"2010-01-01\")] %in% \n  c(\"D150\", \"D152\", \"D159\")\n\n\nWe can save typing by being clever matching the codes (e.g., “starts with D15”)\nDates and times are tricky, though this example is unambiguous"
+  },
+  {
+    "objectID": "lectures/dates-and-strings.html#character-matching",
+    "href": "lectures/dates-and-strings.html#character-matching",
+    "title": "Strings and dates",
+    "section": "Character matching",
+    "text": "Character matching\nRegular expressions are abstract patterns of characters that describe a text sequence\nYou can use them with grep and related functions in base R. Also see the stringr package.\nExample “starts with”\n\ngrepl(pattern= \"^D15\", \n      c(\"D150\", \"D152\", \"D159\", \n        \"A250\", \"Z149\"))\n\n[1]  TRUE  TRUE  TRUE FALSE FALSE"
+  },
+  {
+    "objectID": "lectures/dates-and-strings.html#regexp-operators",
+    "href": "lectures/dates-and-strings.html#regexp-operators",
+    "title": "Strings and dates",
+    "section": "Regexp operators",
+    "text": "Regexp operators\nCertain characters in regexps have special meaning\n\n^: starts with\n$: ends with\n|: or\n*: 0 or more times\n+: 1 or more times\n{n}: n times\n(...): sub-expression\n[...]: character classes\n\nexamples\n\n\"^[A-Z][0-9]{3}$\" ## match all ICD codes\n\"^D15[029]$\" ## our codes of interest"
+  },
+  {
+    "objectID": "lectures/dates-and-strings.html#get-help",
+    "href": "lectures/dates-and-strings.html#get-help",
+    "title": "Strings and dates",
+    "section": "Get help",
+    "text": "Get help\nRegexps can be very complex, but for simple patterns they can save you time\nWrite and double-check your pattern:\n\nThe cheatsheet on strings and regular expressions\nR 4 Data Science, chapter on regular expressions\nhttps://regex101.com/"
+  },
+  {
+    "objectID": "lectures/dates-and-strings.html#some-faulty-assumptions-about-dates-and-times",
+    "href": "lectures/dates-and-strings.html#some-faulty-assumptions-about-dates-and-times",
+    "title": "Strings and dates",
+    "section": "Some faulty assumptions about dates and times",
+    "text": "Some faulty assumptions about dates and times\n\nAll days have 24 hours\nAll years have 365 days (ok not an assumption, but which ones?)\nDates are always written “day - month - year”"
+  },
+  {
+    "objectID": "lectures/dates-and-strings.html#use-lubridate",
+    "href": "lectures/dates-and-strings.html#use-lubridate",
+    "title": "Strings and dates",
+    "section": "Use lubridate",
+    "text": "Use lubridate\nlubridate will solve most of these problems:\n\nImporting dates from character strings\nPrinting dates in a nice format\nComputing time intervals"
+  },
+  {
+    "objectID": "lectures/dates-and-strings.html#register-example-1",
+    "href": "lectures/dates-and-strings.html#register-example-1",
+    "title": "Strings and dates",
+    "section": "Register example",
+    "text": "Register example\n\nas.Date(\"2010-01-01\")\n\n[1] \"2010-01-01\"\n\nas.Date(\"2010-05-10\") ## ambiguous!\n\n[1] \"2010-05-10\"\n\nlibrary(lubridate)\n\nymd(\"2010-05-10\")\n\n[1] \"2010-05-10\"\n\nymd(\"2010-05-10\") - ymd(\"2010-01-01\")\n\nTime difference of 129 days\n\nas.numeric(ymd(\"2010-05-10\") - ymd(\"2010-01-01\"))\n\n[1] 129"
+  },
+  {
+    "objectID": "lectures/dates-and-strings.html#practical",
+    "href": "lectures/dates-and-strings.html#practical",
+    "title": "Strings and dates",
+    "section": "Practical",
+    "text": "Practical\nWe will continue using the register data example to practice merging and defining new variables based on dates and strings.\nLink to lesson\nLink home"
+  },
+  {
+    "objectID": "lectures/merging-data.html#register-data-example",
+    "href": "lectures/merging-data.html#register-data-example",
+    "title": "Merging/joining data",
+    "section": "Register data example",
+    "text": "Register data example\nWe’ve worked a bit with the patient register data defining possible exposures/outcomes using ICD codes and dates\n\nThere are other registers, drug, cause of death, social welfare, etc.\nWe want to obtain data from these other data sets and match it to individuals we already have"
+  },
+  {
+    "objectID": "lectures/merging-data.html#keys",
+    "href": "lectures/merging-data.html#keys",
+    "title": "Merging/joining data",
+    "section": "Keys",
+    "text": "Keys\n\nA key is one or more variables that can be used to identify observations\nExamples, CPR number, hospital code, drug codes"
+  },
+  {
+    "objectID": "lectures/merging-data.html#example",
+    "href": "lectures/merging-data.html#example",
+    "title": "Merging/joining data",
+    "section": "Example",
+    "text": "Example\n\n\n\n\nclassDiagram\n  direction RL\n  class Person {\n    - PID\n    - Birthdate\n    - Deathdate\n  }\n  class Hospitalization {\n    - PID\n    - Date\n    - Diagnosis\n    - Procedures\n  }\n  class Prescription {\n    -PID\n    -Date\n    -ATC\n    -Dose\n  }\n  class Drug{\n    -ATC\n    -Class\n  }\n  Person <|-- Hospitalization\n  Person <|-- Prescription\n  Prescription <|-- Drug"
+  },
+  {
+    "objectID": "lectures/merging-data.html#types-of-joins",
+    "href": "lectures/merging-data.html#types-of-joins",
+    "title": "Merging/joining data",
+    "section": "Types of joins",
+    "text": "Types of joins\nOften the goal of a join or merge is to add new variables to an existing data table\nExample, given a table of hospitalization diagnoses, I want to know the drug dispensations that happened for each person after the hospitalization date"
+  },
+  {
+    "objectID": "lectures/merging-data.html#left-join",
+    "href": "lectures/merging-data.html#left-join",
+    "title": "Merging/joining data",
+    "section": "Left join",
+    "text": "Left join\n\nlibrary(dplyr)\nlibrary(data.table)\nx <- tribble(\n  ~key, ~val_x,\n     1, \"x1\",\n     2, \"x2\",\n     3, \"x3\"\n)\ny <- tribble(\n  ~key, ~val_y,\n     1, \"y1\",\n     2, \"y2\",\n     4, \"y3\"\n)\nx\n\n# A tibble: 3 × 2\n    key val_x\n  <dbl> <chr>\n1     1 x1   \n2     2 x2   \n3     3 x3   \n\ny\n\n# A tibble: 3 × 2\n    key val_y\n  <dbl> <chr>\n1     1 y1   \n2     2 y2   \n3     4 y3"
+  },
+  {
+    "objectID": "lectures/merging-data.html#section",
+    "href": "lectures/merging-data.html#section",
+    "title": "Merging/joining data",
+    "section": "",
+    "text": "Tidyverse\n\nx |> left_join(y, by = \"key\")\n\n# A tibble: 3 × 3\n    key val_x val_y\n  <dbl> <chr> <chr>\n1     1 x1    y1   \n2     2 x2    y2   \n3     3 x3    <NA> \n\n\nBase R\n\nmerge(x, y, by = \"key\", all.x = TRUE)\n\n  key val_x val_y\n1   1    x1    y1\n2   2    x2    y2\n3   3    x3  <NA>\n\n\ndata.table\nsame as base R.\nSlightly different (right join):\n\nxdt <- data.table(x)\nydt <- data.table(y)\n\nydt[xdt, on = .(key)]\n\n   key val_y val_x\n1:   1    y1    x1\n2:   2    y2    x2\n3:   3  <NA>    x3"
+  },
+  {
+    "objectID": "lectures/merging-data.html#many-to-one",
+    "href": "lectures/merging-data.html#many-to-one",
+    "title": "Merging/joining data",
+    "section": "Many-to-one",
+    "text": "Many-to-one\n\nx <- tribble(\n  ~key, ~val_x,\n     1, \"x1\",\n     2, \"x2\",\n     3, \"x3\"\n)\ny <- tribble(\n  ~key, ~val_y,\n     1, \"y1\",\n     1, \"y1b\",\n     2, \"y2\",\n     4, \"y3\"\n)\n\nmerge(x, y, by = \"key\", all.x = TRUE)\n\n  key val_x val_y\n1   1    x1    y1\n2   1    x1   y1b\n3   2    x2    y2\n4   3    x3  <NA>"
+  },
+  {
+    "objectID": "lectures/merging-data.html#one-to-many",
+    "href": "lectures/merging-data.html#one-to-many",
+    "title": "Merging/joining data",
+    "section": "One-to-many",
+    "text": "One-to-many\n\nx <- tribble(\n  ~key, ~val_x,\n     1, \"x1\",\n     1, \"x1b\",\n     2, \"x2\",\n     3, \"x3\"\n)\ny <- tribble(\n  ~key, ~val_y,\n     1, \"y1\",\n     2, \"y2\",\n     4, \"y3\"\n)\n\nmerge(x, y, by = \"key\", all.x = TRUE)\n\n  key val_x val_y\n1   1    x1    y1\n2   1   x1b    y1\n3   2    x2    y2\n4   3    x3  <NA>"
+  },
+  {
+    "objectID": "lectures/merging-data.html#many-to-many",
+    "href": "lectures/merging-data.html#many-to-many",
+    "title": "Merging/joining data",
+    "section": "Many-to-many",
+    "text": "Many-to-many\n\nx <- tribble(\n  ~key, ~val_x,\n     1, \"x1\",\n     1, \"x1b\",\n     2, \"x2\",\n     3, \"x3\"\n)\ny <- tribble(\n  ~key, ~val_y,\n     1, \"y1\",\n     1, \"y1b\",\n     2, \"y2\",\n     4, \"y3\"\n)\n\nmerge(x, y, by = \"key\", all.x = TRUE)\n\n  key val_x val_y\n1   1    x1    y1\n2   1    x1   y1b\n3   1   x1b    y1\n4   1   x1b   y1b\n5   2    x2    y2\n6   3    x3  <NA>"
+  },
+  {
+    "objectID": "lectures/merging-data.html#other-merge-types",
+    "href": "lectures/merging-data.html#other-merge-types",
+    "title": "Merging/joining data",
+    "section": "Other merge types",
+    "text": "Other merge types\n\nRight join: merge(x, y, by = \"key\", all.y = TRUE)\nInner join: merge(x, y, by = \"key\", all = FALSE) (the default)\nFull join: merge(x, y, by = \"key\", all = TRUE)"
+  },
+  {
+    "objectID": "lectures/merging-data.html#examples-from-the-register",
+    "href": "lectures/merging-data.html#examples-from-the-register",
+    "title": "Merging/joining data",
+    "section": "Examples from the register",
+    "text": "Examples from the register\n\nInpatient and outpatient hospitalizations are in different tables, outpatient has only admission date, inpatient also has discharge date\nDrugs are large in number, so drug registers are stored in different files by year\nDates do not match exactly in different registers, often want to match within a range of dates"
+  },
+  {
+    "objectID": "lectures/merging-data.html#non-exact-joins",
+    "href": "lectures/merging-data.html#non-exact-joins",
+    "title": "Merging/joining data",
+    "section": "Non exact joins",
+    "text": "Non exact joins\nI want to merge these two tables where key1 matches exactly, and key2 in y is less than key2 in x\n\nx <- tribble(\n  ~key1, ~key2x, ~val_x,\n     1, 20, \"x1\",\n     1, 50, \"x1b\",\n     2, 35, \"x2\",\n     3, 10, \"x3\"\n)\ny <- tribble(\n  ~key1, ~key2y, ~val_y,\n     1, 10, \"y1\",\n     1, 25, \"y1b\",\n     1, 35, \"y1c\",\n     2, 20, \"y2\",\n     2, 50, \"y2b\",\n     3, 30, \"y3\"\n)"
+  },
+  {
+    "objectID": "lectures/merging-data.html#base-r-1",
+    "href": "lectures/merging-data.html#base-r-1",
+    "title": "Merging/joining data",
+    "section": "Base R",
+    "text": "Base R\nMulti step process in base R\n\nmerge(x, y, by = \"key1\", all = FALSE) |>\n  subset(key2y <= key2x)\n\n  key1 key2x val_x key2y val_y\n1    1    20    x1    10    y1\n4    1    50   x1b    10    y1\n5    1    50   x1b    25   y1b\n6    1    50   x1b    35   y1c\n7    2    35    x2    20    y2\n\n## merge allows multiple keys, but only exact matching\nmerge(x, y, \n      by.x = c(\"key1\", \"key2x\"), \n      by.y = c(\"key1\", \"key2y\"), all = FALSE)\n\n[1] key1  key2x val_x val_y\n<0 rows> (or 0-length row.names)"
+  },
+  {
+    "objectID": "lectures/merging-data.html#data.table-1",
+    "href": "lectures/merging-data.html#data.table-1",
+    "title": "Merging/joining data",
+    "section": "data.table",
+    "text": "data.table\n\nxdt <- data.table(x, key = \"key1\")\nydt <- data.table(y, key = \"key1\")\n\nydt[xdt, on = .(key1, key2y <= key2x), nomatch = NULL]\n\n   key1 key2y val_y val_x\n1:    1    20    y1    x1\n2:    1    50    y1   x1b\n3:    1    50   y1b   x1b\n4:    1    50   y1c   x1b\n5:    2    35    y2    x2"
+  },
+  {
+    "objectID": "lectures/merging-data.html#rolling-joins-with-data.table",
+    "href": "lectures/merging-data.html#rolling-joins-with-data.table",
+    "title": "Merging/joining data",
+    "section": "Rolling joins with data.table",
+    "text": "Rolling joins with data.table\nThe previous example returns all matches satisfying the inequality, what if we only want the closest one?\n\n## return all \nydt[xdt, on = .(key1, key2y <= key2x), nomatch = NULL]\n\n   key1 key2y val_y val_x\n1:    1    20    y1    x1\n2:    1    50    y1   x1b\n3:    1    50   y1b   x1b\n4:    1    50   y1c   x1b\n5:    2    35    y2    x2\n\n## only closest match\nydt[xdt, on = .(key1, key2y == key2x), roll = TRUE, nomatch = NULL]\n\n   key1 key2y val_y val_x\n1:    1    20    y1    x1\n2:    1    50   y1c   x1b\n3:    2    35    y2    x2"
+  },
+  {
+    "objectID": "lectures/merging-data.html#tidyverse-1",
+    "href": "lectures/merging-data.html#tidyverse-1",
+    "title": "Merging/joining data",
+    "section": "Tidyverse",
+    "text": "Tidyverse\nNote: this is not yet available in the dplyr release version (coming in version 1.1.0)\n\nx |> left_join(y, join_by(key2 <= key2))"
+  },
+  {
+    "objectID": "lectures/merging-data.html#remember",
+    "href": "lectures/merging-data.html#remember",
+    "title": "Merging/joining data",
+    "section": "Remember",
+    "text": "Remember\nWhen working with real data, remember these principles when merging\n\nWhat is the key? Is it named something else in the other table?\nDoes the key define unique observations? If not (e.g., multiple rows per individual), then you will have a non one-to-one merge.\nWorking with dates and ranges is possible, but be careful and check the results carefully"
+  },
+  {
+    "objectID": "lectures/merging-data.html#practical",
+    "href": "lectures/merging-data.html#practical",
+    "title": "Merging/joining data",
+    "section": "Practical",
+    "text": "Practical\nWe will continue using the register data example to practice merging and defining new variables based on dates and strings.\nLink to lesson\nLink home"
+  },
+  {
     "objectID": "resources.html",
     "href": "resources.html",
     "title": "Resources and tools about R",
@@ -749,27 +1050,6 @@
     "text": "Share with your neighbor\n\nUpdate your README file.\nZip up the project folder and send it to your partner.\nWhen you receive their project, unzip it, open it in a new R session and try to reproduce their results."
   },
   {
-    "objectID": "exercises/merge-and-reshape.html",
-    "href": "exercises/merge-and-reshape.html",
-    "title": "Tidying and reshaping – exercises",
-    "section": "",
-    "text": "In this lesson you will\n\nPractice tidying statistical results\nSee and understand how to reshape data from wide to long and long to wide"
-  },
-  {
-    "objectID": "exercises/merge-and-reshape.html#tidying-our-mean-sd-function",
-    "href": "exercises/merge-and-reshape.html#tidying-our-mean-sd-function",
-    "title": "Tidying and reshaping – exercises",
-    "section": "Tidying our mean sd function",
-    "text": "Tidying our mean sd function\nLoad the broom package and look at the source code for tidy.lm\n\nbroom:::tidy.lm\n\nfunction (x, conf.int = FALSE, conf.level = 0.95, exponentiate = FALSE, \n    ...) \n{\n    warn_on_subclass(x, \"tidy\")\n    ret <- as_tibble(summary(x)$coefficients, rownames = \"term\")\n    colnames(ret) <- c(\"term\", \"estimate\", \"std.error\", \"statistic\", \n        \"p.value\")\n    coefs <- tibble::enframe(stats::coef(x), name = \"term\", value = \"estimate\")\n    ret <- left_join(coefs, ret, by = c(\"term\", \"estimate\"))\n    if (conf.int) {\n        ci <- broom_confint_terms(x, level = conf.level)\n        ret <- dplyr::left_join(ret, ci, by = \"term\")\n    }\n    if (exponentiate) {\n        ret <- exponentiate(ret)\n    }\n    ret\n}\n<bytecode: 0x55c4702e2438>\n<environment: namespace:broom>\n\n\n\nWrite a tidy method for our mean_sd function and try it out on the penguins dataset.\nApply the mean_sd function to the penguins body mass in grams by species and sex. Organize the results into a table suitable for publication, where it is easy to compare the two sexes."
-  },
-  {
-    "objectID": "exercises/merge-and-reshape.html#tidying-the-national-patient-register-dataset",
-    "href": "exercises/merge-and-reshape.html#tidying-the-national-patient-register-dataset",
-    "title": "Tidying and reshaping – exercises",
-    "section": "Tidying the national patient register dataset",
-    "text": "Tidying the national patient register dataset\nLoad the LPR data example from \"https://sachsmc.github.io/r-programming/data/lpr-ex.rds\"\n\nlibrary(here)\n\nhere() starts at /home/sachsmc/Teaching/Courses/r-programming\n\nlpr <- readRDS(here(\"lpr-ex.rds\"))\n\nUse the tidy principles to do the following:\n\nReshape the data into wide, where the columns are the primary diagnosis (hdia) at each visit number\nReshape the data into longer format, where all of the diagnoses are stored in a single variable, with another variable indicating the primary diagnosis.\nCreate a new variable for each participant which equals TRUE if they had any diagnosis of either D150, D152, or D159 before the date 1 January 2010."
-  },
-  {
     "objectID": "exercises/functions.html",
     "href": "exercises/functions.html",
     "title": "Functions – exercises",
@@ -833,6 +1113,27 @@
     "text": "Working with data using different structures\nThe penguins data is stored as a tibble, which is a special type of data structure that is an enhanced data frame. That is, a tibble is still a data.frame, but it is also more than that.\n\nlibrary(tibble)\nclass(penguins) \n\n[1] \"tbl_df\"     \"tbl\"        \"data.frame\"\n\nis.data.frame(penguins)\n\n[1] TRUE\n\nis_tibble(penguins)\n\n[1] TRUE\n\n\n\nTry it yourself\nThere are other packages out there that enhance data frames. In this exercise we will introduce and compare base data frames, data.tables, and tibbles. For these you will need the tibble, dplyr, and data.table packages.\nIf you have used any of these before, try one of the others. Read the help files and try out some other functions.\n\n\nCode\n\nBase Rtibble/dplyrdata.table\n\n\n\noptions(max.print = 48)\n\npeng_df <- as.data.frame(penguins)\nclass(peng_df)\n\n[1] \"data.frame\"\n\n## subset\nsubset(peng_df, !is.na(body_mass_g))\n\n  species    island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n1  Adelie Torgersen           39.1          18.7               181        3750\n2  Adelie Torgersen           39.5          17.4               186        3800\n3  Adelie Torgersen           40.3          18.0               195        3250\n5  Adelie Torgersen           36.7          19.3               193        3450\n6  Adelie Torgersen           39.3          20.6               190        3650\n7  Adelie Torgersen           38.9          17.8               181        3625\n     sex year\n1   male 2007\n2 female 2007\n3 female 2007\n5 female 2007\n6   male 2007\n7 female 2007\n [ reached 'max' / getOption(\"max.print\") -- omitted 336 rows ]\n\nsubset(peng_df, sex == \"male\")\n\n   species    island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n1   Adelie Torgersen           39.1          18.7               181        3750\n6   Adelie Torgersen           39.3          20.6               190        3650\n8   Adelie Torgersen           39.2          19.6               195        4675\n14  Adelie Torgersen           38.6          21.2               191        3800\n15  Adelie Torgersen           34.6          21.1               198        4400\n18  Adelie Torgersen           42.5          20.7               197        4500\n    sex year\n1  male 2007\n6  male 2007\n8  male 2007\n14 male 2007\n15 male 2007\n18 male 2007\n [ reached 'max' / getOption(\"max.print\") -- omitted 162 rows ]\n\npeng_df[1:6, ]\n\n  species    island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n1  Adelie Torgersen           39.1          18.7               181        3750\n2  Adelie Torgersen           39.5          17.4               186        3800\n3  Adelie Torgersen           40.3          18.0               195        3250\n4  Adelie Torgersen             NA            NA                NA          NA\n5  Adelie Torgersen           36.7          19.3               193        3450\n6  Adelie Torgersen           39.3          20.6               190        3650\n     sex year\n1   male 2007\n2 female 2007\n3 female 2007\n4   <NA> 2007\n5 female 2007\n6   male 2007\n\n## sort\npeng_df[order(peng_df$year), ]\n\n  species    island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n1  Adelie Torgersen           39.1          18.7               181        3750\n2  Adelie Torgersen           39.5          17.4               186        3800\n3  Adelie Torgersen           40.3          18.0               195        3250\n4  Adelie Torgersen             NA            NA                NA          NA\n5  Adelie Torgersen           36.7          19.3               193        3450\n6  Adelie Torgersen           39.3          20.6               190        3650\n     sex year\n1   male 2007\n2 female 2007\n3 female 2007\n4   <NA> 2007\n5 female 2007\n6   male 2007\n [ reached 'max' / getOption(\"max.print\") -- omitted 338 rows ]\n\npeng_df[order(peng_df$year, decreasing = TRUE), ]\n\n    species island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n101  Adelie Biscoe           35.0          17.9               192        3725\n102  Adelie Biscoe           41.0          20.0               203        4725\n103  Adelie Biscoe           37.7          16.0               183        3075\n104  Adelie Biscoe           37.8          20.0               190        4250\n105  Adelie Biscoe           37.9          18.6               193        2925\n106  Adelie Biscoe           39.7          18.9               184        3550\n       sex year\n101 female 2009\n102   male 2009\n103 female 2009\n104   male 2009\n105 female 2009\n106   male 2009\n [ reached 'max' / getOption(\"max.print\") -- omitted 338 rows ]\n\n## select columns\npeng_df[c(\"species\", \"sex\", \"year\")]\n\n   species    sex year\n1   Adelie   male 2007\n2   Adelie female 2007\n3   Adelie female 2007\n4   Adelie   <NA> 2007\n5   Adelie female 2007\n6   Adelie   male 2007\n7   Adelie female 2007\n8   Adelie   male 2007\n9   Adelie   <NA> 2007\n10  Adelie   <NA> 2007\n11  Adelie   <NA> 2007\n12  Adelie   <NA> 2007\n13  Adelie female 2007\n14  Adelie   male 2007\n15  Adelie   male 2007\n16  Adelie female 2007\n [ reached 'max' / getOption(\"max.print\") -- omitted 328 rows ]\n\npeng_df[grep(\"^bill\", names(peng_df), value = TRUE)]\n\n   bill_length_mm bill_depth_mm\n1            39.1          18.7\n2            39.5          17.4\n3            40.3          18.0\n4              NA            NA\n5            36.7          19.3\n6            39.3          20.6\n7            38.9          17.8\n8            39.2          19.6\n9            34.1          18.1\n10           42.0          20.2\n11           37.8          17.1\n12           37.8          17.3\n13           41.1          17.6\n14           38.6          21.2\n15           34.6          21.1\n16           36.6          17.8\n17           38.7          19.0\n18           42.5          20.7\n19           34.4          18.4\n20           46.0          21.5\n21           37.8          18.3\n22           37.7          18.7\n23           35.9          19.2\n24           38.2          18.1\n [ reached 'max' / getOption(\"max.print\") -- omitted 320 rows ]\n\nsubset(peng_df, select = bill_length_mm:body_mass_g)\n\n   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n1            39.1          18.7               181        3750\n2            39.5          17.4               186        3800\n3            40.3          18.0               195        3250\n4              NA            NA                NA          NA\n5            36.7          19.3               193        3450\n6            39.3          20.6               190        3650\n7            38.9          17.8               181        3625\n8            39.2          19.6               195        4675\n9            34.1          18.1               193        3475\n10           42.0          20.2               190        4250\n11           37.8          17.1               186        3300\n12           37.8          17.3               180        3700\n [ reached 'max' / getOption(\"max.print\") -- omitted 332 rows ]\n\n## create new columns\npeng_df$bill_ratio <- with(peng_df, bill_length_mm / bill_depth_mm)\n# or\npeng_df <- within(peng_df, {\n  bill_ratio <- bill_length_mm / bill_depth_mm\n})\n#or\npeng_df <- transform(peng_df, bill_ratio = bill_length_mm / bill_depth_mm)\n\n# reorder\npeng_df[c(\"species\", \"island\", \"bill_length_mm\", \n                     \"bill_depth_mm\", \"bill_ratio\", \"flipper_length_mm\", \n                     \"body_mass_g\", \"sex\", \"year\")]\n\n  species    island bill_length_mm bill_depth_mm bill_ratio flipper_length_mm\n1  Adelie Torgersen           39.1          18.7   2.090909               181\n2  Adelie Torgersen           39.5          17.4   2.270115               186\n3  Adelie Torgersen           40.3          18.0   2.238889               195\n4  Adelie Torgersen             NA            NA         NA                NA\n5  Adelie Torgersen           36.7          19.3   1.901554               193\n  body_mass_g    sex year\n1        3750   male 2007\n2        3800 female 2007\n3        3250 female 2007\n4          NA   <NA> 2007\n5        3450 female 2007\n [ reached 'max' / getOption(\"max.print\") -- omitted 339 rows ]\n\n\n\n\nTibble is often paired with dplyr, which is another package for data manipulation.\n\nlibrary(dplyr)\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\n## subset\nfilter(penguins, !is.na(body_mass_g))\n\n# A tibble: 342 × 8\n   species island    bill_length_mm bill_depth_mm flipper_…¹ body_…² sex    year\n   <fct>   <fct>              <dbl>         <dbl>      <int>   <int> <fct> <int>\n 1 Adelie  Torgersen           39.1          18.7        181    3750 male   2007\n 2 Adelie  Torgersen           39.5          17.4        186    3800 fema…  2007\n 3 Adelie  Torgersen           40.3          18          195    3250 fema…  2007\n 4 Adelie  Torgersen           36.7          19.3        193    3450 fema…  2007\n 5 Adelie  Torgersen           39.3          20.6        190    3650 male   2007\n 6 Adelie  Torgersen           38.9          17.8        181    3625 fema…  2007\n 7 Adelie  Torgersen           39.2          19.6        195    4675 male   2007\n 8 Adelie  Torgersen           34.1          18.1        193    3475 <NA>   2007\n 9 Adelie  Torgersen           42            20.2        190    4250 <NA>   2007\n10 Adelie  Torgersen           37.8          17.1        186    3300 <NA>   2007\n# … with 332 more rows, and abbreviated variable names ¹​flipper_length_mm,\n#   ²​body_mass_g\n# ℹ Use `print(n = ...)` to see more rows\n\nfilter(penguins, sex == \"male\")\n\n# A tibble: 168 × 8\n   species island    bill_length_mm bill_depth_mm flipper_…¹ body_…² sex    year\n   <fct>   <fct>              <dbl>         <dbl>      <int>   <int> <fct> <int>\n 1 Adelie  Torgersen           39.1          18.7        181    3750 male   2007\n 2 Adelie  Torgersen           39.3          20.6        190    3650 male   2007\n 3 Adelie  Torgersen           39.2          19.6        195    4675 male   2007\n 4 Adelie  Torgersen           38.6          21.2        191    3800 male   2007\n 5 Adelie  Torgersen           34.6          21.1        198    4400 male   2007\n 6 Adelie  Torgersen           42.5          20.7        197    4500 male   2007\n 7 Adelie  Torgersen           46            21.5        194    4200 male   2007\n 8 Adelie  Biscoe              37.7          18.7        180    3600 male   2007\n 9 Adelie  Biscoe              38.2          18.1        185    3950 male   2007\n10 Adelie  Biscoe              38.8          17.2        180    3800 male   2007\n# … with 158 more rows, and abbreviated variable names ¹​flipper_length_mm,\n#   ²​body_mass_g\n# ℹ Use `print(n = ...)` to see more rows\n\nslice(penguins, 1:6)\n\n# A tibble: 6 × 8\n  species island    bill_length_mm bill_depth_mm flipper_l…¹ body_…² sex    year\n  <fct>   <fct>              <dbl>         <dbl>       <int>   <int> <fct> <int>\n1 Adelie  Torgersen           39.1          18.7         181    3750 male   2007\n2 Adelie  Torgersen           39.5          17.4         186    3800 fema…  2007\n3 Adelie  Torgersen           40.3          18           195    3250 fema…  2007\n4 Adelie  Torgersen           NA            NA            NA      NA <NA>   2007\n5 Adelie  Torgersen           36.7          19.3         193    3450 fema…  2007\n6 Adelie  Torgersen           39.3          20.6         190    3650 male   2007\n# … with abbreviated variable names ¹​flipper_length_mm, ²​body_mass_g\n\n## sort\narrange(penguins, year)\n\n# A tibble: 344 × 8\n   species island    bill_length_mm bill_depth_mm flipper_…¹ body_…² sex    year\n   <fct>   <fct>              <dbl>         <dbl>      <int>   <int> <fct> <int>\n 1 Adelie  Torgersen           39.1          18.7        181    3750 male   2007\n 2 Adelie  Torgersen           39.5          17.4        186    3800 fema…  2007\n 3 Adelie  Torgersen           40.3          18          195    3250 fema…  2007\n 4 Adelie  Torgersen           NA            NA           NA      NA <NA>   2007\n 5 Adelie  Torgersen           36.7          19.3        193    3450 fema…  2007\n 6 Adelie  Torgersen           39.3          20.6        190    3650 male   2007\n 7 Adelie  Torgersen           38.9          17.8        181    3625 fema…  2007\n 8 Adelie  Torgersen           39.2          19.6        195    4675 male   2007\n 9 Adelie  Torgersen           34.1          18.1        193    3475 <NA>   2007\n10 Adelie  Torgersen           42            20.2        190    4250 <NA>   2007\n# … with 334 more rows, and abbreviated variable names ¹​flipper_length_mm,\n#   ²​body_mass_g\n# ℹ Use `print(n = ...)` to see more rows\n\narrange(penguins, desc(year))\n\n# A tibble: 344 × 8\n   species island bill_length_mm bill_depth_mm flipper_len…¹ body_…² sex    year\n   <fct>   <fct>           <dbl>         <dbl>         <int>   <int> <fct> <int>\n 1 Adelie  Biscoe           35            17.9           192    3725 fema…  2009\n 2 Adelie  Biscoe           41            20             203    4725 male   2009\n 3 Adelie  Biscoe           37.7          16             183    3075 fema…  2009\n 4 Adelie  Biscoe           37.8          20             190    4250 male   2009\n 5 Adelie  Biscoe           37.9          18.6           193    2925 fema…  2009\n 6 Adelie  Biscoe           39.7          18.9           184    3550 male   2009\n 7 Adelie  Biscoe           38.6          17.2           199    3750 fema…  2009\n 8 Adelie  Biscoe           38.2          20             190    3900 male   2009\n 9 Adelie  Biscoe           38.1          17             181    3175 fema…  2009\n10 Adelie  Biscoe           43.2          19             197    4775 male   2009\n# … with 334 more rows, and abbreviated variable names ¹​flipper_length_mm,\n#   ²​body_mass_g\n# ℹ Use `print(n = ...)` to see more rows\n\n## select columns\nselect(penguins, species, sex, year)\n\n# A tibble: 344 × 3\n   species sex     year\n   <fct>   <fct>  <int>\n 1 Adelie  male    2007\n 2 Adelie  female  2007\n 3 Adelie  female  2007\n 4 Adelie  <NA>    2007\n 5 Adelie  female  2007\n 6 Adelie  male    2007\n 7 Adelie  female  2007\n 8 Adelie  male    2007\n 9 Adelie  <NA>    2007\n10 Adelie  <NA>    2007\n# … with 334 more rows\n# ℹ Use `print(n = ...)` to see more rows\n\nselect(penguins, starts_with(\"bill\"))\n\n# A tibble: 344 × 2\n   bill_length_mm bill_depth_mm\n            <dbl>         <dbl>\n 1           39.1          18.7\n 2           39.5          17.4\n 3           40.3          18  \n 4           NA            NA  \n 5           36.7          19.3\n 6           39.3          20.6\n 7           38.9          17.8\n 8           39.2          19.6\n 9           34.1          18.1\n10           42            20.2\n# … with 334 more rows\n# ℹ Use `print(n = ...)` to see more rows\n\nselect(penguins, bill_length_mm:body_mass_g)\n\n# A tibble: 344 × 4\n   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n            <dbl>         <dbl>             <int>       <int>\n 1           39.1          18.7               181        3750\n 2           39.5          17.4               186        3800\n 3           40.3          18                 195        3250\n 4           NA            NA                  NA          NA\n 5           36.7          19.3               193        3450\n 6           39.3          20.6               190        3650\n 7           38.9          17.8               181        3625\n 8           39.2          19.6               195        4675\n 9           34.1          18.1               193        3475\n10           42            20.2               190        4250\n# … with 334 more rows\n# ℹ Use `print(n = ...)` to see more rows\n\n## create new columns\nmutate(penguins, bill_ratio = bill_length_mm / bill_depth_mm) |>\n  select(starts_with(\"bill\"))\n\n# A tibble: 344 × 3\n   bill_length_mm bill_depth_mm bill_ratio\n            <dbl>         <dbl>      <dbl>\n 1           39.1          18.7       2.09\n 2           39.5          17.4       2.27\n 3           40.3          18         2.24\n 4           NA            NA        NA   \n 5           36.7          19.3       1.90\n 6           39.3          20.6       1.91\n 7           38.9          17.8       2.19\n 8           39.2          19.6       2   \n 9           34.1          18.1       1.88\n10           42            20.2       2.08\n# … with 334 more rows\n# ℹ Use `print(n = ...)` to see more rows\n\nmutate(penguins, bill_ratio = bill_length_mm / bill_depth_mm) |>\n  relocate(bill_ratio, .after = bill_depth_mm)\n\n# A tibble: 344 × 9\n   species island    bill_length_mm bill_d…¹ bill_…² flipp…³ body_…⁴ sex    year\n   <fct>   <fct>              <dbl>    <dbl>   <dbl>   <int>   <int> <fct> <int>\n 1 Adelie  Torgersen           39.1     18.7    2.09     181    3750 male   2007\n 2 Adelie  Torgersen           39.5     17.4    2.27     186    3800 fema…  2007\n 3 Adelie  Torgersen           40.3     18      2.24     195    3250 fema…  2007\n 4 Adelie  Torgersen           NA       NA     NA         NA      NA <NA>   2007\n 5 Adelie  Torgersen           36.7     19.3    1.90     193    3450 fema…  2007\n 6 Adelie  Torgersen           39.3     20.6    1.91     190    3650 male   2007\n 7 Adelie  Torgersen           38.9     17.8    2.19     181    3625 fema…  2007\n 8 Adelie  Torgersen           39.2     19.6    2        195    4675 male   2007\n 9 Adelie  Torgersen           34.1     18.1    1.88     193    3475 <NA>   2007\n10 Adelie  Torgersen           42       20.2    2.08     190    4250 <NA>   2007\n# … with 334 more rows, and abbreviated variable names ¹​bill_depth_mm,\n#   ²​bill_ratio, ³​flipper_length_mm, ⁴​body_mass_g\n# ℹ Use `print(n = ...)` to see more rows\n\n\n\n\n\nlibrary(data.table)\n\n\nAttaching package: 'data.table'\n\n\nThe following objects are masked from 'package:dplyr':\n\n    between, first, last\n\npeng_dt <- data.table(penguins)\n\n## subset\npeng_dt[!is.na(body_mass_g)]\n\n       species    island bill_length_mm bill_depth_mm flipper_length_mm\n  1:    Adelie Torgersen           39.1          18.7               181\n  2:    Adelie Torgersen           39.5          17.4               186\n  3:    Adelie Torgersen           40.3          18.0               195\n  4:    Adelie Torgersen           36.7          19.3               193\n  5:    Adelie Torgersen           39.3          20.6               190\n ---                                                                   \n     body_mass_g    sex year\n  1:        3750   male 2007\n  2:        3800 female 2007\n  3:        3250 female 2007\n  4:        3450 female 2007\n  5:        3650   male 2007\n ---                        \n [ reached getOption(\"max.print\") -- omitted 5 rows ]\n\npeng_dt[sex == \"male\"]\n\n       species    island bill_length_mm bill_depth_mm flipper_length_mm\n  1:    Adelie Torgersen           39.1          18.7               181\n  2:    Adelie Torgersen           39.3          20.6               190\n  3:    Adelie Torgersen           39.2          19.6               195\n  4:    Adelie Torgersen           38.6          21.2               191\n  5:    Adelie Torgersen           34.6          21.1               198\n ---                                                                   \n     body_mass_g  sex year\n  1:        3750 male 2007\n  2:        3650 male 2007\n  3:        4675 male 2007\n  4:        3800 male 2007\n  5:        4400 male 2007\n ---                      \n [ reached getOption(\"max.print\") -- omitted 5 rows ]\n\npeng_dt[1:6]\n\n   species    island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n1:  Adelie Torgersen           39.1          18.7               181        3750\n2:  Adelie Torgersen           39.5          17.4               186        3800\n3:  Adelie Torgersen           40.3          18.0               195        3250\n4:  Adelie Torgersen             NA            NA                NA          NA\n5:  Adelie Torgersen           36.7          19.3               193        3450\n6:  Adelie Torgersen           39.3          20.6               190        3650\n      sex year\n1:   male 2007\n2: female 2007\n3: female 2007\n4:   <NA> 2007\n5: female 2007\n6:   male 2007\n\n## sort\nsetorder(peng_dt, year) # doesn't return anything but modifies the table\npeng_dt\n\n       species    island bill_length_mm bill_depth_mm flipper_length_mm\n  1:    Adelie Torgersen           39.1          18.7               181\n  2:    Adelie Torgersen           39.5          17.4               186\n  3:    Adelie Torgersen           40.3          18.0               195\n  4:    Adelie Torgersen             NA            NA                NA\n  5:    Adelie Torgersen           36.7          19.3               193\n ---                                                                   \n     body_mass_g    sex year\n  1:        3750   male 2007\n  2:        3800 female 2007\n  3:        3250 female 2007\n  4:          NA   <NA> 2007\n  5:        3450 female 2007\n ---                        \n [ reached getOption(\"max.print\") -- omitted 5 rows ]\n\nsetorder(peng_dt, -year)\npeng_dt\n\n       species island bill_length_mm bill_depth_mm flipper_length_mm\n  1:    Adelie Biscoe           35.0          17.9               192\n  2:    Adelie Biscoe           41.0          20.0               203\n  3:    Adelie Biscoe           37.7          16.0               183\n  4:    Adelie Biscoe           37.8          20.0               190\n  5:    Adelie Biscoe           37.9          18.6               193\n ---                                                                \n     body_mass_g    sex year\n  1:        3725 female 2009\n  2:        4725   male 2009\n  3:        3075 female 2009\n  4:        4250   male 2009\n  5:        2925 female 2009\n ---                        \n [ reached getOption(\"max.print\") -- omitted 5 rows ]\n\n## select columns\npeng_dt[, .(species, sex, year)]\n\n       species    sex year\n  1:    Adelie female 2009\n  2:    Adelie   male 2009\n  3:    Adelie female 2009\n  4:    Adelie   male 2009\n  5:    Adelie female 2009\n ---                      \n340: Chinstrap   male 2007\n341: Chinstrap female 2007\n342: Chinstrap   male 2007\n343: Chinstrap female 2007\n344: Chinstrap   male 2007\n\npeng_dt[, grep(\"^bill\", names(peng_dt)), with = FALSE]\n\n     bill_length_mm bill_depth_mm\n  1:           35.0          17.9\n  2:           41.0          20.0\n  3:           37.7          16.0\n  4:           37.8          20.0\n  5:           37.9          18.6\n ---                             \n340:           48.5          17.5\n341:           43.2          16.6\n342:           50.6          19.4\n343:           46.7          17.9\n344:           52.0          19.0\n\npeng_dt[, bill_length_mm:body_mass_g]\n\n     bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n  1:           35.0          17.9               192        3725\n  2:           41.0          20.0               203        4725\n  3:           37.7          16.0               183        3075\n  4:           37.8          20.0               190        4250\n  5:           37.9          18.6               193        2925\n ---                                                           \n340:           48.5          17.5               191        3400\n341:           43.2          16.6               187        2900\n342:           50.6          19.4               193        3800\n343:           46.7          17.9               195        3300\n344:           52.0          19.0               197        4150\n\n## create new columns\npeng_dt[, bill_ratio := bill_length_mm / bill_depth_mm]\npeng_dt\n\n       species island bill_length_mm bill_depth_mm flipper_length_mm\n  1:    Adelie Biscoe           35.0          17.9               192\n  2:    Adelie Biscoe           41.0          20.0               203\n  3:    Adelie Biscoe           37.7          16.0               183\n  4:    Adelie Biscoe           37.8          20.0               190\n  5:    Adelie Biscoe           37.9          18.6               193\n     body_mass_g    sex year bill_ratio\n  1:        3725 female 2009   1.955307\n  2:        4725   male 2009   2.050000\n  3:        3075 female 2009   2.356250\n  4:        4250   male 2009   1.890000\n  5:        2925 female 2009   2.037634\n [ reached getOption(\"max.print\") -- omitted 6 rows ]\n\n# transform but doesn't modify the dt\npeng_dt[, .(bill_ratio = bill_length_mm / bill_depth_mm)]\n\n     bill_ratio\n  1:   1.955307\n  2:   2.050000\n  3:   2.356250\n  4:   1.890000\n  5:   2.037634\n ---           \n340:   2.771429\n341:   2.602410\n342:   2.608247\n343:   2.608939\n344:   2.736842\n\n# returns a vector\npeng_dt[, (bill_ratio = bill_length_mm / bill_depth_mm)]\n\n [1] 1.955307 2.050000 2.356250 1.890000 2.037634 2.100529 2.244186 1.910000\n [9] 2.241176 2.273684 2.309091 2.246305 2.242938 2.164103 1.913043 2.333333\n[17] 2.270588 1.819512 2.100000 2.209677 2.104651 1.904040 2.364706 2.237838\n[25] 2.213836 2.136842 2.204545 2.267760 2.280702 2.450000 2.150838 2.244792\n[33] 1.989189 2.027027 2.164773 2.348571 2.034286 2.000000 2.242424 2.217877\n[41] 2.350877 2.360465 2.070968 2.394118 2.220238 2.085561 2.107527 1.989130\n [ reached getOption(\"max.print\") -- omitted 296 entries ]\n\n# reorder columns\n\nsetcolorder(peng_dt, c(\"species\", \"island\", \"bill_length_mm\", \n                     \"bill_depth_mm\", \"bill_ratio\"))\npeng_dt\n\n       species island bill_length_mm bill_depth_mm bill_ratio flipper_length_mm\n  1:    Adelie Biscoe           35.0          17.9   1.955307               192\n  2:    Adelie Biscoe           41.0          20.0   2.050000               203\n  3:    Adelie Biscoe           37.7          16.0   2.356250               183\n  4:    Adelie Biscoe           37.8          20.0   1.890000               190\n  5:    Adelie Biscoe           37.9          18.6   2.037634               193\n     body_mass_g    sex year\n  1:        3725 female 2009\n  2:        4725   male 2009\n  3:        3075 female 2009\n  4:        4250   male 2009\n  5:        2925 female 2009\n [ reached getOption(\"max.print\") -- omitted 6 rows ]\n\n\n\n\n\n\n\nNotes\nIn the above we used the function grep(\"^bill\", names(penguins)). The first string is called a ‘regular expression’, and in this case \"^bill\" can be translated to “starts with bill”. This defines a pattern that is checked against the names(penguins) which contains species, island, bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, sex, year. Which column names match the pattern?\nRegular expressions are very flexible in terms of how you can define patterns. We will use them again in more depth when we talk about working with character data."
   },
   {
+    "objectID": "exercises/tidy-and-reshape.html",
+    "href": "exercises/tidy-and-reshape.html",
+    "title": "Tidying and reshaping – exercises",
+    "section": "",
+    "text": "In this lesson you will\n\nPractice tidying statistical results\nSee and understand how to reshape data from wide to long and long to wide"
+  },
+  {
+    "objectID": "exercises/tidy-and-reshape.html#tidying-our-mean-sd-function",
+    "href": "exercises/tidy-and-reshape.html#tidying-our-mean-sd-function",
+    "title": "Tidying and reshaping – exercises",
+    "section": "Tidying our mean sd function",
+    "text": "Tidying our mean sd function\nLoad the broom package and look at the source code for tidy.lm\n\nbroom:::tidy.lm\n\nfunction (x, conf.int = FALSE, conf.level = 0.95, exponentiate = FALSE, \n    ...) \n{\n    warn_on_subclass(x, \"tidy\")\n    ret <- as_tibble(summary(x)$coefficients, rownames = \"term\")\n    colnames(ret) <- c(\"term\", \"estimate\", \"std.error\", \"statistic\", \n        \"p.value\")\n    coefs <- tibble::enframe(stats::coef(x), name = \"term\", value = \"estimate\")\n    ret <- left_join(coefs, ret, by = c(\"term\", \"estimate\"))\n    if (conf.int) {\n        ci <- broom_confint_terms(x, level = conf.level)\n        ret <- dplyr::left_join(ret, ci, by = \"term\")\n    }\n    if (exponentiate) {\n        ret <- exponentiate(ret)\n    }\n    ret\n}\n<bytecode: 0x557822c633a8>\n<environment: namespace:broom>\n\n\n\nWrite a tidy method for our mean_sd function and try it out on the penguins dataset.\nApply the mean_sd function to the penguins body mass in grams by species and sex. Organize the results into a table suitable for publication, where it is easy to compare the two sexes."
+  },
+  {
+    "objectID": "exercises/tidy-and-reshape.html#tidying-the-national-patient-register-dataset",
+    "href": "exercises/tidy-and-reshape.html#tidying-the-national-patient-register-dataset",
+    "title": "Tidying and reshaping – exercises",
+    "section": "Tidying the national patient register dataset",
+    "text": "Tidying the national patient register dataset\nLoad the LPR data example from \"https://sachsmc.github.io/r-programming/data/lpr-ex.rds\"\n\nlibrary(here)\n\nhere() starts at /home/sachsmc/Teaching/Courses/r-programming\n\nlpr <- readRDS(here(\"data\", \"lpr-ex.rds\"))\n\nUse the tidy principles to do the following:\n\nReshape the data into wide, where the columns are the primary diagnosis (hdia) at each visit number\nReshape the data into longer format, where all of the diagnoses are stored in a single variable, with another variable indicating the primary diagnosis.\nCreate a new variable for each participant which equals TRUE if they had any diagnosis of either D150, D152, or D159 before the date 1 January 2010."
+  },
+  {
     "objectID": "exercises/index.html",
     "href": "exercises/index.html",
     "title": "Exercises",
@@ -872,7 +1173,28 @@
     "href": "exercises/dates-and-strings.html",
     "title": "Dates and character strings – exercises",
     "section": "",
-    "text": "Learning objectives\nIn this lesson you will\n\nManipulate dates and times with lubridate\nLearn some basic regular expressions for matching ICD-10 code"
+    "text": "In this lesson you will\n\nManipulate dates and times with lubridate\nLearn some basic regular expressions for matching ICD-10/ATC codes"
+  },
+  {
+    "objectID": "exercises/dates-and-strings.html#read-in-the-data",
+    "href": "exercises/dates-and-strings.html#read-in-the-data",
+    "title": "Dates and character strings – exercises",
+    "section": "Read in the data",
+    "text": "Read in the data\nFrom the data, download and read in the file “med-2005-ex.rds”.\n\nlibrary(here)\n\nhere() starts at /home/sachsmc/Teaching/Courses/r-programming\n\nmed2005 <- readRDS(here(\"data\", \"med-2005-ex.rds\"))"
+  },
+  {
+    "objectID": "exercises/dates-and-strings.html#dates",
+    "href": "exercises/dates-and-strings.html#dates",
+    "title": "Dates and character strings – exercises",
+    "section": "Dates",
+    "text": "Dates\n\nUse the lubridate package (try the function wday) to calculate the day of the week when the dispensation occurred. Do dispensations occur less frequently on weekends?\nCalculate the month of the dispensation. Is there a seasonal trend on the number of dispensations?\nUse dplyr or data.table to create a new variable that is the last dispensation for each individual during the year (using group_by then mutate or := with by). Then calculate the number of days between each dispensation and the last one. What is the average number of days?"
+  },
+  {
+    "objectID": "exercises/dates-and-strings.html#regular-expressions",
+    "href": "exercises/dates-and-strings.html#regular-expressions",
+    "title": "Dates and character strings – exercises",
+    "section": "Regular expressions",
+    "text": "Regular expressions\nThe “atc” variable contains the ATC code for the drug that was dispensed. This is a standardized classification system for drugs, see https://www.whocc.no/atc_ddd_index/.\n\nCount how many dispensations there were for drugs in the class “J01”. Use the grepl function with a pattern.\nAre there any “invalid” ATC codes in the dataset?"
   },
   {
     "objectID": "index.html",

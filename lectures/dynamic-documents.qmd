@@ -1,0 +1,131 @@
+---
+title: "Dynamic Documents"
+subtitle: "Day 4, C"
+author: "Michael C Sachs"
+format: 
+    revealjs:
+      scrollable: true
+execute:
+  echo: true
+---
+
+# What? 
+
+## Code and prose
+
+A "literate document" or "dynamic document" is a file that contains __code__ and __prose__
+
+The idea was developed by Donald Knuth in the 1980s; his motivation was to use it for software development, but allowing programmers to "concentrate ... on explaining to humans what we want the computer to do". 
+
+When the document is __rendered__ the code also gets run, from top to bottom in the order it appears in the document, and the output inserted dynamically into the output document
+
+## How does it work? 
+
+In an rmarkdown (.Rmd) or Quarto (.qmd) document, at the top you have the __yaml header__, with key: value pairs listed inside a start and end fence ("`---`"). These key: value pairs contain information about the document and control how it is rendered. 
+
+_Prose_ is written in __markdown__. This is a lightweight markup language (headers, bold, italics, links, figures, tables). 
+
+_Code_ is inserted in between start and end fences ("```"), called __chunks__. Options controlling how the code is run and output can be added to each chunk. 
+
+## Markdown
+
+```{r}
+#| eval: false
+# First level header
+## Second level 
+### etc
+
+*italics* for emphasis, **bold** for highlighting
+
+- Lists
+- can 
+- also
+    + be 
+    + nested
+
+1. Or enumerated
+2. B
+3. C
+
+
+![alt text](path-to-image.png)
+
+[text](link.html)
+```
+
+## Code chunks
+
+Look like this, and the output is below
+
+```{r}
+#| echo: fenced
+rnorm(1)
+```
+
+
+You can also have code *inline*: 
+
+```{r}
+#| eval: false
+For example this `r rnorm(1)` will show up inline
+```
+
+which will put the output `r rnorm(1)` without showing the code. 
+
+## Rendering
+
+- The code chunks will be run sequentially in the same, fresh R session (remember when I said restart R frequently when developing)
+- The code and output will be inserted into an intermediate document, as directed by the code chunk options
+- That document is then processed by [pandoc](https://pandoc.org) which turns it into a format designed for human readability, as directed by the document yaml header
+    + html web pages
+    + pdf documents (requires Latex)
+    + word documents
+    + html presentations (like this one)
+    + ...
+
+
+## Getting output to look nice
+
+Tools of the trade
+
+- Figures are straightforward, can use captions and cross-references
+- For inline output, write custom print methods, like our meansd example
+- Tables are the hardest, there are some packages that help
+    + `knitr` and the function `kable`, also the package `kableExtra`
+    + `xtable` (designed for pdf output)
+    + `gtsummary`
+
+## Table example
+
+This function outputs the data in a markdown table, which is then interpreted and rendered nicely when the intermediate document is processed by pandoc
+```{r}
+knitr::kable(head(palmerpenguins::penguins))
+```
+
+
+## Endless possibilities
+
+- In theory, in your paper/presentation, every number and figure that is a result of your analysis can be generated from code
+- Easy to update if the data change
+- Can inspect the source document to determine where the number came from
+- In practice, do the best you can, and sometimes a well-documented "business process" is just as good
+
+
+# How? 
+
+- Rmarkdown, works great, been around for a while now
+- Quarto, quite new. Main advantage is increase flexibility of controlling output (and speed)
+- Sweave, old school format used in R. See the `survival` package vignettes and in particular the "noweb" subdirectory which takes the literate programming approach. 
+- Org mode, an emacs thing
+
+# Try it yourself
+
+## Practical
+
+We will continue using the register data example, and try out rmarkdown or quarto.
+
+[Link to lesson](../lessons/dynamic-documents.html)
+
+[Link home](../index.html)
+
+

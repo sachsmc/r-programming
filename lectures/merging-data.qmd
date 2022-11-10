@@ -1,0 +1,277 @@
+---
+title: "Merging/joining data"
+subtitle: "Day 4, B"
+author: "Michael C Sachs"
+format: 
+    revealjs:
+      scrollable: true
+execute:
+  echo: true
+---
+
+## Register data example
+
+We've worked a bit with the patient register data defining possible exposures/outcomes using ICD codes and dates
+
+- There are other registers, drug, cause of death, social welfare, etc.
+- We want to obtain data from these other data sets and match it to individuals we already have
+
+## Keys
+
+- A _key_ is one or more variables that can be used to identify observations 
+- Examples, CPR number, hospital code, drug codes
+
+## Example
+
+
+```{mermaid}
+%%| echo: false
+classDiagram
+  direction RL
+  class Person {
+    - PID
+    - Birthdate
+    - Deathdate
+  }
+  class Hospitalization {
+    - PID
+    - Date
+    - Diagnosis
+    - Procedures
+  }
+  class Prescription {
+    -PID
+    -Date
+    -ATC
+    -Dose
+  }
+  class Drug{
+    -ATC
+    -Class
+  }
+  Person <|-- Hospitalization
+  Person <|-- Prescription
+  Prescription <|-- Drug
+```
+
+
+# Joins
+
+## Types of joins
+
+Often the goal of a join or merge is to add new variables to an existing data table
+
+Example, given a table of hospitalization diagnoses, I want to know the drug dispensations that happened for each person after the hospitalization date
+
+## Left join
+
+```{r}
+library(dplyr)
+library(data.table)
+x <- tribble(
+  ~key, ~val_x,
+     1, "x1",
+     2, "x2",
+     3, "x3"
+)
+y <- tribble(
+  ~key, ~val_y,
+     1, "y1",
+     2, "y2",
+     4, "y3"
+)
+x
+y
+```
+
+##
+
+### Tidyverse
+
+```{r}
+x |> left_join(y, by = "key")
+```
+
+### Base R
+
+```{r}
+merge(x, y, by = "key", all.x = TRUE)
+```
+
+### data.table
+
+same as base R.
+
+Slightly different (right join): 
+```{r}
+xdt <- data.table(x)
+ydt <- data.table(y)
+
+ydt[xdt, on = .(key)]
+```
+
+
+
+## Many-to-one 
+```{r}
+x <- tribble(
+  ~key, ~val_x,
+     1, "x1",
+     2, "x2",
+     3, "x3"
+)
+y <- tribble(
+  ~key, ~val_y,
+     1, "y1",
+     1, "y1b",
+     2, "y2",
+     4, "y3"
+)
+
+merge(x, y, by = "key", all.x = TRUE)
+```
+
+
+## One-to-many
+```{r}
+x <- tribble(
+  ~key, ~val_x,
+     1, "x1",
+     1, "x1b",
+     2, "x2",
+     3, "x3"
+)
+y <- tribble(
+  ~key, ~val_y,
+     1, "y1",
+     2, "y2",
+     4, "y3"
+)
+
+merge(x, y, by = "key", all.x = TRUE)
+```
+
+
+
+## Many-to-many
+```{r}
+x <- tribble(
+  ~key, ~val_x,
+     1, "x1",
+     1, "x1b",
+     2, "x2",
+     3, "x3"
+)
+y <- tribble(
+  ~key, ~val_y,
+     1, "y1",
+     1, "y1b",
+     2, "y2",
+     4, "y3"
+)
+
+merge(x, y, by = "key", all.x = TRUE)
+```
+
+## Other merge types
+
+- Right join: `merge(x, y, by = "key", all.y = TRUE)`
+- Inner join: `merge(x, y, by = "key", all = FALSE)` (the default)
+- Full join: `merge(x, y, by = "key", all = TRUE)`
+
+
+# Real data is harder
+
+## Examples from the register
+
+- Inpatient and outpatient hospitalizations are in different tables, outpatient has only admission date, inpatient also has discharge date
+- Drugs are large in number, so drug registers are stored in different files by year
+- Dates do not match exactly in different registers, often want to match within a range of dates
+
+## Non exact joins
+
+I want to merge these two tables where `key1` matches exactly, and `key2` in `y` is less than `key2` in `x`
+
+```{r}
+x <- tribble(
+  ~key1, ~key2x, ~val_x,
+     1, 20, "x1",
+     1, 50, "x1b",
+     2, 35, "x2",
+     3, 10, "x3"
+)
+y <- tribble(
+  ~key1, ~key2y, ~val_y,
+     1, 10, "y1",
+     1, 25, "y1b",
+     1, 35, "y1c",
+     2, 20, "y2",
+     2, 50, "y2b",
+     3, 30, "y3"
+)
+```
+
+
+## Base R
+
+Multi step process in base R
+```{r}
+merge(x, y, by = "key1", all = FALSE) |>
+  subset(key2y <= key2x)
+
+## merge allows multiple keys, but only exact matching
+merge(x, y, 
+      by.x = c("key1", "key2x"), 
+      by.y = c("key1", "key2y"), all = FALSE)
+```
+
+
+## data.table
+
+```{r}
+xdt <- data.table(x, key = "key1")
+ydt <- data.table(y, key = "key1")
+
+ydt[xdt, on = .(key1, key2y <= key2x), nomatch = NULL]
+```
+
+## Rolling joins with data.table
+
+The previous example returns all matches satisfying the inequality, what if we only want the _closest_ one? 
+
+```{r}
+## return all 
+ydt[xdt, on = .(key1, key2y <= key2x), nomatch = NULL]
+
+## only closest match
+ydt[xdt, on = .(key1, key2y == key2x), roll = TRUE, nomatch = NULL]
+```
+
+
+
+## Tidyverse
+
+__Note__: this is not yet available in the `dplyr` release version (coming in version 1.1.0)
+
+```{r}
+#| eval: false
+x |> left_join(y, join_by(key2 <= key2))
+```
+
+
+## Remember
+
+When working with real data, remember these principles when merging
+
+- What is the key? Is it named something else in the other table?
+- Does the key define unique observations? If not (e.g., multiple rows per individual), then you will have a non one-to-one merge. 
+- Working with dates and ranges is possible, but be careful and __check the results__ carefully
+
+
+## Practical
+
+We will continue using the register data example to practice merging and defining new variables based on dates and strings.
+
+[Link to lesson](../lessons/merge-and-process.html)
+
+[Link home](../index.html)

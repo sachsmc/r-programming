@@ -253,7 +253,7 @@ Are often much more complex, and can be messier. Here is one example we will use
 
 ```{r}
 library(here)
-readRDS(here("lpr-ex.rds")) |> head(12)
+readRDS(here("data", "lpr-ex.rds")) |> head(12)
 ```
 
 
@@ -262,6 +262,6 @@ readRDS(here("lpr-ex.rds")) |> head(12)
 
 We will practice creating tidy data continuing with our mean sd function, and using the register data example to practice pivoting and doing grouped analyses.
 
-[Link to lesson](../lessons/merge-and-reshape.html)
+[Link to lesson](../lessons/tidy-and-reshape.html)
 
 [Link home](../index.html)

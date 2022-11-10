@@ -33,7 +33,7 @@ Load the LPR data example from `"https://sachsmc.github.io/r-programming/data/lp
 
 ```{r}
 library(here)
-lpr <- readRDS(here("lpr-ex.rds"))
+lpr <- readRDS(here("data", "lpr-ex.rds"))
 ```
 
 Use the tidy principles to do the following: 

@@ -1,0 +1,69 @@
+---
+title: "Summary and conclusion"
+subtitle: "Day 4, D"
+author: "Michael C Sachs"
+format: 
+    revealjs:
+      scrollable: true
+execute:
+  echo: true
+---
+
+# What did we learn?
+
+## Project organization
+
+- Setting up your project structure
+- Documentation and readme
+- Working directories and file paths
+
+## Basic programming principles
+
+- Data structures
+- Loops and conditionals
+- Functions, classes, generics
+
+## Working with data
+
+- Tidying
+- Reshaping
+- Merging
+- Dealing with dates and strings
+
+# Conclusion
+
+## {background-image="code-lifecycle.png" background-size="auto 90%"}
+
+## Where to go from here? 
+
+1. Research project management and reproducibility
+    - `targets` package
+    - project templates
+    - git and/or github
+2. R package development
+    - Great way to share code, data, and documentation
+    - Packages for personal and internal use
+3. High performance computing
+    - Parallelization, using computing servers
+    - Using C/C++ in R (or other languages)
+4. Visualization and interactivity
+    - `shiny` package
+    - Dynamic documents and graphics
+
+## How to get help?
+
+- Use the linked resources to get some background
+- CRAN task views, help files, vignettes
+- Google "how do I do x in R", or the exact error message
+- Stackoverflow, Rstudio forums, R mailing lists
+
+# Feedback
+
+## Course feedback
+
+1. What did you like about the course? 
+2. What did you dislike about the course? 
+3. Did you knowledge about R programming inprove during the course? 
+4. Are there topics you wanted to be covered but were not?
+
+

@@ -8,7 +8,10 @@
       "/lectures/flow-and-loops.html",
       "/lectures/functions.html",
       "/lectures/tidy-data.html",
-      "/lectures/merge-reshape.html"
+      "/lectures/dates-and-strings.html",
+      "/lectures/merging-data.html",
+      "/lectures/dynamic-documents.html",
+      "/lectures/conclusion.html"
     ]
   },
   {
@@ -18,7 +21,7 @@
       "/exercises/data-structures.html",
       "/exercises/flow-and-loops.html",
       "/exercises/functions.html",
-      "/exercises/merge-and-reshape.html",
+      "/exercises/tidy-and-reshape.html",
       "/exercises/dates-and-strings.html",
       "/exercises/dynamic-documents.html"
     ]

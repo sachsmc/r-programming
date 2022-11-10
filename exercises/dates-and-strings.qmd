@@ -12,4 +12,28 @@ image: dates.jpeg
 In this lesson you will 
 
 1. Manipulate dates and times with `lubridate`
-2. Learn some basic regular expressions for matching ICD-10 code
+2. Learn some basic regular expressions for matching ICD-10/ATC codes
+
+
+## Read in the data
+
+From the [data](../data/index.html), download and read in the file "med-2005-ex.rds". 
+
+```{r}
+library(here)
+med2005 <- readRDS(here("data", "med-2005-ex.rds"))
+```
+
+## Dates
+
+1. Use the `lubridate` package (try the function `wday`) to calculate the day of the week when the dispensation occurred. Do dispensations occur less frequently on weekends? 
+2. Calculate the month of the dispensation. Is there a seasonal trend on the number of dispensations? 
+3. Use `dplyr` or `data.table` to create a new variable that is the last dispensation for each individual during the year (using `group_by` then `mutate` or `:=` with `by`). Then calculate the number of days between each dispensation and the last one. What is the average number of days? 
+
+## Regular expressions
+
+
+The "atc" variable contains the ATC code for the drug that was dispensed. This is a standardized classification system for drugs, see [https://www.whocc.no/atc_ddd_index/](https://www.whocc.no/atc_ddd_index/). 
+
+1. Count how many dispensations there were for drugs in the class "J01". Use the `grepl` function with a pattern. 
+2. Are there any "invalid" ATC codes in the dataset? 
