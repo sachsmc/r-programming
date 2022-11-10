@@ -49,9 +49,11 @@ execute:
 4. Visualization and interactivity
     - `shiny` package
     - Dynamic documents and graphics
+    - `ggplot2` custom Geoms and Stats
 
 ## How to get help?
 
+- Keep learning on your own, remember that things change
 - Use the linked resources to get some background
 - CRAN task views, help files, vignettes
 - Google "how do I do x in R", or the exact error message

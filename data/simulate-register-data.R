@@ -1,3 +1,5 @@
+library(here)
+
 
 icd10codes <- expand.grid(LETTERS[1:11], 
             sprintf("%.02i", 0:99), 
@@ -7,7 +9,7 @@ icd10codes <- do.call(paste0, as.list(icd10codes))
 opcodes <- expand.grid(paste0("OP", LETTERS[20:24]), 
                        sprintf("%.03i", 80:220))
 
-atccodes <- readLines("atclist.txt")
+atccodes <- readLines(here("data", "atclist.txt"))
 
 dates <- seq(as.Date("2005-01-01"), as.Date("2015-12-31"), by = 1)
 
@@ -25,7 +27,11 @@ generate_lpr <- function(pid) {
   }))
   colnames(diag) <- c("hdia", paste0("diag", 1:6))
   
-  data.frame(pid= pid, indat = indat, visit = 1:length(indat),
+  sex <- ifelse(ntimes > 6, "m", "f")
+  age <- max(100 - 4.5 * ntimes - 5, 1)
+  
+  data.frame(pid= pid, age = age, sex = sex, 
+             indat = indat, visit = 1:length(indat),
              diag)
   
 }
@@ -46,12 +52,12 @@ generate_lakmedel <- function(pid, year) {
 
 pids <- sprintf("A%.03i", 1:400)
 saveRDS(do.call(rbind, lapply(pids, generate_lpr)), 
-  "data/lpr-ex.rds")
+  here("data", "lpr-ex.rds"))
 
 
 for(year in 2005:2010) {
   saveRDS(do.call(rbind, lapply(pids, generate_lakmedel, year = year)), 
-          sprintf("data/med-%s-ex.rds", year))
+          here("data", sprintf("med-%s-ex.rds", year)))
   
   
 }

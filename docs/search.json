@@ -4,7 +4,7 @@
     "href": "lectures/dynamic-documents.html#code-and-prose",
     "title": "Dynamic Documents",
     "section": "Code and prose",
-    "text": "Code and prose\nA “literate document” or “dynamic document” is a file that contains code and prose\nThe idea was developed by Donald Knuth in the 1980s; his motivation was to use it for software development, but allowing programmers to “concentrate … on explaining to humans what we want the computer to do”.\nWhen the document is rendered the code also gets run, from top to bottom in the order it appears in the document, and the output inserted dynamically into the output document"
+    "text": "Code and prose\nA “literate document” or “dynamic document” is a file that contains code and prose\nThe idea was developed by Donald Knuth in the 1980s; his motivation was to use it for software development, but allowing programmers to “concentrate … on explaining to humans what we want the computer to do”.\nWhen the document is rendered the code also gets run, from top to bottom in the order it appears in the document, and the results inserted dynamically into the output document"
   },
   {
     "objectID": "lectures/dynamic-documents.html#how-does-it-work",
@@ -25,7 +25,7 @@
     "href": "lectures/dynamic-documents.html#code-chunks",
     "title": "Dynamic Documents",
     "section": "Code chunks",
-    "text": "Code chunks\nLook like this, and the output is below\n\n```{r}\nrnorm(1)\n```\n\n[1] 1.335214\n\n\nYou can also have code inline:\n\nFor example this `r rnorm(1)` will show up inline\n\nwhich will put the output -1.1449009 without showing the code."
+    "text": "Code chunks\nLook like this, and the output is below\n\n```{r}\nrnorm(1)\n```\n\n[1] -1.953327\n\n\nYou can also have code inline:\n\nFor example this `r rnorm(1)` will show up inline\n\nwhich will put the output 0.9064626 without showing the code."
   },
   {
     "objectID": "lectures/dynamic-documents.html#rendering",
@@ -33,6 +33,13 @@
     "title": "Dynamic Documents",
     "section": "Rendering",
     "text": "Rendering\n\nThe code chunks will be run sequentially in the same, fresh R session (remember when I said restart R frequently when developing)\nThe code and output will be inserted into an intermediate document, as directed by the code chunk options\nThat document is then processed by pandoc which turns it into a format designed for human readability, as directed by the document yaml header\n\nhtml web pages\npdf documents (requires Latex)\nword documents\nhtml presentations (like this one)\n…"
+  },
+  {
+    "objectID": "lectures/dynamic-documents.html#presentations",
+    "href": "lectures/dynamic-documents.html#presentations",
+    "title": "Dynamic Documents",
+    "section": "Presentations",
+    "text": "Presentations\nI like to use format: revealjs\nA new slide starts with a level-1 (#) or -2 (##) heading, followed by a title. Then you can include anything, lists, code, output, etc:\n\n## This is a slide title\n\nHere is the _slide content_ \n\n\n## This starts a new slide\n\n- More \n- ... content\n\n# This is a new section"
   },
   {
     "objectID": "lectures/dynamic-documents.html#getting-output-to-look-nice",
@@ -242,7 +249,7 @@
     "href": "lectures/tidy-data.html#real-data",
     "title": "Tidy data",
     "section": "Real data",
-    "text": "Real data\nAre often much more complex, and can be messier. Here is one example we will use in the lesson:\n\nlibrary(here)\nreadRDS(here(\"data\", \"lpr-ex.rds\")) |> head(12)\n\n    pid      indat visit hdia diag1 diag2 diag3 diag4 diag5 diag6\n1  A001 2005-03-17     1 B452  A630  F192  <NA>  <NA>  <NA>  <NA>\n2  A001 2009-06-29     2 B382  A022  J500  <NA>  <NA>  <NA>  <NA>\n3  A001 2011-12-17     3 I819  H570  B630  <NA>  <NA>  <NA>  <NA>\n4  A001 2012-01-16     4 B190  E759  H592  J961  F459  <NA>  <NA>\n5  A002 2005-09-26     1 E550  C342  <NA>  <NA>  <NA>  <NA>  <NA>\n6  A002 2006-02-05     2 J789  H151  K299  J979  J910  <NA>  <NA>\n7  A002 2006-05-15     3 K872  I819  F002  F750  I670  E171  <NA>\n8  A002 2009-01-29     4 E379  F730  F539  C030  B469  <NA>  <NA>\n9  A002 2009-02-11     5 D481  E862  A502  H989  J460  A270  <NA>\n10 A002 2010-09-08     6 F119  J699  I759  E249  I622  K121  <NA>\n11 A002 2014-06-28     7 J942  A042  F849  K169  A542  <NA>  <NA>\n12 A003 2010-02-08     1 E669  G231  B950  E290  <NA>  <NA>  <NA>"
+    "text": "Real data\nAre often much more complex, and can be messier. Here is one example we will use in the lesson:\n\nlibrary(here)\nreadRDS(here(\"data\", \"lpr-ex.rds\")) |> head(12)\n\n    pid  age sex      indat visit hdia diag1 diag2 diag3 diag4 diag5 diag6\n1  A001 72.5   f 2010-01-27     1 H560  B632  H180  J050  <NA>  <NA>  <NA>\n2  A001 72.5   f 2010-06-26     2 C871  D422  K820  A602  <NA>  <NA>  <NA>\n3  A001 72.5   f 2010-07-20     3 C040  B710  <NA>  <NA>  <NA>  <NA>  <NA>\n4  A001 72.5   f 2011-03-06     4 F412  F381  F632  E832  <NA>  <NA>  <NA>\n5  A001 72.5   f 2011-12-23     5 F622  J720  <NA>  <NA>  <NA>  <NA>  <NA>\n6  A002 81.5   f 2005-09-02     1 B481  K512  F750  K059  <NA>  <NA>  <NA>\n7  A002 81.5   f 2008-05-05     2 K959  G959  E252  <NA>  <NA>  <NA>  <NA>\n8  A002 81.5   f 2012-07-05     3 G902  D939  K329  G402  <NA>  <NA>  <NA>\n9  A003 54.5   m 2006-07-30     1 E841  A062  <NA>  <NA>  <NA>  <NA>  <NA>\n10 A003 54.5   m 2007-04-09     2 E071  J602  J490  J839  <NA>  <NA>  <NA>\n11 A003 54.5   m 2008-03-14     3 H189  B752  B190  C751  I610  <NA>  <NA>\n12 A003 54.5   m 2010-08-24     4 B090  I992  D021  <NA>  <NA>  <NA>  <NA>"
   },
   {
     "objectID": "lectures/tidy-data.html#practical",
@@ -256,7 +263,7 @@
     "href": "lectures/functions.html#a-function-and-its-components",
     "title": "Functions",
     "section": "A function and its components",
-    "text": "A function and its components\nAlmost everything you do in R involves functions. You call a function by typing its name with its arguments (inputs) inside the parentheses:\n\nsample(x = 1:5, size = 2)\n\n[1] 2 1\n\n\nThe function takes the arguments you provide, does something, and then returns an object. To see what a function does, you can type its name without parentheses to see the source:\n\nsample\n\nfunction (x, size, replace = FALSE, prob = NULL) \n{\n    if (length(x) == 1L && is.numeric(x) && is.finite(x) && x >= \n        1) {\n        if (missing(size)) \n            size <- x\n        sample.int(x, size, replace, prob)\n    }\n    else {\n        if (missing(size)) \n            size <- length(x)\n        x[sample.int(length(x), size, replace, prob)]\n    }\n}\n<bytecode: 0x55ffe75e7db8>\n<environment: namespace:base>\n\n\nThe source shows you the arguments, their default values, and the expression defining the function. You can also look at the help file for the documentation:\n\nhelp(\"sample\")\n# or\n?sample"
+    "text": "A function and its components\nAlmost everything you do in R involves functions. You call a function by typing its name with its arguments (inputs) inside the parentheses:\n\nsample(x = 1:5, size = 2)\n\n[1] 1 5\n\n\nThe function takes the arguments you provide, does something, and then returns an object. To see what a function does, you can type its name without parentheses to see the source:\n\nsample\n\nfunction (x, size, replace = FALSE, prob = NULL) \n{\n    if (length(x) == 1L && is.numeric(x) && is.finite(x) && x >= \n        1) {\n        if (missing(size)) \n            size <- x\n        sample.int(x, size, replace, prob)\n    }\n    else {\n        if (missing(size)) \n            size <- length(x)\n        x[sample.int(length(x), size, replace, prob)]\n    }\n}\n<bytecode: 0x55ae66cb4db8>\n<environment: namespace:base>\n\n\nThe source shows you the arguments, their default values, and the expression defining the function. You can also look at the help file for the documentation:\n\nhelp(\"sample\")\n# or\n?sample"
   },
   {
     "objectID": "lectures/functions.html#using-functions-arguments",
@@ -333,7 +340,7 @@
     "href": "lectures/functions.html#lexical-scoping-example",
     "title": "Functions",
     "section": "Lexical scoping example",
-    "text": "Lexical scoping example\nThis can be used to your advantage, e.g.,\n\nleast_squares_constructor <- function(dataY, dataX) {\n  \n  function(beta) {\n    sum((dataY - (beta[1] + beta[2] * dataX))^2, na.rm  =TRUE)\n  }\n    \n}\n\nmodel_penguin <- least_squares_constructor(penguins$flipper_length_mm, \n                                        penguins$body_mass_g)\nmodel_penguin\n\nfunction(beta) {\n    sum((dataY - (beta[1] + beta[2] * dataX))^2, na.rm  =TRUE)\n  }\n<environment: 0x55ffeb19ef98>\n\nls(environment(model_penguin))\n\n[1] \"dataX\" \"dataY\"\n\noptim(par = c(0,0), fn = model_penguin)\n\n$par\n[1] 136.74979325   0.01527274\n\n$value\n[1] 16250.32\n\n$counts\nfunction gradient \n     113       NA \n\n$convergence\n[1] 0\n\n$message\nNULL"
+    "text": "Lexical scoping example\nThis can be used to your advantage, e.g.,\n\nleast_squares_constructor <- function(dataY, dataX) {\n  \n  function(beta) {\n    sum((dataY - (beta[1] + beta[2] * dataX))^2, na.rm  =TRUE)\n  }\n    \n}\n\nmodel_penguin <- least_squares_constructor(penguins$flipper_length_mm, \n                                        penguins$body_mass_g)\nmodel_penguin\n\nfunction(beta) {\n    sum((dataY - (beta[1] + beta[2] * dataX))^2, na.rm  =TRUE)\n  }\n<environment: 0x55ae6a86bf98>\n\nls(environment(model_penguin))\n\n[1] \"dataX\" \"dataY\"\n\noptim(par = c(0,0), fn = model_penguin)\n\n$par\n[1] 136.74979325   0.01527274\n\n$value\n[1] 16250.32\n\n$counts\nfunction gradient \n     113       NA \n\n$convergence\n[1] 0\n\n$message\nNULL"
   },
   {
     "objectID": "lectures/functions.html#lazy-evaluation-example",
@@ -361,7 +368,7 @@
     "href": "lectures/functions.html#generic-methodsfunctions",
     "title": "Functions",
     "section": "Generic methods/functions",
-    "text": "Generic methods/functions\nLook at the function print\n\nprint\n\nfunction (x, ...) \nUseMethod(\"print\")\n<bytecode: 0x55ffe76abdf8>\n<environment: namespace:base>\n\n\nIt is a generic function. UseMethod says depending on the class of argument object, R will call a suitable method (a function) that does something designed for whatever object is.\nYou can find all the special methods by running methods(\"print\") (try it now).\nThe class of the object is a simple attribute and the method is defined by appending the class name after the function name separated by a dot. This is called the S3 class system:\n\nx <- 1:4\nclass(x)\n\n[1] \"integer\"\n\nclass(x) <- \"myclass\"\n\ninherits(x, \"myclass\")\n\n[1] TRUE\n\nprint.myclass <- function(x, ...) {\n  \n  cat(x, sep = \"\\n\")\n  \n}\n\nx\n\n1\n2\n3\n4"
+    "text": "Generic methods/functions\nLook at the function print\n\nprint\n\nfunction (x, ...) \nUseMethod(\"print\")\n<bytecode: 0x55ae66d78df8>\n<environment: namespace:base>\n\n\nIt is a generic function. UseMethod says depending on the class of argument object, R will call a suitable method (a function) that does something designed for whatever object is.\nYou can find all the special methods by running methods(\"print\") (try it now).\nThe class of the object is a simple attribute and the method is defined by appending the class name after the function name separated by a dot. This is called the S3 class system:\n\nx <- 1:4\nclass(x)\n\n[1] \"integer\"\n\nclass(x) <- \"myclass\"\n\ninherits(x, \"myclass\")\n\n[1] TRUE\n\nprint.myclass <- function(x, ...) {\n  \n  cat(x, sep = \"\\n\")\n  \n}\n\nx\n\n1\n2\n3\n4"
   },
   {
     "objectID": "lectures/functions.html#summary",
@@ -382,7 +389,7 @@
     "href": "lectures/functions.html#get-and-assign",
     "title": "Functions",
     "section": "get and assign",
-    "text": "get and assign\nRecall that we can retrieve a variable from a data frame by using a character string, e.g., penguins[[\"species\"]].\nWe can use a character string to get or assign any other object using these functions. For example, this returns the function called mean\n\nget(\"mean\")\n\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x55ffe8b338f0>\n<environment: namespace:base>\n\n\nwhich we can use like a function\n\nget(\"mean\")(penguins$body_mass_g, na.rm = TRUE)\n\n[1] 4201.754\n\n\nLikewise, an object can be created with assign\n\nassign(\"mean.body.mass\", mean(penguins$body_mass_g, na.rm = TRUE))\nmean.body.mass\n\n[1] 4201.754"
+    "text": "get and assign\nRecall that we can retrieve a variable from a data frame by using a character string, e.g., penguins[[\"species\"]].\nWe can use a character string to get or assign any other object using these functions. For example, this returns the function called mean\n\nget(\"mean\")\n\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x55ae682008f0>\n<environment: namespace:base>\n\n\nwhich we can use like a function\n\nget(\"mean\")(penguins$body_mass_g, na.rm = TRUE)\n\n[1] 4201.754\n\n\nLikewise, an object can be created with assign\n\nassign(\"mean.body.mass\", mean(penguins$body_mass_g, na.rm = TRUE))\nmean.body.mass\n\n[1] 4201.754"
   },
   {
     "objectID": "lectures/functions.html#uses-of-get-and-assign",
@@ -445,21 +452,21 @@
     "href": "lectures/data-structures.html#lists",
     "title": "Data structures in R",
     "section": "Lists",
-    "text": "Lists\nA list is a collection of things not required to be the same type. An element of a list can be any R object. Can also be named or not.\n\nlist(1:4, letters[1:4], mean)\n\n[[1]]\n[1] 1 2 3 4\n\n[[2]]\n[1] \"a\" \"b\" \"c\" \"d\"\n\n[[3]]\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x557f9ad7d8f0>\n<environment: namespace:base>\n\nlist(numbers = 1:4, \n     letters = letters[1:4], \n     mean = mean,\n     list = list(\"a\", 1, TRUE))\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x557f9ad7d8f0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n## an empty list\nlist()\n\nlist()\n\n## a list of 3 placeholders\nvector(mode = \"list\", length = 3)\n\n[[1]]\nNULL\n\n[[2]]\nNULL\n\n[[3]]\nNULL"
+    "text": "Lists\nA list is a collection of things not required to be the same type. An element of a list can be any R object. Can also be named or not.\n\nlist(1:4, letters[1:4], mean)\n\n[[1]]\n[1] 1 2 3 4\n\n[[2]]\n[1] \"a\" \"b\" \"c\" \"d\"\n\n[[3]]\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x55742a58f8f0>\n<environment: namespace:base>\n\nlist(numbers = 1:4, \n     letters = letters[1:4], \n     mean = mean,\n     list = list(\"a\", 1, TRUE))\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x55742a58f8f0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n## an empty list\nlist()\n\nlist()\n\n## a list of 3 placeholders\nvector(mode = \"list\", length = 3)\n\n[[1]]\nNULL\n\n[[2]]\nNULL\n\n[[3]]\nNULL"
   },
   {
     "objectID": "lectures/data-structures.html#indexing-lists",
     "href": "lectures/data-structures.html#indexing-lists",
     "title": "Data structures in R",
     "section": "Indexing lists",
-    "text": "Indexing lists\n\nxl <- list(numbers = 1:4, \n     letters = letters[1:4], \n     mean = mean,\n     list = list(\"a\", 1, TRUE))\n\nA list can be indexed with square brackets [] or double-square brackets [[]], but there is a difference!\n\nxl[[1]] ## returns the first element of the list (vector in this case)\n\n[1] 1 2 3 4\n\nxl[1] ## returns a sublist\n\n$numbers\n[1] 1 2 3 4\n\nxl[-1]\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x557f9ad7d8f0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\nxl[1:2] ## works with vectors\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\nxl[[1:2]] ## works but does something different\n\n[1] 2\n\nxl$numbers\n\n[1] 1 2 3 4\n\nxl[[\"numbers\"]]\n\n[1] 1 2 3 4"
+    "text": "Indexing lists\n\nxl <- list(numbers = 1:4, \n     letters = letters[1:4], \n     mean = mean,\n     list = list(\"a\", 1, TRUE))\n\nA list can be indexed with square brackets [] or double-square brackets [[]], but there is a difference!\n\nxl[[1]] ## returns the first element of the list (vector in this case)\n\n[1] 1 2 3 4\n\nxl[1] ## returns a sublist\n\n$numbers\n[1] 1 2 3 4\n\nxl[-1]\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x55742a58f8f0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\nxl[1:2] ## works with vectors\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\nxl[[1:2]] ## works but does something different\n\n[1] 2\n\nxl$numbers\n\n[1] 1 2 3 4\n\nxl[[\"numbers\"]]\n\n[1] 1 2 3 4"
   },
   {
     "objectID": "lectures/data-structures.html#concatenating-lists",
     "href": "lectures/data-structures.html#concatenating-lists",
     "title": "Data structures in R",
     "section": "Concatenating lists",
-    "text": "Concatenating lists\nNew elements can be added by name or number\n\nxl$LETTERS <- LETTERS[1:4]\nxl[[length(xl) + 1]] <- LETTERS[1:5]\nxl\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x557f9ad7d8f0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n\n$LETTERS\n[1] \"A\" \"B\" \"C\" \"D\"\n\n[[6]]\n[1] \"A\" \"B\" \"C\" \"D\" \"E\"\n\n\nThe c function concatenates new elements to the list\n\nc(xl, AB = list(LETTERS[1:2]))\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x557f9ad7d8f0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n\n$LETTERS\n[1] \"A\" \"B\" \"C\" \"D\"\n\n[[6]]\n[1] \"A\" \"B\" \"C\" \"D\" \"E\"\n\n$AB\n[1] \"A\" \"B\"\n\nc(xl, AB = LETTERS[1:2]) # careful!\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x557f9ad7d8f0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n\n$LETTERS\n[1] \"A\" \"B\" \"C\" \"D\"\n\n[[6]]\n[1] \"A\" \"B\" \"C\" \"D\" \"E\"\n\n$AB1\n[1] \"A\"\n\n$AB2\n[1] \"B\""
+    "text": "Concatenating lists\nNew elements can be added by name or number\n\nxl$LETTERS <- LETTERS[1:4]\nxl[[length(xl) + 1]] <- LETTERS[1:5]\nxl\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x55742a58f8f0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n\n$LETTERS\n[1] \"A\" \"B\" \"C\" \"D\"\n\n[[6]]\n[1] \"A\" \"B\" \"C\" \"D\" \"E\"\n\n\nThe c function concatenates new elements to the list\n\nc(xl, AB = list(LETTERS[1:2]))\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x55742a58f8f0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n\n$LETTERS\n[1] \"A\" \"B\" \"C\" \"D\"\n\n[[6]]\n[1] \"A\" \"B\" \"C\" \"D\" \"E\"\n\n$AB\n[1] \"A\" \"B\"\n\nc(xl, AB = LETTERS[1:2]) # careful!\n\n$numbers\n[1] 1 2 3 4\n\n$letters\n[1] \"a\" \"b\" \"c\" \"d\"\n\n$mean\nfunction (x, ...) \nUseMethod(\"mean\")\n<bytecode: 0x55742a58f8f0>\n<environment: namespace:base>\n\n$list\n$list[[1]]\n[1] \"a\"\n\n$list[[2]]\n[1] 1\n\n$list[[3]]\n[1] TRUE\n\n\n$LETTERS\n[1] \"A\" \"B\" \"C\" \"D\"\n\n[[6]]\n[1] \"A\" \"B\" \"C\" \"D\" \"E\"\n\n$AB1\n[1] \"A\"\n\n$AB2\n[1] \"B\""
   },
   {
     "objectID": "lectures/data-structures.html#matrices",
@@ -480,7 +487,7 @@
     "href": "lectures/data-structures.html#matrix-arithmetic",
     "title": "Data structures in R",
     "section": "Matrix arithmetic",
-    "text": "Matrix arithmetic\nMatrix transpose, multiplication, inversion, eigenvalues, etc, are all available in R\n\nS1 <- matrix(runif(9), nrow = 3, ncol = 3)\nS2 <- matrix(runif(9), nrow = 3, ncol = 3)\nx <- c(1, 1.5, 3)\n\nS1 %*% S2\n\n         [,1]     [,2]     [,3]\n[1,] 1.620953 1.725515 1.418411\n[2,] 1.783931 1.903793 1.575605\n[3,] 1.162668 1.096265 1.076481\n\nt(S1) %*% S2\n\n          [,1]     [,2]      [,3]\n[1,] 1.7962201 1.936036 1.5401036\n[2,] 0.9248062 1.171074 0.7697316\n[3,] 2.0007389 1.968125 1.7526846\n\nx %*% solve(S1) %*% x\n\n         [,1]\n[1,] 9.385049"
+    "text": "Matrix arithmetic\nMatrix transpose, multiplication, inversion, eigenvalues, etc, are all available in R\n\nS1 <- matrix(runif(9), nrow = 3, ncol = 3)\nS2 <- matrix(runif(9), nrow = 3, ncol = 3)\nx <- c(1, 1.5, 3)\n\nS1 %*% S2\n\n         [,1]      [,2]     [,3]\n[1,] 1.149468 0.8068406 1.269547\n[2,] 1.223563 1.0906187 1.501793\n[3,] 1.037616 0.7424404 1.144584\n\nt(S1) %*% S2\n\n          [,1]      [,2]     [,3]\n[1,] 1.5797731 1.0291247 1.638857\n[2,] 1.3705906 1.1260867 1.533441\n[3,] 0.5446178 0.4336422 0.595063\n\nx %*% solve(S1) %*% x\n\n         [,1]\n[1,] 114.9421"
   },
   {
     "objectID": "lectures/data-structures.html#arrays",
@@ -536,7 +543,7 @@
     "href": "lectures/data-structures.html#s4-objects",
     "title": "Data structures in R",
     "section": "S4 objects",
-    "text": "S4 objects\nSome packages you may use (e.g., from Bioconductor) return S4 objects. These are kind of like lists, but to access objects (called ‘slots’) inside, use @ (the at symbol).\nFor example\n\n## A simple class with two slots\ntrack <- setClass(\"track\", slots = c(x=\"numeric\", y=\"numeric\"))\n## an object from the class\nts1 <- track(x = 1:10, y = 1:10 + rnorm(10))\nts1\n\nAn object of class \"track\"\nSlot \"x\":\n [1]  1  2  3  4  5  6  7  8  9 10\n\nSlot \"y\":\n [1] 0.1079623 1.8140647 4.1222643 2.4970740 3.3037573 5.4399455 6.4771524\n [8] 8.7272150 7.3109384 7.7713877\n\nts1@x\n\n [1]  1  2  3  4  5  6  7  8  9 10"
+    "text": "S4 objects\nSome packages you may use (e.g., from Bioconductor) return S4 objects. These are kind of like lists, but to access objects (called ‘slots’) inside, use @ (the at symbol).\nFor example\n\n## A simple class with two slots\ntrack <- setClass(\"track\", slots = c(x=\"numeric\", y=\"numeric\"))\n## an object from the class\nts1 <- track(x = 1:10, y = 1:10 + rnorm(10))\nts1\n\nAn object of class \"track\"\nSlot \"x\":\n [1]  1  2  3  4  5  6  7  8  9 10\n\nSlot \"y\":\n [1] -1.2711240  0.1424564  1.0900081  3.5968796  3.6202094  5.1491203\n [7]  9.2334821  9.0382491 10.2457105  9.7174174\n\nts1@x\n\n [1]  1  2  3  4  5  6  7  8  9 10"
   },
   {
     "objectID": "lectures/data-structures.html#tibbles",
@@ -606,14 +613,14 @@
     "href": "lectures/conclusion.html#where-to-go-from-here",
     "title": "Summary and conclusion",
     "section": "Where to go from here?",
-    "text": "Where to go from here?\n\nResearch project management and reproducibility\n\ntargets package\nproject templates\ngit and/or github\n\nR package development\n\nGreat way to share code, data, and documentation\nPackages for personal and internal use\n\nHigh performance computing\n\nParallelization, using computing servers\nUsing C/C++ in R (or other languages)\n\nVisualization and interactivity\n\nshiny package\nDynamic documents and graphics"
+    "text": "Where to go from here?\n\nResearch project management and reproducibility\n\ntargets package\nproject templates\ngit and/or github\n\nR package development\n\nGreat way to share code, data, and documentation\nPackages for personal and internal use\n\nHigh performance computing\n\nParallelization, using computing servers\nUsing C/C++ in R (or other languages)\n\nVisualization and interactivity\n\nshiny package\nDynamic documents and graphics\nggplot2 custom Geoms and Stats"
   },
   {
     "objectID": "lectures/conclusion.html#how-to-get-help",
     "href": "lectures/conclusion.html#how-to-get-help",
     "title": "Summary and conclusion",
     "section": "How to get help?",
-    "text": "How to get help?\n\nUse the linked resources to get some background\nCRAN task views, help files, vignettes\nGoogle “how do I do x in R”, or the exact error message\nStackoverflow, Rstudio forums, R mailing lists"
+    "text": "How to get help?\n\nKeep learning on your own, remember that things change\nUse the linked resources to get some background\nCRAN task views, help files, vignettes\nGoogle “how do I do x in R”, or the exact error message\nStackoverflow, Rstudio forums, R mailing lists"
   },
   {
     "objectID": "lectures/conclusion.html#course-feedback",
@@ -711,7 +718,7 @@
     "href": "lectures/flow-and-loops.html#note-on-speed",
     "title": "Flow control and loops",
     "section": "Note on speed",
-    "text": "Note on speed\nYou may see people warn you not to use for loops in R, “because they are slow”.\nThat is partially true, but speed is not the only thing, for loops can be much clearer and more understandable than the alternatives.\nBut, the slow thing in R is changing the size of an object, so you can avoid that by creating a vector/matrix/array of the correct size to hold the results of the loop:\n\nsystem.time({\nA1 <- NULL\nfor(i in 1:100000) {\n  A1 <- c(A1, rnorm(1))\n}\n})\n\n   user  system elapsed \n 12.629   0.096  12.756 \n\nsystem.time({\nA2 <- rep(NA, 100000)\nfor(i in 1:length(A2)) {\n  A2[i] <- rnorm(1)\n}\n})\n\n   user  system elapsed \n  0.162   0.004   0.166"
+    "text": "Note on speed\nYou may see people warn you not to use for loops in R, “because they are slow”.\nThat is partially true, but speed is not the only thing, for loops can be much clearer and more understandable than the alternatives.\nBut, the slow thing in R is changing the size of an object, so you can avoid that by creating a vector/matrix/array of the correct size to hold the results of the loop:\n\nsystem.time({\nA1 <- NULL\nfor(i in 1:100000) {\n  A1 <- c(A1, rnorm(1))\n}\n})\n\n   user  system elapsed \n 12.424   0.103  12.551 \n\nsystem.time({\nA2 <- rep(NA, 100000)\nfor(i in 1:length(A2)) {\n  A2[i] <- rnorm(1)\n}\n})\n\n   user  system elapsed \n  0.163   0.004   0.168"
   },
   {
     "objectID": "lectures/flow-and-loops.html#practical",
@@ -987,11 +994,11 @@
     "text": "Data"
   },
   {
-    "objectID": "resources.html#papers-and-packages-mentioned-in-lectures",
-    "href": "resources.html#papers-and-packages-mentioned-in-lectures",
+    "objectID": "resources.html#references-mentioned-in-lectures",
+    "href": "resources.html#references-mentioned-in-lectures",
     "title": "Resources and tools about R",
-    "section": "Papers and packages mentioned in lectures",
-    "text": "Papers and packages mentioned in lectures\n\nTidy data, Hadley Wickham, 2014, JSS"
+    "section": "References mentioned in lectures",
+    "text": "References mentioned in lectures\n\nTidy Data, Hadley Wickham, 2014, JSS\nLiterate Programming, Donald Knuth, 1992"
   },
   {
     "objectID": "resources.html#cheatsheets",
@@ -1012,7 +1019,21 @@
     "href": "exercises/dynamic-documents.html",
     "title": "Dynamic documents – exercises",
     "section": "",
-    "text": "Learning objectives\nIn this lesson you will\n\nLearn how to set up a quarto or rmarkdown document\nPractice managing code chunks to get output to look the way you want"
+    "text": "In this lesson you will\n\nLearn how to set up a quarto or rmarkdown document\nPractice managing code chunks to get output to look the way you want\nPractice and get help with everything you learned in the course"
+  },
+  {
+    "objectID": "exercises/dynamic-documents.html#testing-out-quarto",
+    "href": "exercises/dynamic-documents.html#testing-out-quarto",
+    "title": "Dynamic documents – exercises",
+    "section": "Testing out Quarto",
+    "text": "Testing out Quarto\n\nIf you can, download and install Quarto from here: https://quarto.org/docs/get-started/\nIn Rstudio, click on “New” and then “Quarto document”. Give it a name, and choose an output format (the format that you will view the rendered document in).\nAdd a title, insert a code chunk, and write some prose. Example: print out the first six rows of the palmerpenguins dataset.\nClick on “Render” and see what happens\nExperiment with changing the yaml header options, click on Render again and see what changes. Example, if you are using the html output format, try changing the theme.\nExperiment with changing one of the code chunks in the document, Re-render and see what changes."
+  },
+  {
+    "objectID": "exercises/dynamic-documents.html#a-whole-project",
+    "href": "exercises/dynamic-documents.html#a-whole-project",
+    "title": "Dynamic documents – exercises",
+    "section": "A whole project",
+    "text": "A whole project\nIn this lesson we will work through an entire project using the register data linked in the data directory, where you can download all of the linked files.\nThe objective of this project is to describe the distribution of the number of days between hospitalizations and drug dispensations by age and sex. Your challenge is to do the following:\n\nSet up a project directory with a sensible folder structure, a readme file, and a license.\nWrite one R script that wrangles the data, reading in and merging the datasets.\n\n\n\nHints\n\n\nThe drug register data are stored in separate files by year. You will need to iterate over these files somehow, maybe using a loop or one of the apply functions.\nThe file names can be created programmatically with paste0(\"med-\", 2005:2010, \"-ex.rds\")\nOnce they are all read in as objects, you will want to append them by row, using e.g., rbind\nJoin the hospitalization table to the drug table, by patient id. How to deal with the dates? We want only the most recent prescription since the last hospitalization. This is a rolling join\n\n\n\nCreate the new variables that you need to, and save the results to an intermediate analysis file.\nCreate a dynamic document that reads in the analysis file, and does some simple analyses. Present the results in a readable way using knitr::kable and using figures. Include prose describing what you are doing and why.\nIf you have time, make a presentation in addition to a regular document."
   },
   {
     "objectID": "exercises/projects.html",
@@ -1124,7 +1145,7 @@
     "href": "exercises/tidy-and-reshape.html#tidying-our-mean-sd-function",
     "title": "Tidying and reshaping – exercises",
     "section": "Tidying our mean sd function",
-    "text": "Tidying our mean sd function\nLoad the broom package and look at the source code for tidy.lm\n\nbroom:::tidy.lm\n\nfunction (x, conf.int = FALSE, conf.level = 0.95, exponentiate = FALSE, \n    ...) \n{\n    warn_on_subclass(x, \"tidy\")\n    ret <- as_tibble(summary(x)$coefficients, rownames = \"term\")\n    colnames(ret) <- c(\"term\", \"estimate\", \"std.error\", \"statistic\", \n        \"p.value\")\n    coefs <- tibble::enframe(stats::coef(x), name = \"term\", value = \"estimate\")\n    ret <- left_join(coefs, ret, by = c(\"term\", \"estimate\"))\n    if (conf.int) {\n        ci <- broom_confint_terms(x, level = conf.level)\n        ret <- dplyr::left_join(ret, ci, by = \"term\")\n    }\n    if (exponentiate) {\n        ret <- exponentiate(ret)\n    }\n    ret\n}\n<bytecode: 0x557822c633a8>\n<environment: namespace:broom>\n\n\n\nWrite a tidy method for our mean_sd function and try it out on the penguins dataset.\nApply the mean_sd function to the penguins body mass in grams by species and sex. Organize the results into a table suitable for publication, where it is easy to compare the two sexes."
+    "text": "Tidying our mean sd function\nLoad the broom package and look at the source code for tidy.lm\n\nbroom:::tidy.lm\n\nfunction (x, conf.int = FALSE, conf.level = 0.95, exponentiate = FALSE, \n    ...) \n{\n    warn_on_subclass(x, \"tidy\")\n    ret <- as_tibble(summary(x)$coefficients, rownames = \"term\")\n    colnames(ret) <- c(\"term\", \"estimate\", \"std.error\", \"statistic\", \n        \"p.value\")\n    coefs <- tibble::enframe(stats::coef(x), name = \"term\", value = \"estimate\")\n    ret <- left_join(coefs, ret, by = c(\"term\", \"estimate\"))\n    if (conf.int) {\n        ci <- broom_confint_terms(x, level = conf.level)\n        ret <- dplyr::left_join(ret, ci, by = \"term\")\n    }\n    if (exponentiate) {\n        ret <- exponentiate(ret)\n    }\n    ret\n}\n<bytecode: 0x560ffa6413a8>\n<environment: namespace:broom>\n\n\n\nWrite a tidy method for our mean_sd function and try it out on the penguins dataset.\nApply the mean_sd function to the penguins body mass in grams by species and sex. Organize the results into a table suitable for publication, where it is easy to compare the two sexes."
   },
   {
     "objectID": "exercises/tidy-and-reshape.html#tidying-the-national-patient-register-dataset",
@@ -1194,7 +1215,7 @@
     "href": "exercises/dates-and-strings.html#regular-expressions",
     "title": "Dates and character strings – exercises",
     "section": "Regular expressions",
-    "text": "Regular expressions\nThe “atc” variable contains the ATC code for the drug that was dispensed. This is a standardized classification system for drugs, see https://www.whocc.no/atc_ddd_index/.\n\nCount how many dispensations there were for drugs in the class “J01”. Use the grepl function with a pattern.\nAre there any “invalid” ATC codes in the dataset?"
+    "text": "Regular expressions\nThe “atc” variable contains the ATC code for the drug that was dispensed. This is a standardized classification system for drugs, see https://www.whocc.no/atc/structure_and_principles/.\n\nCount how many dispensations there were for drugs in the class “J01”. Use the grepl function with a pattern.\nAre there any “invalid” ATC codes in the dataset?"
   },
   {
     "objectID": "index.html",
@@ -1285,6 +1306,6 @@
     "href": "data/index.html",
     "title": "Data",
     "section": "",
-    "text": "All datasets are rds files and can be read into R with readRDS\n\nNational patient register\nPrescribed drug register (organized by year)\n\nmed-2005-ex.rds\nmed-2006-ex.rds\nmed-2007-ex.rds\nmed-2008-ex.rds\nmed-2009-ex.rds\nmed-2010-ex.rds"
+    "text": "All datasets are rds files and can be read into R with readRDS\nA zip archive will all of these files is here: regdata.zip\n\nNational patient register\nPrescribed drug register (organized by year)\n\nmed-2005-ex.rds\nmed-2006-ex.rds\nmed-2007-ex.rds\nmed-2008-ex.rds\nmed-2009-ex.rds\nmed-2010-ex.rds"
   }
 ]

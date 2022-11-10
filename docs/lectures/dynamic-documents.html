@@ -410,7 +410,7 @@ Michael C Sachs
 <h2>Code and prose</h2>
 <p>A “literate document” or “dynamic document” is a file that contains <strong>code</strong> and <strong>prose</strong></p>
 <p>The idea was developed by Donald Knuth in the 1980s; his motivation was to use it for software development, but allowing programmers to “concentrate … on explaining to humans what we want the computer to do”.</p>
-<p>When the document is <strong>rendered</strong> the code also gets run, from top to bottom in the order it appears in the document, and the output inserted dynamically into the output document</p>
+<p>When the document is <strong>rendered</strong> the code also gets run, from top to bottom in the order it appears in the document, and the results inserted dynamically into the output document</p>
 </section>
 <section id="how-does-it-work" class="slide level2">
 <h2>How does it work?</h2>
@@ -451,14 +451,14 @@ Michael C Sachs
 <span id="cb2-2"><a href="#cb2-2"></a><span class="fu">rnorm</span>(<span class="dv">1</span>)</span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.335214</code></pre>
+<pre><code>[1] -1.953327</code></pre>
 </div>
 </div>
 <p>You can also have code <em>inline</em>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>For example this <span class="st">`</span><span class="at">r rnorm(1)</span><span class="st">`</span> will show up inline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>which will put the output -1.1449009 without showing the code.</p>
+<p>which will put the output 0.9064626 without showing the code.</p>
 </section>
 <section id="rendering" class="slide level2">
 <h2>Rendering</h2>
@@ -474,6 +474,24 @@ Michael C Sachs
 <li>…</li>
 </ul></li>
 </ul>
+</section>
+<section id="presentations" class="slide level2">
+<h2>Presentations</h2>
+<p>I like to use <code>format: revealjs</code></p>
+<p>A new slide starts with a level-1 (#) or -2 (##) heading, followed by a title. Then you can include anything, lists, code, output, etc:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="do">## This is a slide title</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a>Here is the _slide content_ </span>
+<span id="cb5-4"><a href="#cb5-4"></a></span>
+<span id="cb5-5"><a href="#cb5-5"></a></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="do">## This starts a new slide</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="sc">-</span> More </span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="sc">-</span> ... content</span>
+<span id="cb5-10"><a href="#cb5-10"></a></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co"># This is a new section</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="getting-output-to-look-nice" class="slide level2">
 <h2>Getting output to look nice</h2>
@@ -493,7 +511,7 @@ Michael C Sachs
 <h2>Table example</h2>
 <p>This function outputs the data in a markdown table, which is then interpreted and rendered nicely when the intermediate document is processed by pandoc</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(palmerpenguins<span class="sc">::</span>penguins))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(palmerpenguins<span class="sc">::</span>penguins))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table>
 <colgroup>

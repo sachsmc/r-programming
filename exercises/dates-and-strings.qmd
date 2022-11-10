@@ -33,7 +33,7 @@ med2005 <- readRDS(here("data", "med-2005-ex.rds"))
 ## Regular expressions
 
 
-The "atc" variable contains the ATC code for the drug that was dispensed. This is a standardized classification system for drugs, see [https://www.whocc.no/atc_ddd_index/](https://www.whocc.no/atc_ddd_index/). 
+The "atc" variable contains the ATC code for the drug that was dispensed. This is a standardized classification system for drugs, see [https://www.whocc.no/atc/structure_and_principles/](https://www.whocc.no/atc/structure_and_principles/). 
 
 1. Count how many dispensations there were for drugs in the class "J01". Use the `grepl` function with a pattern. 
 2. Are there any "invalid" ATC codes in the dataset? 

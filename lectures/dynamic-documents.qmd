@@ -17,7 +17,7 @@ A "literate document" or "dynamic document" is a file that contains __code__ and
 
 The idea was developed by Donald Knuth in the 1980s; his motivation was to use it for software development, but allowing programmers to "concentrate ... on explaining to humans what we want the computer to do". 
 
-When the document is __rendered__ the code also gets run, from top to bottom in the order it appears in the document, and the output inserted dynamically into the output document
+When the document is __rendered__ the code also gets run, from top to bottom in the order it appears in the document, and the results inserted dynamically into the output document
 
 ## How does it work? 
 
@@ -82,6 +82,30 @@ which will put the output `r rnorm(1)` without showing the code.
     + word documents
     + html presentations (like this one)
     + ...
+
+## Presentations
+
+I like to use `format: revealjs` 
+
+A new slide starts with a level-1 (#) or -2 (##) heading, followed by a title. Then you can include anything, lists, code, output, etc: 
+
+```{r}
+#| eval = FALSE
+
+## This is a slide title
+
+Here is the _slide content_ 
+
+
+## This starts a new slide
+
+- More 
+- ... content
+
+# This is a new section
+
+```
+
 
 
 ## Getting output to look nice

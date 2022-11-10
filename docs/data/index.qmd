@@ -4,6 +4,9 @@ title: "Data"
 
 All datasets are rds files and can be read into R with `readRDS`
 
+A zip archive will all of these files is here: [regdata.zip](regdata.zip)
+
+
 - [National patient register](lpr-ex.rds)
 
 - Prescribed drug register (organized by year)
