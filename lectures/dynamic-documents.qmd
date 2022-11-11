@@ -51,7 +51,15 @@ _Code_ is inserted in between start and end fences ("```"), called __chunks__. O
 ![alt text](path-to-image.png)
 
 [text](link.html)
+
+Equations:
+
+$$
+T = \frac{\overline{X} - \mu_0}{\hat{\sigma}/\sqrt{n}}
+$$
 ```
+
+
 
 ## Code chunks
 
@@ -61,6 +69,10 @@ Look like this, and the output is below
 #| echo: fenced
 rnorm(1)
 ```
+
+In quarto, chunk options are inside the fence after `#|`, e.g., `#| echo: fenced`, each on their own line
+
+In rmarkdown, chunk options are inside the brackets (this is compatible with quarto for now)
 
 
 You can also have code *inline*: 
@@ -118,6 +130,15 @@ Tools of the trade
     + `knitr` and the function `kable`, also the package `kableExtra`
     + `xtable` (designed for pdf output)
     + `gtsummary`
+    
+## Customizing rendering
+
+- Bibliographies and cross references fully supported
+- With Quarto, layout and style can be controlled with commands inside `:::` fences
+- html output: further tweaks with custom CSS
+- PDF output: Latex and related commands
+- word documents: template files? and some html is supported
+
 
 ## Table example
 

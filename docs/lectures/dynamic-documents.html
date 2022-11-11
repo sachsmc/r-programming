@@ -440,7 +440,13 @@ Michael C Sachs
 <span id="cb1-17"><a href="#cb1-17"></a></span>
 <span id="cb1-18"><a href="#cb1-18"></a><span class="sc">!</span>[alt text](path<span class="sc">-</span>to<span class="sc">-</span>image.png)</span>
 <span id="cb1-19"><a href="#cb1-19"></a></span>
-<span id="cb1-20"><a href="#cb1-20"></a>[text](link.html)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-20"><a href="#cb1-20"></a>[text](link.html)</span>
+<span id="cb1-21"><a href="#cb1-21"></a></span>
+<span id="cb1-22"><a href="#cb1-22"></a>Equations<span class="sc">:</span></span>
+<span id="cb1-23"><a href="#cb1-23"></a></span>
+<span id="cb1-24"><a href="#cb1-24"></a><span class="er">$$</span></span>
+<span id="cb1-25"><a href="#cb1-25"></a>T <span class="ot">=</span> \frac{\overline{X} <span class="sc">-</span> \mu_0}{\hat{\sigma}<span class="sc">/</span>\sqrt{n}}</span>
+<span id="cb1-26"><a href="#cb1-26"></a><span class="sc">$</span><span class="er">$</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="code-chunks" class="slide level2">
@@ -451,14 +457,16 @@ Michael C Sachs
 <span id="cb2-2"><a href="#cb2-2"></a><span class="fu">rnorm</span>(<span class="dv">1</span>)</span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -1.953327</code></pre>
+<pre><code>[1] 0.01760223</code></pre>
 </div>
 </div>
+<p>In quarto, chunk options are inside the fence after <code>#|</code>, e.g., <code>#| echo: fenced</code>, each on their own line</p>
+<p>In rmarkdown, chunk options are inside the brackets (this is compatible with quarto for now)</p>
 <p>You can also have code <em>inline</em>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>For example this <span class="st">`</span><span class="at">r rnorm(1)</span><span class="st">`</span> will show up inline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>which will put the output 0.9064626 without showing the code.</p>
+<p>which will put the output -1.0581362 without showing the code.</p>
 </section>
 <section id="rendering" class="slide level2">
 <h2>Rendering</h2>
@@ -505,6 +513,16 @@ Michael C Sachs
 <li><code>xtable</code> (designed for pdf output)</li>
 <li><code>gtsummary</code></li>
 </ul></li>
+</ul>
+</section>
+<section id="customizing-rendering" class="slide level2">
+<h2>Customizing rendering</h2>
+<ul>
+<li>Bibliographies and cross references fully supported</li>
+<li>With Quarto, layout and style can be controlled with commands inside <code>:::</code> fences</li>
+<li>html output: further tweaks with custom CSS</li>
+<li>PDF output: Latex and related commands</li>
+<li>word documents: template files? and some html is supported</li>
 </ul>
 </section>
 <section id="table-example" class="slide level2">

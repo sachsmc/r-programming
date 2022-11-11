@@ -44,6 +44,6 @@ The objective of this project is to describe the distribution of the number of d
 </details>
 
 3. Create the new variables that you need to, and save the results to an intermediate analysis file. 
-4. Create a dynamic document that reads in the analysis file, and does some simple analyses. Present the results in a readable way using `knitr::kable` and using figures. Include prose describing what you are doing and why. 
+4. Create a dynamic document that reads in the analysis file, and does some simple analyses. Present the results in a readable way using `knitr::kable`, using figures, and include inline output, e.g., with our `print.meansd` function from the [functions lesson](functions.html). Include prose describing what you are doing and why. 
 5. If you have time, make a presentation in addition to a regular document. 
 
