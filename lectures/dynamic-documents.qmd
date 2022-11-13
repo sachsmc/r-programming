@@ -169,7 +169,7 @@ knitr::kable(head(palmerpenguins::penguins))
 
 We will continue using the register data example, and try out rmarkdown or quarto.
 
-[Link to lesson](../lessons/dynamic-documents.html)
+[Link to lesson](../exercises/dynamic-documents.html)
 
 [Link home](../index.html)
 

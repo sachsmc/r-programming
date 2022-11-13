@@ -1,0 +1,218 @@
+---
+title: "Tidying and reshaping -- exercise solutions"
+author: "Michael C Sachs"
+subtitle: "Day 3, B"
+---
+
+
+## Tidying our mean sd function
+
+1. Write a tidy method for our `mean_sd` function and try it out on the penguins dataset. 
+
+```{r}
+library(palmerpenguins)
+library(broom)
+
+#Write a tidy method for our mean_sd function and try it out on the penguins dataset.
+
+mean_sd <- function(x, na.rm = TRUE) {
+  
+  xname <- deparse1(substitute(x))  # gets the name of the variable
+  
+  res <- c(mean = mean(x, na.rm = na.rm), 
+           sd = sd(x, na.rm = na.rm))
+  
+  class(res) <- "meansd"
+  attr(res, "variable") <- xname
+  attr(res, "sampsize") <- length(x)
+  
+  res
+  
+}
+
+print.meansd <- function(x, digits = 2) {
+  
+  cat(attr(x, "variable"), ": ",
+      paste0(
+        round(x["mean"], digits = digits), 
+        " (", 
+        round(x["sd"], digits = digits), 
+        ")\n"))
+  
+}
+
+tidy.meansd <- function(x) {
+  
+  data.frame(variable = attr(x, "variable"), 
+             mean = x["mean"], 
+             sd = x["sd"], 
+             sample.size = attr(x, "sampsize")
+             )
+  
+}
+
+
+mean_sd(penguins$body_mass_g)
+tidy(mean_sd(penguins$body_mass_g))
+
+```
+
+
+2. Apply the `mean_sd` function to the penguins body mass in grams by species and sex. Organize the results into a table suitable for publication, where it is easy to compare the two sexes.
+
+::: {.panel-tabset}
+
+## Base R
+
+```{r}
+
+reslist <- split(penguins$body_mass_g, list(penguins$species, penguins$sex)) |>
+  lapply(FUN = \(x) tidy(mean_sd(x))) 
+
+resdf <- cbind(do.call(rbind, reslist), 
+      do.call(rbind, names(reslist)|> strsplit(split="\\.")))
+colnames(resdf)[5:6] <- c("species", "sex")
+
+reshape(resdf[, -1], direction = "wide", idvar = "species", timevar = "sex")
+```
+
+## `data.table` 
+
+```{r}
+library(data.table)
+
+pengdt <- data.table(penguins)
+peng_summary <- pengdt[, (tidy(mean_sd(body_mass_g))), 
+                       by = list(species, sex)]
+
+dcast(peng_summary[!is.na(sex)], species + variable ~ sex, 
+      value.var = c("mean", "sd", "sample.size"))
+
+```
+
+
+## `dplyr`
+
+
+```{r}
+library(dplyr)
+library(tidyr)
+penguins |> group_by(species, sex) |>
+  summarize(tidy(mean_sd(body_mass_g))) |> 
+  filter(!is.na(sex)) |> 
+  pivot_wider(names_from = "sex", 
+              values_from = c("mean", "sd", "sample.size"))
+
+```
+
+:::
+
+## Tidying the national patient register dataset
+
+Load the LPR data example from `"https://sachsmc.github.io/r-programming/data/lpr-ex.rds"`
+
+```{r}
+library(here)
+lpr <- readRDS(here("data", "lpr-ex.rds"))
+```
+
+1. Reshape the data into wide, where the columns are the primary diagnosis (hdia) at each visit number
+2. Reshape the data into longer format, where all of the diagnoses are stored in a single variable, with another variable indicating the primary diagnosis. 
+3. Create a new variable for each participant which equals TRUE if they had any diagnosis of either D150, D152, or D159 before the date 1 January 2010.
+
+
+::: {.panel-tabset}
+## base R
+
+```{r}
+## 1. 
+lprwide <- subset(lpr, select= c(pid, age, sex, visit, hdia)) |> ## drop the other diag columns and date
+  reshape(direction = "wide", 
+        idvar = "pid", timevar = "visit", 
+        v.names = c("hdia"))
+head(lprwide)
+
+## 2. 
+lprtmp <- lpr
+colnames(lprtmp)[which(colnames(lprtmp) == "hdia")] <- "diag0"
+lprlong <- reshape(lprtmp, direction = "long", 
+        varying = grep("^diag", names(lprtmp)), 
+        sep = "", timevar = "diagnum")
+lprlong$maindiag <- lprlong$diagnum == 0
+lprlong <- subset(lprlong[order(lprlong$pid, lprlong$visit),], 
+                  !is.na(diag))
+
+
+head(lprlong)
+
+## 3. 
+
+lprlong <- split(lprlong, lprlong$pid) |> 
+  lapply(FUN = \(df) {
+    
+    chk <- any(df$diag[df$indat <= as.Date("2010-01-01")] %in% c("D150", "D152", "D159"))
+    if(length(chk) == 0) chk <- FALSE
+    df$ddiag_pre2010 <- chk
+    df
+  }) |> 
+  unsplit(lprlong$pid)
+
+summary(lprlong)
+```
+
+
+## `data.table`
+
+```{r}
+## 1.
+lprdt <- data.table(lpr)
+dcast(lprdt[, .(pid, indat, visit, hdia)], 
+      pid ~ visit, value.var = "hdia")
+
+# 2. 
+lprlong <- melt(lprdt, id.vars = c("pid", "age", "sex", "indat", "visit"), 
+                variable.name = "diagtype", value.name = "diag")
+lprlong <- lprlong[!is.na(diag)]
+lprlong[, main_diag := diagtype == "hdia"]
+
+lprlong
+setorder(lprlong, pid, indat)
+lprlong
+
+# 3. 
+
+
+lprlong <- lprlong[, ddiag_pre2010 := any(diag[indat <= as.Date("2010-01-01")] %in% 
+          c("D150", "D152", "D159")), 
+        by = .(pid)]
+
+summary(lprlong)
+lprdt[pid == "A048"]
+```
+
+
+## tidyverse
+
+```{r}
+lprtbl <- as_tibble(lpr)
+
+## 1. 
+lprtbl |> select(pid, age, sex, visit, hdia) |> 
+  pivot_wider(names_from = visit, values_from = hdia, names_prefix = "visit")
+
+## 2. 
+
+lprlong <- lprtbl |> pivot_longer(cols = hdia:diag6, values_to = "diag") |> 
+  mutate(maindiag = name == "hdia") |> 
+  filter(!is.na(diag))
+lprlong
+
+## 3. 
+lprlong <- lprlong |> group_by(pid) |> 
+  mutate(ddiag_pre2010 = any(diag[indat <= as.Date("2010-01-01")] %in% c("D150", "D152", "D159")))
+
+summary(lprlong)
+```
+:::
+
+

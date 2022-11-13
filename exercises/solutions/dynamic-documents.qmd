@@ -1,0 +1,22 @@
+---
+title: "Dynamic documents -- exercise solutions"
+author: "Michael C Sachs"
+subtitle: "Day 4, A"
+---
+
+
+See [https://github.com/sachsmc/r-programming/tree/master/exercises/solutions/register-project/](https://github.com/sachsmc/r-programming/tree/master/exercises/solutions/register-project/) for an example solution. 
+
+## A whole project
+
+In this lesson we will work through an entire project using the register data linked in the [data](../data/index.html) directory, where you can download all of the linked files. 
+
+The objective of this project is to describe the distribution of the number of days between hospitalizations and drug dispensations by age and sex. Your challenge is to do the following: 
+
+1. Set up a project directory with a sensible folder structure, a readme file, and a license. 
+2. Write one R script that wrangles the data, reading in and merging the datasets.
+3. Create the new variables that you need to, and save the results to an intermediate analysis file. 
+4. Create a dynamic document that reads in the analysis file, and does some simple analyses. Present the results in a readable way using `knitr::kable`, using figures, and include inline output, e.g., with our `print.meansd` function from the [functions lesson](functions.html). Include prose describing what you are doing and why. 
+5. If you have time, make a presentation in addition to a regular document. 
+
+

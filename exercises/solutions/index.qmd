@@ -1,0 +1,9 @@
+---
+title: "Exercise solutions"
+listing: 
+    contents: /*.qmd
+    type: default
+    fields: [title, subtitle]
+    sort: "subtitle"
+---
+

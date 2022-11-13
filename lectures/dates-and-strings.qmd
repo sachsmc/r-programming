@@ -147,6 +147,6 @@ as.numeric(ymd("2010-05-10") - ymd("2010-01-01"))
 
 We will continue using the register data example to practice merging and defining new variables based on dates and strings.
 
-[Link to lesson](../lessons/merge-and-process.html)
+[Link to lesson](../exercises/dates-and-strings.html)
 
 [Link home](../index.html)

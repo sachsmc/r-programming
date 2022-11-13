@@ -1,0 +1,9 @@
+---
+title: "Project organization and workflow -- exercise solutions"
+subtitle: "Day 1, A"
+author: Michael C Sachs
+---
+
+[Link to project directory](https://github.com/sachsmc/r-programming/tree/master/exercises/solutions/penguins-analysis)
+
+

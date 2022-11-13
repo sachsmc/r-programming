@@ -1,0 +1,47 @@
+---
+title: "Register analysis"
+subtitle: "An example"
+author: "Michael C Sachs"
+format: 
+    revealjs:
+      scrollable: true
+execute:
+  echo: true
+---
+
+
+# Background
+
+
+## Information
+
+```{r}
+library(data.table)
+data <- readRDS(here::here("Data/analysis-data.rds"))
+data
+```
+
+
+## Results
+
+```{r}
+source(here::here("Code/02-analysis-functions.R"))
+
+means_by_sex <- lapply(c("f", "m"), \(x) {
+  mean_sd(data[sex == x]$days_to_drug)
+})
+```
+
+The mean (sd) days to drug dispensation is `r print(means_by_sex[[1]])` in women and `r print(means_by_sex[[2]])` in men. 
+
+
+## Results 2
+
+```{r}
+plot(days_to_drug ~ jitter(age), data = data, 
+     col = ifelse(sex == "f", "salmon", "slateblue"))
+```
+
+
+# Conclusion
+

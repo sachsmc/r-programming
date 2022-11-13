@@ -1,0 +1,155 @@
+---
+title: "Functions -- exercise solutions"
+author: "Michael C Sachs"
+subtitle: "Day 2, B"
+---
+
+
+## Iterating over data with functions
+
+1. Load the Palmer penguins dataset. 
+2. Write a function to compute the mean and standard deviation of a numeric vector. We will apply this function to the numeric variables in `penguins`, and also by different subgroups
+    
+```{r}
+library(palmerpenguins)
+
+
+mean_sd1 <- function(x, na.rm = TRUE) {
+  
+  res <- c(mean = mean(x, na.rm = na.rm), 
+    sd = sd(x, na.rm = na.rm))
+
+  res
+  
+}
+
+mean_sd1(penguins$bill_depth_mm)
+```
+
+
+## Using the function
+    
+1. Use your function to compute the mean and sd of all the numeric variables in `penguins`. 
+
+```{r}
+numeric_cols <- sapply(penguins, is.numeric) ## determine which cols are numeric
+apply(penguins[numeric_cols], MARGIN = 2, FUN = mean_sd1)
+```
+
+
+2. Use your function to compute the mean and sd of body mass by species and sex
+ 
+
+::: {.panel-tabset}
+## Base R
+
+```{r}
+split(penguins$body_mass_g, list(penguins$species, penguins$sex)) |>
+  lapply(FUN = mean_sd1)
+
+# sapply converts the result to a matrix
+split(penguins$body_mass_g, list(penguins$species, penguins$sex)) |>
+  sapply(FUN = mean_sd1)
+
+# tapply has a different syntax and each element of the matrix is a list
+tapres <- tapply(penguins$body_mass_g, list(penguins$species, penguins$sex), 
+       mean_sd1)
+tapres
+tapres[1,1]
+```
+
+## `dplyr`
+
+```{r}
+library(dplyr)
+penguins |> group_by(species, sex) |>
+  summarize(mean_sd1(body_mass_g))
+```
+
+## `data.table`
+
+```{r}
+library(data.table)
+pengdt <- data.table(penguins)
+
+pengdt[, mean_sd1(body_mass_g), by = list(species, sex)]
+## . can be used as shorthand for list in data table
+pengdt[, mean_sd1(body_mass_g), by = .(species, sex)]
+```
+:::
+
+
+
+## Classes and custom generics
+
+1. Modify your mean and sd function so that the data structure that is returned has class "meansd". There are two ways to do this: 
+    a. Say the object you currently return is called `res`, instead of `res`, return `structure(res, class = "meansd")`
+    b. Add the line `class(res) <- "meansd"` before returning `res``
+    c. Use the `attr` function to create and assign additional information, for example the name of the variable,  You can get the name of the object passed to `x` using `deparse1(substitute(x))`. 
+
+```{r}
+mean_sd2 <- function(x, na.rm = TRUE) {
+  res <- c(mean = mean(x, na.rm = na.rm), 
+           sd = sd(x, na.rm = na.rm))
+  
+  attr(res, "variable") <- deparse1(substitute(x))
+  attr(res, "sampsize") <- sum(!is.na(x))
+  class(res) <- "meansd"
+  res
+}
+```
+
+
+2. Write a custom print function `print.meansd` that nicely prints the mean and standard deviation. Use the functions `round` and `paste` functions to create a string, then print it out using the `cat` function. 
+
+```{r}
+print.meansd <- function(x, digits = 2) {
+  
+  msd <- paste0(round(x["mean"], digits = digits), " (", 
+                round(x["sd"], digits = digits), ")")
+  
+  cat("mean (sd) of ", 
+      attr(x, "variable"), ":", 
+      msd, "\n")
+  
+}
+
+mean_sd2(penguins$body_mass_g)
+```
+
+
+## More functions
+
+
+1. Write another function that constructs a one-sample t-statistic from an estimated mean and standard deviation. Recall that the t-statistic to test the null hypothesis that $\mu = \mu_0$ is 
+$$
+T = \frac{\overline{X} - \mu_0}{\hat{\sigma}/\sqrt{n}}
+$$
+where $\overline{X}$ is the sample mean and $\hat{\sigma}$ is the sample standard deviation and $n$ is the sample size.
+2. Write another function that takes the t-statistic and calculates a p-value
+3. Compose your custom functions in order to test the null hypothesis that the mean body mass of penguins is 4000g. Try using the pipe operator `|>`. 
+
+
+```{r}
+t_stat <- function(x, mu_0 = 0) {
+  ## x should be of class "meansd"
+  stopifnot(inherits(x, "meansd"))
+  
+  Tstat <- unname((x["mean"] - mu_0) / 
+                    (x["sd"] / sqrt(attr(x, "sampsize"))))
+  attr(Tstat, "df") <- attr(x, "sampsize") - 1
+  Tstat
+  
+}
+
+
+p_value <- function(x) {
+
+  2 * pt(-abs(x), df = attr(x, "df"))
+  
+}
+
+mean_sd2(penguins$body_mass_g) |> t_stat(mu_0 = 4000) |> p_value()
+
+```
+

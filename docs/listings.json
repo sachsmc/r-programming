@@ -15,14 +15,26 @@
     ]
   },
   {
+    "listing": "/exercises/solutions/index.html",
+    "items": [
+      "/exercises/solutions/projects.html",
+      "/exercises/solutions/data-structures.html",
+      "/exercises/solutions/flow-and-loops.html",
+      "/exercises/solutions/functions.html",
+      "/exercises/solutions/tidy-and-reshape.html",
+      "/exercises/solutions/dates-and-strings.html",
+      "/exercises/solutions/dynamic-documents.html"
+    ]
+  },
+  {
     "listing": "/exercises/index.html",
     "items": [
       "/exercises/projects.html",
       "/exercises/data-structures.html",
       "/exercises/flow-and-loops.html",
       "/exercises/functions.html",
-      "/exercises/tidy-and-reshape.html",
       "/exercises/dates-and-strings.html",
+      "/exercises/tidy-and-reshape.html",
       "/exercises/dynamic-documents.html"
     ]
   }

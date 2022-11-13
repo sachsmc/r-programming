@@ -1,0 +1,68 @@
+---
+title: "Data structures -- exercise solutions"
+subtitle: "Day 1, B"
+author: Michael C Sachs
+---
+
+## Vectors and matrices
+
+1. Take the sum of each row of `M1`
+2. Create a new matrix called `M2` that is `M1` with the diagonal elements replaced by 0s
+3. Create a new matrix called `M3` that is `M1` but with all values less than 4 replaced by -1
+4. Append the three matrices into an array with dimensions 4, 4, 3. 
+
+
+```{r}
+M1 <- matrix(1:16, nrow = 4, ncol = 4)
+
+## 1.
+rowSums(M1)
+# or the matrix arithmetic way
+M1 %*% matrix(1, nrow = nrow(M1), ncol = 1)
+
+
+## 2. 
+M2 <- M1
+diag(M2) <- 0
+
+## 3.
+M3 <- M1
+M3[M3 < 4] <- -1
+
+## 4. 
+A1 <- array(NA, dim = c(4, 4, 3))
+A1[,,1] <- M1
+A1[,,2] <- M2
+A1[,,3] <- M3
+```
+
+
+
+## Organizing output from a statistical analysis
+
+```{r}
+library(palmerpenguins)
+
+by(penguins$body_mass_g, list(penguins$sex, penguins$species), summary)
+
+massfit <- lm(body_mass_g ~ sex * species, data = penguins)
+summary(massfit)
+
+boxplot(body_mass_g ~ sex * species, data = penguins, 
+        col = rep(c("slateblue", "salmon"), 3))
+legend("topleft", fill = c("slateblue", "salmon"), 
+       legend = c("Female", "Male"))
+```
+
+
+Inspect the `massfit` object. What type of data structure is it, and what does it contain? 
+
+> It is a list with class "lm". It contains lots of information about the model fit.
+
+You are planning a publication about the association/interaction between species and sex on body mass. The paper will include descriptive statistics, statistical inference, and some figures. You will likely present the results at a conference or in a lab meeting. 
+
+
+1. What are some different approaches to save the results? 
+2. Discuss the pros and cons of your suggested approaches. 
+
+> One approach would be to save is to save the regression fit as an rds file and read it into different R markdown documents to use it for different purposes. Also the figures could be saved as pngs and used in different documents. An alternative is to save the analysis dataset as a file, and the code used to reproduce the analysis, including the figures. The advantage of the 2nd approach is that the output can be tailored to the specific use of the results (e.g., change figure size/resolution for presentation vs manuscript).

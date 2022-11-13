@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-html/tabby.min.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.2.247">
 
   <meta name="author" content="Michael C Sachs">
-  <title>Programming and statistical modelling in R - Flow control and loops</title>
+  <title>Programming and statistical modelling in R - Register analysis</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="../../../../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../../../../site_libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -93,11 +93,11 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css" id="theme">
-  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../../../site_libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link href="../../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../../../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../../../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -389,8 +389,8 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Flow control and loops</h1>
-  <p class="subtitle">Day 2, A</p>
+  <h1 class="title">Register analysis</h1>
+  <p class="subtitle">An example</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -402,312 +402,87 @@ Michael C Sachs
 
 </section>
 <section>
-<section id="flow-control" class="title-slide slide level1 center">
-<h1>Flow control</h1>
+<section id="background" class="title-slide slide level1 center">
+<h1>Background</h1>
 
 </section>
-<section id="what" class="slide level2">
-<h2>What?</h2>
-<ul>
-<li><p>Normally the code gets run line by line, in order, top to bottom</p></li>
-<li><p>There are special commands that allow you change that</p></li>
-<li><p><em>Conditional execution</em>, choose which code to run depending on logical conditions</p>
-<ul>
-<li><code>if(&lt;condition&gt;)</code></li>
-<li><code>else if</code></li>
-<li><code>else</code></li>
-</ul></li>
-<li><p><em>Loops</em>, repeat a chunk of code several times</p>
-<ul>
-<li><code>repeat</code></li>
-<li><code>for</code></li>
-<li><code>while</code></li>
-</ul></li>
-</ul>
-</section>
-<section id="if-then-else" class="slide level2">
-<h2>If then else</h2>
+<section id="information" class="slide level2">
+<h2>Information</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="cf">if</span>(<span class="sc">&lt;</span>condition<span class="sc">&gt;</span>) {</span>
-<span id="cb1-2"><a href="#cb1-2"></a>  </span>
-<span id="cb1-3"><a href="#cb1-3"></a>  <span class="sc">&lt;</span>do something<span class="sc">&gt;</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a>    </span>
-<span id="cb1-5"><a href="#cb1-5"></a>} <span class="cf">else</span> {</span>
-<span id="cb1-6"><a href="#cb1-6"></a>  </span>
-<span id="cb1-7"><a href="#cb1-7"></a>  <span class="sc">&lt;</span>do something <span class="cf">else</span><span class="sc">&gt;</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a>  </span>
-<span id="cb1-9"><a href="#cb1-9"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>If the <code>&lt;condition&gt;</code> evaluates to <code>TRUE</code>, then <code>something</code> gets executed, otherwise <code>something else</code> gets executed.</p>
-<p><code>&lt;condition&gt;</code> must be length one. No vectors allowed.</p>
-</section>
-<section id="examples" class="slide level2">
-<h2>Examples</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>num_reps <span class="ot">&lt;-</span> <span class="cf">if</span>(final_report) <span class="dv">5000</span> <span class="cf">else</span> <span class="dv">200</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>brackets are helpful for understanding and clarity</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>p_value <span class="ot">&lt;-</span> <span class="cf">if</span>(nonparametric) {</span>
-<span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">wilcox.test</span>(mpg <span class="sc">~</span> vs, <span class="at">data =</span> mtcars, <span class="at">exact =</span> <span class="cn">FALSE</span>)<span class="sc">$</span>p.value</span>
-<span id="cb3-3"><a href="#cb3-3"></a>} <span class="cf">else</span> {</span>
-<span id="cb3-4"><a href="#cb3-4"></a>  <span class="fu">t.test</span>(mpg <span class="sc">~</span> vs, <span class="at">data =</span> mtcars)<span class="sc">$</span>p.value</span>
-<span id="cb3-5"><a href="#cb3-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>There does not need to be anything returned from the expression</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="cf">if</span>(log_transform) {</span>
-<span id="cb4-2"><a href="#cb4-2"></a>  </span>
-<span id="cb4-3"><a href="#cb4-3"></a>  data<span class="sc">$</span>Y <span class="ot">&lt;-</span> <span class="fu">log</span>(data<span class="sc">$</span>Y)</span>
-<span id="cb4-4"><a href="#cb4-4"></a>  </span>
-<span id="cb4-5"><a href="#cb4-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="ifelse" class="slide level2">
-<h2><code>ifelse</code></h2>
-<p>This is a function, not a statement like <code>if</code> and <code>else</code>.</p>
-<p>It is vectorized and hence better suited for working with data.</p>
-<p><code>ifelse(&lt;logical vector&gt;, &lt;yes vector&gt;, &lt;no vector&gt;)</code>. All three vectors should be the same length or recycling happens.</p>
-<p>It returns a vector with elements from <code>yes</code> when TRUE, and elements from <code>no</code> when FALSE.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>rawdata <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"12.63"</span>, <span class="st">"62.45"</span>, <span class="st">"&lt;2"</span>) <span class="do">## lower limit of detection</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="fu">as.numeric</span>(<span class="fu">ifelse</span>(rawdata <span class="sc">==</span> <span class="st">"&lt;2"</span>, <span class="dv">1</span>, rawdata))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Data/analysis-data.rds"</span>))</span>
+<span id="cb1-3"><a href="#cb1-3"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 12.63 62.45  1.00</code></pre>
-</div>
-</div>
-</section></section>
-<section>
-<section id="loops" class="title-slide slide level1 center">
-<h1>Loops</h1>
-
-</section>
-<section id="basic-concepts" class="slide level2">
-<h2>Basic concepts</h2>
-<p>A loop repeatedly and sequentially evaluates an expression, i.e.,</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>{</span>
-<span id="cb7-2"><a href="#cb7-2"></a>  <span class="sc">&lt;</span>stuff contained inside curly brackets<span class="sc">&gt;</span></span>
-<span id="cb7-3"><a href="#cb7-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>A loop will continue forever unless you tell it to stop. You tell it to stop in different ways for different loop expressions</p>
-</section>
-<section id="repeat" class="slide level2">
-<h2>Repeat</h2>
-<p>This is the simplest of loops, it will repeat an expression until it encounters <code>break</code></p>
-<p>This will run forever</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="cf">repeat</span> {</span>
-<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">print</span>(<span class="st">"hello"</span>)</span>
-<span id="cb8-3"><a href="#cb8-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>This will run exactly once</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="cf">repeat</span> {</span>
-<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">print</span>(<span class="st">"hello"</span>)</span>
-<span id="cb9-3"><a href="#cb9-3"></a>  <span class="cf">break</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>This will run 5 times</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="cf">repeat</span> {</span>
-<span id="cb10-3"><a href="#cb10-3"></a>  <span class="fu">print</span>(<span class="st">"hello"</span>)</span>
-<span id="cb10-4"><a href="#cb10-4"></a>  <span class="cf">if</span>(i <span class="sc">==</span> <span class="dv">5</span>) <span class="cf">break</span></span>
-<span id="cb10-5"><a href="#cb10-5"></a>  i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb10-6"><a href="#cb10-6"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="while" class="slide level2">
-<h2>While</h2>
-<p>Notice the pattern, repeat an expression until a condition is met.</p>
-<p>The condition usually depends on a variable that changes at each iteration, in this case <code>i</code>, the <em>iterator</em></p>
-<p><code>while</code> loops explicitly state the condition at the start:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="cf">while</span>(i <span class="sc">&lt;=</span> <span class="dv">5</span>) {</span>
-<span id="cb11-3"><a href="#cb11-3"></a>  <span class="fu">print</span>(<span class="st">"hello"</span>)</span>
-<span id="cb11-4"><a href="#cb11-4"></a>  i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb11-5"><a href="#cb11-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "hello"
-[1] "hello"
-[1] "hello"
-[1] "hello"
-[1] "hello"</code></pre>
+<pre><code>       pid       date     atc dose  drug_date  age sex visit hdia diag1 diag2
+   1: A001 2010-01-27 J01DC03  420 2010-03-05 72.5   f     1 H560  B632  H180
+   2: A001 2010-06-26 A10BJ04 1659 2010-08-31 72.5   f     2 C871  D422  K820
+   3: A001 2010-07-20 A10BJ04 1659 2010-08-31 72.5   f     3 C040  B710  &lt;NA&gt;
+   4: A002 2005-09-02 C07FX01 1395 2006-05-02 81.5   f     1 B481  K512  F750
+   5: A002 2008-05-05 C07FX03  526 2008-06-05 81.5   f     2 K959  G959  E252
+  ---                                                                        
+1082: A398 2010-08-31 J01DD01   80 2010-09-20 63.5   m     5 D360  A739  F200
+1083: A399 2008-10-28 J01DB08  243 2008-10-29 81.5   f     1 E761  E541  C811
+1084: A400 2008-01-01 A10BJ04  293 2008-01-12 72.5   f     1 I291  C691  G269
+1085: A400 2008-12-18 J01DD03  322 2009-03-02 72.5   f     2 E461  I290  B409
+1086: A400 2009-10-09 B01AF01  792 2009-11-06 72.5   f     3 F581  E111  H500
+      diag3 diag4 diag5 diag6 days_to_drug
+   1:  J050  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;           37
+   2:  A602  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;           66
+   3:  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;           42
+   4:  K059  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;          242
+   5:  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;           31
+  ---                                     
+1082:  I780  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;           20
+1083:  C662  B811  B972  &lt;NA&gt;            1
+1084:  C732  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;           11
+1085:  G531  I682  &lt;NA&gt;  &lt;NA&gt;           74
+1086:  C432  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;           28</code></pre>
 </div>
 </div>
 </section>
-<section id="for-loops" class="slide level2">
-<h2>For loops</h2>
-<p>A <code>for</code> loop explicitly states the sequence of the iterator at the start. Then the “end condition” is that the loop has reached the end of the sequence.</p>
+<section id="results" class="slide level2">
+<h2>Results</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) {</span>
-<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">print</span>(<span class="st">"hello"</span>)</span>
-<span id="cb13-3"><a href="#cb13-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "hello"
-[1] "hello"
-[1] "hello"
-[1] "hello"
-[1] "hello"</code></pre>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Code/02-analysis-functions.R"</span>))</span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a>means_by_sex <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">c</span>(<span class="st">"f"</span>, <span class="st">"m"</span>), \(x) {</span>
+<span id="cb3-4"><a href="#cb3-4"></a>  <span class="fu">mean_sd</span>(data[sex <span class="sc">==</span> x]<span class="sc">$</span>days_to_drug)</span>
+<span id="cb3-5"><a href="#cb3-5"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<p>In this case, it is the most concise. I personally use <code>for</code> loops more than any other loop.</p>
-<p><code>break</code> can be used inside any loop to end it. <code>next</code> can be used to go to the next iteration.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) {</span>
-<span id="cb15-2"><a href="#cb15-2"></a>  <span class="cf">if</span>(i <span class="sc">==</span> <span class="dv">2</span>) <span class="cf">next</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"hello"</span>, i))</span>
-<span id="cb15-4"><a href="#cb15-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "hello 1"
-[1] "hello 3"
-[1] "hello 4"
-[1] "hello 5"</code></pre>
-</div>
-</div>
+<p>The mean (sd) days to drug dispensation is 31.79 (31.19) in women and 31.18 (30.18) in men.</p>
 </section>
-<section id="examples-1" class="slide level2">
-<h2>Examples</h2>
-<h3 id="bootstrap">Bootstrap</h3>
+<section id="results-2" class="slide level2">
+<h2>Results 2</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">library</span>(palmerpenguins)</span>
-<span id="cb17-2"><a href="#cb17-2"></a></span>
-<span id="cb17-3"><a href="#cb17-3"></a>mu.body_mass <span class="ot">&lt;-</span> <span class="fu">mean</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb17-4"><a href="#cb17-4"></a>bsmeans <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"numeric"</span>, <span class="at">length =</span> <span class="dv">2000</span>)</span>
-<span id="cb17-5"><a href="#cb17-5"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(bsmeans)) {</span>
-<span id="cb17-6"><a href="#cb17-6"></a>  resampled.body_mass <span class="ot">&lt;-</span> <span class="fu">sample</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb17-7"><a href="#cb17-7"></a>  bsmeans[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(resampled.body_mass, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb17-8"><a href="#cb17-8"></a>}</span>
-<span id="cb17-9"><a href="#cb17-9"></a><span class="fu">hist</span>(bsmeans)</span>
-<span id="cb17-10"><a href="#cb17-10"></a><span class="fu">abline</span>(<span class="at">v =</span> mu.body_mass, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">plot</span>(days_to_drug <span class="sc">~</span> <span class="fu">jitter</span>(age), <span class="at">data =</span> data, </span>
+<span id="cb4-2"><a href="#cb4-2"></a>     <span class="at">col =</span> <span class="fu">ifelse</span>(sex <span class="sc">==</span> <span class="st">"f"</span>, <span class="st">"salmon"</span>, <span class="st">"slateblue"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="flow-and-loops_files/figure-revealjs/unnamed-chunk-13-1.png" width="960" class="r-stretch"></section>
-<section id="example-2" class="slide level2">
-<h2>Example 2</h2>
-<p>Iterating through species</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">library</span>(colorspace)</span>
-<span id="cb18-2"><a href="#cb18-2"></a></span>
-<span id="cb18-3"><a href="#cb18-3"></a>species_names <span class="ot">&lt;-</span> <span class="fu">levels</span>(penguins<span class="sc">$</span>species)</span>
-<span id="cb18-4"><a href="#cb18-4"></a>colors <span class="ot">&lt;-</span> colorspace<span class="sc">::</span><span class="fu">qualitative_hcl</span>(<span class="fu">length</span>(species_names))</span>
-<span id="cb18-5"><a href="#cb18-5"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(species_names)){</span>
-<span id="cb18-6"><a href="#cb18-6"></a>  </span>
-<span id="cb18-7"><a href="#cb18-7"></a>  <span class="cf">if</span>(i <span class="sc">==</span> <span class="dv">1</span>) {</span>
-<span id="cb18-8"><a href="#cb18-8"></a>    </span>
-<span id="cb18-9"><a href="#cb18-9"></a>    <span class="fu">plot</span>(bill_length_mm <span class="sc">~</span> bill_depth_mm, </span>
-<span id="cb18-10"><a href="#cb18-10"></a>         <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">col =</span> colors[i],</span>
-<span id="cb18-11"><a href="#cb18-11"></a>         <span class="at">data =</span> <span class="fu">subset</span>(penguins, species <span class="sc">==</span> species_names[i]), </span>
-<span id="cb18-12"><a href="#cb18-12"></a>         <span class="at">xlim =</span> <span class="fu">range</span>(penguins<span class="sc">$</span>bill_depth_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb18-13"><a href="#cb18-13"></a>         <span class="at">ylim =</span> <span class="fu">range</span>(penguins<span class="sc">$</span>bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb18-14"><a href="#cb18-14"></a>         )</span>
-<span id="cb18-15"><a href="#cb18-15"></a>    </span>
-<span id="cb18-16"><a href="#cb18-16"></a>  } <span class="cf">else</span> {</span>
-<span id="cb18-17"><a href="#cb18-17"></a>    </span>
-<span id="cb18-18"><a href="#cb18-18"></a>    <span class="fu">points</span>(bill_length_mm <span class="sc">~</span> bill_depth_mm, </span>
-<span id="cb18-19"><a href="#cb18-19"></a>         <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">col =</span> colors[i],</span>
-<span id="cb18-20"><a href="#cb18-20"></a>         <span class="at">data =</span> <span class="fu">subset</span>(penguins, species <span class="sc">==</span> species_names[i]))</span>
-<span id="cb18-21"><a href="#cb18-21"></a>    </span>
-<span id="cb18-22"><a href="#cb18-22"></a>  }</span>
-<span id="cb18-23"><a href="#cb18-23"></a>  </span>
-<span id="cb18-24"><a href="#cb18-24"></a>}</span>
-<span id="cb18-25"><a href="#cb18-25"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">fill =</span> colors, <span class="at">legend =</span> species_names)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img data-src="flow-and-loops_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" height="600"></p>
-</div>
-</div>
-</section>
-<section id="nested-loops" class="slide level2">
-<h2>Nested loops</h2>
-<p>A loop can itself contain a loop, or multiple loops.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>species_names <span class="ot">&lt;-</span> <span class="fu">levels</span>(penguins<span class="sc">$</span>species)</span>
-<span id="cb19-2"><a href="#cb19-2"></a>island_names <span class="ot">&lt;-</span> <span class="fu">levels</span>(penguins<span class="sc">$</span>island)</span>
-<span id="cb19-3"><a href="#cb19-3"></a>mean_bm_matrix <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="fu">length</span>(species_names), </span>
-<span id="cb19-4"><a href="#cb19-4"></a>                         <span class="at">ncol =</span> <span class="fu">length</span>(island_names), </span>
-<span id="cb19-5"><a href="#cb19-5"></a>                         <span class="at">dimnames =</span> <span class="fu">list</span>(species_names, island_names))</span>
-<span id="cb19-6"><a href="#cb19-6"></a></span>
-<span id="cb19-7"><a href="#cb19-7"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(mean_bm_matrix)) {</span>
-<span id="cb19-8"><a href="#cb19-8"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(mean_bm_matrix)) {</span>
-<span id="cb19-9"><a href="#cb19-9"></a>   </span>
-<span id="cb19-10"><a href="#cb19-10"></a>    thisset <span class="ot">&lt;-</span> <span class="fu">subset</span>(penguins, species <span class="sc">==</span> species_names[i] <span class="sc">&amp;</span> </span>
-<span id="cb19-11"><a href="#cb19-11"></a>                        island <span class="sc">==</span> island_names[j])</span>
-<span id="cb19-12"><a href="#cb19-12"></a>    </span>
-<span id="cb19-13"><a href="#cb19-13"></a>    <span class="cf">if</span>(<span class="fu">nrow</span>(thisset) <span class="sc">==</span> <span class="dv">0</span>) <span class="cf">next</span></span>
-<span id="cb19-14"><a href="#cb19-14"></a>    </span>
-<span id="cb19-15"><a href="#cb19-15"></a>    mean_bm_matrix[i, j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(thisset<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb19-16"><a href="#cb19-16"></a>     </span>
-<span id="cb19-17"><a href="#cb19-17"></a>  }</span>
-<span id="cb19-18"><a href="#cb19-18"></a>}</span>
-<span id="cb19-19"><a href="#cb19-19"></a>mean_bm_matrix</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>            Biscoe    Dream Torgersen
-Adelie    3709.659 3688.393  3706.373
-Chinstrap       NA 3733.088        NA
-Gentoo    5076.016       NA        NA</code></pre>
-</div>
-</div>
-</section>
-<section id="note-on-speed" class="slide level2">
-<h2>Note on speed</h2>
-<p>You may see people warn you not to use for loops in R, “because they are slow”.</p>
-<p>That is partially true, but speed is not the only thing, for loops can be much clearer and more understandable than the alternatives.</p>
-<p><strong>But</strong>, the slow thing in R is changing the size of an object, so you can avoid that by creating a vector/matrix/array of the correct size to hold the results of the loop:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">system.time</span>({</span>
-<span id="cb21-2"><a href="#cb21-2"></a>A1 <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb21-3"><a href="#cb21-3"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100000</span>) {</span>
-<span id="cb21-4"><a href="#cb21-4"></a>  A1 <span class="ot">&lt;-</span> <span class="fu">c</span>(A1, <span class="fu">rnorm</span>(<span class="dv">1</span>))</span>
-<span id="cb21-5"><a href="#cb21-5"></a>}</span>
-<span id="cb21-6"><a href="#cb21-6"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   user  system elapsed 
- 13.084   0.075  13.192 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">system.time</span>({</span>
-<span id="cb23-2"><a href="#cb23-2"></a>A2 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">100000</span>)</span>
-<span id="cb23-3"><a href="#cb23-3"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(A2)) {</span>
-<span id="cb23-4"><a href="#cb23-4"></a>  A2[i] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>)</span>
-<span id="cb23-5"><a href="#cb23-5"></a>}</span>
-<span id="cb23-6"><a href="#cb23-6"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   user  system elapsed 
-  0.164   0.004   0.169 </code></pre>
-</div>
-</div>
-</section>
-<section id="practical" class="slide level2">
-<h2>Practical</h2>
-<ol type="1">
-<li>Practice working if and else statements</li>
-<li>Practice working with loops</li>
-</ol>
-<p><a href="../exercises/flow-and-loops.html">Link to lesson</a></p>
-<p><a href="../index.html">Link home</a></p>
+<img data-src="presentation_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"></section></section>
+<section id="conclusion" class="title-slide slide level1 center">
+<h1>Conclusion</h1>
 
 <div class="footer footer-default">
 
 </div>
-</section></section>
+</section>
     </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <script src="../../../../site_libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="../../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../../../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../../../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../../../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
-  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script src="../../../../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../../../../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../../../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../../../../site_libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>

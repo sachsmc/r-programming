@@ -1,0 +1,136 @@
+---
+title: "Flow control and loops -- exercise solutions"
+subtitle: "Day 2, A"
+author: Michael C Sachs
+---
+
+
+## Simple loops and conditional statements
+
+1. Use a loop to print every number from 1 to 10
+2. Modify the loop to print every _even_ number from 1 to 10 (hint: add an `if` statement and use `(i %% 2) == 0` to check whether `i` is divisible by 2).
+
+
+```{r}
+## 1.
+for(i in 1:10){
+  print(i)
+}
+
+## 2. The %% operator is the modulo function.
+##    i %% 2 attempts to divide i by 2, with 
+##    whole numbers only and returns the remainder. 
+for(i in 1:10){
+  if((i %% 2) == 0) {
+  print(i)
+  }
+}
+
+```
+
+
+## Loops for statistical analysis
+
+```{r}
+library(palmerpenguins)
+```
+
+
+1. Write a loop that calculates and prints out the mean for each numeric variable in the `penguins` dataset
+
+```{r}
+for(i in 1:ncol(penguins)) {
+  ## cat prints to the console without quotes
+  cat(names(penguins)[i], " - ", sep = "")
+  vari <- penguins[[i]] ## this iterates through the columns of penguins
+  if(is.numeric(vari)) { ## check whether it is numeric
+    cat("Mean:", mean(vari, na.rm = TRUE))
+  } else {
+    cat("not numeric")
+  }
+  cat("\n") # new line
+}
+```
+
+
+2. Modify your loop in 1 so that it prints out the mean, standard deviation, median, and interquartile range for each numeric variable in `penguins`. 
+
+
+```{r}
+f.names <- c("mean", "std dev", "median", "interquartile range")
+functions <- list(mean, sd, median, IQR)
+## we will add an inner loop that iterates through these function and names
+
+for(i in 1:ncol(penguins)) {
+  cat(names(penguins)[i], ":\n", sep = "")
+  vari <- penguins[[i]]
+  
+  if(is.numeric(vari)) { 
+    for(fn in 1:length(f.names)) {
+      cat(f.names[fn], functions[[fn]](vari, na.rm = TRUE), "\n")
+    }
+  } else {
+    cat("not numeric\n")
+  }
+  cat("--------\n") # new line
+}
+```
+
+3. Write a loop to compute 500 bootstrap replicates of the means of bill length, bill depth, and flipper length. Remember to pre-allocate a data structure to store the 500 times 3 values. Provide an estimate of the correlation of the sample means.
+
+
+```{r}
+bootmeans <- matrix(NA, nrow = 500, ncol = 3, 
+                    dimnames = list(NULL, c("bill_length", "bill_depth", "flipper_length")))
+for(i in 1:nrow(bootmeans)){
+  bootindex <- sample(1:nrow(penguins), replace = TRUE)
+  peng.star <- penguins[bootindex, ]
+  
+  bootmeans[i, 1] <- mean(peng.star$bill_length_mm, na.rm = TRUE)
+  bootmeans[i, 2] <- mean(peng.star$bill_depth_mm, na.rm = TRUE)
+  bootmeans[i, 3] <- mean(peng.star$flipper_length_mm, na.rm = TRUE)
+}
+
+summary(bootmeans)
+cor(bootmeans)
+```
+
+
+
+## Loops to do data manipulation
+
+1. Write a loop that contains an `if` then `else` statement that goes through the variables in `penguins` and replaces missing values with the mean for numeric double variables, and the most frequent value for characters or factors. 
+
+
+```{r}
+my_mode <- function(x) {
+  
+  converter <- get(paste0("as.", class(x)))
+  tab <- table(x) |> sort(decreasing = TRUE) 
+  names(tab)[1] |> converter()
+  
+}
+
+
+for(colnum in 1:ncol(penguins)){
+  
+  thiscol <- penguins[[colnum]]
+  if(is.double(thiscol)) {
+    
+    thismean <- mean(thiscol, na.rm = TRUE)
+    penguins[is.na(thiscol), colnum] <- thismean
+    
+  } else {
+    
+    penguins[is.na(thiscol), colnum] <- my_mode(thiscol)
+    
+  } 
+}
+
+summary(penguins)
+
+```
+
+
+
+

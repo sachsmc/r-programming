@@ -52,3 +52,8 @@ Long list of cheatsheets:
 - [R Graphics Cookbook, 2nd edition, by Winston Chang](https://r-graphics.org/)
 - [R Markdown: The Definitive Guide, by Yihui Xie, J. J. Allaire, Garrett Grolemund](https://bookdown.org/yihui/rmarkdown/)
 - [R Markdown Cookbook, by Yihui Xie, Christophe Dervieux, Emily Riederer](https://bookdown.org/yihui/rmarkdown-cookbook/)
+
+
+## Solutions to exercises
+
+[Link to solutions](../exercises/solutions/index.html)

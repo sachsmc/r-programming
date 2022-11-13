@@ -1,7 +1,6 @@
 library(here)
 
 ## install.packages("broom")
-## remotes::install_github("sachsmc/eventglm")
 library(broom)
 
 

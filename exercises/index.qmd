@@ -1,6 +1,7 @@
 ---
 title: "Exercises"
 listing: 
+    contents: /*.qmd
     type: default
     fields: [image, title, subtitle, description]
     sort: "subtitle"
