@@ -56,4 +56,4 @@ Long list of cheatsheets:
 
 ## Solutions to exercises
 
-[Link to solutions](../exercises/solutions/index.html)
+[Link to solutions](exercises/solutions/index.html)

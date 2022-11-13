@@ -270,8 +270,6 @@ When working with real data, remember these principles when merging
 
 ## Practical
 
-We will continue using the register data example to practice merging and defining new variables based on dates and strings.
-
-[Link to lesson](../lessons/merge-and-process.html)
+After the next lecture, we will continue using the register data example to practice merging and defining new variables based on dates and strings.
 
 [Link home](../index.html)
