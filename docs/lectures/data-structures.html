@@ -569,7 +569,7 @@ NULL
 [[3]]
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x5646e85d88e0&gt;
+&lt;bytecode: 0x556fe3bbfb40&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="fu">list</span>(<span class="at">numbers =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, </span>
@@ -586,7 +586,7 @@ $letters
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x5646e85d88e0&gt;
+&lt;bytecode: 0x556fe3bbfb40&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -645,7 +645,7 @@ NULL</code></pre>
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x5646e85d88e0&gt;
+&lt;bytecode: 0x556fe3bbfb40&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -697,7 +697,7 @@ $letters
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x5646e85d88e0&gt;
+&lt;bytecode: 0x556fe3bbfb40&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -731,7 +731,7 @@ $letters
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x5646e85d88e0&gt;
+&lt;bytecode: 0x556fe3bbfb40&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -765,7 +765,7 @@ $letters
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x5646e85d88e0&gt;
+&lt;bytecode: 0x556fe3bbfb40&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -942,22 +942,22 @@ c  3 6  9 NA</code></pre>
 <span id="cb110-4"><a href="#cb110-4"></a></span>
 <span id="cb110-5"><a href="#cb110-5"></a>S1 <span class="sc">%*%</span> S2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>         [,1]     [,2]      [,3]
-[1,] 0.956866 1.147533 0.2545951
-[2,] 1.033394 1.384778 0.2544021
-[3,] 1.167610 1.320274 0.2812721</code></pre>
+<pre><code>          [,1]      [,2]      [,3]
+[1,] 0.7905616 0.6612596 0.3811112
+[2,] 0.7563259 0.5168684 0.6109527
+[3,] 0.3963498 0.3595557 0.4188710</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb112"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1"></a><span class="fu">t</span>(S1) <span class="sc">%*%</span> S2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          [,1]      [,2]      [,3]
-[1,] 0.4753205 0.8584161 0.1307646
-[2,] 0.8498833 1.0573935 0.1935282
-[3,] 1.2378401 1.7128031 0.3214043</code></pre>
+[1,] 0.5246866 0.6551334 0.2987061
+[2,] 0.9777197 0.9123905 0.6736973
+[3,] 0.3273115 0.2775540 0.3986832</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb114"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1"></a>x <span class="sc">%*%</span> <span class="fu">solve</span>(S1) <span class="sc">%*%</span> x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>        [,1]
-[1,] 8.40724</code></pre>
+<pre><code>       [,1]
+[1,] 32.409</code></pre>
 </div>
 </div>
 </section>
@@ -1311,8 +1311,7 @@ c  3 6  9 NA</code></pre>
  9 Adelie  Torgersen           34.1          18.1        193    3475 &lt;NA&gt;   2007
 10 Adelie  Torgersen           42            20.2        190    4250 &lt;NA&gt;   2007
 # … with 334 more rows, and abbreviated variable names ¹​flipper_length_mm,
-#   ²​body_mass_g
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+#   ²​body_mass_g</code></pre>
 </div>
 </div>
 <p>You can use objects from packages without attaching them with <code>::</code> (two colons)</p>
@@ -1363,8 +1362,8 @@ Slot "x":
  [1]  1  2  3  4  5  6  7  8  9 10
 
 Slot "y":
- [1] 2.903635 2.267912 2.438313 4.341611 6.100007 6.667503 5.139725 8.726727
- [9] 9.561781 9.021060</code></pre>
+ [1]  2.532838  2.490092  2.160966  4.306050  3.996906  6.882737  7.123031
+ [8]  6.747215  9.703433 10.180076</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb210"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb210-1"><a href="#cb210-1"></a>ts1<span class="sc">@</span>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1398,8 +1397,7 @@ Slot "y":
  9 Adelie  Torgersen           34.1          18.1        193    3475 &lt;NA&gt;   2007
 10 Adelie  Torgersen           42            20.2        190    4250 &lt;NA&gt;   2007
 # … with 334 more rows, and abbreviated variable names ¹​flipper_length_mm,
-#   ²​body_mass_g
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+#   ²​body_mass_g</code></pre>
 </div>
 </div>
 <p>You can convert a regular data.frame to a tibble</p>
@@ -1420,8 +1418,7 @@ Slot "y":
  8  24.4     4  147.    62  3.69  3.19  20       1     0     4     2
  9  22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2
 10  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4
-# … with 22 more rows
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+# … with 22 more rows</code></pre>
 </div>
 </div>
 <p>The indexing behavior is slightly different from data frames:</p>
@@ -1441,8 +1438,7 @@ Slot "y":
  8  24.4
  9  22.8
 10  19.2
-# … with 22 more rows
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+# … with 22 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb220"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb220-1"><a href="#cb220-1"></a>mtcars[, <span class="st">"mpg"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">

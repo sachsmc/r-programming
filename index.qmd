@@ -4,7 +4,7 @@ title: "Programming and statistical modelling in R"
 
 ## Link to padlet for ongoing class: 
 
-[https://padlet.com/sachsmc/rprog](https://padlet.com/sachsmc/rprog)
+[https://padlet.com/sachsmc/rprogs23](https://padlet.com/sachsmc/rprogs23)
 
 
 # COURSE DESCRIPTION
@@ -52,7 +52,7 @@ Michael Sachs, Section of Biostatistics
 Michael Sachs and other members of the staff at the Section of Biostatistics.
 
 ## Dates
-1, 4, 8, 11 November 2022, all days from 8.00-12.00.
+14, 17, 21, 24 March 2023, all days from 10.00-16.00, with breaks for lunch.
 
 ## Course location
-CSS
+CSS 1-0-10
