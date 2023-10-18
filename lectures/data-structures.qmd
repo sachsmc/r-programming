@@ -526,8 +526,8 @@ The most flexible way to read in data is with the `rio` package. It guesses what
 
 ```{r}
 library(rio)
-
-df <- import("https://github.com/leeper/rio/blob/main/inst/examples/iris.xls?raw=true")
+library(here)
+df <- import(here("data/starwars.xlsx"))
 head(df)
 ```
 
@@ -539,13 +539,11 @@ The slowness of reading in data usually comes from format guessing.
 Supplying known column types can dramatically speed up import: 
 
 ```{r}
-df1 <- read.csv("https://raw.githubusercontent.com/leeper/rio/main/inst/examples/noheader.csv", 
-                header = FALSE)
+df1 <- read.csv(here("data/starwars.csv"))
 
-df1b <- read.csv("https://raw.githubusercontent.com/leeper/rio/main/inst/examples/noheader.csv", 
-                header = FALSE, 
-                colClasses = c("integer", "character", "factor", "factor", 
-                               "numeric", "numeric"))
+df1b <- read.csv(here("data/starwars.csv"),
+                colClasses = c("character", "factor", "factor", 
+                               "numeric"))
 
 ```
 
@@ -553,8 +551,7 @@ df1b <- read.csv("https://raw.githubusercontent.com/leeper/rio/main/inst/example
 `fread` from the data.table package is fast and also flexible: 
 
 ```{r}
-fread("https://raw.githubusercontent.com/leeper/rio/main/inst/examples/noheader.csv", 
-      header = FALSE)
+fread(here("data/starwars.csv"))
 ```
 
 

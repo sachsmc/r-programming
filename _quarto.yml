@@ -3,6 +3,9 @@ project:
   output-dir: docs
   resources: 
     - data/*
+  render: 
+    - "*.qmd"
+    - "!docs/"
 
 website:
   title: "Programming and statistical modelling in R"
