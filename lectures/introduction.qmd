@@ -120,7 +120,7 @@ https://sachsmc.github.io/r-programming/
 
 ### Today
 
-1. Project organization
+1. Reporting, dynamic documents
 2. Data structures and indexing
 
 ### Friday
@@ -139,8 +139,8 @@ https://sachsmc.github.io/r-programming/
 
 ### Next Friday
 
-1. Reporting, dynamic documents
-2. Case study, analysis of register data
+1. Data visualization
+2. Time to work on exam
 
 :::
 ::::
@@ -172,6 +172,32 @@ https://sachsmc.github.io/r-programming/
     + Try them out, then choose one and get good at it
     + Same with project organization, choose a system and stick with it
 - Show up to class and participate, you will pass and hopefully learn something useful
+
+## Exam
+
+To get credit for the course, you must hand in and pass the exam which will be an email sent to skl@sund.ku.dk
+
+It must contain as attachments: 
+
+1. A rendered output document in a format of your choice that includes prose, code, and output from code. 
+2. The source document containing code
+3. Any other files necessary to run the code
+
+The body of the email should be the "readme" file, with details on 
+
+1. What is included
+2. How to run the code and reproduce the results
+
+
+## How to pass the exam
+
+1. Send something
+2. Demonstrate mastery of at least 3 out of the 4 learning objectives. 
+
+An easy way to do this is to do the exercises and save them all in a single Rmarkdown or Quarto document. 
+
+
+- 
 
 # Questions? 
 

@@ -3,12 +3,13 @@
     "listing": "/exercises/index.html",
     "items": [
       "/exercises/projects.html",
+      "/exercises/dynamic-documents.html",
       "/exercises/data-structures.html",
       "/exercises/flow-and-loops.html",
       "/exercises/functions.html",
       "/exercises/dates-and-strings.html",
       "/exercises/tidy-and-reshape.html",
-      "/exercises/dynamic-documents.html"
+      "/exercises/dataviz.html"
     ]
   },
   {
@@ -26,15 +27,16 @@
   {
     "listing": "/lectures/index.html",
     "items": [
-      "/lectures/introduction.html",
       "/lectures/projects.html",
+      "/lectures/introduction.html",
+      "/lectures/dynamic-documents.html",
       "/lectures/data-structures.html",
       "/lectures/flow-and-loops.html",
       "/lectures/functions.html",
       "/lectures/tidy-data.html",
       "/lectures/dates-and-strings.html",
       "/lectures/merging-data.html",
-      "/lectures/dynamic-documents.html",
+      "/lectures/dataviz.html",
       "/lectures/conclusion.html"
     ]
   }

@@ -1,6 +1,6 @@
 ---
 title: "Project organization and workflow"
-subtitle: "Day 1, A"
+subtitle: "Day 0"
 author: "Michael C Sachs"
 format: 
     revealjs:
@@ -26,11 +26,9 @@ Quick review of the file system
 - File system discipline: put all the files related to a single project in a designated folder.
     - This applies to data, code, figures, notes, etc.
     - Depending on project complexity, you might enforce further organization into subfolders.
-- Tools to facilitate this
-    + `ProjectTemplate` package
-    + Several other packages: [CRAN task view on Reproducible Research](https://cran.r-project.org/web/views/ReproducibleResearch.html#project-workflows)
-    + Make your own template structure and copy-paste
-
+- A wide variety of tools to facilitate this are collected here:
+    + [CRAN task view on Reproducible Research](https://cran.r-project.org/web/views/ReproducibleResearch.html#project-workflows)
+    
 
 ## The importance of README
 
@@ -118,7 +116,7 @@ read.csv(here("rawdata", "lisa-2012-full.csv"))
 saveRDS(analysis_file, here("data", "analysis-data.rds"))
 ```
 
-The first line figures out the root of your project directory: is there an `.Rproj` or `.here` file there? 
+Upon librarying the `here` package, it will attempt to identify the root of your project directory: is there an `.Rproj` or `.here` file there? 
 
 Then, `here` allows you to build paths to subdirectories, starting from the project root. 
 
@@ -144,7 +142,7 @@ Options for IDEs (all free):
 
 - [Rstudio](https://www.rstudio.com/products/rstudio/download/#download)
 - [VScode](https://code.visualstudio.com/docs/languages/r)
-- emacs
+- [Emacs](https://www.gnu.org/software/emacs/)
 
 All of these support projects, have integrated help files, code completion, and syntax highlighting.
 

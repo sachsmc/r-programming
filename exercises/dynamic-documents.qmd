@@ -1,7 +1,7 @@
 ---
 title: "Dynamic documents -- exercises"
 author: "Michael C Sachs"
-subtitle: "Day 4, A"
+subtitle: "Day 1, A"
 description: "Using rmarkdown and quarto to create reproducible and dynamic documents for reporting statistical analyses"
 image: dynamic-documents.jpeg
 ---
@@ -25,25 +25,4 @@ In this lesson you will
 5. Experiment with changing the yaml header options, click on Render again and see what changes. Example, if you are using the html output format, try changing the [theme](https://quarto.org/docs/output-formats/html-themes.html). 
 6. Experiment with changing one of the code chunks in the document, Re-render and see what changes. 
 
-
-## A whole project
-
-In this lesson we will work through an entire project using the register data linked in the [data](../data/index.html) directory, where you can download all of the linked files. 
-
-The objective of this project is to describe the distribution of the number of days between hospitalizations and drug dispensations by age and sex. Your challenge is to do the following: 
-
-1. Set up a project directory with a sensible folder structure, a readme file, and a license. 
-2. Write one R script that wrangles the data, reading in and merging the datasets.
-
-<details>
-<summary>Hints</summary>
-- The drug register data are stored in separate files by year. You will need to iterate over these files somehow, maybe using a loop or one of the apply functions. 
-- The file names can be created programmatically with `paste0("med-", 2005:2010, "-ex.rds")`
-- Once they are all read in as objects, you will want to append them by row, using e.g., `rbind`
-- Join the hospitalization table to the drug table, by patient id. How to deal with the dates? We want only the most recent prescription since the last hospitalization. This is a __rolling join__
-</details>
-
-3. Create the new variables that you need to, and save the results to an intermediate analysis file. 
-4. Create a dynamic document that reads in the analysis file, and does some simple analyses. Present the results in a readable way using `knitr::kable`, using figures, and include inline output, e.g., with our `print.meansd` function from the [functions lesson](functions.html). Include prose describing what you are doing and why. 
-5. If you have time, make a presentation in addition to a regular document. 
 

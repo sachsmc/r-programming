@@ -1,6 +1,6 @@
 ---
 title: "Dynamic Documents"
-subtitle: "Day 4, C"
+subtitle: "Day 1, A"
 author: "Michael C Sachs"
 format: 
     revealjs:
@@ -167,7 +167,7 @@ knitr::kable(head(palmerpenguins::penguins))
 
 ## Practical
 
-We will continue using the register data example, and try out rmarkdown or quarto.
+We will briefly try out rmarkdown or quarto so that you are set up for the exam.
 
 [Link to lesson](../exercises/dynamic-documents.html)
 

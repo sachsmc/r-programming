@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../../../site_libs/quarto-html/tabby.min.js"></script>
-<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../../../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.3.361">
 
   <meta name="author" content="Michael C Sachs">
-  <title>Programming and statistical modelling in R - Register analysis</title>
+  <title>Programming and statistical modelling in R - Data visualization</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="../../../../site_libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="../../../../site_libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -95,11 +95,11 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../../../site_libs/revealjs/dist/theme/quarto.css">
-  <link href="../../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="../../../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="../../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="../../../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -391,8 +391,8 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Register analysis</h1>
-  <p class="subtitle">An example</p>
+  <h1 class="title">Data visualization</h1>
+  <p class="subtitle">Day 4, C</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -403,66 +403,232 @@ Michael C Sachs
 </div>
 
 </section>
-<section>
-<section id="background" class="title-slide slide level1 center">
-<h1>Background</h1>
-
+<section id="graphics-principles" class="slide level2">
+<h2>Graphics principles</h2>
+<ol type="1">
+<li>Encode quantitative data as linear lengths or distances. They are easier and more accurate to interpret than angles, area, volume, or color.</li>
+<li>Place things that are meant to be compared next to each other.</li>
+<li>Show the raw data or some display of uncertainty rather than only summary statistics.</li>
+<li>Remove extraneous information, don’t waste ink. Also don’t waste paper with empty space.</li>
+<li>Be aware that 5 - 10% of the population is color blind, so choose appropriate color schemes.</li>
+</ol>
+<p>Deciding what to plot is often more difficult than making the plot itself</p>
 </section>
-<section id="information" class="slide level2">
-<h2>Information</h2>
+<section id="graphics-in-r" class="slide level2">
+<h2>Graphics in R</h2>
+<p>R has 2 systems for graphics generation:</p>
+<ol type="1">
+<li>base <code>graphics</code>
+<ul>
+<li>“Just” draws things</li>
+<li>Figures are created by overlaying drawings in one or more steps</li>
+<li>Includes functions for “standard” statistical graphics</li>
+</ul></li>
+<li>The <code>grid</code> system
+<ul>
+<li>A low-level graphics system to create and arrange graphical output</li>
+<li><code>ggplot2</code> and <code>lattice</code> are built on top of <code>grid</code></li>
+<li><code>ggplot2</code> uses a coherent grammar to describe figures, and gets <code>grid</code> to do the drawing</li>
+</ul></li>
+</ol>
+</section>
+<section id="base-graphics-basics" class="slide level2">
+<h2>base graphics basics</h2>
+<ul>
+<li>The primitive types are points, lines, polygons, text, and raster images (aka bitmaps)
+<ul>
+<li>These are the basic drawing tools that are combined to create a figure</li>
+</ul></li>
+<li>Graphical parameters are all documented in <code>par</code>. These include things like point shape, line type, color, margins, font, etc.</li>
+</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(data.table)</span>
-<span id="cb1-2"><a href="#cb1-2"></a>data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Data/analysis-data.rds"</span>))</span>
-<span id="cb1-3"><a href="#cb1-3"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">rep</span>(<span class="fl">0.5</span>, <span class="dv">4</span>))  <span class="co"># small plot margins (bottom, left, top, right)</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">plot.new</span>()  <span class="co"># start a new plot</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">plot.window</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6</span>), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="at">asp=</span><span class="dv">1</span>)  <span class="co"># x range: 0–6, y: 0–2; proportional</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="cn">NA</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>,    <span class="dv">6</span>)</span>
+<span id="cb1-5"><a href="#cb1-5"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="fl">0.25</span>, <span class="dv">0</span>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">points</span>(x[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)], y[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)])  <span class="co"># symbols</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">lines</span>(x, y)   <span class="co"># line segments</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="fu">text</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6</span>), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="fu">c</span>(<span class="st">"(0, 0)"</span>, <span class="st">"(6, 2)"</span>), <span class="at">col=</span><span class="st">"red"</span>)  <span class="co"># two text labels</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="fu">rasterImage</span>(</span>
+<span id="cb1-10"><a href="#cb1-10"></a>    <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>,  <span class="co"># 2x3 pixel "image"; 0=black, 1=white</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>             <span class="dv">0</span>, <span class="dv">1</span>,</span>
+<span id="cb1-12"><a href="#cb1-12"></a>             <span class="dv">0</span>, <span class="dv">0</span>), <span class="at">byrow=</span><span class="cn">TRUE</span>, <span class="at">ncol=</span><span class="dv">2</span>),</span>
+<span id="cb1-13"><a href="#cb1-13"></a>    <span class="dv">5</span>, <span class="fl">0.5</span>, <span class="dv">6</span>, <span class="dv">2</span>,  <span class="co"># position: xleft, ybottom, xright, ytop</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>    <span class="at">interpolate=</span><span class="cn">FALSE</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a>)</span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="fu">polygon</span>(</span>
+<span id="cb1-17"><a href="#cb1-17"></a>    <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="fl">5.5</span>,    <span class="dv">4</span>),  <span class="co"># x coordinates of the vertices</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a>    <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>,   <span class="dv">1</span>, <span class="fl">0.75</span>),  <span class="co"># y coordinates</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a>    <span class="at">lty=</span><span class="st">"dotted"</span>,   <span class="co"># border style</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a>    <span class="at">col=</span><span class="st">"#ffff0044"</span>  <span class="co"># fill colour: semi-transparent yellow</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img data-src="dataviz_files/figure-revealjs/unnamed-chunk-1-1.png" style="height:20.0%" width="960"></p>
+</div>
+</div>
+</section>
+<section id="colors" class="slide level2">
+<h2>Colors</h2>
+<p>You can refer to colors in several ways:</p>
+<ul>
+<li>by name, e.g., <code>"red"</code>, see <code>colors()</code></li>
+<li>by hex code: <code>"#dd3333"</code></li>
+<li>by specifying them in a color space with one of the functions: <code>rgb</code>, <code>hsv</code>, <code>hcl</code>.</li>
+</ul>
+<p>More often, you want to choose a good <em>color palette</em> .</p>
+<p>In base graphics, the <code>palette()</code> function is used to view and modify the current color palette.</p>
+<p>The default is both ugly, and can be poorly perceived when data are mapped to color values.</p>
+</section>
+<section id="choosing-a-palette" class="slide level2">
+<h2>Choosing a palette</h2>
+<p>Use the <code>colorspace</code> package to find a good palette to meet your needs. It uses the Hue Chroma Luminance colorspace</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">library</span>(colorspace)</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">swatchplot</span>(</span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="st">"Hue"</span>       <span class="ot">=</span> <span class="fu">sequential_hcl</span>(<span class="dv">5</span>, <span class="at">h =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">300</span>), <span class="at">c =</span> <span class="fu">c</span>(<span class="dv">60</span>, <span class="dv">60</span>), <span class="at">l =</span> <span class="dv">65</span>),</span>
+<span id="cb2-4"><a href="#cb2-4"></a>  <span class="st">"Chroma"</span>    <span class="ot">=</span> <span class="fu">sequential_hcl</span>(<span class="dv">5</span>, <span class="at">h =</span> <span class="dv">0</span>, <span class="at">c =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">0</span>), <span class="at">l =</span> <span class="dv">65</span>, <span class="at">rev =</span> <span class="cn">TRUE</span>, <span class="at">power =</span> <span class="dv">1</span>),</span>
+<span id="cb2-5"><a href="#cb2-5"></a>  <span class="st">"Luminance"</span> <span class="ot">=</span> <span class="fu">sequential_hcl</span>(<span class="dv">5</span>, <span class="at">h =</span> <span class="dv">260</span>, <span class="at">c =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">25</span>), <span class="at">l =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">90</span>), <span class="at">rev =</span> <span class="cn">TRUE</span>, <span class="at">power =</span> <span class="dv">1</span>),</span>
+<span id="cb2-6"><a href="#cb2-6"></a>  <span class="at">off =</span> <span class="dv">0</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img data-src="dataviz_files/figure-revealjs/unnamed-chunk-2-1.png" width="960"></p>
+</div>
+</div>
+<p>You can also use it to simulate color blindness</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="fu">palette</span>(<span class="st">"R3"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="fu">plot</span>(bill_length_mm <span class="sc">~</span> body_mass_g, </span>
+<span id="cb3-5"><a href="#cb3-5"></a>     <span class="at">col =</span> island, <span class="at">data =</span> penguins, <span class="at">pch =</span> <span class="dv">20</span>, </span>
+<span id="cb3-6"><a href="#cb3-6"></a>     <span class="at">main =</span> <span class="st">"Default palette"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>, <span class="at">fill=</span> <span class="fu">palette</span>(), <span class="at">legend =</span> <span class="fu">levels</span>(penguins<span class="sc">$</span>island))</span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="fu">palette</span>(<span class="fu">deutan</span>(<span class="fu">palette</span>()))</span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="fu">plot</span>(bill_length_mm <span class="sc">~</span> body_mass_g, </span>
+<span id="cb3-10"><a href="#cb3-10"></a>     <span class="at">col =</span> island, <span class="at">data =</span> penguins, <span class="at">pch =</span> <span class="dv">20</span>, </span>
+<span id="cb3-11"><a href="#cb3-11"></a>     <span class="at">main =</span> <span class="st">"Deuteranope"</span>)</span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>, <span class="at">fill=</span> <span class="fu">palette</span>(), <span class="at">legend =</span> <span class="fu">levels</span>(penguins<span class="sc">$</span>island))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img data-src="dataviz_files/figure-revealjs/unnamed-chunk-3-1.png" width="960"></p>
+</div>
+</div>
+</section>
+<section id="ggplot2" class="slide level2">
+<h2><code>ggplot2</code></h2>
+<p>GG stands for “Grammar of Graphics”, and this is actually the 2nd iteration of the package. Hadley Wickham started from scratch in 2005 with ggplot2, abandoning the original ggplot1</p>
+<h3 id="grammar-of-graphics">Grammar of Graphics</h3>
+<p>Introduced in the eponymous book by Leland Wilkinson, Hadley adapted a bit</p>
+<p>Hadley Wickham. <strong>A layered grammar of graphics.</strong> <em>Journal of Computational and Graphical Statistics</em>, vol.&nbsp;19, no. 1, pp.&nbsp;3–28, 2010.</p>
+<ul>
+<li>The main idea is to <strong>concisely describe</strong> a graphic using a set of fundamental <strong>rules and concepts</strong></li>
+<li>In the background, this also facilitates the creation of the graphic by the software</li>
+</ul>
+<p>The building blocks:</p>
+<ol type="1">
+<li>Data and aesthetic mappings (<code>ggplot(data, aes(x = x, y = y))</code>)</li>
+<li>Geometric objects (<code>geom_point()</code>)</li>
+<li>Statistical transformations (<code>stat_smooth()</code>)</li>
+<li>Scales</li>
+<li>Facets</li>
+<li>Coordinate systems</li>
+</ol>
+<p>With <code>ggplot2</code>, we describe the building blocks, and combine them to construct a graphic</p>
+</section>
+<section id="ggplot2-basics" class="slide level2">
+<h2><code>ggplot2</code> basics</h2>
+<ol type="1">
+<li>Start with the data, tidy data</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="fu">head</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>       pid       date     atc dose  drug_date  age sex visit hdia diag1 diag2
-   1: A001 2010-01-27 J01DC03  420 2010-03-05 72.5   f     1 H560  B632  H180
-   2: A001 2010-06-26 A10BJ04 1659 2010-08-31 72.5   f     2 C871  D422  K820
-   3: A001 2010-07-20 A10BJ04 1659 2010-08-31 72.5   f     3 C040  B710  &lt;NA&gt;
-   4: A002 2005-09-02 C07FX01 1395 2006-05-02 81.5   f     1 B481  K512  F750
-   5: A002 2008-05-05 C07FX03  526 2008-06-05 81.5   f     2 K959  G959  E252
-  ---                                                                        
-1082: A398 2010-08-31 J01DD01   80 2010-09-20 63.5   m     5 D360  A739  F200
-1083: A399 2008-10-28 J01DB08  243 2008-10-29 81.5   f     1 E761  E541  C811
-1084: A400 2008-01-01 A10BJ04  293 2008-01-12 72.5   f     1 I291  C691  G269
-1085: A400 2008-12-18 J01DD03  322 2009-03-02 72.5   f     2 E461  I290  B409
-1086: A400 2009-10-09 B01AF01  792 2009-11-06 72.5   f     3 F581  E111  H500
-      diag3 diag4 diag5 diag6 days_to_drug
-   1:  J050  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;           37
-   2:  A602  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;           66
-   3:  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;           42
-   4:  K059  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;          242
-   5:  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;           31
-  ---                                     
-1082:  I780  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;           20
-1083:  C662  B811  B972  &lt;NA&gt;            1
-1084:  C732  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;           11
-1085:  G531  I682  &lt;NA&gt;  &lt;NA&gt;           74
-1086:  C432  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;           28</code></pre>
+<pre><code># A tibble: 6 × 8
+  species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+  &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+1 Adelie  Torgersen           39.1          18.7               181        3750
+2 Adelie  Torgersen           39.5          17.4               186        3800
+3 Adelie  Torgersen           40.3          18                 195        3250
+4 Adelie  Torgersen           NA            NA                  NA          NA
+5 Adelie  Torgersen           36.7          19.3               193        3450
+6 Adelie  Torgersen           39.3          20.6               190        3650
+# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Specify aesthetic mappings, i.e., how variables in the data are associated to visual elements (e.g., x position, y position, color, size, transparency, …)</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>step1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(penguins, </span>
+<span id="cb6-2"><a href="#cb6-2"></a>                <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> bill_length_mm, <span class="at">color =</span> species))</span>
+<span id="cb6-3"><a href="#cb6-3"></a>step1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img data-src="dataviz_files/figure-revealjs/unnamed-chunk-5-1.png" width="960"></p>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Add geometric elements</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>step2 <span class="ot">&lt;-</span> step1 <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
+<span id="cb7-2"><a href="#cb7-2"></a>step2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img data-src="dataviz_files/figure-revealjs/unnamed-chunk-6-1.png" width="960"></p>
+</div>
+</div>
+<ol start="4" type="1">
+<li>Adjust the scales</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>step2 <span class="sc">+</span> <span class="fu">scale_color_brewer</span>(<span class="st">"Species"</span>, <span class="at">type =</span> <span class="st">"qual"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img data-src="dataviz_files/figure-revealjs/unnamed-chunk-7-1.png" width="960"></p>
 </div>
 </div>
 </section>
-<section id="results" class="slide level2">
-<h2>Results</h2>
+<section id="notes-and-details" class="slide level2">
+<h2>Notes and details</h2>
+<ol type="1">
+<li>Layers/components of the plot are distinct functions</li>
+<li>Layers are combined with the <code>+</code></li>
+<li>The plot can be saved as an object (what class?)</li>
+<li>The plot is displayed/rendered when printed</li>
+</ol>
+<h3 id="how-does-the-adding-of-layers-work">How does the adding of layers work?</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Code/02-analysis-functions.R"</span>))</span>
-<span id="cb3-2"><a href="#cb3-2"></a></span>
-<span id="cb3-3"><a href="#cb3-3"></a>means_by_sex <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">c</span>(<span class="st">"f"</span>, <span class="st">"m"</span>), \(x) {</span>
-<span id="cb3-4"><a href="#cb3-4"></a>  <span class="fu">mean_sd</span>(data[sex <span class="sc">==</span> x]<span class="sc">$</span>days_to_drug)</span>
-<span id="cb3-5"><a href="#cb3-5"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>pgeom <span class="ot">&lt;-</span> <span class="fu">geom_point</span>()</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="fu">class</span>(pgeom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "LayerInstance" "Layer"         "ggproto"       "gg"           </code></pre>
 </div>
-<p>The mean (sd) days to drug dispensation is 31.79 (31.19) in women and 31.18 (30.18) in men.</p>
-</section>
-<section id="results-2" class="slide level2">
-<h2>Results 2</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">plot</span>(days_to_drug <span class="sc">~</span> <span class="fu">jitter</span>(age), <span class="at">data =</span> data, </span>
-<span id="cb4-2"><a href="#cb4-2"></a>     <span class="at">col =</span> <span class="fu">ifelse</span>(sex <span class="sc">==</span> <span class="st">"f"</span>, <span class="st">"salmon"</span>, <span class="st">"slateblue"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">class</span>(step1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "gg"     "ggplot"</code></pre>
 </div>
-<img data-src="presentation_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"></section></section>
-<section id="conclusion" class="title-slide slide level1 center">
-<h1>Conclusion</h1>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>ggplot2<span class="sc">:::</span><span class="st">`</span><span class="at">+.gg</span><span class="st">`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>function (e1, e2) 
+{
+    if (missing(e2)) {
+        cli::cli_abort(c("Cannot use {.code +} with a single argument", 
+            i = "Did you accidentally put {.code +} on a new line?"))
+    }
+    e2name &lt;- deparse(substitute(e2))
+    if (is.theme(e1)) 
+        add_theme(e1, e2, e2name)
+    else if (is.ggplot(e1)) 
+        add_ggplot(e1, e2, e2name)
+    else if (is.ggproto(e1)) {
+        cli::cli_abort(c("Cannot add {.cls ggproto} objects together", 
+            i = "Did you forget to add this object to a {.cls ggplot} object?"))
+    }
+}
+&lt;bytecode: 0x560c8e4f69a0&gt;
+&lt;environment: namespace:ggplot2&gt;</code></pre>
+</div>
+</div>
 
 <div class="footer footer-default">
 
@@ -472,19 +638,19 @@ Michael C Sachs
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="../../../../site_libs/revealjs/dist/reveal.js"></script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="../../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="../../../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="../../../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="../../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="../../../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="../../../../site_libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="../../../../site_libs/revealjs/plugin/search/search.js"></script>
-  <script src="../../../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="../../../../site_libs/revealjs/plugin/math/math.js"></script>
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>

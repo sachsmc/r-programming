@@ -1,0 +1,13 @@
+---
+title: "Data visualization -- exercises"
+subtitle: "Day 4, C"
+author: Michael C Sachs
+description: "Understanding how R creates images with base graphics and ggplot2, practice using ggplot2 to customize figures, and practice creating reusable tools for plotting"
+image: datavis.png
+---
+
+
+
+
+
+

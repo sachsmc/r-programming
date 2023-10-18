@@ -1,0 +1,191 @@
+---
+title: "Data visualization"
+subtitle: "Day 4, C"
+author: "Michael C Sachs"
+format: 
+    revealjs:
+      scrollable: true
+execute:
+  echo: true
+---
+
+
+## Graphics principles
+
+1. Encode quantitative data as linear lengths or distances. They are easier and more accurate to interpret than angles, area, volume, or color. 
+2. Place things that are meant to be compared next to each other. 
+3. Show the raw data or some display of uncertainty rather than only summary statistics. 
+4. Remove extraneous information, don't waste ink. Also don't waste paper with empty space. 
+5. Be aware that 5 - 10% of the population is color blind, so choose appropriate color schemes. 
+
+Deciding what to plot is often more difficult than making the plot itself
+
+
+## Graphics in R
+
+R has 2 systems for graphics generation: 
+
+1. base `graphics`
+    + "Just" draws things
+    + Figures are created by overlaying drawings in one or more steps
+    + Includes functions for "standard" statistical graphics
+2. The `grid` system
+    + A low-level graphics system to create and arrange graphical output
+    + `ggplot2` and `lattice` are built on top of `grid`
+    + `ggplot2` uses a coherent grammar to describe figures, and gets `grid` to do the drawing
+    
+    
+## base graphics basics
+
+- The primitive types are points, lines, polygons, text, and raster images (aka bitmaps)
+    + These are the basic drawing tools that are combined to create a figure
+- Graphical parameters are all documented in `par`. These include things like point shape, line type, color, margins, font, etc. 
+
+```{r, fig.height = 3.5, out.height = "20%"}
+par(mar=rep(0.5, 4))  # small plot margins (bottom, left, top, right)
+plot.new()  # start a new plot
+plot.window(c(0, 6), c(0, 2), asp=1)  # x range: 0–6, y: 0–2; proportional
+x <- c(0, 0, NA, 1, 2, 3, 4, 4, 5,    6)
+y <- c(0, 2, NA, 2, 1, 2, 2, 1, 0.25, 0)
+points(x[-(1:6)], y[-(1:6)])  # symbols
+lines(x, y)   # line segments
+text(c(0, 6), c(0, 2), c("(0, 0)", "(6, 2)"), col="red")  # two text labels
+rasterImage(
+    matrix(c(1, 0,  # 2x3 pixel "image"; 0=black, 1=white
+             0, 1,
+             0, 0), byrow=TRUE, ncol=2),
+    5, 0.5, 6, 2,  # position: xleft, ybottom, xright, ytop
+    interpolate=FALSE
+)
+polygon(
+    c(4, 5, 5.5,    4),  # x coordinates of the vertices
+    c(0, 0,   1, 0.75),  # y coordinates
+    lty="dotted",   # border style
+    col="#ffff0044"  # fill colour: semi-transparent yellow
+)
+```
+
+## Colors
+
+You can refer to colors in several ways: 
+
+- by name, e.g., `"red"`, see `colors()`
+- by hex code: `"#dd3333"`
+- by specifying them in a color space with one of the functions: `rgb`, `hsv`, `hcl`. 
+
+More often, you want to choose a good _color palette_ .
+
+In base graphics, the `palette()` function is used to view and modify the current color palette. 
+
+The default is both ugly, and can be poorly perceived when data are mapped to color values. 
+
+## Choosing a palette
+
+Use the `colorspace` package to find a good palette to meet your needs. It uses the Hue Chroma Luminance colorspace
+
+```{r}
+library(colorspace)
+swatchplot(
+  "Hue"       = sequential_hcl(5, h = c(0, 300), c = c(60, 60), l = 65),
+  "Chroma"    = sequential_hcl(5, h = 0, c = c(100, 0), l = 65, rev = TRUE, power = 1),
+  "Luminance" = sequential_hcl(5, h = 260, c = c(25, 25), l = c(25, 90), rev = TRUE, power = 1),
+  off = 0
+)
+```
+
+You can also use it to simulate color blindness
+
+```{r}
+library(palmerpenguins)
+par(mfrow = c(1, 2))
+palette("R3")
+plot(bill_length_mm ~ body_mass_g, 
+     col = island, data = penguins, pch = 20, 
+     main = "Default palette")
+legend("bottomright", fill= palette(), legend = levels(penguins$island))
+palette(deutan(palette()))
+plot(bill_length_mm ~ body_mass_g, 
+     col = island, data = penguins, pch = 20, 
+     main = "Deuteranope")
+legend("bottomright", fill= palette(), legend = levels(penguins$island))
+```
+
+
+## `ggplot2`
+
+GG stands for "Grammar of Graphics", and this is actually the 2nd iteration of the package. Hadley Wickham started from scratch in 2005 with ggplot2, abandoning the original ggplot1
+
+### Grammar of Graphics
+
+Introduced in the eponymous book by Leland Wilkinson, Hadley adapted a bit
+
+Hadley Wickham. __A layered grammar of graphics.__ _Journal of Computational and Graphical Statistics_, vol. 19, no. 1, pp. 3–28, 2010.
+
+- The main idea is to **concisely describe** a graphic using a set of fundamental **rules and concepts**
+- In the background, this also facilitates the creation of the graphic by the software
+
+The building blocks: 
+
+1. Data and aesthetic mappings (`ggplot(data, aes(x = x, y = y))`)
+2. Geometric objects (`geom_point()`)
+3. Statistical transformations (`stat_smooth()`)
+4. Scales
+5. Facets
+6. Coordinate systems
+
+With `ggplot2`, we describe the building blocks, and combine them to construct a graphic
+
+
+## `ggplot2` basics
+
+1. Start with the data, tidy data
+
+```{r}
+library(ggplot2)
+
+head(penguins)
+```
+
+2. Specify aesthetic mappings, i.e., how variables in the data are associated to visual elements (e.g., x position, y position, color, size, transparency, ...)
+
+```{r}
+step1 <- ggplot(penguins, 
+                aes(x = body_mass_g, y = bill_length_mm, color = species))
+step1
+```
+
+3. Add geometric elements
+
+```{r}
+step2 <- step1 + geom_point()
+step2
+```
+
+4. Adjust the scales
+```{r}
+step2 + scale_color_brewer("Species", type = "qual")
+```
+
+## Notes and details
+
+1. Layers/components of the plot are distinct functions
+2. Layers are combined with the `+`
+3. The plot can be saved as an object (what class?)
+4. The plot is displayed/rendered when printed
+
+### How does the adding of layers work? 
+
+```{r}
+pgeom <- geom_point()
+class(pgeom)
+class(step1)
+
+ggplot2:::`+.gg`
+```
+
+
+
+
+
+
+

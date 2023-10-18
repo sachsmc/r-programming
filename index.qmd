@@ -52,7 +52,12 @@ Michael Sachs, Section of Biostatistics
 Michael Sachs and other members of the staff at the Section of Biostatistics.
 
 ## Dates
-14, 17, 21, 24 March 2023, all days from 10.00-16.00, with breaks for lunch.
+30 October, 2, 6, 9, November 2023, all days from 10.00-16.00, with breaks for lunch.
 
 ## Course location
-CSS 1-0-10
+
+### On Monday 30 Oct and 6 Nov
+CSS 2-2-55
+
+### On Thursday 2 and 9 Nov
+CSS 22-0-19
