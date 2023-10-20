@@ -36,7 +36,6 @@ mytheme <- theme(strip.background = element_rect(fill = "steelblue"),
         legend.position = "bottom"
         ) 
 
-theme_get()
 ggplot(penguins, aes(x = body_mass_g, y = bill_length_mm, color = species)) + 
   geom_point() + facet_wrap(~ year) + mytheme
 

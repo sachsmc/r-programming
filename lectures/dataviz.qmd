@@ -5,6 +5,8 @@ author: "Michael C Sachs"
 format: 
     revealjs:
       scrollable: true
+      max-scale: 1
+      min-scale: 1
 execute:
   echo: true
 image: "../images/datavis.png"
@@ -212,25 +214,24 @@ plot2
 
 1. Change titles and axis labels with `ggtitle()`, `xlab(), ylab()`, limits with `xlim(), ylim()`
 2. Themes can be adjusted with `theme()`, changing the appearance of plot elements. The elements are all documented fairly well. There are some nice built-in themes like `theme_bw()`. Save your theme as an object for reuse.
-
 3. Annotations can be added with `annotate()`, but that does not play nicely with facets. Instead use `geom_text()`
 
 ```{r}
+#| out-height: "480px"
 mytheme <- theme(strip.background = element_rect(fill = "steelblue"), 
         text = element_text(family = "Comic sans"), 
         plot.background = element_rect(fill = "grey81"), 
         legend.background = element_rect(fill = NA), 
-        legend.position = "bottom"
-        ) 
+        legend.position = "bottom") 
 
-plot2 + mytheme + 
+plot2b <- plot2 + mytheme + 
   geom_text(data = data.frame(body_mass_g = 3000, 
                               bill_length_mm = 55, 
                               year = 2009, sex = NA,
                               label = "Some missing data here"), 
             aes(label = label, color = NULL), 
-            hjust = 0
-           )
+            hjust = 0)
+plot2b
 ```
 
 ## Tidy data is key
@@ -246,8 +247,7 @@ plot2 +
                               year = 2009, sex = NA,
                               label = "Some missing data here"), 
             aes(label = label, color = NULL), 
-            hjust = 0
-           )
+            hjust = 0)
 ```
 
 Another example
@@ -315,6 +315,7 @@ mcidf$xmax <- as.numeric(mcidf$species) + .45
 Step 2: add to the plot using the desired geometric elements
 
 ```{r}
+#| out-height: "480px"
 plot3 + geom_linerange(data = mcidf, aes(xmin = xmin, 
                                      xmax = xmax, 
                                      y = mean, 
@@ -334,6 +335,7 @@ plot3 + geom_linerange(data = mcidf, aes(xmin = xmin,
 Let's make a function that adds the mean and confidence interval
 
 ```{r}
+#| out-height: "480px"
 ggmean_ci <- function(data, yname, groupname, buffer = .45) {
   
   means_and_cis <- split(data[[yname]], data[[groupname]]) |> 
@@ -384,6 +386,7 @@ ggplot(penguins |> subset(!is.na(sex)), aes(x = sex, y = bill_length_mm)) +
 If you want a function that takes a name or expression as a variable (instead of a string), you can do the following:
 
 ```{r}
+#| out-height: "480px"
 ggboxplot <- function(data, yvar, xvar) {
   
   ggplot(data, aes(x = {{ xvar }}, y = {{ yvar }})) + 
@@ -404,6 +407,7 @@ ggboxplot(penguins |> subset(!is.na(sex)), sqrt(bill_length_mm), sex)
 Use the `patchwork` package
 
 ```{r}
+#| out-height: "480px"
 library(patchwork)
 
 (plot1 + plot3) / plot2
