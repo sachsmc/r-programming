@@ -3,11 +3,77 @@ title: "Data visualization -- exercises"
 subtitle: "Day 4, C"
 author: Michael C Sachs
 description: "Understanding how R creates images with base graphics and ggplot2, practice using ggplot2 to customize figures, and practice creating reusable tools for plotting"
-image: datavis.png
+image: "../images/datavis.png"
 ---
 
 
 
+### Learning objectives {.alert .alert-success}
+
+In this lesson you will 
+
+1. Understand how R creates images with base graphics and ggplot2
+2. Practice using ggplot2 to customize figures 
+3. Practice creating reusable tools for plotting
 
 
+## Create your own theme
+
+Load the `ggplot2` package and customize your own theme. Look at the built-in themes and the `ggthemes` package for inspiration. 
+
+### Tips
+
+1. You can save your customization using the `theme()`, but that will only modify the current theme
+
+```{r}
+library(ggplot2)
+library(palmerpenguins)
+
+mytheme <- theme(strip.background = element_rect(fill = "steelblue"), 
+        text = element_text(family = "Comic sans"), 
+        plot.background = element_rect(fill = "grey81"), 
+        legend.background = element_rect(fill = NA), 
+        legend.position = "bottom"
+        ) 
+
+theme_get()
+ggplot(penguins, aes(x = body_mass_g, y = bill_length_mm, color = species)) + 
+  geom_point() + facet_wrap(~ year) + mytheme
+
+theme_set(theme_bw())
+ggplot(penguins, aes(x = body_mass_g, y = bill_length_mm, color = species)) + 
+  geom_point() + facet_wrap(~ year) + mytheme
+```
+
+2. To make a fully custom theme, start with an existing one, and modify it
+
+```{r}
+my_fulltheme <- theme_grey() + mytheme
+
+ggplot(penguins, aes(x = body_mass_g, y = bill_length_mm, color = species)) + 
+  geom_point() + facet_wrap(~ year) + my_fulltheme
+```
+
+
+3. Save your favorite color scales as a function for easy reuse. Use `discrete_scale` or `continuous_scale`.
+
+```{r}
+my_qual_scale <- function(...) {
+  discrete_scale("color", scale_name = "OI", 
+                 palette = function(x) {
+                   res <- palette.colors(x, "Okabe-Ito")[1:x]
+                   names(res) <- NULL
+                   res
+                 }, ...)
+}
+
+ggplot(penguins, aes(x = body_mass_g, y = bill_length_mm, color = species)) + 
+  geom_point() + facet_wrap(~ year) + my_fulltheme + my_qual_scale()
+```
+
+
+
+## Make a better plot than before
+
+Use a figure from a recent analysis or publication that you would like to reproduce or enhance. Use tidy data principles to set yourself up for success. 
 

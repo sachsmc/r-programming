@@ -3,7 +3,7 @@ title: "Dynamic documents -- exercises"
 author: "Michael C Sachs"
 subtitle: "Day 1, A"
 description: "Using rmarkdown and quarto to create reproducible and dynamic documents for reporting statistical analyses"
-image: dynamic-documents.jpeg
+image: "../images/dynamic-documents.jpeg"
 ---
 
 

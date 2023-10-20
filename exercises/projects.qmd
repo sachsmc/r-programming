@@ -3,7 +3,7 @@ title: "Project organization and workflow -- exercises"
 subtitle: "Day 0"
 author: Michael C Sachs
 description: "Understanding how R deals with the current working directory, practice using relative paths in R input and output, and testing out the `here` package for managing file paths in a project"
-image: projects.jpeg
+image: "../images/projects.png"
 ---
 
 ### Learning objectives {.alert .alert-success}

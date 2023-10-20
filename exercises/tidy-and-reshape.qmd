@@ -3,7 +3,7 @@ title: "Tidying and reshaping -- exercises"
 author: "Michael C Sachs"
 subtitle: "Day 3, B"
 description: "Practice manipulating data by tidying and reshaping"
-image: reshape.jpeg
+image: "../images/reshape.jpeg"
 ---
 
 

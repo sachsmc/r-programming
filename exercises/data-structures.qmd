@@ -3,7 +3,7 @@ title: "Data structures -- exercises"
 subtitle: "Day 1, B"
 author: Michael C Sachs
 description: "Understanding basic data structures in R, including vectors, arrays, lists, and data frames"
-image: data-structures.jpeg
+image: "../images/data-structures.jpeg"
 ---
 
 

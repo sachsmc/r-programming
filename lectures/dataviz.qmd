@@ -7,6 +7,7 @@ format:
       scrollable: true
 execute:
   echo: true
+image: "../images/datavis.png"
 ---
 
 
@@ -127,8 +128,8 @@ Hadley Wickham. __A layered grammar of graphics.__ _Journal of Computational and
 The building blocks: 
 
 1. Data and aesthetic mappings (`ggplot(data, aes(x = x, y = y))`)
-2. Geometric objects (`geom_point()`)
-3. Statistical transformations (`stat_smooth()`)
+2. Geometric objects (e.g., `geom_point()`)
+3. Statistical transformations (e.g., `stat_smooth()`)
 4. Scales
 5. Facets
 6. Coordinate systems
@@ -163,7 +164,8 @@ step2
 
 4. Adjust the scales
 ```{r}
-step2 + scale_color_brewer("Species", type = "qual")
+plot1 <- step2 + scale_color_brewer("Species", type = "qual")
+plot1
 ```
 
 ## Notes and details
@@ -184,8 +186,284 @@ ggplot2:::`+.gg`
 ```
 
 
+## More complex plots
+
+Just keep adding layers:
+
+```{r}
+plot1 + stat_smooth(method = "lm")
+```
+
+```{r}
+plot1 + stat_smooth(method = "lm") + 
+  facet_grid(sex ~ year)
+```
+
+
+```{r}
+plot2 <- plot1 + stat_smooth(method = "lm") + 
+  facet_grid(sex ~ year) + 
+  ggtitle("A nice figure", subtitle = "made by ggplot2")
+plot2
+```
+
+
+## Changing how things look
+
+1. Change titles and axis labels with `ggtitle()`, `xlab(), ylab()`, limits with `xlim(), ylim()`
+2. Themes can be adjusted with `theme()`, changing the appearance of plot elements. The elements are all documented fairly well. There are some nice built-in themes like `theme_bw()`. Save your theme as an object for reuse.
+
+3. Annotations can be added with `annotate()`, but that does not play nicely with facets. Instead use `geom_text()`
+
+```{r}
+mytheme <- theme(strip.background = element_rect(fill = "steelblue"), 
+        text = element_text(family = "Comic sans"), 
+        plot.background = element_rect(fill = "grey81"), 
+        legend.background = element_rect(fill = NA), 
+        legend.position = "bottom"
+        ) 
+
+plot2 + mytheme + 
+  geom_text(data = data.frame(body_mass_g = 3000, 
+                              bill_length_mm = 55, 
+                              year = 2009, sex = NA,
+                              label = "Some missing data here"), 
+            aes(label = label, color = NULL), 
+            hjust = 0
+           )
+```
+
+## Tidy data is key
+
+Most plotting problems are actually data problems. 
+
+Set up the thing you want to add to the plot in a tidy data frame. Then add the geometric element with the mappings.
+
+```{r}
+plot2 +  
+  geom_text(data = data.frame(body_mass_g = 3000, 
+                              bill_length_mm = 55, 
+                              year = 2009, sex = NA,
+                              label = "Some missing data here"), 
+            aes(label = label, color = NULL), 
+            hjust = 0
+           )
+```
+
+Another example
+
+```{r}
+plot3 <- ggplot(penguins, aes(x = species, y = body_mass_g)) + geom_jitter()
+plot3
+```
+
+
+## Reordering things
+
+Again, this is a data problem. The order is determined by the levels of the factor
+
+```{r}
+class(penguins$species)
+
+levels(as.factor(penguins$species))
+```
+
+When R converts a character to a factor, and by default the levels are determined by alphabetical order. Change the order using `factor()` or `reorder()`
+
+```{r}
+penguins$species2 <- factor(penguins$species, 
+                            levels = c("Chinstrap", "Gentoo", "Adelie"))
+
+ggplot(penguins, aes(x = species2, y = body_mass_g)) + geom_jitter()
+
+penguins$species2 <- reorder(penguins$species2, 
+                             penguins$body_mass_g, 
+                             mean, na.rm = TRUE)
+ggplot(penguins, aes(x = species2, y = body_mass_g)) + geom_jitter()
+```
 
 
 
+## Challenge/exercise 
+
+Add solid horizontal lines at the mean and dashed horizontal lines at 95% confidence intervals for the mean
+
+
+## Solution
+
+Step 1: assemble the data
+```{r}
+means_and_cis <- split(penguins$body_mass_g, penguins$species) |> 
+  lapply(\(bm) {
+    ttestbm <- t.test(bm)
+    data.frame(mean = ttestbm[["estimate"]], 
+               lower = ttestbm[["conf.int"]][1], 
+               upper = ttestbm[["conf.int"]][2])
+  })
+
+mcidf <- do.call("rbind.data.frame", means_and_cis)
+mcidf$species <- as.factor(names(means_and_cis))
+
+## get the x position with a .45 unit buffer
+
+mcidf$xmin <- as.numeric(mcidf$species) - .45
+mcidf$xmax <- as.numeric(mcidf$species) + .45
+
+```
+
+
+Step 2: add to the plot using the desired geometric elements
+
+```{r}
+plot3 + geom_linerange(data = mcidf, aes(xmin = xmin, 
+                                     xmax = xmax, 
+                                     y = mean, 
+                                     color = species), linewidth = 1) + 
+  geom_linerange(data = mcidf, aes(xmin = xmin, 
+                                     xmax = xmax,
+                                   y = lower, color = species), linetype = 2) + 
+  geom_linerange(data = mcidf, aes(xmin = xmin, 
+                                     xmax = xmax,
+                                   y = upper, color = species), linetype = 2) 
+```
+
+
+
+## Creating reusable elements
+
+Let's make a function that adds the mean and confidence interval
+
+```{r}
+ggmean_ci <- function(data, yname, groupname, buffer = .45) {
+  
+  means_and_cis <- split(data[[yname]], data[[groupname]]) |> 
+  lapply(\(bm) {
+    ttestbm <- t.test(bm)
+    data.frame(mean = ttestbm[["estimate"]], 
+               lower = ttestbm[["conf.int"]][1], 
+               upper = ttestbm[["conf.int"]][2])
+  })
+
+  mcidf <- do.call("rbind.data.frame", means_and_cis)
+  mcidf[[groupname]] <- as.factor(names(means_and_cis))
+
+## get the x position with a buffer
+
+  mcidf$xmin <- as.numeric(mcidf[[groupname]]) - buffer
+  mcidf$xmax <- as.numeric(mcidf[[groupname]]) + buffer
+  
+  list(
+  geom_linerange(data = mcidf, aes(xmin = xmin, 
+                                   xmax = xmax, 
+                                   y = mean, 
+                                   color = .data[[groupname]]), linewidth = 1),
+  geom_linerange(data = mcidf, aes(xmin = xmin, 
+                                     xmax = xmax,
+                                   y = lower, color = .data[[groupname]]), linetype = 2),
+  geom_linerange(data = mcidf, aes(xmin = xmin, 
+                                     xmax = xmax,
+                                   y = upper, color = .data[[groupname]]), linetype = 2) 
+  )
+
+}
+
+
+plot3 + ggmean_ci(penguins, "body_mass_g", "species")
+
+ggplot(penguins |> subset(!is.na(sex)), aes(x = sex, y = bill_length_mm)) + 
+  geom_jitter() + 
+  ggmean_ci(penguins, "bill_length_mm", "sex")
+```
+
+
+## Using ggplot2 in functions
+
+1. Note the use of `.data[[[groupname]]`. This says to use the layer data and not some other global object. 
+2. Layers cannot be added by themselves without a call to `ggplot()`. This is why we return the elements in list. Themes are an exception to this.
+
+If you want a function that takes a name or expression as a variable (instead of a string), you can do the following:
+
+```{r}
+ggboxplot <- function(data, yvar, xvar) {
+  
+  ggplot(data, aes(x = {{ xvar }}, y = {{ yvar }})) + 
+    geom_jitter() + 
+    geom_boxplot(fill = NA)
+  
+}
+
+ggboxplot(penguins |> subset(!is.na(sex)), bill_length_mm, sex)
+
+ggboxplot(penguins |> subset(!is.na(sex)), sqrt(bill_length_mm), sex)
+
+```
+
+
+## Combining figures
+
+Use the `patchwork` package
+
+```{r}
+library(patchwork)
+
+(plot1 + plot3) / plot2
+```
+
+There are many options for layouts and adding different elements
+
+## Interactive graphics
+
+
+### Why
+
+- Animation/interactivity should only be used when it enhances understanding, condenses information, makes something more accessible 
+- Sometimes it is only distracting
+
+### What
+
+Interesting applications:
+
+- Summarizing complex data/results of analysis
+- Illustrating statistical concepts for education
+- Let readers play the what-if? game
+
+### How
+
+- One easy tool is the `plotly` package
+
+## Example
+
+```{r}
+library(plotly)
+
+ggplotly(plot1 + facet_wrap(~ year))
+```
+
+
+
+
+## Summary
+
+1. Remember tidy data
+    + Keep data defining groups you want to compare (colors, facets) as variables
+    + Distinct geometric elements can be separated into different columns or different datasets
+2. Choose good color scales
+    + `colorspace` is a great resource for this
+    + qualitative (discrete data), sequential and diverging (continuous data)
+3. Save images at the correct size and format
+4. Create reusable elements
+    + Functions for special types of plots
+    + Themes and groups of geoms as lists
+5. Define your own Stats and Geoms
+    + See "Extending ggplot2" vignette
+
+
+# Try it yourself
+
+## Practical
+
+[Link to lesson](../exercises/dataviz.html)
+
+[Link home](../index.html)
 
 

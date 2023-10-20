@@ -3,7 +3,7 @@ title: "Flow control and loops -- exercises"
 subtitle: "Day 2, A"
 author: Michael C Sachs
 description: "Understanding conditional and repeated execution of R expressions"
-image: loops.jpeg
+image: "../images/loops.jpeg"
 ---
 
 

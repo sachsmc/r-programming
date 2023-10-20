@@ -3,7 +3,7 @@ title: "Functions -- exercises"
 author: "Michael C Sachs"
 subtitle: "Day 2, B"
 description: "Understanding how to create and use your own functions"
-image: functions.jpeg
+image: "../images/functions.jpeg"
 ---
 
 

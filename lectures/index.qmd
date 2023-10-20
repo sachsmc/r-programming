@@ -2,7 +2,7 @@
 title: "Lectures"
 listing: 
     type: default
-    fields: [title, subtitle]
+    fields: [title, subtitle, image]
     sort: "subtitle"
 ---
 

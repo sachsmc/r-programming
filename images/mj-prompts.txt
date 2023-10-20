@@ -1,0 +1,9 @@
+in the style of Picasso, a drawing or painting of abstract representation of loops in a programming language --ar 1:1 
+in the style of Dali, a surreal image of an artist making statistical graphics such as a scatterplot with the programming language R --ar 1:1 
+photorealistic style, a group of young adults with a mix of ethnicities and genders preparing to go on an outdoor adventure with gear related to the programming language R --ar 1:1 
+in the style of HR Giger, a painting style image of several abstract alien tools and machines that are designed to work together to accomplish an unknown task --ar 1:1 
+in the style of studio Ghibli, an image of a magical workshop with a variety of tools and machines on tables and shelves --ar 1:1 
+in the style of Piet Mondrian, a painting of a bunch of haphazardly arranged cubes that are transitioning into a regular rectangular arrangement --ar 1:1
+a cinematic style photo that you might see at the end of an inspirational movie about a person overcoming challenges and being prepared for the future --ar 1:1
+a cartoon in the style of Richard Scarry showing a busy highway intersection where vehicles are merging efficiently --ar 1:1
+a cartoon in the style of Richard Scarry showing cartoon animals working together to plan and carry out a complicated project --ar 1:1

@@ -7,6 +7,7 @@ format:
       scrollable: true
 execute:
   echo: true
+image: "../images/merging.png"
 ---
 
 ## Register data example
@@ -251,7 +252,7 @@ ydt[xdt, on = .(key1, key2y == key2x), roll = TRUE, nomatch = NULL]
 
 ## Tidyverse
 
-__Note__: this is not yet available in the `dplyr` release version (coming in version 1.1.0)
+This is available in `dplyr` since version 1.1.0
 
 ```{r}
 #| eval: false

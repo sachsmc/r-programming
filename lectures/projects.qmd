@@ -5,6 +5,7 @@ author: "Michael C Sachs"
 format: 
     revealjs:
       scrollable: true
+image: "../images/projects.png"
 ---
 
 
