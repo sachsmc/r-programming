@@ -7,9 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Michael C Sachs">
-<meta name="description" content="Understanding how R creates images with base graphics and ggplot2, practice using ggplot2 to customize figures, and practice creating reusable tools for plotting">
 
-<title>Programming and statistical modelling in R - Data visualization – exercises</title>
+<title>Programming and statistical modelling in R - Data visualization – exercise solutions</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -59,22 +58,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -97,7 +96,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -107,10 +106,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../ku-logo_400x400.png" alt="" class="navbar-logo">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../ku-logo_400x400.png" alt="" class="navbar-logo">
     </a>
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Programming and statistical modelling in R</span>
     </a>
   </div>
@@ -121,19 +120,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html" rel="" target="">
+    <a class="nav-link" href="../../index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../lectures/index.html" rel="" target="">
+    <a class="nav-link" href="../../lectures/index.html" rel="" target="">
  <span class="menu-text">Lectures</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../exercises/index.html" rel="" target="">
+    <a class="nav-link" href="../../exercises/index.html" rel="" target="">
  <span class="menu-text">Exercises</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../resources.html" rel="" target="">
+    <a class="nav-link" href="../../resources.html" rel="" target="">
  <span class="menu-text">Links and Resources</span></a>
   </li>  
 </ul>
@@ -152,12 +151,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning objectives</a></li>
-  <li><a href="#create-your-own-theme" id="toc-create-your-own-theme" class="nav-link" data-scroll-target="#create-your-own-theme">Create your own theme</a>
+  <li><a href="#create-your-own-theme" id="toc-create-your-own-theme" class="nav-link active" data-scroll-target="#create-your-own-theme">Create your own theme</a>
   <ul class="collapse">
   <li><a href="#tips" id="toc-tips" class="nav-link" data-scroll-target="#tips">Tips</a></li>
   </ul></li>
-  <li><a href="#make-a-better-plot-than-before" id="toc-make-a-better-plot-than-before" class="nav-link" data-scroll-target="#make-a-better-plot-than-before">Make a better plot than before</a></li>
   <li><a href="#complex-figures-with-base-graphics" id="toc-complex-figures-with-base-graphics" class="nav-link" data-scroll-target="#complex-figures-with-base-graphics">Complex figures with base graphics</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/sachsmc/r-programming/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -167,15 +164,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Data visualization – exercises</h1>
+<h1 class="title">Data visualization – exercise solutions</h1>
 <p class="subtitle lead">Day 4, C</p>
 </div>
 
-<div>
-  <div class="description">
-    Understanding how R creates images with base graphics and ggplot2, practice using ggplot2 to customize figures, and practice creating reusable tools for plotting
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
@@ -194,15 +186,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="learning-objectives" class="level3 alert alert-success">
-<h3 class="alert alert-success anchored" data-anchor-id="learning-objectives">Learning objectives</h3>
-<p>In this lesson you will</p>
-<ol type="1">
-<li>Understand how R creates images with base graphics and ggplot2</li>
-<li>Practice using ggplot2 to customize figures</li>
-<li>Practice creating reusable tools for plotting</li>
-</ol>
-</section>
 <section id="create-your-own-theme" class="level2">
 <h2 class="anchored" data-anchor-id="create-your-own-theme">Create your own theme</h2>
 <p>Load the <code>ggplot2</code> package and customize your own theme. Look at the built-in themes and the <code>ggthemes</code> package for inspiration.</p>
@@ -279,10 +262,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-<section id="make-a-better-plot-than-before" class="level2">
-<h2 class="anchored" data-anchor-id="make-a-better-plot-than-before">Make a better plot than before</h2>
-<p>Use a figure from a recent analysis or publication that you would like to reproduce or enhance. Use tidy data principles to set yourself up for success.</p>
-</section>
 <section id="complex-figures-with-base-graphics" class="level2">
 <h2 class="anchored" data-anchor-id="complex-figures-with-base-graphics">Complex figures with base graphics</h2>
 <p>Check out this violin plot</p>
@@ -299,23 +278,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>How would you produce a similar plot using base graphics? After doing so, reflect, do you appreciate to convenience and flexibility of <code>ggplot2</code>?</p>
-<details>
-<summary>
-Hints
-</summary>
 <p>Use the <code>density</code> function to calculate the densities by species. The results are stored in a list with elements <code>x</code> and <code>y</code>. Then transform by rotating 90 degrees and mirroring. Plot the result using the <code>polygon</code> function.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dens_by_species <span class="ot">&lt;-</span> <span class="fu">split</span>(penguins<span class="sc">$</span>body_mass_g, penguins<span class="sc">$</span>species) <span class="sc">|&gt;</span> </span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(density, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">cut =</span> <span class="dv">0</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(body_mass_g <span class="sc">~</span> <span class="fu">jitter</span>(<span class="fu">as.numeric</span>(<span class="fu">as.factor</span>(species))), </span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">data =</span> penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">data =</span> penguins, <span class="at">xaxt =</span> <span class="st">"n"</span>, <span class="at">xlab =</span> <span class="st">"species"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(dens_by_species)) {</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  den <span class="ot">&lt;-</span> dens_by_species[[i]]</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  newx <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.2</span> <span class="sc">*</span> (den<span class="sc">$</span>y <span class="sc">/</span> <span class="fu">max</span>(den<span class="sc">$</span>y)) <span class="sc">+</span> i, </span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>            <span class="fu">rev</span>(<span class="sc">-</span><span class="fl">0.2</span> <span class="sc">*</span> (den<span class="sc">$</span>y <span class="sc">/</span> <span class="fu">max</span>(den<span class="sc">$</span>y)) <span class="sc">+</span> i))</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  newy <span class="ot">&lt;-</span> <span class="fu">c</span>(den<span class="sc">$</span>x, <span class="fu">rev</span>(den<span class="sc">$</span>x))</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">polygon</span>(newx,  newy)</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">at =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">labels =</span> <span class="fu">levels</span>(<span class="fu">as.factor</span>(penguins<span class="sc">$</span>species)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="dataviz_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">## rotate, scale, and mirror the densities, then add with polygon</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</details>
 
 
 </section>

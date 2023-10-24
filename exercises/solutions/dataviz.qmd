@@ -1,20 +1,8 @@
 ---
-title: "Data visualization -- exercises"
+title: "Data visualization -- exercise solutions"
 subtitle: "Day 4, C"
 author: Michael C Sachs
-description: "Understanding how R creates images with base graphics and ggplot2, practice using ggplot2 to customize figures, and practice creating reusable tools for plotting"
-image: "../images/datavis.png"
 ---
-
-
-
-### Learning objectives {.alert .alert-success}
-
-In this lesson you will 
-
-1. Understand how R creates images with base graphics and ggplot2
-2. Practice using ggplot2 to customize figures 
-3. Practice creating reusable tools for plotting
 
 
 ## Create your own theme
@@ -71,13 +59,6 @@ ggplot(penguins, aes(x = body_mass_g, y = bill_length_mm, color = species)) +
 ```
 
 
-
-## Make a better plot than before
-
-Use a figure from a recent analysis or publication that you would like to reproduce or enhance. Use tidy data principles to set yourself up for success. 
-
-
-
 ## Complex figures with base graphics
 
 Check out this violin plot 
@@ -89,8 +70,6 @@ ggplot(penguins, aes(x = species, y = body_mass_g)) + geom_violin() + geom_jitte
 How would you produce a similar plot using base graphics? After doing so, reflect, do you appreciate to convenience and flexibility of `ggplot2`? 
 
 
-<details>
-<summary>Hints</summary>
 Use the `density` function to calculate the densities by species. The results are stored in a list with elements `x` and `y`. Then transform by rotating 90 degrees and mirroring. Plot the result using the `polygon` function. 
 
 ```{r}
@@ -98,10 +77,19 @@ dens_by_species <- split(penguins$body_mass_g, penguins$species) |>
   lapply(density, na.rm = TRUE, cut = 0)
 
 plot(body_mass_g ~ jitter(as.numeric(as.factor(species))), 
-     data = penguins)
+     data = penguins, xaxt = "n", xlab = "species")
 
-## rotate, scale, and mirror the densities, then add with polygon
+for(i in 1:length(dens_by_species)) {
+  
+  den <- dens_by_species[[i]]
+  newx <- c(0.2 * (den$y / max(den$y)) + i, 
+            rev(-0.2 * (den$y / max(den$y)) + i))
+  newy <- c(den$x, rev(den$x))
+  
+  polygon(newx,  newy)
+}
+axis(side = 1, at = 1:3, labels = levels(as.factor(penguins$species)))
+
 ```
 
 
-</details>

@@ -61,3 +61,10 @@ CSS 2-2-55
 
 ### On Thursday 2 and 9 Nov
 CSS 22-0-19
+
+## Course credit
+
+To get credit for the course, you must submit and pass the take-home exam. Attendance is encouraged but not required.
+
+Send your solution to skl@sund.ku.dk __no later than 23.59 on November 16__. 
+
