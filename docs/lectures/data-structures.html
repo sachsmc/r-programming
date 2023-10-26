@@ -571,7 +571,7 @@ NULL
 [[3]]
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x55a7e4c45088&gt;
+&lt;bytecode: 0x55b3219e8088&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="fu">list</span>(<span class="at">numbers =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, </span>
@@ -588,7 +588,7 @@ $letters
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x55a7e4c45088&gt;
+&lt;bytecode: 0x55b3219e8088&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -647,7 +647,7 @@ NULL</code></pre>
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x55a7e4c45088&gt;
+&lt;bytecode: 0x55b3219e8088&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -699,7 +699,7 @@ $letters
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x55a7e4c45088&gt;
+&lt;bytecode: 0x55b3219e8088&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -733,7 +733,7 @@ $letters
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x55a7e4c45088&gt;
+&lt;bytecode: 0x55b3219e8088&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -767,7 +767,7 @@ $letters
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x55a7e4c45088&gt;
+&lt;bytecode: 0x55b3219e8088&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -945,21 +945,21 @@ c  3 6  9 NA</code></pre>
 <span id="cb110-5"><a href="#cb110-5"></a>S1 <span class="sc">%*%</span> S2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          [,1]      [,2]      [,3]
-[1,] 1.4383167 0.8982013 0.6728829
-[2,] 0.8124150 0.8505780 0.3674475
-[3,] 0.4446513 0.5503394 0.2301724</code></pre>
+[1,] 0.6805966 0.9890853 0.9191607
+[2,] 0.7046472 1.0929680 1.0612170
+[3,] 0.9706980 1.5595080 1.6363843</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb112"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1"></a><span class="fu">t</span>(S1) <span class="sc">%*%</span> S2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>          [,1]      [,2]      [,3]
-[1,] 1.4091899 1.0566146 0.8242002
-[2,] 0.5490144 0.3409433 0.3084038
-[3,] 0.5999194 0.8480257 0.2629703</code></pre>
+<pre><code>          [,1]     [,2]      [,3]
+[1,] 0.7861738 1.289605 1.4506330
+[2,] 0.4569648 0.676454 0.6433459
+[3,] 0.9812677 1.545392 1.5625850</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb114"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1"></a>x <span class="sc">%*%</span> <span class="fu">solve</span>(S1) <span class="sc">%*%</span> x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         [,1]
-[1,] 17.90753</code></pre>
+[1,] 7.255047</code></pre>
 </div>
 </div>
 </section>
@@ -1188,7 +1188,9 @@ c  3 6  9 NA</code></pre>
 </section>
 <section id="coercion" class="slide level2">
 <h2>Coercion</h2>
-<p>Coercion is what happens when two different types of data meet during an operation. In order to perform the operation, one of the data types may need to be coerced into the other data type. This can also be done explicitly using the <code>as.</code> family of functions.</p>
+<p>Coercion is what happens when data gets converted from one type to another (e.g., numeric to character).</p>
+<p>This can also be done explicitly using the <code>as.</code> family of functions.</p>
+<p>One of R’s “nice” features is that it will <strong>automatically attempt to coerce data</strong> when different types meet in an operation.</p>
 <p>Examples</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb176"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb176-1"><a href="#cb176-1"></a><span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>) <span class="sc">*</span> <span class="fl">1.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1215,6 +1217,8 @@ c  3 6  9 NA</code></pre>
 <pre><code>[1] 1.35 2.50   NA</code></pre>
 </div>
 </div>
+<p>Hopefully R warns you if data is destroyed due to coercion.</p>
+<p>If the data type is critical for an operation then it is up to you to check using the <code>is.</code> family of functions.</p>
 </section>
 <section id="recycling" class="slide level2">
 <h2>Recycling</h2>
@@ -1269,19 +1273,88 @@ c  3 6  9 NA</code></pre>
   8 0.80000000 0.00000000 0.40000000</code></pre>
 </div>
 </div>
+<p>Again, hopefully R warns you about this, but when in doubt check and validate lengths.</p>
 </section></section>
 <section>
 <section id="special-data-structures" class="title-slide slide level1 center">
 <h1>Special data structures</h1>
 
 </section>
+<section id="attributes" class="slide level2">
+<h2>Attributes</h2>
+<p>Any object can have attributes, which are data that get attached to the object. It is a flexible way to include information with an object.</p>
+<p>They are stored as names and value as in a list. Query or replace them with <code>attributes</code> or <code>attr</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb198"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb198-1"><a href="#cb198-1"></a><span class="fu">attributes</span>(A1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$dim
+[1] 4 4 2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb200"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb200-1"><a href="#cb200-1"></a><span class="fu">attr</span>(A1, <span class="st">"dim"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4 4 2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb202"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb202-1"><a href="#cb202-1"></a><span class="fu">attr</span>(A1, <span class="st">"note"</span>) <span class="ot">&lt;-</span> <span class="st">"This is a new attribute"</span></span>
+<span id="cb202-2"><a href="#cb202-2"></a></span>
+<span id="cb202-3"><a href="#cb202-3"></a>A1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>, , 1
+
+     [,1] [,2] [,3] [,4]
+[1,]    1    5    9   13
+[2,]    2    6   10   14
+[3,]    3    7   11   15
+[4,]    4    8   12   16
+
+, , 2
+
+     [,1] [,2] [,3] [,4]
+[1,]   17   21   25   29
+[2,]   18   22   26   30
+[3,]   19   23   27   31
+[4,]   20   24   28   32
+
+attr(,"note")
+[1] "This is a new attribute"</code></pre>
+</div>
+</div>
+<p>Some attributes are special, e.g., <code>class</code>, <code>comment</code>, <code>dim</code>, <code>dimnames</code>, …, and have special ways of querying and setting</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb204"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb204-1"><a href="#cb204-1"></a><span class="fu">comment</span>(A1) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"I created this array on "</span>, <span class="fu">Sys.time</span>())</span>
+<span id="cb204-2"><a href="#cb204-2"></a>A1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>, , 1
+
+     [,1] [,2] [,3] [,4]
+[1,]    1    5    9   13
+[2,]    2    6   10   14
+[3,]    3    7   11   15
+[4,]    4    8   12   16
+
+, , 2
+
+     [,1] [,2] [,3] [,4]
+[1,]   17   21   25   29
+[2,]   18   22   26   30
+[3,]   19   23   27   31
+[4,]   20   24   28   32
+
+attr(,"note")
+[1] "This is a new attribute"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb206"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb206-1"><a href="#cb206-1"></a><span class="fu">comment</span>(A1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "I created this array on  2023-10-26 14:39:12.186352"</code></pre>
+</div>
+</div>
+</section>
 <section id="environments-how-does-r-find-things" class="slide level2">
 <h2>Environments – how does R find things?</h2>
 <p>An environment is kind of like a list, it contains a number of arbitrary objects.</p>
 <p>The <em>global environment</em> is a special one, look at the upper right pane of Rstudio, or run</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb198"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb198-1"><a href="#cb198-1"></a><span class="do">## all of the objects in the global environment</span></span>
-<span id="cb198-2"><a href="#cb198-2"></a><span class="fu">ls</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb208"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb208-1"><a href="#cb208-1"></a><span class="do">## all of the objects in the global environment</span></span>
+<span id="cb208-2"><a href="#cb208-2"></a><span class="fu">ls</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "A1"              "d1"              "has_annotations" "i3"             
  [5] "imat"            "M1"              "M2"              "og.num"         
@@ -1298,8 +1371,8 @@ c  3 6  9 NA</code></pre>
 <p>They are installed to your system with <code>install.packages("pkgname")</code></p>
 <p>When you use <code>library("pkgname")</code>, the package is <em>attached</em>, so that objects in the package can be found just by typing the name:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb200"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb200-1"><a href="#cb200-1"></a><span class="fu">library</span>(palmerpenguins)</span>
-<span id="cb200-2"><a href="#cb200-2"></a>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb210"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb210-1"><a href="#cb210-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb210-2"><a href="#cb210-2"></a>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 344 × 8
    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
@@ -1320,7 +1393,7 @@ c  3 6  9 NA</code></pre>
 </div>
 <p>You can use objects from packages without attaching them with <code>::</code> (two colons)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb202"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb202-1"><a href="#cb202-1"></a><span class="fu">head</span>(survival<span class="sc">::</span>aml)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb212"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb212-1"><a href="#cb212-1"></a><span class="fu">head</span>(survival<span class="sc">::</span>aml)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  time status          x
 1    9      1 Maintained
@@ -1333,12 +1406,12 @@ c  3 6  9 NA</code></pre>
 </div>
 <p>and you can get internal objects from a package with <code>:::</code> (three colons)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb204"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb204-1"><a href="#cb204-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb204-2"><a href="#cb204-2"></a>plot.aareg <span class="do">## error</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb214"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb214-1"><a href="#cb214-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb214-2"><a href="#cb214-2"></a>plot.aareg <span class="do">## error</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in eval(expr, envir, enclos): object 'plot.aareg' not found</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb206"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb206-1"><a href="#cb206-1"></a><span class="fu">head</span>(survival<span class="sc">:::</span>plot.aareg) <span class="do">## finds it</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb216"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb216-1"><a href="#cb216-1"></a><span class="fu">head</span>(survival<span class="sc">:::</span>plot.aareg) <span class="do">## finds it</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                                    
 1 function (x, se = TRUE, maxtime, type = "s", ...) 
@@ -1355,21 +1428,21 @@ c  3 6  9 NA</code></pre>
 <p>Some packages you may use (e.g., from Bioconductor) return <em>S4 objects</em>. These are kind of like lists, but to access objects (called ‘slots’) inside, use <code>@</code> (the at symbol).</p>
 <p>For example</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb208"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb208-1"><a href="#cb208-1"></a><span class="do">## A simple class with two slots</span></span>
-<span id="cb208-2"><a href="#cb208-2"></a>track <span class="ot">&lt;-</span> <span class="fu">setClass</span>(<span class="st">"track"</span>, <span class="at">slots =</span> <span class="fu">c</span>(<span class="at">x=</span><span class="st">"numeric"</span>, <span class="at">y=</span><span class="st">"numeric"</span>))</span>
-<span id="cb208-3"><a href="#cb208-3"></a><span class="do">## an object from the class</span></span>
-<span id="cb208-4"><a href="#cb208-4"></a>ts1 <span class="ot">&lt;-</span> <span class="fu">track</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">y =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">10</span>))</span>
-<span id="cb208-5"><a href="#cb208-5"></a>ts1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb218"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb218-1"><a href="#cb218-1"></a><span class="do">## A simple class with two slots</span></span>
+<span id="cb218-2"><a href="#cb218-2"></a>track <span class="ot">&lt;-</span> <span class="fu">setClass</span>(<span class="st">"track"</span>, <span class="at">slots =</span> <span class="fu">c</span>(<span class="at">x=</span><span class="st">"numeric"</span>, <span class="at">y=</span><span class="st">"numeric"</span>))</span>
+<span id="cb218-3"><a href="#cb218-3"></a><span class="do">## an object from the class</span></span>
+<span id="cb218-4"><a href="#cb218-4"></a>ts1 <span class="ot">&lt;-</span> <span class="fu">track</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">y =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">10</span>))</span>
+<span id="cb218-5"><a href="#cb218-5"></a>ts1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>An object of class "track"
 Slot "x":
  [1]  1  2  3  4  5  6  7  8  9 10
 
 Slot "y":
- [1]  0.4512432  1.8265775  4.0035876  5.7572639  5.7564436  5.3125006
- [7]  6.4441651  7.9288203  8.5495864 11.5117037</code></pre>
+ [1] -0.8099225  1.7770185  3.8988999  3.6981417  4.9748003  5.2231952
+ [7]  7.1268818  7.6755662  7.8994802  9.4701344</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb210"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb210-1"><a href="#cb210-1"></a>ts1<span class="sc">@</span>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb220"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb220-1"><a href="#cb220-1"></a>ts1<span class="sc">@</span>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
 </div>
@@ -1379,13 +1452,13 @@ Slot "y":
 <h2>Tibbles</h2>
 <p>Tibbles (cute name for ‘table’) are data frames with enhanced printing.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb212"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb212-1"><a href="#cb212-1"></a><span class="fu">library</span>(tibble)</span>
-<span id="cb212-2"><a href="#cb212-2"></a><span class="fu">library</span>(palmerpenguins)</span>
-<span id="cb212-3"><a href="#cb212-3"></a><span class="fu">class</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb222"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb222-1"><a href="#cb222-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb222-2"><a href="#cb222-2"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb222-3"><a href="#cb222-3"></a><span class="fu">class</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "tbl_df"     "tbl"        "data.frame"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb214"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb214-1"><a href="#cb214-1"></a>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb224"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb224-1"><a href="#cb224-1"></a>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 344 × 8
    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
@@ -1406,8 +1479,8 @@ Slot "y":
 </div>
 <p>You can convert a regular data.frame to a tibble</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb216"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb216-1"><a href="#cb216-1"></a>mttbl <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(mtcars)</span>
-<span id="cb216-2"><a href="#cb216-2"></a>mttbl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb226"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb226-1"><a href="#cb226-1"></a>mttbl <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(mtcars)</span>
+<span id="cb226-2"><a href="#cb226-2"></a>mttbl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 32 × 11
      mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
@@ -1427,7 +1500,7 @@ Slot "y":
 </div>
 <p>The indexing behavior is slightly different from data frames:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb218"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb218-1"><a href="#cb218-1"></a>mttbl[, <span class="st">"mpg"</span>] <span class="do">## still a tibble</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb228"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb228-1"><a href="#cb228-1"></a>mttbl[, <span class="st">"mpg"</span>] <span class="do">## still a tibble</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 32 × 1
      mpg
@@ -1444,19 +1517,19 @@ Slot "y":
 10  19.2
 # ℹ 22 more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb220"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb220-1"><a href="#cb220-1"></a>mtcars[, <span class="st">"mpg"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb230"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb230-1"><a href="#cb230-1"></a>mtcars[, <span class="st">"mpg"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2 10.4
 [16] 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4 15.8 19.7
 [31] 15.0 21.4</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb222"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb222-1"><a href="#cb222-1"></a>mttbl[[<span class="st">"mpg"</span>]] <span class="do">## gives a vector</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb232"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb232-1"><a href="#cb232-1"></a>mttbl[[<span class="st">"mpg"</span>]] <span class="do">## gives a vector</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2 10.4
 [16] 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4 15.8 19.7
 [31] 15.0 21.4</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb224"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb224-1"><a href="#cb224-1"></a>mttbl<span class="sc">$</span>mpg <span class="do">## same as data.frame</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb234"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb234-1"><a href="#cb234-1"></a>mttbl<span class="sc">$</span>mpg <span class="do">## same as data.frame</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2 10.4
 [16] 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4 15.8 19.7
@@ -1470,14 +1543,14 @@ Slot "y":
 <p>It has many features for data manipulation and management with a focus on <strong>speed</strong>, both typing and computer speed for large datasets.</p>
 <p>There is a special syntax for indexing and merging using square brackets, we will come back to this (because it is my favorite tool for data management)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb226"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb226-1"><a href="#cb226-1"></a><span class="fu">library</span>(data.table)</span>
-<span id="cb226-2"><a href="#cb226-2"></a></span>
-<span id="cb226-3"><a href="#cb226-3"></a>mtdt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(mtcars)</span>
-<span id="cb226-4"><a href="#cb226-4"></a><span class="fu">class</span>(mtdt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb236"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb236-1"><a href="#cb236-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb236-2"><a href="#cb236-2"></a></span>
+<span id="cb236-3"><a href="#cb236-3"></a>mtdt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(mtcars)</span>
+<span id="cb236-4"><a href="#cb236-4"></a><span class="fu">class</span>(mtdt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "data.table" "data.frame"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb228"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb228-1"><a href="#cb228-1"></a><span class="fu">head</span>(mtdt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb238"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb238-1"><a href="#cb238-1"></a><span class="fu">head</span>(mtdt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    mpg cyl disp  hp drat    wt  qsec vs am gear carb
 1: 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
@@ -1487,8 +1560,8 @@ Slot "y":
 5: 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
 6: 18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb230"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb230-1"><a href="#cb230-1"></a><span class="fu">setkey</span>(mtdt, <span class="st">"mpg"</span>)</span>
-<span id="cb230-2"><a href="#cb230-2"></a><span class="fu">head</span>(mtdt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb240"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb240-1"><a href="#cb240-1"></a><span class="fu">setkey</span>(mtdt, <span class="st">"mpg"</span>)</span>
+<span id="cb240-2"><a href="#cb240-2"></a><span class="fu">head</span>(mtdt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    mpg cyl disp  hp drat    wt  qsec vs am gear carb
 1: 10.4   8  472 205 2.93 5.250 17.98  0  0    3    4
@@ -1498,7 +1571,7 @@ Slot "y":
 5: 14.7   8  440 230 3.23 5.345 17.42  0  0    3    4
 6: 15.0   8  301 335 3.54 3.570 14.60  0  1    5    8</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb232"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb232-1"><a href="#cb232-1"></a>mtdt[, .(<span class="at">meanwt =</span> <span class="fu">mean</span>(wt)), by <span class="ot">=</span> .(cyl)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb242"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb242-1"><a href="#cb242-1"></a>mtdt[, .(<span class="at">meanwt =</span> <span class="fu">mean</span>(wt)), by <span class="ot">=</span> .(cyl)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   cyl   meanwt
 1:   8 3.999214
@@ -1518,10 +1591,10 @@ Slot "y":
 <p>Via add on packages, R supports import of any data format I can think of.</p>
 <p>The most flexible way to read in data is with the <code>rio</code> package. It guesses what the format is and uses the correct import tool (most of the time)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb234"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb234-1"><a href="#cb234-1"></a><span class="fu">library</span>(rio)</span>
-<span id="cb234-2"><a href="#cb234-2"></a><span class="fu">library</span>(here)</span>
-<span id="cb234-3"><a href="#cb234-3"></a>df <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="fu">here</span>(<span class="st">"data/starwars.xlsx"</span>))</span>
-<span id="cb234-4"><a href="#cb234-4"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb244"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb244-1"><a href="#cb244-1"></a><span class="fu">library</span>(rio)</span>
+<span id="cb244-2"><a href="#cb244-2"></a><span class="fu">library</span>(here)</span>
+<span id="cb244-3"><a href="#cb244-3"></a>df <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="fu">here</span>(<span class="st">"data/starwars.xlsx"</span>))</span>
+<span id="cb244-4"><a href="#cb244-4"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Name homeworld species
 1 Luke Skywalker  Tatooine   Human
@@ -1538,15 +1611,15 @@ Slot "y":
 <p>The slowness of reading in data usually comes from format guessing.</p>
 <p>Supplying known column types can dramatically speed up import:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb236"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb236-1"><a href="#cb236-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">"data/starwars.csv"</span>))</span>
-<span id="cb236-2"><a href="#cb236-2"></a></span>
-<span id="cb236-3"><a href="#cb236-3"></a>df1b <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">"data/starwars.csv"</span>),</span>
-<span id="cb236-4"><a href="#cb236-4"></a>                <span class="at">colClasses =</span> <span class="fu">c</span>(<span class="st">"character"</span>, <span class="st">"factor"</span>, <span class="st">"factor"</span>, </span>
-<span id="cb236-5"><a href="#cb236-5"></a>                               <span class="st">"numeric"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb246"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb246-1"><a href="#cb246-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">"data/starwars.csv"</span>))</span>
+<span id="cb246-2"><a href="#cb246-2"></a></span>
+<span id="cb246-3"><a href="#cb246-3"></a>df1b <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">"data/starwars.csv"</span>),</span>
+<span id="cb246-4"><a href="#cb246-4"></a>                <span class="at">colClasses =</span> <span class="fu">c</span>(<span class="st">"character"</span>, <span class="st">"factor"</span>, <span class="st">"factor"</span>, </span>
+<span id="cb246-5"><a href="#cb246-5"></a>                               <span class="st">"numeric"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>fread</code> from the data.table package is fast and also flexible:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb237"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb237-1"><a href="#cb237-1"></a><span class="fu">fread</span>(<span class="fu">here</span>(<span class="st">"data/starwars.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb247"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb247-1"><a href="#cb247-1"></a><span class="fu">fread</span>(<span class="fu">here</span>(<span class="st">"data/starwars.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  Name homeworld species age
  1:     Luke Skywalker  Tatooine   Human  27
@@ -1568,8 +1641,8 @@ Slot "y":
 <p>Another under-used way of exporting objects is to use <code>saveRDS</code>, this saves any R object to a file, which then gives you exactly the same object when read into R using <code>readRDS</code>. I use this frequently for intermediate datasets, analysis results stored in a list, and even functions.</p>
 <p>Example</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb239"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb239-1"><a href="#cb239-1"></a>lmfit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> mtcars)</span>
-<span id="cb239-2"><a href="#cb239-2"></a>lmfit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb249"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb249-1"><a href="#cb249-1"></a>lmfit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> mtcars)</span>
+<span id="cb249-2"><a href="#cb249-2"></a>lmfit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1579,9 +1652,9 @@ Coefficients:
 (Intercept)           wt  
      37.285       -5.344  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb241"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb241-1"><a href="#cb241-1"></a><span class="fu">saveRDS</span>(lmfit, <span class="at">file =</span> <span class="st">"reg-ex.rds"</span>)</span>
-<span id="cb241-2"><a href="#cb241-2"></a></span>
-<span id="cb241-3"><a href="#cb241-3"></a><span class="fu">readRDS</span>(<span class="st">"reg-ex.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb251"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb251-1"><a href="#cb251-1"></a><span class="fu">saveRDS</span>(lmfit, <span class="at">file =</span> <span class="st">"reg-ex.rds"</span>)</span>
+<span id="cb251-2"><a href="#cb251-2"></a></span>
+<span id="cb251-3"><a href="#cb251-3"></a><span class="fu">readRDS</span>(<span class="st">"reg-ex.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:

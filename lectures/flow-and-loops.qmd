@@ -179,13 +179,30 @@ for(i in 1:5) {
 ```
 
 
-## Examples
-
-### Bootstrap
+## Example - Iterating through species
 
 ```{r}
 library(palmerpenguins)
 
+species_names <- levels(penguins$species)
+mean_bill_length <- numeric(length(species_names))
+names(mean_bill_length) <- species_names
+
+for(i in species_names){  ## iterator is a character
+  
+  mean_bill_length[i] <- ## indexing by name
+    mean(subset(penguins, species == i)$bill_length_mm, na.rm = TRUE)
+  
+}
+
+mean_bill_length
+```
+
+
+
+## Bootstrap
+
+```{r}
 mu.body_mass <- mean(penguins$body_mass_g, na.rm = TRUE)
 bsmeans <- vector("numeric", length = 2000)
 for(i in 1:length(bsmeans)) {
@@ -195,39 +212,6 @@ for(i in 1:length(bsmeans)) {
 hist(bsmeans)
 abline(v = mu.body_mass, col = "red")
 ```
-
-## Example 2
-Iterating through species
-
-```{r}
-#| out.height: 600px
-library(colorspace)
-
-species_names <- levels(penguins$species)
-colors <- colorspace::qualitative_hcl(length(species_names))
-for(i in 1:length(species_names)){
-  
-  if(i == 1) {
-    
-    plot(bill_length_mm ~ bill_depth_mm, 
-         pch = 20, col = colors[i],
-         data = subset(penguins, species == species_names[i]), 
-         xlim = range(penguins$bill_depth_mm, na.rm = TRUE), 
-         ylim = range(penguins$bill_length_mm, na.rm = TRUE)
-         )
-    
-  } else {
-    
-    points(bill_length_mm ~ bill_depth_mm, 
-         pch = 20, col = colors[i],
-         data = subset(penguins, species == species_names[i]))
-    
-  }
-  
-}
-legend("topleft", fill = colors, legend = species_names)
-```
-
 
 ## Nested loops
 
@@ -240,11 +224,11 @@ mean_bm_matrix <- matrix(NA, nrow = length(species_names),
                          ncol = length(island_names), 
                          dimnames = list(species_names, island_names))
 
-for(i in 1:nrow(mean_bm_matrix)) {
-  for(j in 1:ncol(mean_bm_matrix)) {
+for(i in species_names) {
+  for(j in island_names) {
    
-    thisset <- subset(penguins, species == species_names[i] & 
-                        island == island_names[j])
+    thisset <- subset(penguins, species == i & 
+                        island == j)
     
     if(nrow(thisset) == 0) next
     
@@ -273,7 +257,7 @@ for(i in 1:100000) {
 })
 
 system.time({
-A2 <- rep(NA, 100000)
+A2 <- numeric(100000)
 for(i in 1:length(A2)) {
   A2[i] <- rnorm(1)
 }

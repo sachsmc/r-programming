@@ -10,7 +10,7 @@ title: "Resources and tools about R"
 
 - [Tidy Data, Hadley Wickham, 2014, JSS](wickham-tidy-data-2014-jssv59i10.pdf)
 - [Literate Programming, Donald Knuth, 1992](https://www-cs-faculty.stanford.edu/~knuth/lp.html)
-
+- [A Layered Grammar of Graphics, 2010, JCGS](layered-grammar.pdf)
 
 ## Cheatsheets
 

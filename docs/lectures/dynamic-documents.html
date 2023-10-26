@@ -423,32 +423,37 @@ Michael C Sachs
 <section id="markdown" class="slide level2">
 <h2>Markdown</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># First level header</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="do">## Second level </span></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="do">### etc</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="sc">*</span>italics<span class="sc">*</span> <span class="cf">for</span> emphasis, <span class="sc">**</span>bold<span class="sc">**</span> <span class="cf">for</span> highlighting</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="sc">---</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>title<span class="sc">:</span> Example yaml header</span>
+<span id="cb1-3"><a href="#cb1-3"></a>author<span class="sc">:</span> Homer J Simpson</span>
+<span id="cb1-4"><a href="#cb1-4"></a>format<span class="sc">:</span> html</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="sc">---</span></span>
 <span id="cb1-6"><a href="#cb1-6"></a></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="sc">-</span> Lists</span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="sc">-</span> can </span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="sc">-</span> also</span>
-<span id="cb1-10"><a href="#cb1-10"></a>    <span class="sc">+</span> be </span>
-<span id="cb1-11"><a href="#cb1-11"></a>    <span class="sc">+</span> nested</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="co"># First level header</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="do">## Second level </span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="do">### etc</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="er">*</span>italics<span class="sc">*</span> <span class="cf">for</span> emphasis, <span class="sc">**</span>bold<span class="sc">**</span> <span class="cf">for</span> highlighting</span>
 <span id="cb1-12"><a href="#cb1-12"></a></span>
-<span id="cb1-13"><a href="#cb1-13"></a><span class="fl">1.</span> Or enumerated</span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="fl">2.</span> B</span>
-<span id="cb1-15"><a href="#cb1-15"></a><span class="fl">3.</span> C</span>
-<span id="cb1-16"><a href="#cb1-16"></a></span>
-<span id="cb1-17"><a href="#cb1-17"></a></span>
-<span id="cb1-18"><a href="#cb1-18"></a><span class="sc">!</span>[alt text](path<span class="sc">-</span>to<span class="sc">-</span>image.png)</span>
-<span id="cb1-19"><a href="#cb1-19"></a></span>
-<span id="cb1-20"><a href="#cb1-20"></a>[text](link.html)</span>
-<span id="cb1-21"><a href="#cb1-21"></a></span>
-<span id="cb1-22"><a href="#cb1-22"></a>Equations<span class="sc">:</span></span>
-<span id="cb1-23"><a href="#cb1-23"></a></span>
-<span id="cb1-24"><a href="#cb1-24"></a><span class="er">$$</span></span>
-<span id="cb1-25"><a href="#cb1-25"></a>T <span class="ot">=</span> \frac{\overline{X} <span class="sc">-</span> \mu_0}{\hat{\sigma}<span class="sc">/</span>\sqrt{n}}</span>
-<span id="cb1-26"><a href="#cb1-26"></a><span class="sc">$</span><span class="er">$</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="sc">-</span> Lists</span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="sc">-</span> can </span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="sc">-</span> also</span>
+<span id="cb1-16"><a href="#cb1-16"></a>    <span class="sc">+</span> be </span>
+<span id="cb1-17"><a href="#cb1-17"></a>    <span class="sc">+</span> nested</span>
+<span id="cb1-18"><a href="#cb1-18"></a></span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="fl">1.</span> Or enumerated</span>
+<span id="cb1-20"><a href="#cb1-20"></a><span class="fl">2.</span> B</span>
+<span id="cb1-21"><a href="#cb1-21"></a><span class="fl">3.</span> C</span>
+<span id="cb1-22"><a href="#cb1-22"></a></span>
+<span id="cb1-23"><a href="#cb1-23"></a><span class="sc">!</span>[alt text](path<span class="sc">-</span>to<span class="sc">-</span>image.png)</span>
+<span id="cb1-24"><a href="#cb1-24"></a></span>
+<span id="cb1-25"><a href="#cb1-25"></a>[text](link.html)</span>
+<span id="cb1-26"><a href="#cb1-26"></a></span>
+<span id="cb1-27"><a href="#cb1-27"></a>Equations<span class="sc">:</span></span>
+<span id="cb1-28"><a href="#cb1-28"></a></span>
+<span id="cb1-29"><a href="#cb1-29"></a><span class="er">$$</span></span>
+<span id="cb1-30"><a href="#cb1-30"></a>T <span class="ot">=</span> \frac{\overline{X} <span class="sc">-</span> \mu_0}{\hat{\sigma}<span class="sc">/</span>\sqrt{n}}</span>
+<span id="cb1-31"><a href="#cb1-31"></a><span class="sc">$</span><span class="er">$</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="code-chunks" class="slide level2">
@@ -459,7 +464,7 @@ Michael C Sachs
 <span id="cb2-2"><a href="#cb2-2"></a><span class="fu">rnorm</span>(<span class="dv">1</span>)</span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.5791548</code></pre>
+<pre><code>[1] 0.1266231</code></pre>
 </div>
 </div>
 <p>In quarto, chunk options are inside the fence after <code>#|</code>, e.g., <code>#| echo: fenced</code>, each on their own line</p>
@@ -468,7 +473,7 @@ Michael C Sachs
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>For example this <span class="st">`</span><span class="at">r rnorm(1)</span><span class="st">`</span> will show up inline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>which will put the output 0.267688 without showing the code.</p>
+<p>which will put the output 0.297338 without showing the code.</p>
 </section>
 <section id="rendering" class="slide level2">
 <h2>Rendering</h2>
@@ -508,7 +513,7 @@ Michael C Sachs
 <p>Tools of the trade</p>
 <ul>
 <li>Figures are straightforward, can use captions and cross-references</li>
-<li>For inline output, write custom print methods, like our meansd example</li>
+<li>For inline output, you can write custom print methods, which we will try later</li>
 <li>Tables are the hardest, there are some packages that help
 <ul>
 <li><code>knitr</code> and the function <code>kable</code>, also the package <code>kableExtra</code></li>
@@ -629,6 +634,7 @@ Michael C Sachs
 <li>Easy to update if the data change</li>
 <li>Can inspect the source document to determine where the number came from</li>
 <li>In practice, do the best you can, and sometimes a well-documented “business process” is just as good</li>
+<li>Content comes first – the default “look” and layout is good enough for most applications, but you can also endless tweak that to suit your need</li>
 </ul>
 </section></section>
 <section id="how" class="title-slide slide level1 center">

@@ -570,80 +570,66 @@ Michael C Sachs
 </div>
 </div>
 </section>
-<section id="examples-1" class="slide level2">
-<h2>Examples</h2>
-<h3 id="bootstrap">Bootstrap</h3>
+<section id="example---iterating-through-species" class="slide level2">
+<h2>Example - Iterating through species</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">library</span>(palmerpenguins)</span>
 <span id="cb17-2"><a href="#cb17-2"></a></span>
-<span id="cb17-3"><a href="#cb17-3"></a>mu.body_mass <span class="ot">&lt;-</span> <span class="fu">mean</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb17-4"><a href="#cb17-4"></a>bsmeans <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"numeric"</span>, <span class="at">length =</span> <span class="dv">2000</span>)</span>
-<span id="cb17-5"><a href="#cb17-5"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(bsmeans)) {</span>
-<span id="cb17-6"><a href="#cb17-6"></a>  resampled.body_mass <span class="ot">&lt;-</span> <span class="fu">sample</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb17-7"><a href="#cb17-7"></a>  bsmeans[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(resampled.body_mass, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb17-8"><a href="#cb17-8"></a>}</span>
-<span id="cb17-9"><a href="#cb17-9"></a><span class="fu">hist</span>(bsmeans)</span>
-<span id="cb17-10"><a href="#cb17-10"></a><span class="fu">abline</span>(<span class="at">v =</span> mu.body_mass, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="flow-and-loops_files/figure-revealjs/unnamed-chunk-13-1.png" width="960" class="r-stretch"></section>
-<section id="example-2" class="slide level2">
-<h2>Example 2</h2>
-<p>Iterating through species</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">library</span>(colorspace)</span>
-<span id="cb18-2"><a href="#cb18-2"></a></span>
-<span id="cb18-3"><a href="#cb18-3"></a>species_names <span class="ot">&lt;-</span> <span class="fu">levels</span>(penguins<span class="sc">$</span>species)</span>
-<span id="cb18-4"><a href="#cb18-4"></a>colors <span class="ot">&lt;-</span> colorspace<span class="sc">::</span><span class="fu">qualitative_hcl</span>(<span class="fu">length</span>(species_names))</span>
-<span id="cb18-5"><a href="#cb18-5"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(species_names)){</span>
-<span id="cb18-6"><a href="#cb18-6"></a>  </span>
-<span id="cb18-7"><a href="#cb18-7"></a>  <span class="cf">if</span>(i <span class="sc">==</span> <span class="dv">1</span>) {</span>
-<span id="cb18-8"><a href="#cb18-8"></a>    </span>
-<span id="cb18-9"><a href="#cb18-9"></a>    <span class="fu">plot</span>(bill_length_mm <span class="sc">~</span> bill_depth_mm, </span>
-<span id="cb18-10"><a href="#cb18-10"></a>         <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">col =</span> colors[i],</span>
-<span id="cb18-11"><a href="#cb18-11"></a>         <span class="at">data =</span> <span class="fu">subset</span>(penguins, species <span class="sc">==</span> species_names[i]), </span>
-<span id="cb18-12"><a href="#cb18-12"></a>         <span class="at">xlim =</span> <span class="fu">range</span>(penguins<span class="sc">$</span>bill_depth_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb18-13"><a href="#cb18-13"></a>         <span class="at">ylim =</span> <span class="fu">range</span>(penguins<span class="sc">$</span>bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb18-14"><a href="#cb18-14"></a>         )</span>
-<span id="cb18-15"><a href="#cb18-15"></a>    </span>
-<span id="cb18-16"><a href="#cb18-16"></a>  } <span class="cf">else</span> {</span>
-<span id="cb18-17"><a href="#cb18-17"></a>    </span>
-<span id="cb18-18"><a href="#cb18-18"></a>    <span class="fu">points</span>(bill_length_mm <span class="sc">~</span> bill_depth_mm, </span>
-<span id="cb18-19"><a href="#cb18-19"></a>         <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">col =</span> colors[i],</span>
-<span id="cb18-20"><a href="#cb18-20"></a>         <span class="at">data =</span> <span class="fu">subset</span>(penguins, species <span class="sc">==</span> species_names[i]))</span>
-<span id="cb18-21"><a href="#cb18-21"></a>    </span>
-<span id="cb18-22"><a href="#cb18-22"></a>  }</span>
-<span id="cb18-23"><a href="#cb18-23"></a>  </span>
-<span id="cb18-24"><a href="#cb18-24"></a>}</span>
-<span id="cb18-25"><a href="#cb18-25"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">fill =</span> colors, <span class="at">legend =</span> species_names)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img data-src="flow-and-loops_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" height="600"></p>
+<span id="cb17-3"><a href="#cb17-3"></a>species_names <span class="ot">&lt;-</span> <span class="fu">levels</span>(penguins<span class="sc">$</span>species)</span>
+<span id="cb17-4"><a href="#cb17-4"></a>mean_bill_length <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(species_names))</span>
+<span id="cb17-5"><a href="#cb17-5"></a><span class="fu">names</span>(mean_bill_length) <span class="ot">&lt;-</span> species_names</span>
+<span id="cb17-6"><a href="#cb17-6"></a></span>
+<span id="cb17-7"><a href="#cb17-7"></a><span class="cf">for</span>(i <span class="cf">in</span> species_names){  <span class="do">## iterator is a character</span></span>
+<span id="cb17-8"><a href="#cb17-8"></a>  </span>
+<span id="cb17-9"><a href="#cb17-9"></a>  mean_bill_length[i] <span class="ot">&lt;-</span> <span class="do">## indexing by name</span></span>
+<span id="cb17-10"><a href="#cb17-10"></a>    <span class="fu">mean</span>(<span class="fu">subset</span>(penguins, species <span class="sc">==</span> i)<span class="sc">$</span>bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-11"><a href="#cb17-11"></a>  </span>
+<span id="cb17-12"><a href="#cb17-12"></a>}</span>
+<span id="cb17-13"><a href="#cb17-13"></a></span>
+<span id="cb17-14"><a href="#cb17-14"></a>mean_bill_length</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Adelie Chinstrap    Gentoo 
+ 38.79139  48.83382  47.50488 </code></pre>
 </div>
 </div>
 </section>
+<section id="bootstrap" class="slide level2">
+<h2>Bootstrap</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>mu.body_mass <span class="ot">&lt;-</span> <span class="fu">mean</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-2"><a href="#cb19-2"></a>bsmeans <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"numeric"</span>, <span class="at">length =</span> <span class="dv">2000</span>)</span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(bsmeans)) {</span>
+<span id="cb19-4"><a href="#cb19-4"></a>  resampled.body_mass <span class="ot">&lt;-</span> <span class="fu">sample</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-5"><a href="#cb19-5"></a>  bsmeans[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(resampled.body_mass, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-6"><a href="#cb19-6"></a>}</span>
+<span id="cb19-7"><a href="#cb19-7"></a><span class="fu">hist</span>(bsmeans)</span>
+<span id="cb19-8"><a href="#cb19-8"></a><span class="fu">abline</span>(<span class="at">v =</span> mu.body_mass, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="flow-and-loops_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"></section>
 <section id="nested-loops" class="slide level2">
 <h2>Nested loops</h2>
 <p>A loop can itself contain a loop, or multiple loops.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>species_names <span class="ot">&lt;-</span> <span class="fu">levels</span>(penguins<span class="sc">$</span>species)</span>
-<span id="cb19-2"><a href="#cb19-2"></a>island_names <span class="ot">&lt;-</span> <span class="fu">levels</span>(penguins<span class="sc">$</span>island)</span>
-<span id="cb19-3"><a href="#cb19-3"></a>mean_bm_matrix <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="fu">length</span>(species_names), </span>
-<span id="cb19-4"><a href="#cb19-4"></a>                         <span class="at">ncol =</span> <span class="fu">length</span>(island_names), </span>
-<span id="cb19-5"><a href="#cb19-5"></a>                         <span class="at">dimnames =</span> <span class="fu">list</span>(species_names, island_names))</span>
-<span id="cb19-6"><a href="#cb19-6"></a></span>
-<span id="cb19-7"><a href="#cb19-7"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(mean_bm_matrix)) {</span>
-<span id="cb19-8"><a href="#cb19-8"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(mean_bm_matrix)) {</span>
-<span id="cb19-9"><a href="#cb19-9"></a>   </span>
-<span id="cb19-10"><a href="#cb19-10"></a>    thisset <span class="ot">&lt;-</span> <span class="fu">subset</span>(penguins, species <span class="sc">==</span> species_names[i] <span class="sc">&amp;</span> </span>
-<span id="cb19-11"><a href="#cb19-11"></a>                        island <span class="sc">==</span> island_names[j])</span>
-<span id="cb19-12"><a href="#cb19-12"></a>    </span>
-<span id="cb19-13"><a href="#cb19-13"></a>    <span class="cf">if</span>(<span class="fu">nrow</span>(thisset) <span class="sc">==</span> <span class="dv">0</span>) <span class="cf">next</span></span>
-<span id="cb19-14"><a href="#cb19-14"></a>    </span>
-<span id="cb19-15"><a href="#cb19-15"></a>    mean_bm_matrix[i, j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(thisset<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb19-16"><a href="#cb19-16"></a>     </span>
-<span id="cb19-17"><a href="#cb19-17"></a>  }</span>
-<span id="cb19-18"><a href="#cb19-18"></a>}</span>
-<span id="cb19-19"><a href="#cb19-19"></a>mean_bm_matrix</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>species_names <span class="ot">&lt;-</span> <span class="fu">levels</span>(penguins<span class="sc">$</span>species)</span>
+<span id="cb20-2"><a href="#cb20-2"></a>island_names <span class="ot">&lt;-</span> <span class="fu">levels</span>(penguins<span class="sc">$</span>island)</span>
+<span id="cb20-3"><a href="#cb20-3"></a>mean_bm_matrix <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="fu">length</span>(species_names), </span>
+<span id="cb20-4"><a href="#cb20-4"></a>                         <span class="at">ncol =</span> <span class="fu">length</span>(island_names), </span>
+<span id="cb20-5"><a href="#cb20-5"></a>                         <span class="at">dimnames =</span> <span class="fu">list</span>(species_names, island_names))</span>
+<span id="cb20-6"><a href="#cb20-6"></a></span>
+<span id="cb20-7"><a href="#cb20-7"></a><span class="cf">for</span>(i <span class="cf">in</span> species_names) {</span>
+<span id="cb20-8"><a href="#cb20-8"></a>  <span class="cf">for</span>(j <span class="cf">in</span> island_names) {</span>
+<span id="cb20-9"><a href="#cb20-9"></a>   </span>
+<span id="cb20-10"><a href="#cb20-10"></a>    thisset <span class="ot">&lt;-</span> <span class="fu">subset</span>(penguins, species <span class="sc">==</span> i <span class="sc">&amp;</span> </span>
+<span id="cb20-11"><a href="#cb20-11"></a>                        island <span class="sc">==</span> j)</span>
+<span id="cb20-12"><a href="#cb20-12"></a>    </span>
+<span id="cb20-13"><a href="#cb20-13"></a>    <span class="cf">if</span>(<span class="fu">nrow</span>(thisset) <span class="sc">==</span> <span class="dv">0</span>) <span class="cf">next</span></span>
+<span id="cb20-14"><a href="#cb20-14"></a>    </span>
+<span id="cb20-15"><a href="#cb20-15"></a>    mean_bm_matrix[i, j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(thisset<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-16"><a href="#cb20-16"></a>     </span>
+<span id="cb20-17"><a href="#cb20-17"></a>  }</span>
+<span id="cb20-18"><a href="#cb20-18"></a>}</span>
+<span id="cb20-19"><a href="#cb20-19"></a>mean_bm_matrix</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Biscoe    Dream Torgersen
 Adelie    3709.659 3688.393  3706.373
@@ -658,25 +644,25 @@ Gentoo    5076.016       NA        NA</code></pre>
 <p>That is partially true, but speed is not the only thing, for loops can be much clearer and more understandable than the alternatives.</p>
 <p><strong>But</strong>, the slow thing in R is changing the size of an object, so you can avoid that by creating a vector/matrix/array of the correct size to hold the results of the loop:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">system.time</span>({</span>
-<span id="cb21-2"><a href="#cb21-2"></a>A1 <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb21-3"><a href="#cb21-3"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100000</span>) {</span>
-<span id="cb21-4"><a href="#cb21-4"></a>  A1 <span class="ot">&lt;-</span> <span class="fu">c</span>(A1, <span class="fu">rnorm</span>(<span class="dv">1</span>))</span>
-<span id="cb21-5"><a href="#cb21-5"></a>}</span>
-<span id="cb21-6"><a href="#cb21-6"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">system.time</span>({</span>
+<span id="cb22-2"><a href="#cb22-2"></a>A1 <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100000</span>) {</span>
+<span id="cb22-4"><a href="#cb22-4"></a>  A1 <span class="ot">&lt;-</span> <span class="fu">c</span>(A1, <span class="fu">rnorm</span>(<span class="dv">1</span>))</span>
+<span id="cb22-5"><a href="#cb22-5"></a>}</span>
+<span id="cb22-6"><a href="#cb22-6"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
- 12.857   0.066  12.941 </code></pre>
+ 12.584   0.051  12.653 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">system.time</span>({</span>
-<span id="cb23-2"><a href="#cb23-2"></a>A2 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">100000</span>)</span>
-<span id="cb23-3"><a href="#cb23-3"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(A2)) {</span>
-<span id="cb23-4"><a href="#cb23-4"></a>  A2[i] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>)</span>
-<span id="cb23-5"><a href="#cb23-5"></a>}</span>
-<span id="cb23-6"><a href="#cb23-6"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">system.time</span>({</span>
+<span id="cb24-2"><a href="#cb24-2"></a>A2 <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="dv">100000</span>)</span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(A2)) {</span>
+<span id="cb24-4"><a href="#cb24-4"></a>  A2[i] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>)</span>
+<span id="cb24-5"><a href="#cb24-5"></a>}</span>
+<span id="cb24-6"><a href="#cb24-6"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.174   0.004   0.179 </code></pre>
+  0.216   0.000   0.218 </code></pre>
 </div>
 </div>
 </section>

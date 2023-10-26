@@ -357,7 +357,11 @@ numeric.squared ## not attached anymore
 
 ## Coercion
 
-Coercion is what happens when two different types of data meet during an operation. In order to perform the operation, one of the data types may need to be coerced into the other data type. This can also be done explicitly using the `as.` family of functions. 
+Coercion is what happens when data gets converted from one type to another (e.g., numeric to character). 
+
+This can also be done explicitly using the `as.` family of functions. 
+
+One of R's "nice" features is that it will __automatically attempt to coerce data__ when different types meet in an operation.
 
 Examples
 ```{r}
@@ -372,6 +376,10 @@ This is useful sometimes, other times it can cause problems:
 ```{r}
 as.numeric(c("1.35", "2.5", "<.01"))
 ```
+
+Hopefully R warns you if data is destroyed due to coercion. 
+
+If the data type is critical for an operation then it is up to you to check using the `is.` family of functions.
 
 ## Recycling
 
@@ -398,8 +406,33 @@ t1 / rbind(colSums(t1), colSums(t1), colSums(t1))
 proportions(t1, margin = 2)
 ```
 
+Again, hopefully R warns you about this, but when in doubt check and validate lengths.
+
 
 # Special data structures
+
+## Attributes
+
+Any object can have attributes, which are data that get attached to the object. It is a flexible way to include information with an object.
+
+They are stored as names and value as in a list. Query or replace them with `attributes` or `attr`
+
+```{r}
+attributes(A1)
+attr(A1, "dim")
+attr(A1, "note") <- "This is a new attribute"
+
+A1
+```
+
+Some attributes are special, e.g., `class`, `comment`, `dim`, `dimnames`, ..., and have special ways of querying and setting
+
+```{r}
+comment(A1) <- paste("I created this array on ", Sys.time())
+A1
+comment(A1)
+```
+
 
 ## Environments -- how does R find things?
 

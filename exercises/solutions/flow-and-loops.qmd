@@ -96,6 +96,35 @@ cor(bootmeans)
 ```
 
 
+## Loops for numeric calculation
+
+Loops are sometimes unavoidable if a calculation depends on the value at one or more of the previous iterations. 
+
+
+One way to compute the [Kaplan-Meier curve for right censored data](https://en.wikipedia.org/wiki/Kaplan%E2%80%93Meier_estimator) is to loop through the death times and accumulate the product of 1 minus the number of deaths at each time over the number at risk at that time. Complete the following code to compute the KM curve and compare to the result from the survival package. 
+
+```{r}
+amldat <- survival::aml
+library(survival)
+
+deathtimes <- c(0, sort(unique(amldat$time[amldat$status == 1])))
+surv <- c(1, numeric(length(deathtimes) - 1))
+
+for(i in 2:length(deathtimes)) {
+  
+  atrisk <- subset(amldat, time > deathtimes[i - 1])
+  
+  deaths_at_ti <- sum(atrisk$status[atrisk$time == deathtimes[i]] == 1)
+  
+  surv[i] <- surv[i - 1] * (1 - (deaths_at_ti / 
+                                     nrow(atrisk)))
+  
+}
+
+plot(surv ~ deathtimes)
+lines(survfit(Surv(time, status) ~ 1, data = amldat))
+```
+
 
 ## Loops to do data manipulation
 

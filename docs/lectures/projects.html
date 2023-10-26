@@ -442,7 +442,8 @@ Michael C Sachs
 <li>A license describing the conditions of use</li>
 </ul></li>
 </ul>
-<p><a href="https://github.com/sachsmc/liger">Example 1</a> <a href="https://github.com/pablogonzalezginestet/megalearner">Example 2</a></p>
+<p><a href="https://github.com/pablogonzalezginestet/megalearner/blob/master/README.md">Example 1</a></p>
+<p><a href="https://github.com/sachsmc/doubly-robust-glm/blob/master/README.md">Example 2</a></p>
 </section>
 <section id="an-example-project-structure" class="slide level2">
 <h2>An example project structure</h2>
@@ -451,7 +452,8 @@ Michael C Sachs
 <pre><code>example-project</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>-- code
+<pre><code>-- .here
+-- code
    |__01-process-data.R
    |__02-primary-analysis.R
    |__03-sensitivity-analysis.R
@@ -502,7 +504,7 @@ Michael C Sachs
 </section>
 <section id="navigating-the-directory-from-r" class="slide level2">
 <h2>Navigating the directory from R</h2>
-<p>Compose directories and files with <code>file.path</code> (it is safe and works in any OS)</p>
+<p>Compose directories and files with <code>file.path</code> (it is safe and works in any operating system)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">read.csv</span>(<span class="fu">file.path</span>(<span class="st">".."</span>, <span class="st">"rawdata"</span>, <span class="st">"lisa-2012-full.csv"</span>))</span>
 <span id="cb9-2"><a href="#cb9-2"></a><span class="fu">saveRDS</span>(analysis_file, <span class="fu">file.path</span>(<span class="st">".."</span>, <span class="st">"data"</span>, <span class="st">"analysis-data.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -513,10 +515,21 @@ Michael C Sachs
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb10-2"><a href="#cb10-2"></a></span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">"rawdata"</span>, <span class="st">"lisa-2012-full.csv"</span>))</span>
-<span id="cb10-4"><a href="#cb10-4"></a><span class="fu">saveRDS</span>(analysis_file, <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"analysis-data.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="fu">here</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "/home/sachsmc/Teaching/Courses/r-programming"</code></pre>
 </div>
-<p>Upon librarying the <code>here</code> package, it will attempt to identify the root of your project directory: is there an <code>.Rproj</code> or <code>.here</code> file there?</p>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">setwd</span>(<span class="st">"../exercises"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="fu">here</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "/home/sachsmc/Teaching/Courses/r-programming"</code></pre>
+</div>
+</div>
+<p>Upon librarying the <code>here</code> package, it will attempt to identify the root of your project directory: is there an <code>.Rproj</code> or <code>.here</code> file there? Then you can use the <code>here()</code> function to give the path to the root directory no matter where you are in the project directories.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">"rawdata"</span>, <span class="st">"lisa-2012-full.csv"</span>))</span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="fu">saveRDS</span>(analysis_file, <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"analysis-data.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>Then, <code>here</code> allows you to build paths to subdirectories, starting from the project root.</p>
 <p>Use this in your scripts, and everything will run nicely, both interactively <strong>and</strong> programmatically, no matter what your working directory is (as long as it is in the project).</p>
 </section></section>

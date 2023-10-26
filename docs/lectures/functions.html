@@ -414,7 +414,7 @@ Michael C Sachs
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">size =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2 5</code></pre>
+<pre><code>[1] 5 1</code></pre>
 </div>
 </div>
 <p>The function takes the arguments you provide, does something, and then returns an object. To see what a function does, you can type its name without parentheses to see the source:</p>
@@ -435,7 +435,7 @@ Michael C Sachs
         x[sample.int(length(x), size, replace, prob)]
     }
 }
-&lt;bytecode: 0x55d8d694a570&gt;
+&lt;bytecode: 0x5572f711bf10&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -491,48 +491,37 @@ Michael C Sachs
 </div>
 </div>
 <ol start="2" type="1">
-<li>To pass optional arguments to other functions</li>
+<li>To pass optional arguments to other functions involved</li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">library</span>(palmerpenguins)</span>
-<span id="cb16-2"><a href="#cb16-2"></a><span class="fu">summary</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="fu">with</span>(penguins, </span>
+<span id="cb16-3"><a href="#cb16-3"></a>     <span class="fu">by</span>(body_mass_g, species, mean)</span>
+<span id="cb16-4"><a href="#cb16-4"></a>     )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      species          island    bill_length_mm  bill_depth_mm  
- Adelie   :152   Biscoe   :168   Min.   :32.10   Min.   :13.10  
- Chinstrap: 68   Dream    :124   1st Qu.:39.23   1st Qu.:15.60  
- Gentoo   :124   Torgersen: 52   Median :44.45   Median :17.30  
-                                 Mean   :43.92   Mean   :17.15  
-                                 3rd Qu.:48.50   3rd Qu.:18.70  
-                                 Max.   :59.60   Max.   :21.50  
-                                 NA's   :2       NA's   :2      
- flipper_length_mm  body_mass_g       sex           year     
- Min.   :172.0     Min.   :2700   female:165   Min.   :2007  
- 1st Qu.:190.0     1st Qu.:3550   male  :168   1st Qu.:2007  
- Median :197.0     Median :4050   NA's  : 11   Median :2008  
- Mean   :200.9     Mean   :4202                Mean   :2008  
- 3rd Qu.:213.0     3rd Qu.:4750                3rd Qu.:2009  
- Max.   :231.0     Max.   :6300                Max.   :2009  
- NA's   :2         NA's   :2                                 </code></pre>
+<pre><code>species: Adelie
+[1] NA
+------------------------------------------------------------ 
+species: Chinstrap
+[1] 3733.088
+------------------------------------------------------------ 
+species: Gentoo
+[1] NA</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="do">## digits gets passed to "format"</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a><span class="fu">summary</span>(penguins, <span class="at">digits =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="do">## na.rm gets passed to "mean"</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="fu">with</span>(penguins, </span>
+<span id="cb18-3"><a href="#cb18-3"></a>     <span class="fu">by</span>(body_mass_g, species, mean, </span>
+<span id="cb18-4"><a href="#cb18-4"></a>        <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-5"><a href="#cb18-5"></a>     )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      species          island    bill_length_mm bill_depth_mm flipper_length_mm
- Adelie   :152   Biscoe   :168   Min.   :32     Min.   :13    Min.   :172      
- Chinstrap: 68   Dream    :124   1st Qu.:39     1st Qu.:16    1st Qu.:190      
- Gentoo   :124   Torgersen: 52   Median :44     Median :17    Median :197      
-                                 Mean   :44     Mean   :17    Mean   :201      
-                                 3rd Qu.:48     3rd Qu.:19    3rd Qu.:213      
-                                 Max.   :60     Max.   :22    Max.   :231      
-                                 NA's   :2      NA's   :2     NA's   :2        
-  body_mass_g       sex           year     
- Min.   :2700   female:165   Min.   :2007  
- 1st Qu.:3550   male  :168   1st Qu.:2007  
- Median :4050   NA's  : 11   Median :2008  
- Mean   :4202                Mean   :2008  
- 3rd Qu.:4750                3rd Qu.:2009  
- Max.   :6300                Max.   :2009  
- NA's   :2                                 </code></pre>
+<pre><code>species: Adelie
+[1] 3700.662
+------------------------------------------------------------ 
+species: Chinstrap
+[1] 3733.088
+------------------------------------------------------------ 
+species: Gentoo
+[1] 5076.016</code></pre>
 </div>
 </div>
 </section>
@@ -739,7 +728,7 @@ $Gentoo
 <pre><code>function(beta) {
     sum((dataY - (beta[1] + beta[2] * dataX))^2, na.rm  =TRUE)
   }
-&lt;environment: 0x55d8d6c151b0&gt;</code></pre>
+&lt;environment: 0x5572f67420e0&gt;</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">ls</span>(<span class="fu">environment</span>(model_penguin))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -891,7 +880,7 @@ NULL</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>function (x, ...) 
 UseMethod("print")
-&lt;bytecode: 0x55d8d6917750&gt;
+&lt;bytecode: 0x5572f86fd750&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -951,20 +940,10 @@ UseMethod("print")
 </tbody>
 </table>
 <p>These concepts are loosely defined, because functions can take both data and function arguments and return data and function results.</p>
-</section>
-<section id="practical" class="slide level2">
-<h2>Practical</h2>
-<ol type="1">
-<li>Modify and write functions</li>
-<li>Use apply to iterate functions over data</li>
-<li>Write your own class and generic print function</li>
-</ol>
-<p><a href="../exercises/functions.html">Link to lesson</a></p>
-<p><a href="../index.html">Link home</a></p>
 </section></section>
 <section>
-<section id="extra-slides" class="title-slide slide level1 center">
-<h1>Extra slides</h1>
+<section id="some-more-advanced-topics" class="title-slide slide level1 center">
+<h1>Some more advanced topics</h1>
 
 </section>
 <section id="get-and-assign" class="slide level2">
@@ -976,7 +955,7 @@ UseMethod("print")
 <div class="cell-output cell-output-stdout">
 <pre><code>function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x55d8d6092088&gt;
+&lt;bytecode: 0x5572f7e78088&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -1052,22 +1031,58 @@ Gentoo    217.1870 6.484976</code></pre>
 </div>
 </div>
 </section>
+<section id="global-assigment-operator" class="slide level2">
+<h2>Global assigment operator</h2>
+<p>There is the <code>&lt;&lt;-</code> operator, which is used in functions and does (re)assignment <strong>outside the function</strong>. It searches the parent environments and reassigns where found, if not found it assigns in the global environment.</p>
+<p>This is generally considered to be a bad idea, but now you know about it.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1"></a>name2 <span class="ot">&lt;-</span> <span class="st">"Billie"</span></span>
+<span id="cb97-2"><a href="#cb97-2"></a>name2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Billie"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1"></a>hello <span class="ot">&lt;-</span> <span class="cf">function</span>(name) {</span>
+<span id="cb99-2"><a href="#cb99-2"></a>  </span>
+<span id="cb99-3"><a href="#cb99-3"></a>  name2 <span class="ot">&lt;&lt;-</span> <span class="st">"Mike"</span></span>
+<span id="cb99-4"><a href="#cb99-4"></a>  <span class="fu">paste</span>(<span class="st">"Hello"</span>, name, <span class="st">"meet"</span>, name2)</span>
+<span id="cb99-5"><a href="#cb99-5"></a>  </span>
+<span id="cb99-6"><a href="#cb99-6"></a>}</span>
+<span id="cb99-7"><a href="#cb99-7"></a><span class="fu">hello</span>(<span class="st">"Jim"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Hello Jim meet Mike"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1"></a>name2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mike"</code></pre>
+</div>
+</div>
+</section>
 <section id="recursive-functions" class="slide level2">
 <h2>Recursive functions</h2>
 <p>Functions that call themselves are possible.</p>
 <p>As with repeat loops, they need to have a <em>break condition</em></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1"></a>fibbo <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
-<span id="cb97-2"><a href="#cb97-2"></a>  </span>
-<span id="cb97-3"><a href="#cb97-3"></a>  <span class="cf">if</span>(n <span class="sc">&lt;=</span> <span class="dv">2</span>) {  <span class="do">## exit condition</span></span>
-<span id="cb97-4"><a href="#cb97-4"></a>    <span class="dv">1</span></span>
-<span id="cb97-5"><a href="#cb97-5"></a>  } <span class="cf">else</span> {</span>
-<span id="cb97-6"><a href="#cb97-6"></a>    n <span class="sc">+</span> <span class="fu">fibbo</span>(n <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb97-7"><a href="#cb97-7"></a>  }</span>
-<span id="cb97-8"><a href="#cb97-8"></a>  </span>
-<span id="cb97-9"><a href="#cb97-9"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1"></a>fibbo <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb103-2"><a href="#cb103-2"></a>  </span>
+<span id="cb103-3"><a href="#cb103-3"></a>  <span class="cf">if</span>(n <span class="sc">&lt;=</span> <span class="dv">2</span>) {  <span class="do">## exit condition</span></span>
+<span id="cb103-4"><a href="#cb103-4"></a>    <span class="dv">1</span></span>
+<span id="cb103-5"><a href="#cb103-5"></a>  } <span class="cf">else</span> {</span>
+<span id="cb103-6"><a href="#cb103-6"></a>    n <span class="sc">+</span> <span class="fu">fibbo</span>(n <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb103-7"><a href="#cb103-7"></a>  }</span>
+<span id="cb103-8"><a href="#cb103-8"></a>  </span>
+<span id="cb103-9"><a href="#cb103-9"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>These are actually useful when working with nested lists and directed acyclic graphs, for example.</p>
+</section>
+<section id="practical" class="slide level2">
+<h2>Practical</h2>
+<ol type="1">
+<li>Modify and write functions</li>
+<li>Use apply to iterate functions over data</li>
+<li>Write your own class and generic print function</li>
+</ol>
+<p><a href="../exercises/functions.html">Link to lesson</a></p>
+<p><a href="../index.html">Link home</a></p>
 
 <div class="footer footer-default">
 

@@ -42,8 +42,11 @@ Quick review of the file system
     + How to run the analysis and use the results (including what dependencies are needed)
     + A license describing the conditions of use
     
-[Example 1](https://github.com/sachsmc/liger)
-[Example 2](https://github.com/pablogonzalezginestet/megalearner)
+
+
+[Example 1](https://github.com/pablogonzalezginestet/megalearner/blob/master/README.md)
+
+[Example 2](https://github.com/sachsmc/doubly-robust-glm/blob/master/README.md)
 
 
 ## An example project structure
@@ -52,7 +55,7 @@ Quick review of the file system
 twee <- function(path = getwd(), level = Inf) {
   
   fad <-
-    list.files(path = path, recursive = TRUE,no.. = TRUE, include.dirs = TRUE)
+    list.files(path = path, recursive = TRUE, no.. = TRUE, include.dirs = TRUE, all.files = TRUE)
 
   fad_split_up <- strsplit(fad, "/")
 
@@ -82,7 +85,7 @@ twee(here::here("example-project"))
 ## R session and the working directory
 
 ```{r}
-#| echo= TRUE
+#| echo: true
 getwd()
 list.dirs(".", recursive = FALSE)
 list.dirs("..", recursive = FALSE)
@@ -96,11 +99,11 @@ list.dirs("..", recursive = FALSE)
 
 ## Navigating the directory from R
 
-Compose directories and files with `file.path` (it is safe and works in any OS)
+Compose directories and files with `file.path` (it is safe and works in any operating system)
 
 ```{r}
-#| eval=FALSE,
-#| echo=TRUE
+#| eval: false
+#| echo: true
 read.csv(file.path("..", "rawdata", "lisa-2012-full.csv"))
 saveRDS(analysis_file, file.path("..", "data", "analysis-data.rds"))
 ```
@@ -109,15 +112,25 @@ saveRDS(analysis_file, file.path("..", "data", "analysis-data.rds"))
 
 
 ```{r}
-#| echo = TRUE,
-#| eval = FALSE
+#| echo: true
+#| eval: true
 library(here)
 
+here()
+setwd("../exercises")
+here()
+```
+
+Upon librarying the `here` package, it will attempt to identify the root of your project directory: is there an `.Rproj` or `.here` file there? Then you can use the `here()` function to give the path to the root directory no matter where you are in the project directories. 
+
+```{r}
+#| echo: true
+#| eval: false
 read.csv(here("rawdata", "lisa-2012-full.csv"))
 saveRDS(analysis_file, here("data", "analysis-data.rds"))
 ```
 
-Upon librarying the `here` package, it will attempt to identify the root of your project directory: is there an `.Rproj` or `.here` file there? 
+
 
 Then, `here` allows you to build paths to subdirectories, starting from the project root. 
 

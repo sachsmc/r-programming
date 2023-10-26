@@ -155,7 +155,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning objectives</a></li>
   <li><a href="#simple-loops-and-conditional-statements" id="toc-simple-loops-and-conditional-statements" class="nav-link" data-scroll-target="#simple-loops-and-conditional-statements">Simple loops and conditional statements</a></li>
   <li><a href="#loops-for-statistical-analysis" id="toc-loops-for-statistical-analysis" class="nav-link" data-scroll-target="#loops-for-statistical-analysis">Loops for statistical analysis</a></li>
-  <li><a href="#loops-to-do-data-manipulation" id="toc-loops-to-do-data-manipulation" class="nav-link" data-scroll-target="#loops-to-do-data-manipulation">Loops to do data manipulation</a></li>
+  <li><a href="#loops-for-numeric-calculation" id="toc-loops-for-numeric-calculation" class="nav-link" data-scroll-target="#loops-for-numeric-calculation">Loops for numeric calculation</a></li>
+  <li><a href="#optional-loops-to-do-data-manipulation" id="toc-optional-loops-to-do-data-manipulation" class="nav-link" data-scroll-target="#optional-loops-to-do-data-manipulation"><strong>Optional</strong>: Loops to do data manipulation</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/sachsmc/r-programming/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -266,8 +267,47 @@ Hints
 </ul>
 </details>
 </section>
-<section id="loops-to-do-data-manipulation" class="level2">
-<h2 class="anchored" data-anchor-id="loops-to-do-data-manipulation">Loops to do data manipulation</h2>
+<section id="loops-for-numeric-calculation" class="level2">
+<h2 class="anchored" data-anchor-id="loops-for-numeric-calculation">Loops for numeric calculation</h2>
+<p>Loops are sometimes unavoidable if a calculation depends on the value at one or more of the previous iterations.</p>
+<p>One way to compute the <a href="https://en.wikipedia.org/wiki/Kaplan%E2%80%93Meier_estimator">Kaplan-Meier curve for right censored data</a> is to loop through the death times and accumulate the product of 1 minus the number of deaths at each time over the number at risk at that time. Complete the following code to compute the KM curve and compare to the result from the survival package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>amldat <span class="ot">&lt;-</span> survival<span class="sc">::</span>aml</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>deathtimes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">sort</span>(<span class="fu">unique</span>(amldat<span class="sc">$</span>time[amldat<span class="sc">$</span>status <span class="sc">==</span> <span class="dv">1</span>])))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>surv <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">numeric</span>(<span class="fu">length</span>(deathtimes) <span class="sc">-</span> <span class="dv">1</span>))</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(deathtimes)) {</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="do">## n_i = number still at risk</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  atrisk <span class="ot">&lt;-</span> <span class="fu">subset</span>(amldat, time <span class="sc">&gt;</span> deathtimes[i <span class="sc">-</span> <span class="dv">1</span>])</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="do">## count the number of deaths at time ti, call it d_i</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="do">## then compute 1 - d_i / n_i and multiply it by the previous survival probability</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="do">## plot(surv ~ deathtimes)</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="do">## lines(survfit(Surv(time, status) ~ 1, data = amldat))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="optional-loops-to-do-data-manipulation" class="level2">
+<h2 class="anchored" data-anchor-id="optional-loops-to-do-data-manipulation"><strong>Optional</strong>: Loops to do data manipulation</h2>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This exercises uses some concepts from functional programming, which we have not covered yet. Try it if you have time, but if not you can return to this after the functions lecture.</p>
+</div>
+</div>
 <p>You may notice that some of the variables have missing values. We would like to replace the missing values with the “typical” value that is observed.</p>
 <ol type="1">
 <li>Write a loop that contains an <code>if</code> then <code>else</code> statement that goes through the variables in <code>penguins</code> and replaces missing values with the mean for numeric double variables, and the most frequent value for characters or factors.</li>
@@ -280,13 +320,13 @@ Hints
 <li>Use this function to calculate the mode in a way that returns the same data type.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>my_mode <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  converter <span class="ot">&lt;-</span> <span class="fu">get</span>(<span class="fu">paste0</span>(<span class="st">"as."</span>, <span class="fu">class</span>(x)))</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  tab <span class="ot">&lt;-</span> <span class="fu">table</span>(x) <span class="sc">|&gt;</span> <span class="fu">sort</span>(<span class="at">decreasing =</span> <span class="cn">TRUE</span>) </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(tab)[<span class="dv">1</span>] <span class="sc">|&gt;</span> <span class="fu">converter</span>()</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>my_mode <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  converter <span class="ot">&lt;-</span> <span class="fu">get</span>(<span class="fu">paste0</span>(<span class="st">"as."</span>, <span class="fu">class</span>(x)))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  tab <span class="ot">&lt;-</span> <span class="fu">table</span>(x) <span class="sc">|&gt;</span> <span class="fu">sort</span>(<span class="at">decreasing =</span> <span class="cn">TRUE</span>) </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(tab)[<span class="dv">1</span>] <span class="sc">|&gt;</span> <span class="fu">converter</span>()</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Inside the loop you will need to check whether the variable is of type “double”. Do this using the <code>is.double</code> function, which returns a TRUE or FALSE.</li>

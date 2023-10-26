@@ -32,6 +32,13 @@ _Code_ is inserted in between start and end fences ("```"), called __chunks__. O
 
 ```{r}
 #| eval: false
+
+---
+title: Example yaml header
+author: Homer J Simpson
+format: html
+---
+
 # First level header
 ## Second level 
 ### etc
@@ -47,7 +54,6 @@ _Code_ is inserted in between start and end fences ("```"), called __chunks__. O
 1. Or enumerated
 2. B
 3. C
-
 
 ![alt text](path-to-image.png)
 
@@ -126,7 +132,7 @@ Here is the _slide content_
 Tools of the trade
 
 - Figures are straightforward, can use captions and cross-references
-- For inline output, write custom print methods, like our meansd example
+- For inline output, you can write custom print methods, which we will try later
 - Tables are the hardest, there are some packages that help
     + `knitr` and the function `kable`, also the package `kableExtra`
     + `xtable` (designed for pdf output)
@@ -155,7 +161,7 @@ knitr::kable(head(palmerpenguins::penguins))
 - Easy to update if the data change
 - Can inspect the source document to determine where the number came from
 - In practice, do the best you can, and sometimes a well-documented "business process" is just as good
-
+- Content comes first -- the default "look" and layout is good enough for most applications, but you can also endless tweak that to suit your need
 
 # How? 
 

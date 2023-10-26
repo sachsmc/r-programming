@@ -176,7 +176,7 @@ https://sachsmc.github.io/r-programming/
 
 ## Exam
 
-To get credit for the course, you must hand in and pass the exam which will be an email sent to skl@sund.ku.dk
+To get credit for the course, you must hand in and pass the exam which will be an __email sent to skl@sund.ku.dk no later than 23.59 on November 16.__ 
 
 It must contain as attachments: 
 
@@ -192,13 +192,17 @@ The body of the email should be the "readme" file, with details on
 
 ## How to pass the exam
 
-1. Send something
+1. Send something on time (Before midnight on Nov 16)
 2. Demonstrate mastery of at least 3 out of the 4 learning objectives. 
 
 An easy way to do this is to do the exercises and save them all in a single Rmarkdown or Quarto document. 
 
+### Office hours
 
-- 
+The week after the course and before Nov 16, I will hold office hours where you can come ask questions and get help on any R topic
+
+I will send sign up link by email
+
 
 # Questions? 
 

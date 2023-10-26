@@ -7,7 +7,7 @@ format:
       scrollable: true
 execute:
   echo: true
-image: "../images/functions.jpeg"
+image: "../images/functions.png"
 ---
 
 # Using functions
@@ -68,12 +68,17 @@ c(1, 2)
 ```
 
 
-2. To pass optional arguments to other functions
+2. To pass optional arguments to other functions involved
 ```{r}
 library(palmerpenguins)
-summary(penguins)
-## digits gets passed to "format"
-summary(penguins, digits = 1)
+with(penguins, 
+     by(body_mass_g, species, mean)
+     )
+## na.rm gets passed to "mean"
+with(penguins, 
+     by(body_mass_g, species, mean, 
+        na.rm = TRUE)
+     )
 ```
 
 
@@ -379,19 +384,8 @@ Function     | Functional       | Function operator
 These concepts are loosely defined, because functions can take both data and function arguments and return data and function results.
 
 
-## Practical
 
-1. Modify and write functions
-2. Use apply to iterate functions over data
-3. Write your own class and generic print function
-
-
-[Link to lesson](../exercises/functions.html)
-
-[Link home](../index.html)
-
-
-# Extra slides
+# Some more advanced topics
 
 ## `get` and `assign`
 
@@ -460,6 +454,26 @@ mean.sd.by.species <- lapply(split(penguins$flipper_length_mm, penguins$species)
 do.call("rbind", mean.sd.by.species)
 ```
 
+## Global assigment operator
+
+There is the `<<-` operator, which is used in functions and does (re)assignment __outside the function__. It searches the parent environments and reassigns where found, if not found it assigns in the global environment. 
+
+This is generally considered to be a bad idea, but now you know about it. 
+
+```{r}
+name2 <- "Billie"
+name2
+hello <- function(name) {
+  
+  name2 <<- "Mike"
+  paste("Hello", name, "meet", name2)
+  
+}
+hello("Jim")
+name2
+```
+
+
 
 ## Recursive functions
 
@@ -483,3 +497,14 @@ fibbo <- function(n) {
 
 These are actually useful when working with nested lists and directed acyclic graphs, for example. 
 
+
+## Practical
+
+1. Modify and write functions
+2. Use apply to iterate functions over data
+3. Write your own class and generic print function
+
+
+[Link to lesson](../exercises/functions.html)
+
+[Link home](../index.html)

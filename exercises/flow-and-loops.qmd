@@ -56,7 +56,43 @@ penguins
 </details>
 
 
-## Loops to do data manipulation
+## Loops for numeric calculation
+
+Loops are sometimes unavoidable if a calculation depends on the value at one or more of the previous iterations. 
+
+
+One way to compute the [Kaplan-Meier curve for right censored data](https://en.wikipedia.org/wiki/Kaplan%E2%80%93Meier_estimator) is to loop through the death times and accumulate the product of 1 minus the number of deaths at each time over the number at risk at that time. Complete the following code to compute the KM curve and compare to the result from the survival package. 
+
+```{r}
+amldat <- survival::aml
+library(survival)
+
+deathtimes <- c(0, sort(unique(amldat$time[amldat$status == 1])))
+surv <- c(1, numeric(length(deathtimes) - 1))
+
+for(i in 2:length(deathtimes)) {
+  
+  ## n_i = number still at risk
+  atrisk <- subset(amldat, time > deathtimes[i - 1])
+  
+  ## count the number of deaths at time ti, call it d_i
+  
+  ## then compute 1 - d_i / n_i and multiply it by the previous survival probability
+  
+}
+
+## plot(surv ~ deathtimes)
+## lines(survfit(Surv(time, status) ~ 1, data = amldat))
+```
+
+
+## __Optional__: Loops to do data manipulation
+
+
+::: {.callout-important}
+This exercises uses some concepts from functional programming, which we have not covered yet. Try it if you have time, but if not you can return to this after the functions lecture.
+:::
+
 
 You may notice that some of the variables have missing values. We would like to replace the missing values with the "typical" value that is observed. 
 
