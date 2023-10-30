@@ -124,7 +124,7 @@ https://sachsmc.github.io/r-programming/
 1. Reporting, dynamic documents
 2. Data structures and indexing
 
-### Friday
+### Thursday
 
 1. Flow control and loops
 2. Creating and using functions
@@ -133,12 +133,12 @@ https://sachsmc.github.io/r-programming/
 
 ::: {.column width="45%"}
 
-### Tuesday
+### Next Monday
 
 1. Working with data, merging and reshaping
 2. Working with data, dates and characters
 
-### Next Friday
+### Next Thursday
 
 1. Data visualization
 2. Time to work on exam
