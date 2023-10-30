@@ -2,6 +2,9 @@
 title: "Data"
 ---
 
+Palmer penguins -- install the `palmerpenguins` package in R. See [https://allisonhorst.github.io/palmerpenguins/](https://allisonhorst.github.io/palmerpenguins/) for more information. 
+
+
 All datasets are rds files and can be read into R with `readRDS`
 
 A zip archive will all of these files is here: [regdata.zip](regdata.zip)
