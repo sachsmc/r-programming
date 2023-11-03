@@ -1,7 +1,7 @@
 ---
 title: "Dates and character strings -- exercises"
 author: "Michael C Sachs"
-subtitle: "Day 3, B"
+subtitle: "Day 3, A"
 description: "Understanding the pitfalls of dealing with dates, times, and manipulating strings with regular expressions"
 image: "../images/dates.jpeg"
 ---

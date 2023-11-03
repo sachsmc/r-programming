@@ -263,6 +263,6 @@ readRDS(here("data", "lpr-ex.rds")) |> head(12)
 
 We will practice creating tidy data continuing with our mean sd function, and using the register data example to practice pivoting and doing grouped analyses.
 
-[Link to lesson](../lessons/tidy-and-reshape.html)
+[Link to lesson](../exercises/tidy-and-reshape.html)
 
 [Link home](../index.html)

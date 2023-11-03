@@ -1,6 +1,6 @@
 ---
 title: "Strings and dates"
-subtitle: "Day 4, A"
+subtitle: "Day 3, A"
 author: "Michael C Sachs"
 format: 
     revealjs:
