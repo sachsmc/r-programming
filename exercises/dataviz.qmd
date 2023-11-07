@@ -76,6 +76,22 @@ ggplot(penguins, aes(x = body_mass_g, y = bill_length_mm, color = species)) +
 
 Use a figure from a recent analysis or publication that you would like to reproduce or enhance. Use tidy data principles to set yourself up for success. 
 
+If you cannot think of anything, here is an example. 
+
+The following code uses the `survival` package to estimate survival curves in two treatment groups. 
+
+```{r}
+library(survival)
+
+sfit <- survfit(Surv(time, status) ~ x, data = aml)
+sfit
+
+str(sfit)
+```
+
+How would you plot the Kaplan-Meier curves in the two treatment groups using `ggplot2`? What about adding confidence intervals to the plot? What about adding tick marks where the censoring times are? 
+
+
 
 
 ## Complex figures with base graphics

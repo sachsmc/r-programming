@@ -66,7 +66,11 @@ image: "../images/outro.png"
 
 1. What did you like about the course? 
 2. What did you dislike about the course? 
-3. Did you knowledge about R programming inprove during the course? 
+3. Did you knowledge about R programming improve during the course? 
 4. Are there topics you wanted to be covered but were not?
 
+# Office hours
 
+## Book a time
+
+![](qrbook.png)

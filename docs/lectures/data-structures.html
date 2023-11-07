@@ -571,7 +571,7 @@ NULL
 [[3]]
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x55a67b642088&gt;
+&lt;bytecode: 0x558921b27088&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="fu">list</span>(<span class="at">numbers =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, </span>
@@ -588,7 +588,7 @@ $letters
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x55a67b642088&gt;
+&lt;bytecode: 0x558921b27088&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -647,7 +647,7 @@ NULL</code></pre>
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x55a67b642088&gt;
+&lt;bytecode: 0x558921b27088&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -699,7 +699,7 @@ $letters
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x55a67b642088&gt;
+&lt;bytecode: 0x558921b27088&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -733,7 +733,7 @@ $letters
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x55a67b642088&gt;
+&lt;bytecode: 0x558921b27088&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -767,7 +767,7 @@ $letters
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x55a67b642088&gt;
+&lt;bytecode: 0x558921b27088&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -944,22 +944,22 @@ c  3 6  9 NA</code></pre>
 <span id="cb110-4"><a href="#cb110-4"></a></span>
 <span id="cb110-5"><a href="#cb110-5"></a>S1 <span class="sc">%*%</span> S2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>          [,1]      [,2]      [,3]
-[1,] 0.7675415 0.8691309 0.2207640
-[2,] 1.0728870 1.3162927 0.9421436
-[3,] 1.4577862 1.4488901 0.8547885</code></pre>
+<pre><code>           [,1]      [,2]      [,3]
+[1,] 0.42087994 0.3655782 0.3280428
+[2,] 0.58501628 0.8616795 0.7261262
+[3,] 0.09953931 0.1457493 0.1379693</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb112"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1"></a><span class="fu">t</span>(S1) <span class="sc">%*%</span> S2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>          [,1]     [,2]      [,3]
-[1,] 0.8494679 1.071059 0.2947009
-[2,] 0.8255842 1.065576 0.6342277
-[3,] 1.4640512 1.424664 0.8698095</code></pre>
+<pre><code>          [,1]      [,2]      [,3]
+[1,] 0.2074437 0.2733969 0.2469921
+[2,] 0.6928884 0.5359650 0.5125037
+[3,] 0.6552608 0.3395593 0.3174070</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb114"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1"></a>x <span class="sc">%*%</span> <span class="fu">solve</span>(S1) <span class="sc">%*%</span> x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         [,1]
-[1,] 6.036685</code></pre>
+[1,] 19.22081</code></pre>
 </div>
 </div>
 </section>
@@ -1344,7 +1344,7 @@ attr(,"note")
 </div>
 <div class="sourceCode cell-code" id="cb206"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb206-1"><a href="#cb206-1"></a><span class="fu">comment</span>(A1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "I created this array on  2023-11-03 15:13:52.639829"</code></pre>
+<pre><code>[1] "I created this array on  2023-11-06 15:35:53.337576"</code></pre>
 </div>
 </div>
 </section>
@@ -1439,8 +1439,8 @@ Slot "x":
  [1]  1  2  3  4  5  6  7  8  9 10
 
 Slot "y":
- [1]  0.4923493  2.4172047  2.3729974  3.5372491  5.6517470  4.3846065
- [7]  5.0831151  9.2956115 10.0775053 10.9261773</code></pre>
+ [1] 0.5516686 1.4937299 1.4475250 5.3939747 3.8335691 5.8265759 6.0137394
+ [8] 8.5298937 7.6669777 9.6780568</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb220"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb220-1"><a href="#cb220-1"></a>ts1<span class="sc">@</span>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">

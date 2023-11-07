@@ -282,12 +282,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="make-a-better-plot-than-before" class="level2">
 <h2 class="anchored" data-anchor-id="make-a-better-plot-than-before">Make a better plot than before</h2>
 <p>Use a figure from a recent analysis or publication that you would like to reproduce or enhance. Use tidy data principles to set yourself up for success.</p>
+<p>If you cannot think of anything, here is an example.</p>
+<p>The following code uses the <code>survival</code> package to estimate survival curves in two treatment groups.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>sfit <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> x, <span class="at">data =</span> aml)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>sfit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call: survfit(formula = Surv(time, status) ~ x, data = aml)
+
+                 n events median 0.95LCL 0.95UCL
+x=Maintained    11      7     31      18      NA
+x=Nonmaintained 12     11     23       8      NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sfit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 17
+ $ n        : int [1:2] 11 12
+ $ time     : num [1:20] 9 13 18 23 28 31 34 45 48 161 ...
+ $ n.risk   : num [1:20] 11 10 8 7 6 5 4 3 2 1 ...
+ $ n.event  : num [1:20] 1 1 1 1 0 1 1 0 1 0 ...
+ $ n.censor : num [1:20] 0 1 0 0 1 0 0 1 0 1 ...
+ $ surv     : num [1:20] 0.909 0.818 0.716 0.614 0.614 ...
+ $ std.err  : num [1:20] 0.0953 0.1421 0.1951 0.2487 0.2487 ...
+ $ cumhaz   : num [1:20] 0.0909 0.1909 0.3159 0.4588 0.4588 ...
+ $ std.chaz : num [1:20] 0.0909 0.1351 0.1841 0.233 0.233 ...
+ $ strata   : Named int [1:2] 10 10
+  ..- attr(*, "names")= chr [1:2] "x=Maintained" "x=Nonmaintained"
+ $ type     : chr "right"
+ $ logse    : logi TRUE
+ $ conf.int : num 0.95
+ $ conf.type: chr "log"
+ $ lower    : num [1:20] 0.754 0.619 0.488 0.377 0.377 ...
+ $ upper    : num [1:20] 1 1 1 0.999 0.999 ...
+ $ call     : language survfit(formula = Surv(time, status) ~ x, data = aml)
+ - attr(*, "class")= chr "survfit"</code></pre>
+</div>
+</div>
+<p>How would you plot the Kaplan-Meier curves in the two treatment groups using <code>ggplot2</code>? What about adding confidence intervals to the plot? What about adding tick marks where the censoring times are?</p>
 </section>
 <section id="complex-figures-with-base-graphics" class="level2">
 <h2 class="anchored" data-anchor-id="complex-figures-with-base-graphics">Complex figures with base graphics</h2>
 <p>Check out this violin plot</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span> <span class="fu">geom_violin</span>() <span class="sc">+</span> <span class="fu">geom_jitter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span> <span class="fu">geom_violin</span>() <span class="sc">+</span> <span class="fu">geom_jitter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 2 rows containing non-finite values (`stat_ydensity()`).</code></pre>
 </div>
@@ -295,7 +334,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="dataviz_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<p><img src="dataviz_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>How would you produce a similar plot using base graphics? After doing so, reflect, do you appreciate to convenience and flexibility of <code>ggplot2</code>?</p>
@@ -305,15 +344,15 @@ Hints
 </summary>
 <p>Use the <code>density</code> function to calculate the densities by species. The results are stored in a list with elements <code>x</code> and <code>y</code>. Then transform by rotating 90 degrees and mirroring. Plot the result using the <code>polygon</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dens_by_species <span class="ot">&lt;-</span> <span class="fu">split</span>(penguins<span class="sc">$</span>body_mass_g, penguins<span class="sc">$</span>species) <span class="sc">|&gt;</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(density, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">cut =</span> <span class="dv">0</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(body_mass_g <span class="sc">~</span> <span class="fu">jitter</span>(<span class="fu">as.numeric</span>(<span class="fu">as.factor</span>(species))), </span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">data =</span> penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>dens_by_species <span class="ot">&lt;-</span> <span class="fu">split</span>(penguins<span class="sc">$</span>body_mass_g, penguins<span class="sc">$</span>species) <span class="sc">|&gt;</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(density, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">cut =</span> <span class="dv">0</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(body_mass_g <span class="sc">~</span> <span class="fu">jitter</span>(<span class="fu">as.numeric</span>(<span class="fu">as.factor</span>(species))), </span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">data =</span> penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="dataviz_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="dataviz_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">## rotate, scale, and mirror the densities, then add with polygon</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">## rotate, scale, and mirror the densities, then add with polygon</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </details>
 
