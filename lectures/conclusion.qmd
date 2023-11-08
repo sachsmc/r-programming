@@ -30,6 +30,7 @@ image: "../images/outro.png"
 - Reshaping
 - Merging
 - Dealing with dates and strings
+- Visualization
 
 # Conclusion
 
@@ -46,7 +47,7 @@ image: "../images/outro.png"
     - Packages for personal and internal use
 3. High performance computing
     - Parallelization, using computing servers
-    - Using C/C++ in R (or other languages)
+    - Using C/C++ (or other languages) in R 
 4. Visualization and interactivity
     - `shiny` package
     - Dynamic documents and graphics
@@ -72,5 +73,9 @@ image: "../images/outro.png"
 # Office hours
 
 ## Book a time
+
+To ask about R, get help on the exam, or anything else
+
+My office is 10.2.25
 
 ![](qrbook.png)

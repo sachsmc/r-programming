@@ -7,21 +7,101 @@ format:
       scrollable: true
       max-scale: 1
       min-scale: 1
+      fig-width: 8.25
+      fig-height: 5.25
 execute:
   echo: true
 image: "../images/datavis.png"
 ---
 
 
-## Graphics principles
+# General graphics principles
 
-1. Encode quantitative data as linear lengths or distances. They are easier and more accurate to interpret than angles, area, volume, or color. 
-2. Place things that are meant to be compared next to each other. 
-3. Show the raw data or some display of uncertainty rather than only summary statistics. 
-4. Remove extraneous information, don't waste ink. Also don't waste paper with empty space. 
-5. Be aware that 5 - 10% of the population is color blind, so choose appropriate color schemes. 
+## 1. Encode quantitative data as linear lengths or distances. 
 
-Deciding what to plot is often more difficult than making the plot itself
+```{r}
+#| echo: false
+#| message: false
+library(ggplot2)
+library(patchwork)
+library(palmerpenguins)
+library(dplyr)
+```
+
+
+```{r}
+#| echo: false
+piedat <- table(penguins$island)
+layout(matrix(c(1, 2), nrow = 1))
+par(mar = c(1, 1, 4, 4))
+pie(piedat, main = "Frequency of penguins\nat each island", radius = .9)
+box()
+par(mar = c(5, 4, 1, 1))
+dotchart(as.numeric(piedat), labels = names(piedat),  xlab = "Frequency", xlim = c(0, 175))
+```
+
+
+They are easier and more accurate to interpret than angles, area, volume, or color. 
+
+## 2. Place things that are meant to be compared next to each other. 
+
+```{r}
+#| echo: false
+ex1 <- ggplot(subset(penguins, !is.na(sex)), aes(x = species, y = body_mass_g)) + 
+  geom_jitter() + geom_boxplot() + 
+  facet_wrap(~ sex)
+ex2 <- ggplot(subset(penguins, !is.na(sex)), aes(x = species, y = body_mass_g, color = sex)) + 
+  geom_jitter() + geom_boxplot()
+ex1 / ex2
+```
+
+
+## 3. If no comparison is relevant, sort by a quantitative variable
+
+```{r}
+#| echo: false
+#| fig-height: 6.5
+par(mfrow = c(1, 2))
+dotchart(mtcars$wt, labels = rownames(mtcars), xlab = "weight (1000s of pounds)")
+dotchart(sort(mtcars$wt), labels = rownames(mtcars[order(mtcars$wt),]), xlab = "weight (1000s of pounds)")
+```
+
+## 4. Show the raw data or some display of uncertainty rather than only summary statistics. 
+
+```{r}
+#| echo: false
+ex31 <- subset(penguins, !is.na(sex)) |> group_by(species, sex) |> 
+  summarize(mean_flipper_length = mean(flipper_length_mm, na.rm = TRUE)) |> 
+  ggplot(aes(x = species, y = mean_flipper_length, fill = sex)) + 
+  geom_bar(stat = "identity", position = "dodge") + theme(legend.position = "bottom")
+
+ex32 <- ggplot(subset(penguins, !is.na(sex)), aes(x = species, color = sex, y = flipper_length_mm)) + 
+  geom_point(position = position_jitterdodge()) + 
+  stat_summary(fun.data = "mean_cl_normal", geom = "crossbar", position = "dodge") + theme(legend.position = "bottom")
+ex31 + ex32
+```
+
+## 5. Carefully choose appropriate color schemes. 
+
+Be aware that 5 - 10% of the population is color blind, but color deficiencies or not, the scheme strongly affects the interpretation of the graphic.
+
+```{r}
+#| echo: false
+library(colorspace)
+par(mfrow = c(2, 2), mar = c(2,2, 2, 2))
+demoplot(rainbow(99), type = "heatmap")
+demoplot(desaturate(rainbow(99)), type = "heatmap")
+demoplot(sequential_hcl(99, "Purple-Blue"), type = "heatmap")
+demoplot(desaturate(sequential_hcl(99, "Purple-Blue")), type = "heatmap")
+```
+
+
+## Deciding what to plot is often more difficult than making the plot itself
+
+```{r}
+#| echo: false
+knitr::include_graphics("decline.png")
+```
 
 
 ## Graphics in R
@@ -84,7 +164,7 @@ The default is both ugly, and can be poorly perceived when data are mapped to co
 
 ## Choosing a palette
 
-Use the `colorspace` package to find a good palette to meet your needs. It uses the Hue Chroma Luminance colorspace
+Use the `colorspace` package to find a good palette to meet your needs. It uses the Hue-Chroma-Luminance colorspace
 
 ```{r}
 library(colorspace)
@@ -257,6 +337,7 @@ plot3 <- ggplot(penguins, aes(x = species, y = body_mass_g)) + geom_jitter()
 plot3
 ```
 
+These are alphabetical, how do I change the order?
 
 ## Reordering things
 
@@ -278,7 +359,7 @@ ggplot(penguins, aes(x = species2, y = body_mass_g)) + geom_jitter()
 
 penguins$species2 <- reorder(penguins$species2, 
                              penguins$body_mass_g, 
-                             mean, na.rm = TRUE)
+                             min, na.rm = TRUE)
 ggplot(penguins, aes(x = species2, y = body_mass_g)) + geom_jitter()
 ```
 
