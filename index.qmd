@@ -52,19 +52,15 @@ Michael Sachs, Section of Biostatistics
 Michael Sachs and other members of the staff at the Section of Biostatistics.
 
 ## Dates
-30 October, 2, 6, 9, November 2023, all days from 10.00-16.00, with breaks for lunch.
+11, 14, 18, 21, March 2024 all days from 10.00-16.00, with breaks for lunch.
 
 ## Course location
 
-### On Monday 30 Oct and 6 Nov
-CSS 2-2-55
-
-### On Thursday 2 and 9 Nov
-CSS 22-0-19
+CSS 2-1-55
 
 ## Course credit
 
 To get credit for the course, you must submit and pass the take-home exam. Attendance is encouraged but not required.
 
-Send your solution to skl@sund.ku.dk __no later than 23.59 on November 16__. 
+Send your solution to michael.sachs@sund.ku.dk __no later than 23.59 on March 28__. 
 

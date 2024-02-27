@@ -2,6 +2,8 @@
 title: "Introduction and Overview"
 subtitle: "Day 1"
 author: "Michael C Sachs"
+params: 
+  due_date: "March 28"
 format: 
     revealjs:
       scrollable: true
@@ -14,6 +16,12 @@ image: "../images/intro.png"
 # Introduction
 
 ## Learning objectives
+
+```{r}
+#| include: false
+cat(params$due_date)
+```
+
 
 - Understand and apply programming principles to handle repetitive tasks
 - Understand how to use and make your own functions in R
@@ -176,7 +184,7 @@ https://sachsmc.github.io/r-programming/
 
 ## Exam
 
-To get credit for the course, you must hand in and pass the exam which will be an __email sent to skl@sund.ku.dk no later than 23.59 on November 16.__ 
+To get credit for the course, you must hand in and pass the exam which will be an __email sent to michael.sachs@sund.ku.dk no later than 23.59 on `r params$due_date`.__ 
 
 It must contain as attachments: 
 
@@ -192,14 +200,14 @@ The body of the email should be the "readme" file, with details on
 
 ## How to pass the exam
 
-1. Send something on time (Before midnight on Nov 16)
+1. Send something on time (Before midnight on `r params$due_date`)
 2. Demonstrate mastery of at least 3 out of the 4 learning objectives. 
 
 An easy way to do this is to do the exercises and save them all in a single Rmarkdown or Quarto document. 
 
 ### Office hours
 
-The week after the course and before Nov 16, I will hold office hours where you can come ask questions and get help on any R topic
+The week after the course and before `r params$due_date`, I will hold office hours where you can come ask questions and get help on any R topic
 
 I will send sign up link by email
 

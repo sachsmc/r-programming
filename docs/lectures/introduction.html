@@ -502,7 +502,7 @@ Michael C Sachs
 </section>
 <section id="exam" class="slide level2">
 <h2>Exam</h2>
-<p>To get credit for the course, you must hand in and pass the exam which will be an <strong>email sent to skl@sund.ku.dk no later than 23.59 on November 16.</strong></p>
+<p>To get credit for the course, you must hand in and pass the exam which will be an <strong>email sent to michael.sachs@sund.ku.dk no later than 23.59 on March 28.</strong></p>
 <p>It must contain as attachments:</p>
 <ol type="1">
 <li>A rendered output document in a format of your choice that includes prose, code, and output from code.</li>
@@ -518,12 +518,12 @@ Michael C Sachs
 <section id="how-to-pass-the-exam" class="slide level2">
 <h2>How to pass the exam</h2>
 <ol type="1">
-<li>Send something on time (Before midnight on Nov 16)</li>
+<li>Send something on time (Before midnight on March 28)</li>
 <li>Demonstrate mastery of at least 3 out of the 4 learning objectives.</li>
 </ol>
 <p>An easy way to do this is to do the exercises and save them all in a single Rmarkdown or Quarto document.</p>
 <h3 id="office-hours">Office hours</h3>
-<p>The week after the course and before Nov 16, I will hold office hours where you can come ask questions and get help on any R topic</p>
+<p>The week after the course and before March 28, I will hold office hours where you can come ask questions and get help on any R topic</p>
 <p>I will send sign up link by email</p>
 </section></section>
 <section id="questions" class="title-slide slide level1 center">
@@ -745,6 +745,44 @@ Michael C Sachs
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
