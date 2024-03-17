@@ -1,6 +1,6 @@
 ---
 title: "Tidy data"
-subtitle: "Day 3, B"
+subtitle: "Day 3, C"
 author: "Michael C Sachs"
 format: 
     revealjs:

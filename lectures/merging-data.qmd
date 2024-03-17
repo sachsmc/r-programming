@@ -1,6 +1,6 @@
 ---
 title: "Merging/joining data"
-subtitle: "Day 3, C"
+subtitle: "Day 3, B"
 author: "Michael C Sachs"
 format: 
     revealjs:

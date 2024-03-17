@@ -44,3 +44,21 @@ Use the tidy principles to do the following:
 
 
 
+
+
+## Merging and manipulation
+
+The objective of this project is to describe the distribution of the number of days between hospitalizations and drug dispensations by age and sex. Your challenge is to do the following: 
+
+1. Import and merge the drug register data with the hospitalization register. 
+2. Create a new variable that counts the number of drug dispensations in the 3 months following a hospitalization. 
+3. Summarize the variable by age and sex. Try making a graphical summary .
+
+<details>
+<summary>Hints</summary>
+- The drug register data are stored in separate files by year. You will need to iterate over these files somehow, maybe using a loop or one of the apply functions. 
+- The file names can be created programmatically with `paste0("med-", 2005:2010, "-ex.rds")`
+- Once they are all read in as objects, you will want to append them by row, using e.g., `rbind`
+- Join the hospitalization table to the drug table, by patient id. How to deal with the dates? We want only the most recent prescription since the last hospitalization. This is a __rolling join__
+</details>
+

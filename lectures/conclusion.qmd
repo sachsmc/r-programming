@@ -1,6 +1,6 @@
 ---
 title: "Summary and conclusion"
-subtitle: "Day 4, D"
+subtitle: "Day 4, B"
 author: "Michael C Sachs"
 format: 
     revealjs:
