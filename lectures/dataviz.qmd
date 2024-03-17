@@ -1,6 +1,6 @@
 ---
 title: "Data visualization"
-subtitle: "Day 4, C"
+subtitle: "Day 4, A"
 author: "Michael C Sachs"
 format: 
     revealjs:

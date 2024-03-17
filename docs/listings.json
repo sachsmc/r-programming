@@ -1,18 +1,5 @@
 [
   {
-    "listing": "/exercises/index.html",
-    "items": [
-      "/exercises/projects.html",
-      "/exercises/dynamic-documents.html",
-      "/exercises/data-structures.html",
-      "/exercises/flow-and-loops.html",
-      "/exercises/functions.html",
-      "/exercises/dates-and-strings.html",
-      "/exercises/tidy-and-reshape.html",
-      "/exercises/dataviz.html"
-    ]
-  },
-  {
     "listing": "/exercises/solutions/index.html",
     "items": [
       "/exercises/solutions/projects.html",
@@ -26,6 +13,19 @@
     ]
   },
   {
+    "listing": "/exercises/index.html",
+    "items": [
+      "/exercises/projects.html",
+      "/exercises/dynamic-documents.html",
+      "/exercises/data-structures.html",
+      "/exercises/flow-and-loops.html",
+      "/exercises/functions.html",
+      "/exercises/dates-and-strings.html",
+      "/exercises/tidy-and-reshape.html",
+      "/exercises/dataviz.html"
+    ]
+  },
+  {
     "listing": "/lectures/index.html",
     "items": [
       "/lectures/projects.html",
@@ -35,8 +35,8 @@
       "/lectures/flow-and-loops.html",
       "/lectures/functions.html",
       "/lectures/dates-and-strings.html",
-      "/lectures/tidy-data.html",
       "/lectures/merging-data.html",
+      "/lectures/tidy-data.html",
       "/lectures/dataviz.html",
       "/lectures/conclusion.html"
     ]

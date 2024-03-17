@@ -8,7 +8,7 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.361">
+  <meta name="generator" content="quarto-1.3.450">
 
   <meta name="author" content="Michael C Sachs">
   <title>Programming and statistical modelling in R - Data structures in R</title>
@@ -571,7 +571,7 @@ NULL
 [[3]]
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x55e4304adb90&gt;
+&lt;bytecode: 0x000002397db799b8&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="fu">list</span>(<span class="at">numbers =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, </span>
@@ -588,7 +588,7 @@ $letters
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x55e4304adb90&gt;
+&lt;bytecode: 0x000002397db799b8&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -647,7 +647,7 @@ NULL</code></pre>
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x55e4304adb90&gt;
+&lt;bytecode: 0x000002397db799b8&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -699,7 +699,7 @@ $letters
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x55e4304adb90&gt;
+&lt;bytecode: 0x000002397db799b8&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -733,7 +733,7 @@ $letters
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x55e4304adb90&gt;
+&lt;bytecode: 0x000002397db799b8&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -767,7 +767,7 @@ $letters
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x55e4304adb90&gt;
+&lt;bytecode: 0x000002397db799b8&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -945,21 +945,21 @@ c  3 6  9 NA</code></pre>
 <span id="cb110-5"><a href="#cb110-5"></a>S1 <span class="sc">%*%</span> S2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          [,1]      [,2]      [,3]
-[1,] 0.4484847 0.8976075 0.5879748
-[2,] 0.6205122 1.1953116 0.8510472
-[3,] 1.0931022 1.9657169 1.6195091</code></pre>
+[1,] 0.4771123 0.4238099 0.4098438
+[2,] 1.3819082 1.2369149 1.2594622
+[3,] 1.4188617 1.2896047 1.2750428</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb112"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1"></a><span class="fu">t</span>(S1) <span class="sc">%*%</span> S2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          [,1]      [,2]      [,3]
-[1,] 0.7512037 1.3155394 1.1487857
-[2,] 1.1433559 2.0199227 1.7282152
-[3,] 0.3732234 0.6145506 0.6037765</code></pre>
+[1,] 1.5605761 1.1773483 0.7316962
+[2,] 1.3759560 1.1262108 0.9575830
+[3,] 0.7385219 0.5599396 0.3505885</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb114"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1"></a>x <span class="sc">%*%</span> <span class="fu">solve</span>(S1) <span class="sc">%*%</span> x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         [,1]
-[1,] 8.193283</code></pre>
+[1,] 25.22766</code></pre>
 </div>
 </div>
 </section>
@@ -1344,7 +1344,7 @@ attr(,"note")
 </div>
 <div class="sourceCode cell-code" id="cb206"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb206-1"><a href="#cb206-1"></a><span class="fu">comment</span>(A1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "I created this array on  2024-02-27 09:46:58.967187"</code></pre>
+<pre><code>[1] "I created this array on  2024-03-17 19:19:18"</code></pre>
 </div>
 </div>
 </section>
@@ -1439,8 +1439,8 @@ Slot "x":
  [1]  1  2  3  4  5  6  7  8  9 10
 
 Slot "y":
- [1]  0.1934406  1.6930345  3.4438153  5.9933985  3.8995571  5.6746216
- [7]  6.9577575  7.8796912 10.3999419 10.5728627</code></pre>
+ [1] 1.291361 2.200325 2.551539 4.054219 5.471827 6.485464 5.995219 7.760294
+ [9] 8.477432 8.219974</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb220"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb220-1"><a href="#cb220-1"></a>ts1<span class="sc">@</span>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
