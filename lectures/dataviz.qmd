@@ -374,6 +374,7 @@ Add solid horizontal lines at the mean and dashed horizontal lines at 95% confid
 
 Step 1: assemble the data
 ```{r}
+#| echo: false
 means_and_cis <- split(penguins$body_mass_g, penguins$species) |> 
   lapply(\(bm) {
     ttestbm <- t.test(bm)
@@ -397,6 +398,7 @@ Step 2: add to the plot using the desired geometric elements
 
 ```{r}
 #| out-height: "480px"
+#| echo: false
 plot3 + geom_linerange(data = mcidf, aes(xmin = xmin, 
                                      xmax = xmax, 
                                      y = mean, 
@@ -413,10 +415,10 @@ plot3 + geom_linerange(data = mcidf, aes(xmin = xmin,
 
 ## Creating reusable elements
 
-Let's make a function that adds the mean and confidence interval
+It is possible to make a function that adds layers to a plot. 
 
 ```{r}
-#| out-height: "480px"
+#| code-fold: true
 ggmean_ci <- function(data, yname, groupname, buffer = .45) {
   
   means_and_cis <- split(data[[yname]], data[[groupname]]) |> 
@@ -449,8 +451,10 @@ ggmean_ci <- function(data, yname, groupname, buffer = .45) {
   )
 
 }
+```
 
-
+```{r}
+#| out-height: "480px"
 plot3 + ggmean_ci(penguins, "body_mass_g", "species")
 
 ggplot(penguins |> subset(!is.na(sex)), aes(x = sex, y = bill_length_mm)) + 

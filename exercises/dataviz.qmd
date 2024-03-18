@@ -70,7 +70,18 @@ ggplot(penguins, aes(x = body_mass_g, y = bill_length_mm, color = species)) +
   geom_point() + facet_wrap(~ year) + my_fulltheme + my_qual_scale()
 ```
 
+## Adding elements to a plot
 
+Starting with this example from the lecture: 
+
+```{r}
+plotbm <- ggplot(penguins, aes(x = species, y = body_mass_g)) + geom_jitter()
+plotbm
+```
+
+1. Add solid horizontal lines at the mean of each species.
+2. Add dotted horizontal lines at the median of each species.
+3. __(For keeners)__ Create a reusable component that adds the mean and median lines to a jitter plot. Try it out on a different plot, e.g., sex versus bill length
 
 ## Make a better plot than before
 

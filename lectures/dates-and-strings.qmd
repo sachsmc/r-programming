@@ -47,6 +47,27 @@ sprintf("n and percent male: %.0f (%.1f%%)",
 
 See also the `glue` package for a different way to do this.
 
+## `glue` 
+
+`glue` is a package that allows you to insert R code into strings
+
+```{r}
+library(glue)
+
+glue("n and percent male: {round(nmale)} ({round(percentmale, 1)}%)", 
+        nmale = sum(penguins$sex == "male", na.rm = TRUE), 
+        percentmale = 100 * sum(penguins$sex == "male", na.rm = TRUE) / nrow(penguins)            )
+```
+
+It is quite flexible and works well with data frames as well
+
+```{r}
+library(dplyr)
+penguins |> group_by(species) |> 
+  summarize(mean_bill = mean(bill_length_mm, na.rm = TRUE)) |>
+  glue_data("The mean bill length for {species} is {round(mean_bill, 1)}mm")
+```
+
 
 # Regular expressions
 

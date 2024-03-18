@@ -3,7 +3,7 @@ title: "Introduction and Overview"
 subtitle: "Day 1"
 author: "Michael C Sachs"
 params: 
-  due_date: "March 28"
+  due_date: "April 4"
 format: 
     revealjs:
       scrollable: true

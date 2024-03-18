@@ -445,6 +445,32 @@ Michael C Sachs
 </div>
 </div>
 <p>See also the <code>glue</code> package for a different way to do this.</p>
+</section>
+<section id="glue" class="slide level2">
+<h2><code>glue</code></h2>
+<p><code>glue</code> is a package that allows you to insert R code into strings</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">library</span>(glue)</span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="fu">glue</span>(<span class="st">"n and percent male: {round(nmale)} ({round(percentmale, 1)}%)"</span>, </span>
+<span id="cb5-4"><a href="#cb5-4"></a>        <span class="at">nmale =</span> <span class="fu">sum</span>(penguins<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"male"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb5-5"><a href="#cb5-5"></a>        <span class="at">percentmale =</span> <span class="dv">100</span> <span class="sc">*</span> <span class="fu">sum</span>(penguins<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"male"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">nrow</span>(penguins)            )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>n and percent male: 168 (48.8%)</code></pre>
+</div>
+</div>
+<p>It is quite flexible and works well with data frames as well</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb7-2"><a href="#cb7-2"></a>penguins <span class="sc">|&gt;</span> <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span> </span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="fu">summarize</span>(<span class="at">mean_bill =</span> <span class="fu">mean</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>  <span class="fu">glue_data</span>(<span class="st">"The mean bill length for {species} is {round(mean_bill, 1)}mm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The mean bill length for Adelie is 38.8mm
+The mean bill length for Chinstrap is 48.8mm
+The mean bill length for Gentoo is 47.5mm</code></pre>
+</div>
+</div>
 </section></section>
 <section>
 <section id="regular-expressions" class="title-slide slide level1 center">
@@ -455,8 +481,8 @@ Michael C Sachs
 <h2>Register example</h2>
 <p>“… any diagnosis of either D150, D152, or D159 before the date 1 January 2010”</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>lpr<span class="sc">$</span>diag[lpr<span class="sc">$</span>date <span class="sc">&lt;=</span> <span class="fu">as.Date</span>(<span class="st">"2010-01-01"</span>)] <span class="sc">%in%</span> </span>
-<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">c</span>(<span class="st">"D150"</span>, <span class="st">"D152"</span>, <span class="st">"D159"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>lpr<span class="sc">$</span>diag[lpr<span class="sc">$</span>date <span class="sc">&lt;=</span> <span class="fu">as.Date</span>(<span class="st">"2010-01-01"</span>)] <span class="sc">%in%</span> </span>
+<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">c</span>(<span class="st">"D150"</span>, <span class="st">"D152"</span>, <span class="st">"D159"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>We can save typing by being clever matching the codes (e.g., “starts with D15”)</li>
@@ -469,9 +495,9 @@ Michael C Sachs
 <p>You can use them with <code>grep</code> and related functions in base R. Also see the <code>stringr</code> package.</p>
 <p>Example “starts with”</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">grepl</span>(<span class="at">pattern=</span> <span class="st">"^D15"</span>, </span>
-<span id="cb6-2"><a href="#cb6-2"></a>      <span class="fu">c</span>(<span class="st">"D150"</span>, <span class="st">"D152"</span>, <span class="st">"D159"</span>, </span>
-<span id="cb6-3"><a href="#cb6-3"></a>        <span class="st">"A250"</span>, <span class="st">"Z149"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">grepl</span>(<span class="at">pattern=</span> <span class="st">"^D15"</span>, </span>
+<span id="cb10-2"><a href="#cb10-2"></a>      <span class="fu">c</span>(<span class="st">"D150"</span>, <span class="st">"D152"</span>, <span class="st">"D159"</span>, </span>
+<span id="cb10-3"><a href="#cb10-3"></a>        <span class="st">"A250"</span>, <span class="st">"Z149"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  TRUE  TRUE  TRUE FALSE FALSE</code></pre>
 </div>
@@ -492,8 +518,8 @@ Michael C Sachs
 </ul>
 <p>examples</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="st">"^[A-Z][0-9]{3}$"</span> <span class="do">## match all ICD codes</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="st">"^D15[029]$"</span> <span class="do">## our codes of interest</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="st">"^[A-Z][0-9]{3}$"</span> <span class="do">## match all ICD codes</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="st">"^D15[029]$"</span> <span class="do">## our codes of interest</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="get-help" class="slide level2">
@@ -531,25 +557,25 @@ Michael C Sachs
 <section id="register-example-1" class="slide level2">
 <h2>Register example</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">as.Date</span>(<span class="st">"2010-01-01"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">as.Date</span>(<span class="st">"2010-01-01"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2010-01-01"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">as.Date</span>(<span class="st">"2010-05-10"</span>) <span class="do">## ambiguous!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">as.Date</span>(<span class="st">"2010-05-10"</span>) <span class="do">## ambiguous!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2010-05-10"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb13-2"><a href="#cb13-2"></a></span>
-<span id="cb13-3"><a href="#cb13-3"></a><span class="fu">ymd</span>(<span class="st">"2010-05-10"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb17-2"><a href="#cb17-2"></a></span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="fu">ymd</span>(<span class="st">"2010-05-10"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2010-05-10"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">ymd</span>(<span class="st">"2010-05-10"</span>) <span class="sc">-</span> <span class="fu">ymd</span>(<span class="st">"2010-01-01"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">ymd</span>(<span class="st">"2010-05-10"</span>) <span class="sc">-</span> <span class="fu">ymd</span>(<span class="st">"2010-01-01"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Time difference of 129 days</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">as.numeric</span>(<span class="fu">ymd</span>(<span class="st">"2010-05-10"</span>) <span class="sc">-</span> <span class="fu">ymd</span>(<span class="st">"2010-01-01"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">as.numeric</span>(<span class="fu">ymd</span>(<span class="st">"2010-05-10"</span>) <span class="sc">-</span> <span class="fu">ymd</span>(<span class="st">"2010-01-01"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 129</code></pre>
 </div>

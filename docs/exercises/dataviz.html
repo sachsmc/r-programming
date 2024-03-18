@@ -157,6 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#tips" id="toc-tips" class="nav-link" data-scroll-target="#tips">Tips</a></li>
   </ul></li>
+  <li><a href="#adding-elements-to-a-plot" id="toc-adding-elements-to-a-plot" class="nav-link" data-scroll-target="#adding-elements-to-a-plot">Adding elements to a plot</a></li>
   <li><a href="#make-a-better-plot-than-before" id="toc-make-a-better-plot-than-before" class="nav-link" data-scroll-target="#make-a-better-plot-than-before">Make a better plot than before</a></li>
   <li><a href="#complex-figures-with-base-graphics" id="toc-complex-figures-with-base-graphics" class="nav-link" data-scroll-target="#complex-figures-with-base-graphics">Complex figures with base graphics</a></li>
   </ul>
@@ -398,16 +399,35 @@ family not found in Windows font database</code></pre>
 </div>
 </section>
 </section>
+<section id="adding-elements-to-a-plot" class="level2">
+<h2 class="anchored" data-anchor-id="adding-elements-to-a-plot">Adding elements to a plot</h2>
+<p>Starting with this example from the lecture:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>plotbm <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span> <span class="fu">geom_jitter</span>()</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>plotbm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="dataviz_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol type="1">
+<li>Add solid horizontal lines at the mean of each species.</li>
+<li>Add dotted horizontal lines at the median of each species.</li>
+<li><strong>(For keeners)</strong> Create a reusable component that adds the mean and median lines to a jitter plot. Try it out on a different plot, e.g., sex versus bill length</li>
+</ol>
+</section>
 <section id="make-a-better-plot-than-before" class="level2">
 <h2 class="anchored" data-anchor-id="make-a-better-plot-than-before">Make a better plot than before</h2>
 <p>Use a figure from a recent analysis or publication that you would like to reproduce or enhance. Use tidy data principles to set yourself up for success.</p>
 <p>If you cannot think of anything, here is an example.</p>
 <p>The following code uses the <code>survival</code> package to estimate survival curves in two treatment groups.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>sfit <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> x, <span class="at">data =</span> aml)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>sfit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>sfit <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> x, <span class="at">data =</span> aml)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>sfit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call: survfit(formula = Surv(time, status) ~ x, data = aml)
 
@@ -415,7 +435,7 @@ family not found in Windows font database</code></pre>
 x=Maintained    11      7     31      18      NA
 x=Nonmaintained 12     11     23       8      NA</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sfit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sfit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 17
  $ n        : int [1:2] 11 12
@@ -445,7 +465,7 @@ x=Nonmaintained 12     11     23       8      NA</code></pre>
 <h2 class="anchored" data-anchor-id="complex-figures-with-base-graphics">Complex figures with base graphics</h2>
 <p>Check out this violin plot</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span> <span class="fu">geom_violin</span>() <span class="sc">+</span> <span class="fu">geom_jitter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span> <span class="fu">geom_violin</span>() <span class="sc">+</span> <span class="fu">geom_jitter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 2 rows containing non-finite values (`stat_ydensity()`).</code></pre>
 </div>
@@ -453,7 +473,7 @@ x=Nonmaintained 12     11     23       8      NA</code></pre>
 <pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="dataviz_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="dataviz_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>How would you produce a similar plot using base graphics? After doing so, reflect, do you appreciate to convenience and flexibility of <code>ggplot2</code>?</p>
@@ -463,15 +483,15 @@ Hints
 </summary>
 <p>Use the <code>density</code> function to calculate the densities by species. The results are stored in a list with elements <code>x</code> and <code>y</code>. Then transform by rotating 90 degrees and mirroring. Plot the result using the <code>polygon</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>dens_by_species <span class="ot">&lt;-</span> <span class="fu">split</span>(penguins<span class="sc">$</span>body_mass_g, penguins<span class="sc">$</span>species) <span class="sc">|&gt;</span> </span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(density, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">cut =</span> <span class="dv">0</span>)</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(body_mass_g <span class="sc">~</span> <span class="fu">jitter</span>(<span class="fu">as.numeric</span>(<span class="fu">as.factor</span>(species))), </span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">data =</span> penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>dens_by_species <span class="ot">&lt;-</span> <span class="fu">split</span>(penguins<span class="sc">$</span>body_mass_g, penguins<span class="sc">$</span>species) <span class="sc">|&gt;</span> </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(density, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">cut =</span> <span class="dv">0</span>)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(body_mass_g <span class="sc">~</span> <span class="fu">jitter</span>(<span class="fu">as.numeric</span>(<span class="fu">as.factor</span>(species))), </span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">data =</span> penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="dataviz_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="dataviz_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="do">## rotate, scale, and mirror the densities, then add with polygon</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="do">## rotate, scale, and mirror the densities, then add with polygon</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </details>
 
