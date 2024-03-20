@@ -30,7 +30,7 @@ library(ggplot2)
 library(palmerpenguins)
 
 mytheme <- theme(strip.background = element_rect(fill = "steelblue"), 
-        text = element_text(family = "Comic sans"), 
+        text = element_text(family = "Comic Sans MS"), 
         plot.background = element_rect(fill = "grey81"), 
         legend.background = element_rect(fill = NA), 
         legend.position = "bottom"
