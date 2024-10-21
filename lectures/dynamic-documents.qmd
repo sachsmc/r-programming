@@ -166,7 +166,7 @@ knitr::kable(head(palmerpenguins::penguins))
 # How? 
 
 - Rmarkdown, works great, been around for a while now
-- Quarto, quite new. Main advantage is increase flexibility of controlling output (and speed)
+- Quarto, relatively newer. Main advantage is increase flexibility of controlling output (and speed) and more features being introduced
 - Sweave, old school format used in R. See the `survival` package vignettes and in particular the "noweb" subdirectory which takes the literate programming approach. 
 - Org mode, an emacs thing
 

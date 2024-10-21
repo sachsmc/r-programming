@@ -8,10 +8,10 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.550">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Michael C Sachs">
-  <title>Programming and statistical modelling in R - Data structures in R</title>
+  <title>Programming and statistical modelling in R – Data structures in R</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -42,7 +42,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -70,7 +70,7 @@
     code span.at { color: #657422; } /* Attribute */
     code span.bn { color: #ad0000; } /* BaseN */
     code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
     code span.ch { color: #20794d; } /* Char */
     code span.cn { color: #8f5902; } /* Constant */
     code span.co { color: #5e5e5e; } /* Comment */
@@ -84,7 +84,7 @@
     code span.fu { color: #4758ab; } /* Function */
     code span.im { color: #00769e; } /* Import */
     code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; } /* Keyword */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
     code span.op { color: #5e5e5e; } /* Operator */
     code span.ot { color: #003b4f; } /* Other */
     code span.pp { color: #ad0000; } /* Preprocessor */
@@ -572,7 +572,7 @@ NULL
 [[3]]
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x5e74b9ba4650&gt;
+&lt;bytecode: 0x59a5202bd998&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a><span class="fu">list</span>(<span class="at">numbers =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, </span>
@@ -589,7 +589,7 @@ $letters
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x5e74b9ba4650&gt;
+&lt;bytecode: 0x59a5202bd998&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -648,7 +648,7 @@ NULL</code></pre>
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x5e74b9ba4650&gt;
+&lt;bytecode: 0x59a5202bd998&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -700,7 +700,7 @@ $letters
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x5e74b9ba4650&gt;
+&lt;bytecode: 0x59a5202bd998&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -734,7 +734,7 @@ $letters
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x5e74b9ba4650&gt;
+&lt;bytecode: 0x59a5202bd998&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -768,7 +768,7 @@ $letters
 $mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x5e74b9ba4650&gt;
+&lt;bytecode: 0x59a5202bd998&gt;
 &lt;environment: namespace:base&gt;
 
 $list
@@ -946,21 +946,21 @@ c  3 6  9 NA</code></pre>
 <span id="cb110-5"><a></a>S1 <span class="sc">%*%</span> S2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          [,1]      [,2]      [,3]
-[1,] 0.5817102 0.4319694 0.5662887
-[2,] 0.8618178 0.6708640 0.8093220
-[3,] 0.9190139 0.9417321 1.3805946</code></pre>
+[1,] 1.2022690 0.6992816 1.2044129
+[2,] 1.3649854 0.6986581 1.4354533
+[3,] 0.7901516 0.5845208 0.9240978</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb112"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a></a><span class="fu">t</span>(S1) <span class="sc">%*%</span> S2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>          [,1]      [,2]      [,3]
-[1,] 0.7698256 0.5293676 0.9130591
-[2,] 0.5945810 0.5559717 0.7709751
-[3,] 0.8993657 0.9304431 1.3227746</code></pre>
+<pre><code>          [,1]      [,2]     [,3]
+[1,] 1.1532553 0.7655407 1.172239
+[2,] 1.2847604 0.5720371 1.356778
+[3,] 0.9564748 0.5900914 1.058774</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb114"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a></a>x <span class="sc">%*%</span> <span class="fu">solve</span>(S1) <span class="sc">%*%</span> x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         [,1]
-[1,] 9.059178</code></pre>
+[1,] 9.853942</code></pre>
 </div>
 </div>
 </section>
@@ -1345,7 +1345,7 @@ attr(,"note")
 </div>
 <div class="sourceCode cell-code" id="cb206"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb206-1"><a></a><span class="fu">comment</span>(A1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "I created this array on  2024-03-20 15:39:58.962121"</code></pre>
+<pre><code>[1] "I created this array on  2024-10-21 13:46:09.821312"</code></pre>
 </div>
 </div>
 </section>
@@ -1438,8 +1438,8 @@ Slot "x":
  [1]  1  2  3  4  5  6  7  8  9 10
 
 Slot "y":
- [1] -0.4686968  1.4483865  2.1845973  3.7024516  4.7426660  6.1987013
- [7]  6.1366448  6.9758053  8.9995082 10.5466263</code></pre>
+ [1]  2.247167  2.424729  2.348301  3.476776  6.506061  6.052728  5.433494
+ [8]  8.922170 10.147431  9.939171</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb220"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb220-1"><a></a>ts1<span class="sc">@</span>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1961,18 +1961,7 @@ Coefficients:
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -2004,7 +1993,47 @@ Coefficients:
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
       function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
@@ -2041,7 +2070,11 @@ Coefficients:
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);
-          return note.innerHTML;
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
         });
       }
       const findCites = (el) => {

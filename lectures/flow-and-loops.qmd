@@ -2,12 +2,20 @@
 title: "Flow control and loops"
 subtitle: "Day 2, A"
 author: "Michael C Sachs"
-format: 
-    revealjs:
-      scrollable: true
+format:
+  live-revealjs:
+    theme: default
+    scrollable: true
 execute:
   echo: true
+webr:
+  cell-options:
+    autorun: true
+    fig-width: 11
+    fig-height: 5
 image: "../images/flow-and-loops.png"
+editor_options: 
+  chunk_output_type: console
 ---
 
 # Flow control
@@ -49,14 +57,18 @@ If the `<condition>` evaluates to `TRUE`, then `something` gets executed, otherw
 
 ## Examples
 
-```{r}
-#| eval: false
-num_reps <- if(final_report) 5000 else 200
+```{webr}
+num_reps <- if(TRUE) 5000 else 200
+num_reps
 ```
 
-brackets are helpful for understanding and clarity
-```{r}
-#| eval: false
+This is more useful when the condition inside the `if` is a result of some other computation
+
+## Examples
+
+```{webr}
+nonparametric <- median(mtcars$mpg) > (mean(mtcars$mpg) * sd(mtcars$mpg) / 2)
+
 p_value <- if(nonparametric) {
   wilcox.test(mpg ~ vs, data = mtcars, exact = FALSE)$p.value
 } else {
@@ -64,7 +76,9 @@ p_value <- if(nonparametric) {
 }
 ```
 
-There does not need to be anything returned from the expression
+## Examples
+
+There does not need to be anything returned from the expression, it could just modify data, make a figure, etc. 
 ```{r}
 #| eval: false
 
@@ -86,7 +100,7 @@ It is vectorized and hence better suited for working with data.
 
 It returns a vector with elements from `yes` when TRUE, and elements from `no` when FALSE. 
 
-```{r}
+```{webr}
 rawdata <- c("12.63", "62.45", "<2") ## lower limit of detection
 as.numeric(ifelse(rawdata == "<2", 1, rawdata))
 ```
@@ -120,15 +134,17 @@ repeat {
 ```
 
 This will run exactly once
-```{r}
-#| eval: false
+```{webr}
+#| autorun: false
 repeat {
   print("hello")
   break
 }
 ```
 
-This will run 5 times
+Modify the above to run 5 times
+
+<details>
 ```{r}
 #| eval: false
 i <- 1
@@ -138,7 +154,7 @@ repeat {
   i <- i + 1
 }
 ```
-
+</details>
 
 ## While
 
