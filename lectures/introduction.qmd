@@ -149,13 +149,13 @@ https://sachsmc.github.io/r-programming/
 
 ### Next Monday
 
-1. Working with data, merging and reshaping
-2. Working with data, dates and characters
+1. Functions continued
+2. Working with data, merging and reshaping
 
 ### Next Thursday
 
 1. Data visualization
-2. Time to work on exam
+2. Working with data, dates and characters
 
 :::
 ::::

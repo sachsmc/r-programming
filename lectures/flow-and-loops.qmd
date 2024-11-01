@@ -11,6 +11,7 @@ execute:
 webr:
   cell-options:
     autorun: true
+    echo: true
     fig-width: 11
     fig-height: 5
 image: "../images/flow-and-loops.png"
@@ -164,7 +165,7 @@ The condition usually depends on a variable that changes at each iteration, in t
 
 `while` loops explicitly state the condition at the start: 
 
-```{r}
+```{webr}
 i <- 1
 while(i <= 5) {
   print("hello")
@@ -177,7 +178,7 @@ while(i <= 5) {
 
 A `for` loop explicitly states the sequence of the iterator at the start. Then the "end condition" is that the loop has reached the end of the sequence. 
 
-```{r}
+```{webr}
 for(i in 1:5) {
   print("hello")
 }
@@ -187,7 +188,7 @@ In this case, it is the most concise. I personally use `for` loops more than any
 
 `break` can be used inside any loop to end it. `next` can be used to go to the next iteration. 
 
-```{r}
+```{webr}
 for(i in 1:5) {
   if(i == 2) next
   print(paste("hello", i))
@@ -197,7 +198,7 @@ for(i in 1:5) {
 
 ## Example - Iterating through species
 
-```{r}
+```{webr}
 library(palmerpenguins)
 
 species_names <- levels(penguins$species)
@@ -218,9 +219,9 @@ mean_bill_length
 
 ## Bootstrap
 
-```{r}
+```{webr}
 mu.body_mass <- mean(penguins$body_mass_g, na.rm = TRUE)
-bsmeans <- vector("numeric", length = 2000)
+bsmeans <- vector("numeric", length = 200)
 for(i in 1:length(bsmeans)) {
   resampled.body_mass <- sample(penguins$body_mass_g, replace = TRUE)
   bsmeans[i] <- mean(resampled.body_mass, na.rm = TRUE)
@@ -233,7 +234,7 @@ abline(v = mu.body_mass, col = "red")
 
 A loop can itself contain a loop, or multiple loops. 
 
-```{r}
+```{webr}
 species_names <- levels(penguins$species)
 island_names <- levels(penguins$island)
 mean_bm_matrix <- matrix(NA, nrow = length(species_names), 

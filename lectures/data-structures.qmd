@@ -2,11 +2,19 @@
 title: "Data structures in R"
 subtitle: "Day 1, B"
 author: "Michael C Sachs"
-format: 
-    revealjs:
-      scrollable: true
+format:
+  live-revealjs:
+    theme: default
+    scrollable: true
 execute:
   echo: true
+webr:
+  cell-options:
+    echo: true
+    autorun: true
+    fig-width: 11
+    fig-height: 5
+engine: knitr
 image: "../images/data-structures.jpeg"
 ---
 
@@ -39,7 +47,6 @@ NULL
 ```
 
 
-
 ## Vectors
 
 A one dimensional collection of data with the same type. Can be named or unnamed. 
@@ -55,6 +62,8 @@ x <- 1:4
 names(x) <- c("a", "b", "c", "d")
 x
 ```
+
+
 
 
 ## Missing and empty/null values
@@ -81,14 +90,16 @@ Subsequences of vectors are obtained with square brackets `[]`
 Inside the square brackets goes the _index_, which can be itself a vector of numbers, logicals, or characters (if the vector is _named_)
 
 
-```{r}
+```{webr}
 x <- 1:6
 names(x) <- c("a", "b", "c", "d", "e", "f")
+```
 
+```{webr}
 x[c(1, 3, 5)]
 x[-c(2, 4, 6)] # negative index only works for numeric
 x[c(TRUE, FALSE, TRUE, FALSE, TRUE, FALSE)]
-x[(x %% 2) == 1]
+x[(x %% 2) == 1]  ## what does x %% 2 mean?
 x[(x %% 2) != 0]
 x[c("a", "c", "d")]
 ```
@@ -98,7 +109,7 @@ x[c("a", "c", "d")]
 
 A _list_ is a collection of things not required to be the same type. An element of a list can be any R object. Can also be named or not.
 
-```{r}
+```{webr}
 list(1:4, letters[1:4], mean)
 
 list(numbers = 1:4, 
@@ -116,17 +127,16 @@ vector(mode = "list", length = 3)
 
 ## Indexing lists
 
-```{r}
+A list can be indexed with square brackets `[]` or double-square brackets `[[]]`, but there is a difference! 
+
+```{webr}
 xl <- list(numbers = 1:4, 
      letters = letters[1:4], 
      mean = mean,
      list = list("a", 1, TRUE))
-
 ```
 
-A list can be indexed with square brackets `[]` or double-square brackets `[[]]`, but there is a difference! 
-
-```{r}
+```{webr}
 xl[[1]] ## returns the first element of the list (vector in this case)
 xl[1] ## returns a sublist
 xl[-1]
@@ -143,7 +153,7 @@ xl[["numbers"]]
 
 New elements can be added by name or number
 
-```{r}
+```{webr}
 xl$LETTERS <- LETTERS[1:4]
 xl[[length(xl) + 1]] <- LETTERS[1:5]
 xl
@@ -151,7 +161,7 @@ xl
 
 The `c` function concatenates new elements to the list
 
-```{r}
+```{webr}
 c(xl, AB = list(LETTERS[1:2]))
 c(xl, AB = LETTERS[1:2]) # careful!
 ```
@@ -163,7 +173,7 @@ Just like in math, R matrices are like vectors that have 2 dimensions, and are i
 
 There are lots of matrix manipulation functions in base R
 
-```{r}
+```{webr}
 M1 <- matrix(1:12, nrow = 3, ncol = 4)
 M1
 M2 <- matrix(1:12, nrow = 3, ncol = 4, 
@@ -183,13 +193,13 @@ diag(3) %*% M1
 
 Using square brackets, we get a single value by using two numbers or names separated by a comma: 
 
-```{r}
+```{webr}
 M1[2, 3]
 M2["b", "C"]
 ```
 
 A missing index means "everything", so this returns a vector
-```{r}
+```{webr}
 M1[2,]
 
 ## if you want the result to be a matrix (with 1 row)
@@ -197,7 +207,7 @@ M1[2, , drop = FALSE]
 ```
 
 Can also use a logical matrix or numeric as a single index
-```{r}
+```{webr}
 M1[M1 < 7] ## but this returns a vector
 M1[M1 < 7] <- 0 ## when used with assignment, the matrix is preserved
 M1
@@ -206,7 +216,7 @@ M1
 Index matrices are convenient but hard to understand
 
 Before we used a single index for each dimension: 
-```{r}
+```{webr}
 M2[1, 3]
 M2[2, 1]
 M2[3, 4]
@@ -214,7 +224,7 @@ M2[3, 4]
 
 If we create a series of paired single indices, and store them in a matrix with 2 columns, we can use that matrix as an index: 
 
-```{r}
+```{webr}
 imat <- rbind(c(1, 3), 
               c(2, 1), 
               c(3, 4))
@@ -247,20 +257,20 @@ Arrays are like matrices, but with more dimensions. A matrix is an array with 2 
 
 The data gets filled in by the first dimension, then the second, then the third, ...
 
-```{r}
+```{webr}
 A1 <- array(1:32, dim = c(4, 4, 2))
 A1
 ```
 
 The data also get "unrolled" in the same way. 
 
-```{r}
+```{webr}
 c(A1)
 ```
 
 Indexing works like it does with matrices:
 
-```{r}
+```{webr}
 A1[2, 4, 2] # value
 A1[2, 4, ] # vector
 A1[, , 2] # matrix
@@ -278,7 +288,7 @@ A1[i3]
 
 Data frames look like matrices, but the columns can be different data types: 
 
-```{r}
+```{webr}
 d1 <- data.frame(logical = c(FALSE, TRUE, FALSE), 
                  numeric = c(1, 2, 3), 
                  char = c("a", "b", "c"))
@@ -289,7 +299,7 @@ d1[, "numeric"]
 
 While they look like matrices, they act more like lists: 
 
-```{r}
+```{webr}
 d1$numeric
 d1[["char"]]
 d1[[1]]
@@ -303,7 +313,7 @@ d1
 
 Multiple ways to refer to a particular column: 
 
-```{r}
+```{webr}
 d1$numeric
 d1[["numeric"]]
 d1[, "numeric"]
@@ -313,14 +323,14 @@ d1[[2]]
 
 Subsetting
 
-```{r}
+```{webr}
 subset(d1, logical == TRUE) ## knows where to find logical
 d1[d1$numeric <= 2, ] ## need to tell it that numeric is in d1
 ```
 
 Manipulation
 
-```{r}
+```{webr}
 #| error: true
 d1$numeric.squared <- d1$numeric^2
 d1
@@ -336,7 +346,12 @@ with(d1, {
   sqrt(numeric)
   
 })
+```
 
+Careful with attach if you know about it.
+
+```{webr}
+#| error: true
 attach(d1) ## this is like a global with/within
 ### many texts recommend not using attach
 
@@ -349,7 +364,6 @@ og.num <- sqrt(numeric.squared) ## this does not work like within
 detach(d1)
 og.num ## still here
 numeric.squared ## not attached anymore
-
 ```
 
 
@@ -364,7 +378,7 @@ This can also be done explicitly using the `as.` family of functions.
 One of R's "nice" features is that it will __automatically attempt to coerce data__ when different types meet in an operation.
 
 Examples
-```{r}
+```{webr}
 c(FALSE, TRUE, FALSE) * 1.0
 1 - c(FALSE, TRUE)
 as.logical(1 - c(FALSE, TRUE))
@@ -373,7 +387,7 @@ paste("A", 1:4, sep = "_")
 ```
 
 This is useful sometimes, other times it can cause problems: 
-```{r}
+```{webr}
 as.numeric(c("1.35", "2.5", "<.01"))
 ```
 
@@ -387,18 +401,20 @@ Vector and array arithmetic works elementwise, as long as the things have the sa
 
 If not, the shorter one is sometimes _recycled_ to match the larger dimension thing
 
-```{r}
+```{webr}
 c(1, 2) * c(1:6)
 c(1, 2) * c(1:5)
 ```
 
 I often make this mistake when calculating proportions from a table: 
-```{r}
+```{webr}
 t1 <- table(mtcars$cyl, mtcars$gear)
 t1
 ## I want column proportions
 t1 / colSums(t1)  ## this is wrong because of recycling rowwise
+```
 
+```{webr}
 ## create matrix of the same dimensions
 t1 / rbind(colSums(t1), colSums(t1), colSums(t1))
 
@@ -417,7 +433,7 @@ Any object can have attributes, which are data that get attached to the object. 
 
 They are stored as names and value as in a list. Query or replace them with `attributes` or `attr`
 
-```{r}
+```{webr}
 attributes(A1)
 attr(A1, "dim")
 attr(A1, "note") <- "This is a new attribute"
@@ -427,7 +443,7 @@ A1
 
 Some attributes are special, e.g., `class`, `comment`, `dim`, `dimnames`, ..., and have special ways of querying and setting
 
-```{r}
+```{webr}
 comment(A1) <- paste("I created this array on ", Sys.time())
 A1
 comment(A1)
@@ -440,7 +456,7 @@ An environment is kind of like a list, it contains a number of arbitrary objects
 
 The _global environment_ is a special one, look at the upper right pane of Rstudio, or run
 
-```{r}
+```{webr}
 ## all of the objects in the global environment
 ls()
 ```
@@ -457,9 +473,9 @@ They are installed to your system with `install.packages("pkgname")`
 
 When you use `library("pkgname")`, the package is _attached_, so that objects in the package can be found just by typing the name:
 
-```{r}
+```{webr}
 library(palmerpenguins)
-penguins
+head(penguins)
 ```
 
 You can use objects from packages without attaching them with `::` (two colons)
@@ -470,7 +486,7 @@ head(survival::aml)
 
 and you can get internal objects from a package with `:::` (three colons)
 
-```{r}
+```{webr}
 #| error: true
 library(survival)
 plot.aareg ## error
@@ -484,7 +500,7 @@ Some packages you may use (e.g., from Bioconductor) return _S4 objects_. These a
 
 For example
 
-```{r}
+```{webr}
 ## A simple class with two slots
 track <- setClass("track", slots = c(x="numeric", y="numeric"))
 ## an object from the class
@@ -502,20 +518,21 @@ Tibbles (cute name for 'table') are data frames with enhanced printing.
 ```{r}
 library(tibble)
 library(palmerpenguins)
-class(penguins)
+class(penguins) ## this will be data.frame in the browser, but tbl_df in R
 
 penguins
 ``` 
 
 You can convert a regular data.frame to a tibble
-```{r}
+```{webr}
+library(tibble)
 mttbl <- as_tibble(mtcars)
 mttbl
 ```
 
 The indexing behavior is slightly different from data frames: 
 
-```{r}
+```{webr}
 mttbl[, "mpg"] ## still a tibble
 mtcars[, "mpg"]
 
@@ -534,7 +551,7 @@ It has many features for data manipulation and management with a focus on __spee
 
 There is a special syntax for indexing and merging using square brackets, we will come back to this (because it is my favorite tool for data management)
 
-```{r}
+```{webr}
 library(data.table)
 
 mtdt <- data.table(mtcars)
@@ -585,6 +602,7 @@ df1b <- read.csv(here("data/starwars.csv"),
 `fread` from the data.table package is fast and also flexible: 
 
 ```{r}
+library(data.table)
 fread(here("data/starwars.csv"))
 ```
 

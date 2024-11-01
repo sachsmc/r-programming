@@ -174,7 +174,7 @@ knitr::kable(head(palmerpenguins::penguins))
 
 ## Practical
 
-We will briefly try out rmarkdown or quarto so that you are set up for the exam.
+We will briefly try out rmarkdown or quarto so that you are set up for taking notes and keeping track of your exercise solutions.
 
 [Link to lesson](../exercises/dynamic-documents.html)
 
