@@ -120,7 +120,7 @@ No sticky = still working
 
 Share solutions/questions/responses on padlet: 
 
-https://padlet.com/sachsmc/rprogs23
+https://padlet.com/sachsmc/rprogs24/
 
 Course website: 
 
@@ -188,7 +188,8 @@ https://sachsmc.github.io/r-programming/
     + Same with project organization, choose a system and stick with it
 - Show up to class and participate, you will pass and hopefully learn something useful
 
-## Take notes
+
+## Take notes and practice
 
 To get credit for the course, you must attend at least 80% of the course.
 
@@ -200,9 +201,12 @@ I encourage you to work on the exercises and take notes as we proceed.
 
 
 
-### Office hours
+## Office hours and independent study
 
-Every day after class (starting from 12.30), I will hold office hours where you can come ask questions and get help on any R topic
+- This is the condensed version of the course. Lectures and lessons from 8 - 12 each day. Sometimes it will seem fast.  
+- You will need to spend some time on your own reviewing the material and practicing
+
+Every day after class (from 12 - 14), I will hold office hours where you can come ask questions and get help on any R topic
 
 My office is CSS 10.2.25
 
@@ -211,6 +215,7 @@ My office is CSS 10.2.25
 Slides will occasionally allow you to interact with the code. Follow along with lectures and use it for short quizzes. Try it out: 
 
 ```{webr}
+#| autorun: false
 mod <- lm(mpg ~ cyl, data = mtcars)
 summary(mod)
 ```

@@ -465,7 +465,7 @@ Michael C Sachs
 <span id="cb2-2"><a></a><span class="in">rnorm(1)</span></span>
 <span id="cb2-3"><a></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.182395</code></pre>
+<pre><code>[1] -2.561754</code></pre>
 </div>
 </div>
 <p>In quarto, chunk options are inside the fence after <code>#|</code>, e.g., <code>#| echo: fenced</code>, each on their own line</p>
@@ -474,7 +474,7 @@ Michael C Sachs
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>For example this <span class="st">`</span><span class="at">r rnorm(1)</span><span class="st">`</span> will show up inline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>which will put the output -2.6812602 without showing the code.</p>
+<p>which will put the output -1.1130713 without showing the code.</p>
 </section>
 <section id="rendering" class="slide level2">
 <h2>Rendering</h2>
@@ -645,6 +645,33 @@ Michael C Sachs
 <li>Quarto, relatively newer. Main advantage is increase flexibility of controlling output (and speed) and more features being introduced</li>
 <li>Sweave, old school format used in R. See the <code>survival</code> package vignettes and in particular the “noweb” subdirectory which takes the literate programming approach.</li>
 <li>Org mode, an emacs thing</li>
+</ul>
+</section>
+
+<section id="more-about-quarto" class="title-slide slide level1 center">
+<h1>More about quarto</h1>
+<ul>
+<li><a href="https://quarto.org/docs/reference/cells/cells-knitr.html">reference for code cell options</a></li>
+<li><a href="https://quarto.org/docs/reference/formats/html.html">reference for format options (html)</a></li>
+</ul>
+<p>Cell options affect the execution and output of executable code blocks. They are specified within comments at the top of a block. For example:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a></a><span class="in">```{r}</span></span>
+<span id="cb7-2"><a></a><span class="in">#| label: fig-polar</span></span>
+<span id="cb7-3"><a></a><span class="in">#| echo: false</span></span>
+<span id="cb7-4"><a></a><span class="in">#| fig-cap: "A line plot on a polar axis"</span></span>
+<span id="cb7-5"><a></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+
+<section id="even-more" class="title-slide slide level1 center">
+<h1>Even more</h1>
+<p>Defaults can be set globally in the YAML header, e.g.,</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb8-1"><a></a><span class="pp">---</span></span>
+<span id="cb8-2"><a></a><span class="fu">execute</span><span class="kw">:</span></span>
+<span id="cb8-3"><a></a><span class="at">  </span><span class="fu">echo</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb8-4"><a></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Quarto works well with python, Julia, and observable (javascript)</li>
+<li>You can organize collections of documents into books, websites, etc.</li>
 </ul>
 </section>
 

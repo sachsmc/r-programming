@@ -5,9 +5,17 @@ author: "Michael C Sachs"
 format: 
     revealjs:
       scrollable: true
+webr:
+  cell-options:
+    autorun: true
+    echo: true
+    fig-width: 11
+    fig-height: 5
 execute:
   echo: true
 image: "../images/functions.png"
+editor_options: 
+  chunk_output_type: console
 ---
 
 # Using functions
@@ -16,7 +24,7 @@ image: "../images/functions.png"
 
 Almost everything you do in R involves functions. You call a function by typing its name with its arguments (inputs) inside the parentheses: 
 
-```{r}
+```{webr}
 sample(x = 1:5, size = 2)
 ```
 
@@ -39,7 +47,7 @@ help("sample")
 Functions can have 0 or more arguments, with or without defaults. 
 
 The arguments can be given in order, or by name
-```{r}
+```{webr}
 set.seed(100)
 sample(1:5, 2, FALSE)
 ## same as
@@ -48,7 +56,7 @@ sample(size = 2, replace = FALSE, x = 1:5)
 ```
 
 Names can be partially matched, which can be confusing: 
-```{r}
+```{webr}
 set.seed(100)
 sample(si = 2, re = FALSE, x = 1:5)
 ```
@@ -61,7 +69,7 @@ Some functions take `...` as an argument, e.g., `paste`, `list`, also the `apply
 There are 2 reasons for this: 
 
 1. There could be varying numbers of arguments
-```{r}
+```{webr}
 c(1, 2, 3)
 ##
 c(1, 2)
@@ -69,7 +77,7 @@ c(1, 2)
 
 
 2. To pass optional arguments to other functions involved
-```{r}
+```{webr}
 library(palmerpenguins)
 with(penguins, 
      by(body_mass_g, species, mean)
@@ -87,7 +95,7 @@ with(penguins,
 Often we want to use the result of one function as the argument to another function. There are many ways to do this: 
 
 1. Intermediate variables
-```{r}
+```{webr}
 set.seed(100)
 x <- rgamma(100, shape = 1, rate = 2)
 logx <- log(x)
@@ -96,13 +104,13 @@ quantile(stdlogx, c(.25, .75))
 ```
 
 2. Nested function calls
-```{r}
+```{webr}
 quantile(scale(log(x)), c(.25, .75))
 ```
 
 
 3. The pipe operator `|>` (available in R 4.0.1)
-```{r}
+```{webr}
 x |> log() |> scale() |> quantile(c(.25, .75))
   
 ```
@@ -112,7 +120,7 @@ x |> log() |> scale() |> quantile(c(.25, .75))
 Some functions will take other functions as arguments. An example is the `apply` family of functions, which applies a function over an index or iterator. See `help(apply)`
 
 `apply` repeated applies a function over the dimensions of an array. `MARGIN` indicates which dimension, and then for each index in that dimension, it applies `FUN` to the sub-array
-```{r}
+```{webr}
 M1 <- matrix(rnorm(1000), nrow = 100, ncol = 10)
 colnames(M1) <- paste0("X", 1:10)
 apply(M1, MARGIN = 2, FUN = median)
@@ -121,18 +129,33 @@ apply(M1, MARGIN = 2, FUN = median)
 ## Apply continued
 
 `tapply` is commonly used with data. It subsets the data `X` based on the `INDEX` argument, then applies a function to each subset: 
-```{r}
+```{webr}
 library(palmerpenguins)
 tapply(X = penguins$bill_depth_mm, INDEX = penguins$species, 
        FUN = mean)
 
 ```
 
-`lapply` is more general, in that it can take any index and apply any function that takes the index as an argument. It always returns a list. 
-```{r}
+## `lapply`
+
+`lapply` is more general, in that it can take any index and apply any function that takes the index as an argument. It always returns a list. `sapply` does the same, but simplifies the result to an array, if possible.
+```{webr}
 lapply(split(penguins$bill_depth_mm, penguins$species), 
        FUN = mean)
+
+sapply(split(penguins$bill_depth_mm, penguins$species), 
+       FUN = mean)
+
 ```
+
+## `mapply`
+
+This is the multivariate version of `sapply` that allows vector arguments. 
+
+```{webr}
+mapply(rep, times = 1:4, x = 4:1)
+```
+
 
 
 ## Notes on speed and flexibility
@@ -150,7 +173,7 @@ You can do whatever you want inside a for loop, how would you do something more 
 
 ## A simple function
 
-```{r}
+```{webr}
 hello <- function() {
   
   "Hello"
@@ -163,7 +186,7 @@ hello()
 ## A function with arguments
 
 
-```{r}
+```{webr}
 hello <- function(name) {
   
   paste("Hello", name)
@@ -176,7 +199,7 @@ lapply(c("Jim", "Heather", "Bob"), hello)
 
 ## Local variables and scoping
 
-```{r}
+```{webr}
 #| error: true
 hello <- function(name) {
   
@@ -190,14 +213,14 @@ name2
 
 `name2` is a local variable. It exists only inside the function.
 
-```{r}
+```{webr}
 name2 <- "Billie"
 hello("Jim")
 ```
 
 Modifying local variables outside the function has no effect. But be careful: 
 
-```{r}
+```{webr}
 hello2 <- function(name) {
   
   paste("Hello", name, "meet", name2)
@@ -223,7 +246,7 @@ Note the specification sees a variable _and needs to use it_. This is called _la
 
 This can be used to your advantage, e.g., 
 
-```{r}
+```{webr}
 least_squares_constructor <- function(dataY, dataX) {
   
   function(beta) {
@@ -242,7 +265,7 @@ optim(par = c(0,0), fn = model_penguin)
 
 ## Lazy evaluation example
 
-```{r}
+```{webr}
 h01 <- function(x) {
     
     "Hello world!"
@@ -254,7 +277,7 @@ h01(stop("Error"))
 
 One way to manually check for arguments is with `missing`: 
 
-```{r}
+```{webr}
 h02 <- function(x) {
     
     if(missing(x)) {
@@ -273,7 +296,7 @@ h02(1)
 
 Your own functions do not need to be saved and assigned names. If a function does not have a name it is `anonymous`, I use these often with the apply family: 
 
-```{r}
+```{webr}
 bootmeans <- sapply(1:1000, function(i) {
   
   sample(penguins$body_mass_g, replace = TRUE) |>
@@ -284,7 +307,7 @@ summary(bootmeans)
 ```
 
 Since R 4.0.1, `\()` can be used as shorthand for `function()`: 
-```{r}
+```{webr}
 bootmeans <- sapply(1:1000, \(i) {
   
    sample(penguins$body_mass_g, replace = TRUE) |>
@@ -352,7 +375,7 @@ You can find all the special methods by running `methods("print")` (try it now).
 
 The class of the object is a simple attribute and the method is defined by appending the class name after the function name separated by a dot. This is called the __S3 class system__: 
 
-```{r}
+```{webr}
 x <- 1:4
 class(x)
 class(x) <- "myclass"
@@ -392,17 +415,17 @@ These concepts are loosely defined, because functions can take both data and fun
 Recall that we can retrieve a variable from a data frame by using a character string, e.g., `penguins[["species"]]`. 
 
 We can use a character string to get or assign any other object using these functions. For example, this returns the function called mean
-```{r}
+```{webr}
 get("mean")
 ```
 
 which we can use like a function
-```{r}
+```{webr}
 get("mean")(penguins$body_mass_g, na.rm = TRUE)
 ```
 
 Likewise, an object can be created with `assign`
-```{r}
+```{webr}
 assign("mean.body.mass", mean(penguins$body_mass_g, na.rm = TRUE))
 mean.body.mass
 ```
@@ -410,7 +433,7 @@ mean.body.mass
 ## Uses of `get` and `assign`
 
 Example, iterating over functions by name:
-```{r}
+```{webr}
 summary_funcs <- c("mean", "sd", "median")
 for(fn in summary_funcs) {
   cat(fn, "body mass: ")
@@ -419,13 +442,13 @@ for(fn in summary_funcs) {
 ```
 
 Example, retrieving a function programmatically, 
-```{r}
+```{webr}
 converter <- get(paste0("as.", class(penguins$flipper_length_mm)))
 converter(mean(penguins$flipper_length_mm, na.rm = TRUE))
 ```
 
 Example, programmatically creating new variables, 
-```{r}
+```{webr}
 numeric_cols <- names(penguins)[sapply(penguins, is.numeric)]
 for(col in numeric_cols){
   assign(paste0(col, ".scaled"), 
@@ -442,13 +465,13 @@ A variant on `get` is `do.call`. This takes a function as the first argument, th
 A common use for this is with functions that take a variable number of arguments, e.g., `cbind`, `paste`, where the arguments are created programmatically.
 
 simple example, 
-```{r}
+```{webr}
 do.call("paste", list("A", "B", sep = "."))
 ```
 
 
 arranging a list into a matrix 
-```{r}
+```{webr}
 mean.sd.by.species <- lapply(split(penguins$flipper_length_mm, penguins$species), 
                              function(x) c(mean = mean(x, na.rm = TRUE), sd = sd(x, na.rm = TRUE)))
 do.call("rbind", mean.sd.by.species)
@@ -481,7 +504,7 @@ Functions that call themselves are possible.
 
 As with repeat loops, they need to have a _break condition_ 
 
-```{r}
+```{webr}
 
 fibbo <- function(n) {
   

@@ -170,6 +170,37 @@ knitr::kable(head(palmerpenguins::penguins))
 - Sweave, old school format used in R. See the `survival` package vignettes and in particular the "noweb" subdirectory which takes the literate programming approach. 
 - Org mode, an emacs thing
 
+# More about quarto
+
+- [reference for code cell options](https://quarto.org/docs/reference/cells/cells-knitr.html)
+- [reference for format options (html)](https://quarto.org/docs/reference/formats/html.html)
+
+Cell options affect the execution and output of executable code blocks. They are specified within comments at the top of a block. For example:
+
+``` {{r}}
+#| label: fig-polar
+#| echo: false
+#| fig-cap: "A line plot on a polar axis"
+```
+
+
+
+# Even more
+
+Defaults can be set globally in the YAML header, e.g., 
+
+```yaml
+---
+execute:
+  echo: true
+---
+```
+
+- Quarto works well with python, Julia, and observable (javascript)
+- You can organize collections of documents into books, websites, etc. 
+
+
+
 # Try it yourself
 
 ## Practical

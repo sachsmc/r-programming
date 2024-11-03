@@ -90,6 +90,84 @@ if(log_transform) {
 }
 ```
 
+## Many `if else`
+
+There is no limit to the amount of `if else` statements. This is equivalent to having if statements repeatedly nested. 
+
+```{webr}
+letter <- "three"
+number <- if(letter == "one") {
+  1
+} else if(letter == "two") {
+  2
+} else if(letter == "three") {
+  3
+} else {
+  stop("Number not found!")
+}
+number
+```
+
+## Related functions
+
+- `switch`: evaluates its first argument, and chooses one of the subsequent arguments by name (unnamed the "default")
+
+```{webr}
+switch(letter, one = 1, two = 2, three = 3, stop("Number not found!"))
+```
+
+- `cut`: Divides a numeric vector into intervals and produces a factor.
+
+```{r}
+(x1 <- rnorm(5))
+cut(x1, breaks = c(-Inf, -1, 0, 1, Inf), 
+    labels = c("<-1", "-1 to 0", "0 to 1", "> 1"))
+```
+
+
+## Logical operators
+
+`&` (logical AND) and `|` (OR) have scalar counterparts, called "short-circuit" operators
+
+- `&&` and `||` evaluate the first argument, and then the second one __only if necessary__. 
+
+```{webr}
+FALSE && stop("Error")
+TRUE || stop("Error")
+```
+
+Common use case: 
+
+```{webr}
+p.value <- exp(log(runif(1, -.1, .5)))
+if(!is.na(p.value) && p.value < .05) {"<0.001"}
+```
+
+
+## Exception handling
+
+aka, how to not stop evaluation on an error. R has 3 types of exceptions: 1) Errors, 2) Warnings, 3) Messages. Errors stop the flow of execution, all three say something at the console. 
+
+Warnings and Messages can be suppressed by wrapping the expressions in `suppress(Warhings|Messages)`
+
+`tryCatch` evaluates an expression and does something with the error that you decide. 
+
+```{webr}
+tryCatch({           # block of expressions to execute, until an error occurs
+        cat("a...\n")
+        stop("b!")    # error – breaks the linear control flow
+        cat("c?\n")
+    },
+    error = function(e) {  # executed immediately on an error
+        cat(sprintf("[error] %s\n", e[["message"]]))
+    },
+    finally = {  # always executed at the end, regardless of error occurrence
+        cat("d.\n")
+    }
+)
+```
+
+
 
 ## `ifelse`
 

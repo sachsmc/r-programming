@@ -22,6 +22,7 @@ In this lesson you will
 
 
 
+
 ## Loops for statistical analysis
 
 Load the `palmerpenguins` dataset: 
