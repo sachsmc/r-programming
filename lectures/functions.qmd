@@ -156,6 +156,7 @@ This is the multivariate version of `sapply` that allows vector arguments.
 mapply(rep, times = 1:4, x = 4:1)
 ```
 
+See also the `purrr` package
 
 
 ## Notes on speed and flexibility
@@ -164,7 +165,7 @@ The apply family of functions is computationally equivalent to a loop (with pre-
 
 Using apply instead of a for loop will not be faster computationally
 
-It may be faster to write, but it may also be much harder to understand
+It may be faster to write, but it may also be harder to understand
 
 You can do whatever you want inside a for loop, how would you do something more complex with `lapply`?
 
@@ -229,6 +230,24 @@ hello2 <- function(name) {
 hello2("Jim")
 ```
 
+
+## Arguments passed by value
+
+Likewise, arguments modified inside the function do not change the object outside the function. 
+
+```{webr}
+HELLO <- function(name) {
+  
+  name <- toupper(name)
+  paste("HELLO", name)
+  
+}
+name <- "mark"
+HELLO(name)
+name
+```
+
+
 ## Lexical scoping
 
 This is called _lexical scoping_: it defines how R looks for objects when they are referred to by name 
@@ -290,6 +309,29 @@ h02 <- function(x) {
 h02()
 h02(1)
 ```
+
+
+## Using `match.arg`
+
+Look at the help file for `t.test`, and specifically the `alternative` argument. It is a vector with 3 elements, but only one is used. Also, it can be partially matched, e.g., 
+
+```{webr}
+t.test(1:10, y = c(7:20), alternative = "gr") 
+```
+
+How does that work? Using `match.arg` inside the function:  
+
+```{r}
+mysummary <- function(x, type = c("mean", "median")) {
+  type <- match.arg(type) 
+  switch(type, 
+         mean = mean(x), 
+         median = median(x))
+}
+
+mysummary(c(1, 2, 5))
+```
+
 
 
 ## Anonymous functions
@@ -406,6 +448,18 @@ Function     | Functional       | Function operator
 
 These concepts are loosely defined, because functions can take both data and function arguments and return data and function results.
 
+## Designing functions
+
+When should you write a function? How should it be designed?
+
+1. The DRY principle: don't repeat yourself
+2. Consider the audience
+  + Don't write a function unless you expect somebody to use it
+  + Consider the most likely use cases, and remember you can't make everyone happy
+3. Balance ease-of-use with understandability
+  + Break down the task into a series of smaller tasks, and abstract them away into functions
+  + Reuse or build? Dependencies (using functions from other packages) may change in unpredictable ways
+  + Default arguments and error checking -- you can't prevent all errors, ultimately it is the users' responsibility to use the tools correctly
 
 
 # Some more advanced topics
@@ -519,6 +573,7 @@ fibbo <- function(n) {
 
 
 These are actually useful when working with nested lists and directed acyclic graphs, for example. 
+
 
 
 ## Practical

@@ -433,7 +433,7 @@ Michael C Sachs
         x[sample.int(length(x), size, replace, prob)]
     }
 }
-&lt;bytecode: 0x5deaa6861e68&gt;
+&lt;bytecode: 0x647736375bb0&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -551,12 +551,13 @@ Michael C Sachs
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb15-1"><a></a>mapply(rep, times = 1:4, x = 4:1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>See also the <code>purrr</code> package</p>
 </section>
 <section id="notes-on-speed-and-flexibility" class="slide level2">
 <h2>Notes on speed and flexibility</h2>
 <p>The apply family of functions is computationally equivalent to a loop (with pre-allocation)</p>
 <p>Using apply instead of a for loop will not be faster computationally</p>
-<p>It may be faster to write, but it may also be much harder to understand</p>
+<p>It may be faster to write, but it may also be harder to understand</p>
 <p>You can do whatever you want inside a for loop, how would you do something more complex with <code>lapply</code>?</p>
 </section></section>
 <section>
@@ -615,6 +616,21 @@ Michael C Sachs
 <span id="cb20-6"><a></a>hello2("Jim")</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
+<section id="arguments-passed-by-value" class="slide level2">
+<h2>Arguments passed by value</h2>
+<p>Likewise, arguments modified inside the function do not change the object outside the function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb21-1"><a></a>HELLO &lt;- function(name) {</span>
+<span id="cb21-2"><a></a>  </span>
+<span id="cb21-3"><a></a>  name &lt;- toupper(name)</span>
+<span id="cb21-4"><a></a>  paste("HELLO", name)</span>
+<span id="cb21-5"><a></a>  </span>
+<span id="cb21-6"><a></a>}</span>
+<span id="cb21-7"><a></a>name &lt;- "mark"</span>
+<span id="cb21-8"><a></a>HELLO(name)</span>
+<span id="cb21-9"><a></a>name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
 <section id="lexical-scoping" class="slide level2 scrollable">
 <h2>Lexical scoping</h2>
 <p>This is called <em>lexical scoping</em>: it defines how R looks for objects when they are referred to by name</p>
@@ -630,69 +646,90 @@ Michael C Sachs
 <h2>Lexical scoping example</h2>
 <p>This can be used to your advantage, e.g.,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb21-1"><a></a>least_squares_constructor &lt;- function(dataY, dataX) {</span>
-<span id="cb21-2"><a></a>  </span>
-<span id="cb21-3"><a></a>  function(beta) {</span>
-<span id="cb21-4"><a></a>    sum((dataY - (beta[1] + beta[2] * dataX))^2, na.rm  =TRUE)</span>
-<span id="cb21-5"><a></a>  }</span>
-<span id="cb21-6"><a></a>    </span>
-<span id="cb21-7"><a></a>}</span>
-<span id="cb21-8"><a></a></span>
-<span id="cb21-9"><a></a>model_penguin &lt;- least_squares_constructor(penguins$flipper_length_mm, </span>
-<span id="cb21-10"><a></a>                                        penguins$body_mass_g)</span>
-<span id="cb21-11"><a></a>model_penguin</span>
-<span id="cb21-12"><a></a>ls(environment(model_penguin))</span>
-<span id="cb21-13"><a></a></span>
-<span id="cb21-14"><a></a>optim(par = c(0,0), fn = model_penguin)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb22-1"><a></a>least_squares_constructor &lt;- function(dataY, dataX) {</span>
+<span id="cb22-2"><a></a>  </span>
+<span id="cb22-3"><a></a>  function(beta) {</span>
+<span id="cb22-4"><a></a>    sum((dataY - (beta[1] + beta[2] * dataX))^2, na.rm  =TRUE)</span>
+<span id="cb22-5"><a></a>  }</span>
+<span id="cb22-6"><a></a>    </span>
+<span id="cb22-7"><a></a>}</span>
+<span id="cb22-8"><a></a></span>
+<span id="cb22-9"><a></a>model_penguin &lt;- least_squares_constructor(penguins$flipper_length_mm, </span>
+<span id="cb22-10"><a></a>                                        penguins$body_mass_g)</span>
+<span id="cb22-11"><a></a>model_penguin</span>
+<span id="cb22-12"><a></a>ls(environment(model_penguin))</span>
+<span id="cb22-13"><a></a></span>
+<span id="cb22-14"><a></a>optim(par = c(0,0), fn = model_penguin)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="lazy-evaluation-example" class="slide level2">
 <h2>Lazy evaluation example</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb22-1"><a></a>h01 &lt;- function(x) {</span>
-<span id="cb22-2"><a></a>    </span>
-<span id="cb22-3"><a></a>    "Hello world!"</span>
-<span id="cb22-4"><a></a>    </span>
-<span id="cb22-5"><a></a>}</span>
-<span id="cb22-6"><a></a>h01()</span>
-<span id="cb22-7"><a></a>h01(stop("Error"))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb23-1"><a></a>h01 &lt;- function(x) {</span>
+<span id="cb23-2"><a></a>    </span>
+<span id="cb23-3"><a></a>    "Hello world!"</span>
+<span id="cb23-4"><a></a>    </span>
+<span id="cb23-5"><a></a>}</span>
+<span id="cb23-6"><a></a>h01()</span>
+<span id="cb23-7"><a></a>h01(stop("Error"))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>One way to manually check for arguments is with <code>missing</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb23-1"><a></a>h02 &lt;- function(x) {</span>
-<span id="cb23-2"><a></a>    </span>
-<span id="cb23-3"><a></a>    if(missing(x)) {</span>
-<span id="cb23-4"><a></a>        return("Missing x!")</span>
-<span id="cb23-5"><a></a>    }</span>
-<span id="cb23-6"><a></a>    "Hello world!"</span>
-<span id="cb23-7"><a></a>    </span>
-<span id="cb23-8"><a></a>}</span>
-<span id="cb23-9"><a></a></span>
-<span id="cb23-10"><a></a>h02()</span>
-<span id="cb23-11"><a></a>h02(1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb24-1"><a></a>h02 &lt;- function(x) {</span>
+<span id="cb24-2"><a></a>    </span>
+<span id="cb24-3"><a></a>    if(missing(x)) {</span>
+<span id="cb24-4"><a></a>        return("Missing x!")</span>
+<span id="cb24-5"><a></a>    }</span>
+<span id="cb24-6"><a></a>    "Hello world!"</span>
+<span id="cb24-7"><a></a>    </span>
+<span id="cb24-8"><a></a>}</span>
+<span id="cb24-9"><a></a></span>
+<span id="cb24-10"><a></a>h02()</span>
+<span id="cb24-11"><a></a>h02(1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="using-match.arg" class="slide level2">
+<h2>Using <code>match.arg</code></h2>
+<p>Look at the help file for <code>t.test</code>, and specifically the <code>alternative</code> argument. It is a vector with 3 elements, but only one is used. Also, it can be partially matched, e.g.,</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb25-1"><a></a>t.test(1:10, y = c(7:20), alternative = "gr") </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>How does that work? Using <code>match.arg</code> inside the function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>mysummary <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">type =</span> <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"median"</span>)) {</span>
+<span id="cb26-2"><a></a>  type <span class="ot">&lt;-</span> <span class="fu">match.arg</span>(type) </span>
+<span id="cb26-3"><a></a>  <span class="cf">switch</span>(type, </span>
+<span id="cb26-4"><a></a>         <span class="at">mean =</span> <span class="fu">mean</span>(x), </span>
+<span id="cb26-5"><a></a>         <span class="at">median =</span> <span class="fu">median</span>(x))</span>
+<span id="cb26-6"><a></a>}</span>
+<span id="cb26-7"><a></a></span>
+<span id="cb26-8"><a></a><span class="fu">mysummary</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.666667</code></pre>
+</div>
 </div>
 </section>
 <section id="anonymous-functions" class="slide level2">
 <h2>Anonymous functions</h2>
 <p>Your own functions do not need to be saved and assigned names. If a function does not have a name it is <code>anonymous</code>, I use these often with the apply family:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb24-1"><a></a>bootmeans &lt;- sapply(1:1000, function(i) {</span>
-<span id="cb24-2"><a></a>  </span>
-<span id="cb24-3"><a></a>  sample(penguins$body_mass_g, replace = TRUE) |&gt;</span>
-<span id="cb24-4"><a></a>    mean(na.rm = TRUE)</span>
-<span id="cb24-5"><a></a></span>
-<span id="cb24-6"><a></a>})</span>
-<span id="cb24-7"><a></a>summary(bootmeans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb28-1"><a></a>bootmeans &lt;- sapply(1:1000, function(i) {</span>
+<span id="cb28-2"><a></a>  </span>
+<span id="cb28-3"><a></a>  sample(penguins$body_mass_g, replace = TRUE) |&gt;</span>
+<span id="cb28-4"><a></a>    mean(na.rm = TRUE)</span>
+<span id="cb28-5"><a></a></span>
+<span id="cb28-6"><a></a>})</span>
+<span id="cb28-7"><a></a>summary(bootmeans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Since R 4.0.1, <code>\()</code> can be used as shorthand for <code>function()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb25-1"><a></a>bootmeans &lt;- sapply(1:1000, \(i) {</span>
-<span id="cb25-2"><a></a>  </span>
-<span id="cb25-3"><a></a>   sample(penguins$body_mass_g, replace = TRUE) |&gt;</span>
-<span id="cb25-4"><a></a>    mean(na.rm = TRUE)</span>
-<span id="cb25-5"><a></a>  </span>
-<span id="cb25-6"><a></a>})</span>
-<span id="cb25-7"><a></a>summary(bootmeans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb29-1"><a></a>bootmeans &lt;- sapply(1:1000, \(i) {</span>
+<span id="cb29-2"><a></a>  </span>
+<span id="cb29-3"><a></a>   sample(penguins$body_mass_g, replace = TRUE) |&gt;</span>
+<span id="cb29-4"><a></a>    mean(na.rm = TRUE)</span>
+<span id="cb29-5"><a></a>  </span>
+<span id="cb29-6"><a></a>})</span>
+<span id="cb29-7"><a></a>summary(bootmeans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="operators" class="slide level2">
@@ -700,11 +737,11 @@ Michael C Sachs
 <p>Operators are symbols like <code>+</code>, <code>&lt;-</code>, <code>%*%</code>, <code>[</code>.</p>
 <p>These are functions! To treat them like functions instead of operators, use backticks:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="st">`</span><span class="at">+</span><span class="st">`</span>(<span class="dv">2</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a><span class="st">`</span><span class="at">+</span><span class="st">`</span>(<span class="dv">2</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4</code></pre>
 </div>
@@ -712,33 +749,33 @@ Michael C Sachs
 <p>You can then treat operators as you would any other function, using them in apply or otherwise</p>
 <p>You can also define your own operators:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="st">`</span><span class="at">% %</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) {</span>
-<span id="cb30-2"><a></a>    </span>
-<span id="cb30-3"><a></a>    <span class="fu">paste</span>(a, b)</span>
-<span id="cb30-4"><a></a>    </span>
-<span id="cb30-5"><a></a>}</span>
-<span id="cb30-6"><a></a></span>
-<span id="cb30-7"><a></a><span class="st">"my"</span> <span class="sc">% %</span> <span class="st">"name"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a><span class="st">`</span><span class="at">% %</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) {</span>
+<span id="cb34-2"><a></a>    </span>
+<span id="cb34-3"><a></a>    <span class="fu">paste</span>(a, b)</span>
+<span id="cb34-4"><a></a>    </span>
+<span id="cb34-5"><a></a>}</span>
+<span id="cb34-6"><a></a></span>
+<span id="cb34-7"><a></a><span class="st">"my"</span> <span class="sc">% %</span> <span class="st">"name"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "my name"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a><span class="st">"my"</span> <span class="sc">% %</span> <span class="st">"name"</span> <span class="sc">% %</span> <span class="st">"is"</span> <span class="sc">% %</span> <span class="st">"Mike"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a><span class="st">"my"</span> <span class="sc">% %</span> <span class="st">"name"</span> <span class="sc">% %</span> <span class="st">"is"</span> <span class="sc">% %</span> <span class="st">"Mike"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "my name is Mike"</code></pre>
 </div>
 </div>
 <p>Assignment operators have a special syntax:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a><span class="st">`</span><span class="at">second&lt;-</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="cf">function</span>(x, value){</span>
-<span id="cb34-2"><a></a>    </span>
-<span id="cb34-3"><a></a>    x[<span class="dv">2</span>] <span class="ot">&lt;-</span> value</span>
-<span id="cb34-4"><a></a>    x</span>
-<span id="cb34-5"><a></a>    </span>
-<span id="cb34-6"><a></a>}</span>
-<span id="cb34-7"><a></a></span>
-<span id="cb34-8"><a></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
-<span id="cb34-9"><a></a><span class="fu">second</span>(x) <span class="ot">&lt;-</span> <span class="dv">11</span></span>
-<span id="cb34-10"><a></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a><span class="st">`</span><span class="at">second&lt;-</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="cf">function</span>(x, value){</span>
+<span id="cb38-2"><a></a>    </span>
+<span id="cb38-3"><a></a>    x[<span class="dv">2</span>] <span class="ot">&lt;-</span> value</span>
+<span id="cb38-4"><a></a>    x</span>
+<span id="cb38-5"><a></a>    </span>
+<span id="cb38-6"><a></a>}</span>
+<span id="cb38-7"><a></a></span>
+<span id="cb38-8"><a></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb38-9"><a></a><span class="fu">second</span>(x) <span class="ot">&lt;-</span> <span class="dv">11</span></span>
+<span id="cb38-10"><a></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1]  1 11  3  4  5  6  7  8  9 10</code></pre>
 </div>
@@ -748,11 +785,11 @@ Michael C Sachs
 <h2>Generic methods/functions</h2>
 <p>Look at the function <code>print</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a>print</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>print</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>function (x, ...) 
 UseMethod("print")
-&lt;bytecode: 0x5deaa5f216a0&gt;
+&lt;bytecode: 0x6477359af6a0&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -760,19 +797,19 @@ UseMethod("print")
 <p>You can find all the special methods by running <code>methods("print")</code> (try it now).</p>
 <p>The class of the object is a simple attribute and the method is defined by appending the class name after the function name separated by a dot. This is called the <strong>S3 class system</strong>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb38-1"><a></a>x &lt;- 1:4</span>
-<span id="cb38-2"><a></a>class(x)</span>
-<span id="cb38-3"><a></a>class(x) &lt;- "myclass"</span>
-<span id="cb38-4"><a></a></span>
-<span id="cb38-5"><a></a>inherits(x, "myclass")</span>
-<span id="cb38-6"><a></a></span>
-<span id="cb38-7"><a></a>print.myclass &lt;- function(x, ...) {</span>
-<span id="cb38-8"><a></a>  </span>
-<span id="cb38-9"><a></a>  cat(x, sep = "\n")</span>
-<span id="cb38-10"><a></a>  </span>
-<span id="cb38-11"><a></a>}</span>
-<span id="cb38-12"><a></a></span>
-<span id="cb38-13"><a></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb42-1"><a></a>x &lt;- 1:4</span>
+<span id="cb42-2"><a></a>class(x)</span>
+<span id="cb42-3"><a></a>class(x) &lt;- "myclass"</span>
+<span id="cb42-4"><a></a></span>
+<span id="cb42-5"><a></a>inherits(x, "myclass")</span>
+<span id="cb42-6"><a></a></span>
+<span id="cb42-7"><a></a>print.myclass &lt;- function(x, ...) {</span>
+<span id="cb42-8"><a></a>  </span>
+<span id="cb42-9"><a></a>  cat(x, sep = "\n")</span>
+<span id="cb42-10"><a></a>  </span>
+<span id="cb42-11"><a></a>}</span>
+<span id="cb42-12"><a></a></span>
+<span id="cb42-13"><a></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="summary" class="slide level2">
@@ -801,6 +838,26 @@ UseMethod("print")
 </tbody>
 </table>
 <p>These concepts are loosely defined, because functions can take both data and function arguments and return data and function results.</p>
+</section>
+<section id="designing-functions" class="slide level2 scrollable">
+<h2>Designing functions</h2>
+<p>When should you write a function? How should it be designed?</p>
+<ol type="1">
+<li>The DRY principle: don’t repeat yourself</li>
+<li>Consider the audience</li>
+</ol>
+<ul>
+<li>Don’t write a function unless you expect somebody to use it</li>
+<li>Consider the most likely use cases, and remember you can’t make everyone happy</li>
+</ul>
+<ol start="3" type="1">
+<li>Balance ease-of-use with understandability</li>
+</ol>
+<ul>
+<li>Break down the task into a series of smaller tasks, and abstract them away into functions</li>
+<li>Reuse or build? Dependencies (using functions from other packages) may change in unpredictable ways</li>
+<li>Default arguments and error checking – you can’t prevent all errors, ultimately it is the users’ responsibility to use the tools correctly</li>
+</ul>
 </section></section>
 <section>
 <section id="some-more-advanced-topics" class="title-slide slide level1 center">
@@ -812,40 +869,40 @@ UseMethod("print")
 <p>Recall that we can retrieve a variable from a data frame by using a character string, e.g., <code>penguins[["species"]]</code>.</p>
 <p>We can use a character string to get or assign any other object using these functions. For example, this returns the function called mean</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb39-1"><a></a>get("mean")</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb43-1"><a></a>get("mean")</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>which we can use like a function</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb40-1"><a></a>get("mean")(penguins$body_mass_g, na.rm = TRUE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb44-1"><a></a>get("mean")(penguins$body_mass_g, na.rm = TRUE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Likewise, an object can be created with <code>assign</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb41-1"><a></a>assign("mean.body.mass", mean(penguins$body_mass_g, na.rm = TRUE))</span>
-<span id="cb41-2"><a></a>mean.body.mass</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb45-1"><a></a>assign("mean.body.mass", mean(penguins$body_mass_g, na.rm = TRUE))</span>
+<span id="cb45-2"><a></a>mean.body.mass</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="uses-of-get-and-assign" class="slide level2">
 <h2>Uses of <code>get</code> and <code>assign</code></h2>
 <p>Example, iterating over functions by name:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb42-1"><a></a>summary_funcs &lt;- c("mean", "sd", "median")</span>
-<span id="cb42-2"><a></a>for(fn in summary_funcs) {</span>
-<span id="cb42-3"><a></a>  cat(fn, "body mass: ")</span>
-<span id="cb42-4"><a></a>  cat(get(fn)(penguins$body_mass_g, na.rm = TRUE), "\n")</span>
-<span id="cb42-5"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb46-1"><a></a>summary_funcs &lt;- c("mean", "sd", "median")</span>
+<span id="cb46-2"><a></a>for(fn in summary_funcs) {</span>
+<span id="cb46-3"><a></a>  cat(fn, "body mass: ")</span>
+<span id="cb46-4"><a></a>  cat(get(fn)(penguins$body_mass_g, na.rm = TRUE), "\n")</span>
+<span id="cb46-5"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Example, retrieving a function programmatically,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb43-1"><a></a>converter &lt;- get(paste0("as.", class(penguins$flipper_length_mm)))</span>
-<span id="cb43-2"><a></a>converter(mean(penguins$flipper_length_mm, na.rm = TRUE))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb47-1"><a></a>converter &lt;- get(paste0("as.", class(penguins$flipper_length_mm)))</span>
+<span id="cb47-2"><a></a>converter(mean(penguins$flipper_length_mm, na.rm = TRUE))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Example, programmatically creating new variables,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb44-1"><a></a>numeric_cols &lt;- names(penguins)[sapply(penguins, is.numeric)]</span>
-<span id="cb44-2"><a></a>for(col in numeric_cols){</span>
-<span id="cb44-3"><a></a>  assign(paste0(col, ".scaled"), </span>
-<span id="cb44-4"><a></a>         scale(penguins[[col]]))</span>
-<span id="cb44-5"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb48-1"><a></a>numeric_cols &lt;- names(penguins)[sapply(penguins, is.numeric)]</span>
+<span id="cb48-2"><a></a>for(col in numeric_cols){</span>
+<span id="cb48-3"><a></a>  assign(paste0(col, ".scaled"), </span>
+<span id="cb48-4"><a></a>         scale(penguins[[col]]))</span>
+<span id="cb48-5"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="do.call" class="slide level2">
@@ -854,13 +911,13 @@ UseMethod("print")
 <p>A common use for this is with functions that take a variable number of arguments, e.g., <code>cbind</code>, <code>paste</code>, where the arguments are created programmatically.</p>
 <p>simple example,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb45-1"><a></a>do.call("paste", list("A", "B", sep = "."))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb49-1"><a></a>do.call("paste", list("A", "B", sep = "."))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>arranging a list into a matrix</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb46-1"><a></a>mean.sd.by.species &lt;- lapply(split(penguins$flipper_length_mm, penguins$species), </span>
-<span id="cb46-2"><a></a>                             function(x) c(mean = mean(x, na.rm = TRUE), sd = sd(x, na.rm = TRUE)))</span>
-<span id="cb46-3"><a></a>do.call("rbind", mean.sd.by.species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb50-1"><a></a>mean.sd.by.species &lt;- lapply(split(penguins$flipper_length_mm, penguins$species), </span>
+<span id="cb50-2"><a></a>                             function(x) c(mean = mean(x, na.rm = TRUE), sd = sd(x, na.rm = TRUE)))</span>
+<span id="cb50-3"><a></a>do.call("rbind", mean.sd.by.species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="global-assigment-operator" class="slide level2">
@@ -868,22 +925,22 @@ UseMethod("print")
 <p>There is the <code>&lt;&lt;-</code> operator, which is used in functions and does (re)assignment <strong>outside the function</strong>. It searches the parent environments and reassigns where found, if not found it assigns in the global environment.</p>
 <p>This is generally considered to be a bad idea, but now you know about it.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a>name2 <span class="ot">&lt;-</span> <span class="st">"Billie"</span></span>
-<span id="cb47-2"><a></a>name2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a>name2 <span class="ot">&lt;-</span> <span class="st">"Billie"</span></span>
+<span id="cb51-2"><a></a>name2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Billie"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a>hello <span class="ot">&lt;-</span> <span class="cf">function</span>(name) {</span>
-<span id="cb49-2"><a></a>  </span>
-<span id="cb49-3"><a></a>  name2 <span class="ot">&lt;&lt;-</span> <span class="st">"Mike"</span></span>
-<span id="cb49-4"><a></a>  <span class="fu">paste</span>(<span class="st">"Hello"</span>, name, <span class="st">"meet"</span>, name2)</span>
-<span id="cb49-5"><a></a>  </span>
-<span id="cb49-6"><a></a>}</span>
-<span id="cb49-7"><a></a><span class="fu">hello</span>(<span class="st">"Jim"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a>hello <span class="ot">&lt;-</span> <span class="cf">function</span>(name) {</span>
+<span id="cb53-2"><a></a>  </span>
+<span id="cb53-3"><a></a>  name2 <span class="ot">&lt;&lt;-</span> <span class="st">"Mike"</span></span>
+<span id="cb53-4"><a></a>  <span class="fu">paste</span>(<span class="st">"Hello"</span>, name, <span class="st">"meet"</span>, name2)</span>
+<span id="cb53-5"><a></a>  </span>
+<span id="cb53-6"><a></a>}</span>
+<span id="cb53-7"><a></a><span class="fu">hello</span>(<span class="st">"Jim"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Hello Jim meet Mike"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a>name2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a>name2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Mike"</code></pre>
 </div>
@@ -894,16 +951,16 @@ UseMethod("print")
 <p>Functions that call themselves are possible.</p>
 <p>As with repeat loops, they need to have a <em>break condition</em></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb53-1"><a></a></span>
-<span id="cb53-2"><a></a>fibbo &lt;- function(n) {</span>
-<span id="cb53-3"><a></a>  </span>
-<span id="cb53-4"><a></a>  if(n &lt;= 2) {  ## exit condition</span>
-<span id="cb53-5"><a></a>    1</span>
-<span id="cb53-6"><a></a>  } else {</span>
-<span id="cb53-7"><a></a>    n + fibbo(n - 1)</span>
-<span id="cb53-8"><a></a>  }</span>
-<span id="cb53-9"><a></a>  </span>
-<span id="cb53-10"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource webr number-lines code-with-copy"><code class="sourceCode"><span id="cb57-1"><a></a></span>
+<span id="cb57-2"><a></a>fibbo &lt;- function(n) {</span>
+<span id="cb57-3"><a></a>  </span>
+<span id="cb57-4"><a></a>  if(n &lt;= 2) {  ## exit condition</span>
+<span id="cb57-5"><a></a>    1</span>
+<span id="cb57-6"><a></a>  } else {</span>
+<span id="cb57-7"><a></a>    n + fibbo(n - 1)</span>
+<span id="cb57-8"><a></a>  }</span>
+<span id="cb57-9"><a></a>  </span>
+<span id="cb57-10"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>These are actually useful when working with nested lists and directed acyclic graphs, for example.</p>
 </section>

@@ -195,7 +195,8 @@ window.Quarto = {
   </ul></li>
   <li><a href="#using-the-function" id="toc-using-the-function" class="nav-link" data-scroll-target="#using-the-function">Using the function</a></li>
   <li><a href="#classes-and-custom-generics" id="toc-classes-and-custom-generics" class="nav-link" data-scroll-target="#classes-and-custom-generics">Classes and custom generics</a></li>
-  <li><a href="#more-functions" id="toc-more-functions" class="nav-link" data-scroll-target="#more-functions">More functions</a>
+  <li><a href="#more-functions-conditional-calculations" id="toc-more-functions-conditional-calculations" class="nav-link" data-scroll-target="#more-functions-conditional-calculations">More functions – conditional calculations</a></li>
+  <li><a href="#more-functions-classes" id="toc-more-functions-classes" class="nav-link" data-scroll-target="#more-functions-classes">More functions – classes</a>
   <ul class="collapse">
   <li><a href="#if-you-have-time-or-on-your-own" id="toc-if-you-have-time-or-on-your-own" class="nav-link" data-scroll-target="#if-you-have-time-or-on-your-own">If you have time or on your own</a></li>
   </ul></li>
@@ -355,8 +356,17 @@ Hints
 </div>
 </details>
 </section>
-<section id="more-functions" class="level2">
-<h2 class="anchored" data-anchor-id="more-functions">More functions</h2>
+<section id="more-functions-conditional-calculations" class="level2">
+<h2 class="anchored" data-anchor-id="more-functions-conditional-calculations">More functions – conditional calculations</h2>
+<ol type="1">
+<li>Write a function that allows the user to choose between the mean and standard deviation, or the median and interquartile range.</li>
+<li>What can you use as the default argument to allow the switching? Try using <code>match.arg</code>.</li>
+<li>In your function, before doing any calculations, add a check that the data supplied by the user is numeric. Include an informative error message.</li>
+<li>Modify your function so that it does a calculation to decide whether the mean (sd) or median (IQR) is used (e.g., check the skewness). How can you communicate to the user whether the result is the mean or median?</li>
+</ol>
+</section>
+<section id="more-functions-classes" class="level2">
+<h2 class="anchored" data-anchor-id="more-functions-classes">More functions – classes</h2>
 <ol type="1">
 <li>Write another function that constructs a one-sample t-statistic from an estimated mean and standard deviation. Recall that the t-statistic to test the null hypothesis that <span class="math inline">\(\mu = \mu_0\)</span> is <span class="math display">\[
 T = \frac{\overline{X} - \mu_0}{\hat{\sigma}/\sqrt{n}}

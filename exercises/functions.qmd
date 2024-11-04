@@ -115,7 +115,15 @@ print.meansd <- function(x, digits = 2) {
 </details>
 
 
-## More functions
+## More functions -- conditional calculations
+
+1. Write a function that allows the user to choose between the mean and standard deviation, or the median and interquartile range. 
+2. What can you use as the default argument to allow the switching? Try using `match.arg`. 
+3. In your function, before doing any calculations, add a check that the data supplied by the user is numeric. Include an informative error message. 
+4. Modify your function so that it does a calculation to decide whether the mean (sd) or median (IQR) is used (e.g., check the skewness). How can you communicate to the user whether the result is the mean or median? 
+
+
+## More functions -- classes
 
 
 1. Write another function that constructs a one-sample t-statistic from an estimated mean and standard deviation. Recall that the t-statistic to test the null hypothesis that $\mu = \mu_0$ is 

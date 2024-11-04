@@ -74,7 +74,7 @@
     "href": "lectures/data-structures.html#matrix-arithmetic",
     "title": "Data structures in R",
     "section": "Matrix arithmetic",
-    "text": "Matrix arithmetic\nMatrix transpose, multiplication, inversion, eigenvalues, etc, are all available in R\n\nS1 &lt;- matrix(runif(9), nrow = 3, ncol = 3)\nS2 &lt;- matrix(runif(9), nrow = 3, ncol = 3)\nx &lt;- c(1, 1.5, 3)\n\nS1 %*% S2\n\n          [,1]      [,2]      [,3]\n[1,] 1.3549644 0.8512803 0.3358520\n[2,] 1.4240114 0.9509045 0.4549104\n[3,] 0.5251912 0.3800698 0.1288710\n\nt(S1) %*% S2\n\n          [,1]      [,2]      [,3]\n[1,] 1.2884663 0.7683094 0.2524717\n[2,] 0.9907881 0.6208795 0.2721237\n[3,] 0.9906546 0.6655569 0.2069585\n\nx %*% solve(S1) %*% x\n\n         [,1]\n[1,] 32.82401"
+    "text": "Matrix arithmetic\nMatrix transpose, multiplication, inversion, eigenvalues, etc, are all available in R\n\nS1 &lt;- matrix(runif(9), nrow = 3, ncol = 3)\nS2 &lt;- matrix(runif(9), nrow = 3, ncol = 3)\nx &lt;- c(1, 1.5, 3)\n\nS1 %*% S2\n\n          [,1]      [,2]      [,3]\n[1,] 0.2901766 0.7941887 0.3776255\n[2,] 0.4156499 0.7776627 0.6062960\n[3,] 0.3693639 0.8448503 0.5511134\n\nt(S1) %*% S2\n\n          [,1]      [,2]      [,3]\n[1,] 0.3841269 0.7057294 0.6660192\n[2,] 0.2803895 0.6117174 0.4452145\n[3,] 0.3987584 1.0412931 0.4471638\n\nx %*% solve(S1) %*% x\n\n         [,1]\n[1,] 9.896047"
   },
   {
     "objectID": "lectures/data-structures.html#arrays",
@@ -186,7 +186,7 @@
     "href": "lectures/functions.html#a-function-and-its-components",
     "title": "Functions",
     "section": "A function and its components",
-    "text": "A function and its components\nAlmost everything you do in R involves functions. You call a function by typing its name with its arguments (inputs) inside the parentheses:\n\nsample(x = 1:5, size = 2)\n\nThe function takes the arguments you provide, does something, and then returns an object. To see what a function does, you can type its name without parentheses to see the source:\n\nsample\n\nfunction (x, size, replace = FALSE, prob = NULL) \n{\n    if (length(x) == 1L && is.numeric(x) && is.finite(x) && x &gt;= \n        1) {\n        if (missing(size)) \n            size &lt;- x\n        sample.int(x, size, replace, prob)\n    }\n    else {\n        if (missing(size)) \n            size &lt;- length(x)\n        x[sample.int(length(x), size, replace, prob)]\n    }\n}\n&lt;bytecode: 0x5deaa6861e68&gt;\n&lt;environment: namespace:base&gt;\n\n\nThe source shows you the arguments, their default values, and the expression defining the function. You can also look at the help file for the documentation:\n\nhelp(\"sample\")\n# or\n?sample"
+    "text": "A function and its components\nAlmost everything you do in R involves functions. You call a function by typing its name with its arguments (inputs) inside the parentheses:\n\nsample(x = 1:5, size = 2)\n\nThe function takes the arguments you provide, does something, and then returns an object. To see what a function does, you can type its name without parentheses to see the source:\n\nsample\n\nfunction (x, size, replace = FALSE, prob = NULL) \n{\n    if (length(x) == 1L && is.numeric(x) && is.finite(x) && x &gt;= \n        1) {\n        if (missing(size)) \n            size &lt;- x\n        sample.int(x, size, replace, prob)\n    }\n    else {\n        if (missing(size)) \n            size &lt;- length(x)\n        x[sample.int(length(x), size, replace, prob)]\n    }\n}\n&lt;bytecode: 0x647736375bb0&gt;\n&lt;environment: namespace:base&gt;\n\n\nThe source shows you the arguments, their default values, and the expression defining the function. You can also look at the help file for the documentation:\n\nhelp(\"sample\")\n# or\n?sample"
   },
   {
     "objectID": "lectures/functions.html#using-functions-arguments",
@@ -235,14 +235,14 @@
     "href": "lectures/functions.html#mapply",
     "title": "Functions",
     "section": "mapply",
-    "text": "mapply\nThis is the multivariate version of sapply that allows vector arguments.\n\nmapply(rep, times = 1:4, x = 4:1)"
+    "text": "mapply\nThis is the multivariate version of sapply that allows vector arguments.\n\nmapply(rep, times = 1:4, x = 4:1)\n\nSee also the purrr package"
   },
   {
     "objectID": "lectures/functions.html#notes-on-speed-and-flexibility",
     "href": "lectures/functions.html#notes-on-speed-and-flexibility",
     "title": "Functions",
     "section": "Notes on speed and flexibility",
-    "text": "Notes on speed and flexibility\nThe apply family of functions is computationally equivalent to a loop (with pre-allocation)\nUsing apply instead of a for loop will not be faster computationally\nIt may be faster to write, but it may also be much harder to understand\nYou can do whatever you want inside a for loop, how would you do something more complex with lapply?"
+    "text": "Notes on speed and flexibility\nThe apply family of functions is computationally equivalent to a loop (with pre-allocation)\nUsing apply instead of a for loop will not be faster computationally\nIt may be faster to write, but it may also be harder to understand\nYou can do whatever you want inside a for loop, how would you do something more complex with lapply?"
   },
   {
     "objectID": "lectures/functions.html#a-simple-function",
@@ -266,6 +266,13 @@
     "text": "Local variables and scoping\n\nhello &lt;- function(name) {\n  \n  name2 &lt;- \"Mike\"\n  paste(\"Hello\", name, \"meet\", name2)\n  \n}\nhello(\"Jim\")\nname2\n\nname2 is a local variable. It exists only inside the function.\n\nname2 &lt;- \"Billie\"\nhello(\"Jim\")\n\nModifying local variables outside the function has no effect. But be careful:\n\nhello2 &lt;- function(name) {\n  \n  paste(\"Hello\", name, \"meet\", name2)\n  \n}\nhello2(\"Jim\")"
   },
   {
+    "objectID": "lectures/functions.html#arguments-passed-by-value",
+    "href": "lectures/functions.html#arguments-passed-by-value",
+    "title": "Functions",
+    "section": "Arguments passed by value",
+    "text": "Arguments passed by value\nLikewise, arguments modified inside the function do not change the object outside the function.\n\nHELLO &lt;- function(name) {\n  \n  name &lt;- toupper(name)\n  paste(\"HELLO\", name)\n  \n}\nname &lt;- \"mark\"\nHELLO(name)\nname"
+  },
+  {
     "objectID": "lectures/functions.html#lexical-scoping",
     "href": "lectures/functions.html#lexical-scoping",
     "title": "Functions",
@@ -287,6 +294,13 @@
     "text": "Lazy evaluation example\n\nh01 &lt;- function(x) {\n    \n    \"Hello world!\"\n    \n}\nh01()\nh01(stop(\"Error\"))\n\nOne way to manually check for arguments is with missing:\n\nh02 &lt;- function(x) {\n    \n    if(missing(x)) {\n        return(\"Missing x!\")\n    }\n    \"Hello world!\"\n    \n}\n\nh02()\nh02(1)"
   },
   {
+    "objectID": "lectures/functions.html#using-match.arg",
+    "href": "lectures/functions.html#using-match.arg",
+    "title": "Functions",
+    "section": "Using match.arg",
+    "text": "Using match.arg\nLook at the help file for t.test, and specifically the alternative argument. It is a vector with 3 elements, but only one is used. Also, it can be partially matched, e.g.,\n\nt.test(1:10, y = c(7:20), alternative = \"gr\") \n\nHow does that work? Using match.arg inside the function:\n\nmysummary &lt;- function(x, type = c(\"mean\", \"median\")) {\n  type &lt;- match.arg(type) \n  switch(type, \n         mean = mean(x), \n         median = median(x))\n}\n\nmysummary(c(1, 2, 5))\n\n[1] 2.666667"
+  },
+  {
     "objectID": "lectures/functions.html#anonymous-functions",
     "href": "lectures/functions.html#anonymous-functions",
     "title": "Functions",
@@ -305,7 +319,7 @@
     "href": "lectures/functions.html#generic-methodsfunctions",
     "title": "Functions",
     "section": "Generic methods/functions",
-    "text": "Generic methods/functions\nLook at the function print\n\nprint\n\nfunction (x, ...) \nUseMethod(\"print\")\n&lt;bytecode: 0x5deaa5f216a0&gt;\n&lt;environment: namespace:base&gt;\n\n\nIt is a generic function. UseMethod says depending on the class of argument object, R will call a suitable method (a function) that does something designed for whatever object is.\nYou can find all the special methods by running methods(\"print\") (try it now).\nThe class of the object is a simple attribute and the method is defined by appending the class name after the function name separated by a dot. This is called the S3 class system:\n\nx &lt;- 1:4\nclass(x)\nclass(x) &lt;- \"myclass\"\n\ninherits(x, \"myclass\")\n\nprint.myclass &lt;- function(x, ...) {\n  \n  cat(x, sep = \"\\n\")\n  \n}\n\nx"
+    "text": "Generic methods/functions\nLook at the function print\n\nprint\n\nfunction (x, ...) \nUseMethod(\"print\")\n&lt;bytecode: 0x6477359af6a0&gt;\n&lt;environment: namespace:base&gt;\n\n\nIt is a generic function. UseMethod says depending on the class of argument object, R will call a suitable method (a function) that does something designed for whatever object is.\nYou can find all the special methods by running methods(\"print\") (try it now).\nThe class of the object is a simple attribute and the method is defined by appending the class name after the function name separated by a dot. This is called the S3 class system:\n\nx &lt;- 1:4\nclass(x)\nclass(x) &lt;- \"myclass\"\n\ninherits(x, \"myclass\")\n\nprint.myclass &lt;- function(x, ...) {\n  \n  cat(x, sep = \"\\n\")\n  \n}\n\nx"
   },
   {
     "objectID": "lectures/functions.html#summary",
@@ -313,6 +327,13 @@
     "title": "Functions",
     "section": "Summary",
     "text": "Summary\nIn R, everything that happens is due to a function, and everything that exists is an object. Functions themselves are objects.\nHow do functions work together? We can classify functions according to their inputs and outputs:\n\n\n\nInput/Output\nData\nFunction\n\n\n\n\nData\nRegular function\nFunction factory\n\n\nFunction\nFunctional\nFunction operator\n\n\n\nThese concepts are loosely defined, because functions can take both data and function arguments and return data and function results."
+  },
+  {
+    "objectID": "lectures/functions.html#designing-functions",
+    "href": "lectures/functions.html#designing-functions",
+    "title": "Functions",
+    "section": "Designing functions",
+    "text": "Designing functions\nWhen should you write a function? How should it be designed?\n\nThe DRY principle: don’t repeat yourself\nConsider the audience\n\n\nDon’t write a function unless you expect somebody to use it\nConsider the most likely use cases, and remember you can’t make everyone happy\n\n\nBalance ease-of-use with understandability\n\n\nBreak down the task into a series of smaller tasks, and abstract them away into functions\nReuse or build? Dependencies (using functions from other packages) may change in unpredictable ways\nDefault arguments and error checking – you can’t prevent all errors, ultimately it is the users’ responsibility to use the tools correctly"
   },
   {
     "objectID": "lectures/functions.html#get-and-assign",
@@ -676,7 +697,7 @@
     "href": "exercises/solutions/flow-and-loops.html#loops-for-statistical-analysis",
     "title": "Flow control and loops – exercise solutions",
     "section": "Loops for statistical analysis",
-    "text": "Loops for statistical analysis\n\nlibrary(palmerpenguins)\n\n\nWrite a loop that calculates and prints out the mean for each numeric variable in the penguins dataset\n\n\nfor(i in 1:ncol(penguins)) {\n  ## cat prints to the console without quotes\n  cat(names(penguins)[i], \" - \", sep = \"\")\n  vari &lt;- penguins[[i]] ## this iterates through the columns of penguins\n  if(is.numeric(vari)) { ## check whether it is numeric\n    cat(\"Mean:\", mean(vari, na.rm = TRUE))\n  } else {\n    cat(\"not numeric\")\n  }\n  cat(\"\\n\") # new line\n}\n\nspecies - not numeric\nisland - not numeric\nbill_length_mm - Mean: 43.92193\nbill_depth_mm - Mean: 17.15117\nflipper_length_mm - Mean: 200.9152\nbody_mass_g - Mean: 4201.754\nsex - not numeric\nyear - Mean: 2008.029\n\n\n\nModify your loop in 1 so that it prints out the mean, standard deviation, median, and interquartile range for each numeric variable in penguins.\n\n\nf.names &lt;- c(\"mean\", \"std dev\", \"median\", \"interquartile range\")\nfunctions &lt;- list(mean, sd, median, IQR)\n## we will add an inner loop that iterates through these function and names\n\nfor(i in 1:ncol(penguins)) {\n  cat(names(penguins)[i], \":\\n\", sep = \"\")\n  vari &lt;- penguins[[i]]\n  \n  if(is.numeric(vari)) { \n    for(fn in 1:length(f.names)) {\n      cat(f.names[fn], functions[[fn]](vari, na.rm = TRUE), \"\\n\")\n    }\n  } else {\n    cat(\"not numeric\\n\")\n  }\n  cat(\"--------\\n\") # new line\n}\n\nspecies:\nnot numeric\n--------\nisland:\nnot numeric\n--------\nbill_length_mm:\nmean 43.92193 \nstd dev 5.459584 \nmedian 44.45 \ninterquartile range 9.275 \n--------\nbill_depth_mm:\nmean 17.15117 \nstd dev 1.974793 \nmedian 17.3 \ninterquartile range 3.1 \n--------\nflipper_length_mm:\nmean 200.9152 \nstd dev 14.06171 \nmedian 197 \ninterquartile range 23 \n--------\nbody_mass_g:\nmean 4201.754 \nstd dev 801.9545 \nmedian 4050 \ninterquartile range 1200 \n--------\nsex:\nnot numeric\n--------\nyear:\nmean 2008.029 \nstd dev 0.8183559 \nmedian 2008 \ninterquartile range 2 \n--------\n\n\n\nWrite a loop to compute 500 bootstrap replicates of the means of bill length, bill depth, and flipper length. Remember to pre-allocate a data structure to store the 500 times 3 values. Provide an estimate of the correlation of the sample means.\n\n\nbootmeans &lt;- matrix(NA, nrow = 500, ncol = 3, \n                    dimnames = list(NULL, c(\"bill_length\", \"bill_depth\", \"flipper_length\")))\nfor(i in 1:nrow(bootmeans)){\n  bootindex &lt;- sample(1:nrow(penguins), replace = TRUE)\n  peng.star &lt;- penguins[bootindex, ]\n  \n  bootmeans[i, 1] &lt;- mean(peng.star$bill_length_mm, na.rm = TRUE)\n  bootmeans[i, 2] &lt;- mean(peng.star$bill_depth_mm, na.rm = TRUE)\n  bootmeans[i, 3] &lt;- mean(peng.star$flipper_length_mm, na.rm = TRUE)\n}\n\nsummary(bootmeans)\n\n  bill_length      bill_depth    flipper_length \n Min.   :43.15   Min.   :16.85   Min.   :198.8  \n 1st Qu.:43.73   1st Qu.:17.09   1st Qu.:200.4  \n Median :43.94   Median :17.16   Median :200.9  \n Mean   :43.94   Mean   :17.16   Mean   :200.9  \n 3rd Qu.:44.14   3rd Qu.:17.23   3rd Qu.:201.4  \n Max.   :44.74   Max.   :17.47   Max.   :202.9  \n\ncor(bootmeans)\n\n               bill_length bill_depth flipper_length\nbill_length      1.0000000 -0.2334123      0.6539536\nbill_depth      -0.2334123  1.0000000     -0.5674234\nflipper_length   0.6539536 -0.5674234      1.0000000"
+    "text": "Loops for statistical analysis\n\nlibrary(palmerpenguins)\n\n\nWrite a loop that calculates and prints out the mean for each numeric variable in the penguins dataset\n\n\nfor(i in 1:ncol(penguins)) {\n  ## cat prints to the console without quotes\n  cat(names(penguins)[i], \" - \", sep = \"\")\n  vari &lt;- penguins[[i]] ## this iterates through the columns of penguins\n  if(is.numeric(vari)) { ## check whether it is numeric\n    cat(\"Mean:\", mean(vari, na.rm = TRUE))\n  } else {\n    cat(\"not numeric\")\n  }\n  cat(\"\\n\") # new line\n}\n\nspecies - not numeric\nisland - not numeric\nbill_length_mm - Mean: 43.92193\nbill_depth_mm - Mean: 17.15117\nflipper_length_mm - Mean: 200.9152\nbody_mass_g - Mean: 4201.754\nsex - not numeric\nyear - Mean: 2008.029\n\n\n\nModify your loop in 1 so that it prints out the mean, standard deviation, median, and interquartile range for each numeric variable in penguins.\n\n\nf.names &lt;- c(\"mean\", \"std dev\", \"median\", \"interquartile range\")\nfunctions &lt;- list(mean, sd, median, IQR)\n## we will add an inner loop that iterates through these function and names\n\nfor(i in 1:ncol(penguins)) {\n  cat(names(penguins)[i], \":\\n\", sep = \"\")\n  vari &lt;- penguins[[i]]\n  \n  if(is.numeric(vari)) { \n    for(fn in 1:length(f.names)) {\n      cat(f.names[fn], functions[[fn]](vari, na.rm = TRUE), \"\\n\")\n    }\n  } else {\n    cat(\"not numeric\\n\")\n  }\n  cat(\"--------\\n\") # new line\n}\n\nspecies:\nnot numeric\n--------\nisland:\nnot numeric\n--------\nbill_length_mm:\nmean 43.92193 \nstd dev 5.459584 \nmedian 44.45 \ninterquartile range 9.275 \n--------\nbill_depth_mm:\nmean 17.15117 \nstd dev 1.974793 \nmedian 17.3 \ninterquartile range 3.1 \n--------\nflipper_length_mm:\nmean 200.9152 \nstd dev 14.06171 \nmedian 197 \ninterquartile range 23 \n--------\nbody_mass_g:\nmean 4201.754 \nstd dev 801.9545 \nmedian 4050 \ninterquartile range 1200 \n--------\nsex:\nnot numeric\n--------\nyear:\nmean 2008.029 \nstd dev 0.8183559 \nmedian 2008 \ninterquartile range 2 \n--------\n\n\n\nWrite a loop to compute 500 bootstrap replicates of the means of bill length, bill depth, and flipper length. Remember to pre-allocate a data structure to store the 500 times 3 values. Provide an estimate of the correlation of the sample means.\n\n\nbootmeans &lt;- matrix(NA, nrow = 500, ncol = 3, \n                    dimnames = list(NULL, c(\"bill_length\", \"bill_depth\", \"flipper_length\")))\nfor(i in 1:nrow(bootmeans)){\n  bootindex &lt;- sample(1:nrow(penguins), replace = TRUE)\n  peng.star &lt;- penguins[bootindex, ]\n  \n  bootmeans[i, 1] &lt;- mean(peng.star$bill_length_mm, na.rm = TRUE)\n  bootmeans[i, 2] &lt;- mean(peng.star$bill_depth_mm, na.rm = TRUE)\n  bootmeans[i, 3] &lt;- mean(peng.star$flipper_length_mm, na.rm = TRUE)\n}\n\nsummary(bootmeans)\n\n  bill_length      bill_depth    flipper_length \n Min.   :43.12   Min.   :16.82   Min.   :198.6  \n 1st Qu.:43.71   1st Qu.:17.08   1st Qu.:200.5  \n Median :43.91   Median :17.14   Median :200.9  \n Mean   :43.91   Mean   :17.14   Mean   :200.9  \n 3rd Qu.:44.11   3rd Qu.:17.20   3rd Qu.:201.4  \n Max.   :44.82   Max.   :17.46   Max.   :203.8  \n\ncor(bootmeans)\n\n               bill_length bill_depth flipper_length\nbill_length      1.0000000 -0.1821403      0.6441139\nbill_depth      -0.1821403  1.0000000     -0.5003045\nflipper_length   0.6441139 -0.5003045      1.0000000"
   },
   {
     "objectID": "exercises/solutions/flow-and-loops.html#loops-for-numeric-calculation",
@@ -774,7 +795,7 @@
     "href": "exercises/tidy-and-reshape.html#tidying-our-mean-sd-function",
     "title": "Tidying and reshaping – exercises",
     "section": "Tidying our mean sd function",
-    "text": "Tidying our mean sd function\nLoad the broom package and look at the source code for tidy.lm\n\nbroom:::tidy.lm\n\nfunction (x, conf.int = FALSE, conf.level = 0.95, ...) \n{\n    warn_on_subclass(x)\n    ret &lt;- as_tibble(summary(x)$coefficients, rownames = \"term\")\n    colnames(ret) &lt;- c(\"term\", \"estimate\", \"std.error\", \"statistic\", \n        \"p.value\")\n    coefs &lt;- tibble::enframe(stats::coef(x), name = \"term\", value = \"estimate\")\n    ret &lt;- left_join(coefs, ret, by = c(\"term\", \"estimate\"))\n    if (conf.int) {\n        ci &lt;- broom_confint_terms(x, level = conf.level)\n        ret &lt;- dplyr::left_join(ret, ci, by = \"term\")\n    }\n    ret\n}\n&lt;bytecode: 0x607e3c919060&gt;\n&lt;environment: namespace:broom&gt;\n\n\n\nWrite a tidy method for our mean_sd function and try it out on the penguins dataset.\nApply the mean_sd function to the penguins body mass in grams by species and sex. Organize the results into a table suitable for publication, where it is easy to compare the two sexes."
+    "text": "Tidying our mean sd function\nLoad the broom package and look at the source code for tidy.lm\n\nbroom:::tidy.lm\n\nfunction (x, conf.int = FALSE, conf.level = 0.95, ...) \n{\n    warn_on_subclass(x)\n    ret &lt;- as_tibble(summary(x)$coefficients, rownames = \"term\")\n    colnames(ret) &lt;- c(\"term\", \"estimate\", \"std.error\", \"statistic\", \n        \"p.value\")\n    coefs &lt;- tibble::enframe(stats::coef(x), name = \"term\", value = \"estimate\")\n    ret &lt;- left_join(coefs, ret, by = c(\"term\", \"estimate\"))\n    if (conf.int) {\n        ci &lt;- broom_confint_terms(x, level = conf.level)\n        ret &lt;- dplyr::left_join(ret, ci, by = \"term\")\n    }\n    ret\n}\n&lt;bytecode: 0x582c3d4b3ce0&gt;\n&lt;environment: namespace:broom&gt;\n\n\n\nWrite a tidy method for our mean_sd function and try it out on the penguins dataset.\nApply the mean_sd function to the penguins body mass in grams by species and sex. Organize the results into a table suitable for publication, where it is easy to compare the two sexes."
   },
   {
     "objectID": "exercises/tidy-and-reshape.html#tidying-the-national-patient-register-dataset",
@@ -1334,7 +1355,7 @@
     "href": "lectures/dynamic-documents.html#code-chunks",
     "title": "Dynamic Documents",
     "section": "Code chunks",
-    "text": "Code chunks\nLook like this, and the output is below\n\n```{r}\nrnorm(1)\n```\n\n[1] -2.561754\n\n\nIn quarto, chunk options are inside the fence after #|, e.g., #| echo: fenced, each on their own line\nIn rmarkdown, chunk options are inside the brackets (this is compatible with quarto for now)\nYou can also have code inline:\n\nFor example this `r rnorm(1)` will show up inline\n\nwhich will put the output -1.1130713 without showing the code."
+    "text": "Code chunks\nLook like this, and the output is below\n\n```{r}\nrnorm(1)\n```\n\n[1] -0.7362617\n\n\nIn quarto, chunk options are inside the fence after #|, e.g., #| echo: fenced, each on their own line\nIn rmarkdown, chunk options are inside the brackets (this is compatible with quarto for now)\nYou can also have code inline:\n\nFor example this `r rnorm(1)` will show up inline\n\nwhich will put the output 0.103182 without showing the code."
   },
   {
     "objectID": "lectures/dynamic-documents.html#rendering",
@@ -1435,11 +1456,18 @@
     "text": "Classes and custom generics\nNow that you have some functions to do something interesting, let’s create a “class” to indicate that the object has a specific meaning.\n\nModify your mean and sd function so that the data structure that is returned has class “meansd”. There are two ways to do this:\n\nSay the object you currently return is called res, instead of res, return structure(res, class = \"meansd\")\nAdd the line class(res) &lt;- \"meansd\" before returning `res``\nUse the attr function to create and assign additional information, for example the name of the variable, You can get the name of the object passed to x using deparse1(substitute(x)).\n\n\n\n\nHints\n\n\nmean_sd2 &lt;- function(x, na.rm = TRUE) {\n  res &lt;- c(mean = mean(x, na.rm = na.rm), \n           sd = sd(x, na.rm = na.rm))\n  \n  attr(res, \"variable\") &lt;- deparse1(substitute(x))\n  class(res) &lt;- \"meansd\"\n  res\n}\n\n\n\nWrite a custom print function print.meansd that nicely prints the mean and standard deviation. Use the functions round and paste functions to create a string, then print it out using the cat function.\n\n\n\nHints\n\n\nprint.meansd &lt;- function(x, digits = 2) {\n  \n  msd &lt;- paste0(round(x[\"mean\"], digits = digits), \" (\", \n                round(x[\"sd\"], digits = digits), \")\")\n  \n  cat(\"mean (sd) of \", \n      attr(x, \"variable\"), \":\", \n      msd, \"\\n\")\n  \n}"
   },
   {
-    "objectID": "exercises/functions.html#more-functions",
-    "href": "exercises/functions.html#more-functions",
+    "objectID": "exercises/functions.html#more-functions-conditional-calculations",
+    "href": "exercises/functions.html#more-functions-conditional-calculations",
     "title": "Functions – exercises",
-    "section": "More functions",
-    "text": "More functions\n\nWrite another function that constructs a one-sample t-statistic from an estimated mean and standard deviation. Recall that the t-statistic to test the null hypothesis that \\(\\mu = \\mu_0\\) is \\[\nT = \\frac{\\overline{X} - \\mu_0}{\\hat{\\sigma}/\\sqrt{n}}\n\\] where \\(\\overline{X}\\) is the sample mean and \\(\\hat{\\sigma}\\) is the sample standard deviation and \\(n\\) is the sample size.\nWrite another function that takes the t-statistic and calculates a p-value\nCompose your custom functions in order to test the null hypothesis that the mean body mass of penguins is 4000g. Try using the pipe operator |&gt;.\n\n\nIf you have time or on your own\n\nExpand your class to include confidence interval and p-value calculation/printing. Check out the scales::pvalue function.\nLook at the t.test function. What type of object does this return?\nLook at the print method for the class of the object returned by t.test, use the command stats:::print.htest to find the source. How does it work? How would you modify it?\nAre there any other methods are available for that class? Use the methods function to find out. What would be another useful method for this class?"
+    "section": "More functions – conditional calculations",
+    "text": "More functions – conditional calculations\n\nWrite a function that allows the user to choose between the mean and standard deviation, or the median and interquartile range.\nWhat can you use as the default argument to allow the switching? Try using match.arg.\nIn your function, before doing any calculations, add a check that the data supplied by the user is numeric. Include an informative error message.\nModify your function so that it does a calculation to decide whether the mean (sd) or median (IQR) is used (e.g., check the skewness). How can you communicate to the user whether the result is the mean or median?"
+  },
+  {
+    "objectID": "exercises/functions.html#more-functions-classes",
+    "href": "exercises/functions.html#more-functions-classes",
+    "title": "Functions – exercises",
+    "section": "More functions – classes",
+    "text": "More functions – classes\n\nWrite another function that constructs a one-sample t-statistic from an estimated mean and standard deviation. Recall that the t-statistic to test the null hypothesis that \\(\\mu = \\mu_0\\) is \\[\nT = \\frac{\\overline{X} - \\mu_0}{\\hat{\\sigma}/\\sqrt{n}}\n\\] where \\(\\overline{X}\\) is the sample mean and \\(\\hat{\\sigma}\\) is the sample standard deviation and \\(n\\) is the sample size.\nWrite another function that takes the t-statistic and calculates a p-value\nCompose your custom functions in order to test the null hypothesis that the mean body mass of penguins is 4000g. Try using the pipe operator |&gt;.\n\n\nIf you have time or on your own\n\nExpand your class to include confidence interval and p-value calculation/printing. Check out the scales::pvalue function.\nLook at the t.test function. What type of object does this return?\nLook at the print method for the class of the object returned by t.test, use the command stats:::print.htest to find the source. How does it work? How would you modify it?\nAre there any other methods are available for that class? Use the methods function to find out. What would be another useful method for this class?"
   },
   {
     "objectID": "lectures/merging-data.html#register-data-example",
@@ -1614,7 +1642,7 @@
     "href": "lectures/flow-and-loops.html#related-functions",
     "title": "Flow control and loops",
     "section": "Related functions",
-    "text": "Related functions\n\nswitch: evaluates its first argument, and chooses one of the subsequent arguments by name (unnamed the “default”)\n\n\n\n\n\n\n\n\n\n\ncut: Divides a numeric vector into intervals and produces a factor.\n\n\n(x1 &lt;- rnorm(5))\n\n[1] -0.89316636  1.36753065 -0.46366360 -0.05221397  1.00517999\n\ncut(x1, breaks = c(-Inf, -1, 0, 1, Inf), \n    labels = c(\"&lt;-1\", \"-1 to 0\", \"0 to 1\", \"&gt; 1\"))\n\n[1] -1 to 0 &gt; 1     -1 to 0 -1 to 0 &gt; 1    \nLevels: &lt;-1 -1 to 0 0 to 1 &gt; 1"
+    "text": "Related functions\n\nswitch: evaluates its first argument, and chooses one of the subsequent arguments by name (unnamed the “default”)\n\n\n\n\n\n\n\n\n\n\ncut: Divides a numeric vector into intervals and produces a factor.\n\n\n(x1 &lt;- rnorm(5))\n\n[1] -1.41523603 -1.17475532  1.62701004 -0.79143204  0.05289112\n\ncut(x1, breaks = c(-Inf, -1, 0, 1, Inf), \n    labels = c(\"&lt;-1\", \"-1 to 0\", \"0 to 1\", \"&gt; 1\"))\n\n[1] &lt;-1     &lt;-1     &gt; 1     -1 to 0 0 to 1 \nLevels: &lt;-1 -1 to 0 0 to 1 &gt; 1"
   },
   {
     "objectID": "lectures/flow-and-loops.html#logical-operators",
@@ -1691,7 +1719,7 @@
     "href": "lectures/flow-and-loops.html#note-on-speed",
     "title": "Flow control and loops",
     "section": "Note on speed",
-    "text": "Note on speed\nYou may see people warn you not to use for loops in R, “because they are slow”.\nThat is partially true, but speed is not the only thing, for loops can be much clearer and more understandable than the alternatives.\nBut, the slow thing in R is changing the size of an object, so you can avoid that by creating a vector/matrix/array of the correct size to hold the results of the loop:\n\nsystem.time({\nA1 &lt;- NULL\nfor(i in 1:100000) {\n  A1 &lt;- c(A1, rnorm(1))\n}\n})\n\n   user  system elapsed \n 14.029   0.335  14.432 \n\nsystem.time({\nA2 &lt;- numeric(100000)\nfor(i in 1:length(A2)) {\n  A2[i] &lt;- rnorm(1)\n}\n})\n\n   user  system elapsed \n  0.076   0.001   0.077"
+    "text": "Note on speed\nYou may see people warn you not to use for loops in R, “because they are slow”.\nThat is partially true, but speed is not the only thing, for loops can be much clearer and more understandable than the alternatives.\nBut, the slow thing in R is changing the size of an object, so you can avoid that by creating a vector/matrix/array of the correct size to hold the results of the loop:\n\nsystem.time({\nA1 &lt;- NULL\nfor(i in 1:100000) {\n  A1 &lt;- c(A1, rnorm(1))\n}\n})\n\n   user  system elapsed \n 12.384   0.161  12.608 \n\nsystem.time({\nA2 &lt;- numeric(100000)\nfor(i in 1:length(A2)) {\n  A2[i] &lt;- rnorm(1)\n}\n})\n\n   user  system elapsed \n  0.073   0.000   0.073"
   },
   {
     "objectID": "lectures/flow-and-loops.html#practical",
@@ -1789,7 +1817,7 @@
     "href": "lectures/dataviz.html#notes-and-details",
     "title": "Data visualization",
     "section": "Notes and details",
-    "text": "Notes and details\n\nLayers/components of the plot are distinct functions\nLayers are combined with the +\nThe plot can be saved as an object (what class?)\nThe plot is displayed/rendered when printed\n\nHow does the adding of layers work?\n\npgeom &lt;- geom_point()\nclass(pgeom)\n\n[1] \"LayerInstance\" \"Layer\"         \"ggproto\"       \"gg\"           \n\nclass(step1)\n\n[1] \"gg\"     \"ggplot\"\n\nggplot2:::`+.gg`\n\nfunction (e1, e2) \n{\n    if (missing(e2)) {\n        abort(\"Cannot use `+.gg()` with a single argument. Did you accidentally put + on a new line?\")\n    }\n    e2name &lt;- deparse(substitute(e2))\n    if (is.theme(e1)) \n        add_theme(e1, e2, e2name)\n    else if (is.ggplot(e1)) \n        add_ggplot(e1, e2, e2name)\n    else if (is.ggproto(e1)) {\n        abort(\"Cannot add ggproto objects together. Did you forget to add this object to a ggplot object?\")\n    }\n}\n&lt;bytecode: 0x5a65096b3ca0&gt;\n&lt;environment: namespace:ggplot2&gt;"
+    "text": "Notes and details\n\nLayers/components of the plot are distinct functions\nLayers are combined with the +\nThe plot can be saved as an object (what class?)\nThe plot is displayed/rendered when printed\n\nHow does the adding of layers work?\n\npgeom &lt;- geom_point()\nclass(pgeom)\n\n[1] \"LayerInstance\" \"Layer\"         \"ggproto\"       \"gg\"           \n\nclass(step1)\n\n[1] \"gg\"     \"ggplot\"\n\nggplot2:::`+.gg`\n\nfunction (e1, e2) \n{\n    if (missing(e2)) {\n        abort(\"Cannot use `+.gg()` with a single argument. Did you accidentally put + on a new line?\")\n    }\n    e2name &lt;- deparse(substitute(e2))\n    if (is.theme(e1)) \n        add_theme(e1, e2, e2name)\n    else if (is.ggplot(e1)) \n        add_ggplot(e1, e2, e2name)\n    else if (is.ggproto(e1)) {\n        abort(\"Cannot add ggproto objects together. Did you forget to add this object to a ggplot object?\")\n    }\n}\n&lt;bytecode: 0x5dfbf2af1ca0&gt;\n&lt;environment: namespace:ggplot2&gt;"
   },
   {
     "objectID": "lectures/dataviz.html#more-complex-plots",
