@@ -139,9 +139,24 @@ TRUE || stop("Error")
 Common use case: 
 
 ```{webr}
-p.value <- exp(log(runif(1, -.1, .5)))
-if(!is.na(p.value) && p.value < .05) {"<0.001"}
+p.value <- exp(log(runif(1, -.1, .1)))
+p.value <- p.value[!is.na(p.value)]
+p.char <- if(length(p.value) > 0 && p.value[[1]] < .05) {"<0.05"} else NULL
+p.char
 ```
+
+## Other logical operators
+
+- `xor` Exclusive OR
+- `isTRUE` and `isFALSE`
+- `any` and `all` for converting logical vectors to a single value, also have `na.rm` option
+
+```{webr}
+any(c(FALSE, TRUE, FALSE))
+all(c(FALSE, TRUE))
+```
+
+ 
 
 
 ## Exception handling
