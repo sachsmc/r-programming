@@ -2,17 +2,18 @@
 title: "Functions"
 subtitle: "Day 2, B"
 author: "Michael C Sachs"
-format: 
-    revealjs:
-      scrollable: true
+format:
+  live-revealjs:
+    theme: default
+    scrollable: true
+execute:
+  echo: true
 webr:
   cell-options:
     autorun: true
     echo: true
     fig-width: 11
     fig-height: 5
-execute:
-  echo: true
 image: "../images/functions.png"
 editor_options: 
   chunk_output_type: console
@@ -321,7 +322,7 @@ t.test(1:10, y = c(7:20), alternative = "gr")
 
 How does that work? Using `match.arg` inside the function:  
 
-```{r}
+```{webr}
 mysummary <- function(x, type = c("mean", "median")) {
   type <- match.arg(type) 
   switch(type, 
