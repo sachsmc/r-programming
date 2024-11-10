@@ -2,11 +2,18 @@
 title: "Tidy data"
 subtitle: "Day 3, C"
 author: "Michael C Sachs"
-format: 
-    revealjs:
-      scrollable: true
+format:
+  live-revealjs:
+    theme: default
+    scrollable: true
 execute:
   echo: true
+webr:
+  cell-options:
+    autorun: true
+    echo: true
+    fig-width: 11
+    fig-height: 5
 image: "../images/tidy-merge.png"
 ---
 
@@ -14,7 +21,7 @@ image: "../images/tidy-merge.png"
 
 ## Our `mean_sd` function
 
-```{r}
+```{webr}
 library(palmerpenguins)
 library(dplyr)
 
@@ -34,7 +41,7 @@ This is not so nice to work with because we cannot see which row is the mean and
 ## Alternative 1
 Return a data frame instead
 
-```{r}
+```{webr}
 mean_sd_df <- function(x, na.rm = TRUE) {
   data.frame(
     variable = deparse1(substitute(x)),
@@ -47,7 +54,7 @@ penguins |> group_by(species, sex) |>
 ```
 
 ## Alternative 2
-```{r}
+```{webr}
 mean_sd_ldf <- function(x, na.rm = TRUE) {
   data.frame(
     variable = deparse1(substitute(x)),
@@ -102,19 +109,19 @@ Tips and tricks:
 
 ## The `broom` package
 
-```{r}
+```{webr}
 library(broom)
 ```
 
 Broom provides a `tidy` function, which is a generic, it can be applied to lots of different objects:
 
-```{r}
+```{webr}
 methods("tidy")
 ```
 
 It attempts to do organize statistical output into a tidy tibble. 
 
-```{r}
+```{webr}
 lmfit <- lm(flipper_length_mm ~ body_mass_g + species + sex, 
             data = penguins)
 lmfit
@@ -147,7 +154,7 @@ The main reason for being tidy is to help with subsequent analysis and reporting
 
 Real data is often messy, and we want that to be tidy as well for easier analysis. Example of messy data: 
 
-```{r}
+```{webr}
 library(tidyr)
 billboard <- tribble(
   ~artist, ~wk1, ~wk2,
@@ -165,7 +172,7 @@ billboard
 ## Pivoting data
 
 Converting from wide to long (`tidyr` package): 
-```{r}
+```{webr}
 billboard |> 
     pivot_longer(
     cols = starts_with("wk"), 
@@ -176,7 +183,7 @@ billboard |>
 ```
 
 Base R
-```{r}
+```{webr}
 longbb <- as.data.frame(billboard) |>
   reshape(direction = "long", 
           varying = colnames(billboard)[-c(1)], 
@@ -190,7 +197,7 @@ subset(longbb, !is.na(rank))
 ## Melting (data.table and old tidyverse)
 
 
-```{r}
+```{webr}
 library(data.table)
 
 data.table(billboard) |>
@@ -210,7 +217,7 @@ Most longitudinal data analyses will expect data in "long" format.
 
 This also has its uses. Examples include computing correlation matrices, doing derived variable analysis, and tables are often more readable in wide or partial wide format. 
 
-```{r}
+```{webr}
 dfw <- tribble(
   ~id, ~time, ~value,
   "A", 1, 8.6,
@@ -226,14 +233,14 @@ dfw <- tribble(
 
 `tidyr` 
 
-```{r}
+```{webr}
 dfw |> pivot_wider(names_from = "time", 
                    names_prefix = "time",
                    values_from = "value")
 ```
 
 base R 
-```{r}
+```{webr}
 as.data.frame(dfw) |>
   reshape(direction = "wide", 
           idvar = "id" ,
@@ -242,7 +249,7 @@ as.data.frame(dfw) |>
 ```
 
 `data.table`
-```{r}
+```{webr}
 data.table(dfw) |>
   dcast(id ~ time, value.var = "value")
 ```

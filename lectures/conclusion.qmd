@@ -72,10 +72,10 @@ image: "../images/outro.png"
 
 # Office hours
 
-## Book a time
+## Last chance
 
-To ask about R, get help on the exam, or anything else
+To ask about R, or anything else
 
 My office is 10.2.25
 
-![](qrbook.png)
+You can also use our consulting services -- Look under "Statistical Advisory Services" on the Biostat homepage.

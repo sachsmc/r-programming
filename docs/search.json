@@ -74,7 +74,7 @@
     "href": "lectures/data-structures.html#matrix-arithmetic",
     "title": "Data structures in R",
     "section": "Matrix arithmetic",
-    "text": "Matrix arithmetic\nMatrix transpose, multiplication, inversion, eigenvalues, etc, are all available in R\n\nS1 &lt;- matrix(runif(9), nrow = 3, ncol = 3)\nS2 &lt;- matrix(runif(9), nrow = 3, ncol = 3)\nx &lt;- c(1, 1.5, 3)\n\nS1 %*% S2\n\n          [,1]      [,2]      [,3]\n[1,] 0.2517887 0.3303153 0.2398263\n[2,] 0.4823803 0.4714457 0.5911750\n[3,] 0.4312377 0.5555718 0.1543587\n\nt(S1) %*% S2\n\n           [,1]      [,2]      [,3]\n[1,] 0.07085691 0.2075372 0.2282054\n[2,] 0.32447243 0.3515282 0.3628315\n[3,] 0.51814417 0.6287460 0.4027159\n\nx %*% solve(S1) %*% x\n\n         [,1]\n[1,] 13.19692"
+    "text": "Matrix arithmetic\nMatrix transpose, multiplication, inversion, eigenvalues, etc, are all available in R\n\nS1 &lt;- matrix(runif(9), nrow = 3, ncol = 3)\nS2 &lt;- matrix(runif(9), nrow = 3, ncol = 3)\nx &lt;- c(1, 1.5, 3)\n\nS1 %*% S2\n\n         [,1]      [,2]     [,3]\n[1,] 1.302694 0.9729528 1.514939\n[2,] 1.091354 0.7723148 1.142920\n[3,] 1.208944 0.9165629 1.444500\n\nt(S1) %*% S2\n\n          [,1]      [,2]     [,3]\n[1,] 1.2363695 0.9751907 1.591019\n[2,] 1.2367629 0.9261671 1.445685\n[3,] 0.9502872 0.7489214 1.219555\n\nx %*% solve(S1) %*% x\n\n          [,1]\n[1,] -4.448517"
   },
   {
     "objectID": "lectures/data-structures.html#arrays",
@@ -186,7 +186,7 @@
     "href": "lectures/functions.html#a-function-and-its-components",
     "title": "Functions",
     "section": "A function and its components",
-    "text": "A function and its components\nAlmost everything you do in R involves functions. You call a function by typing its name with its arguments (inputs) inside the parentheses:\n\n\n\n\n\n\n\n\nThe function takes the arguments you provide, does something, and then returns an object. To see what a function does, you can type its name without parentheses to see the source:\n\nsample\n\nfunction (x, size, replace = FALSE, prob = NULL) \n{\n    if (length(x) == 1L && is.numeric(x) && is.finite(x) && x &gt;= \n        1) {\n        if (missing(size)) \n            size &lt;- x\n        sample.int(x, size, replace, prob)\n    }\n    else {\n        if (missing(size)) \n            size &lt;- length(x)\n        x[sample.int(length(x), size, replace, prob)]\n    }\n}\n&lt;bytecode: 0x64c66eaa4b30&gt;\n&lt;environment: namespace:base&gt;\n\n\nThe source shows you the arguments, their default values, and the expression defining the function. You can also look at the help file for the documentation:\n\nhelp(\"sample\")\n# or\n?sample"
+    "text": "A function and its components\nAlmost everything you do in R involves functions. You call a function by typing its name with its arguments (inputs) inside the parentheses:\n\n\n\n\n\n\n\n\nThe function takes the arguments you provide, does something, and then returns an object. To see what a function does, you can type its name without parentheses to see the source:\n\nsample\n\nfunction (x, size, replace = FALSE, prob = NULL) \n{\n    if (length(x) == 1L && is.numeric(x) && is.finite(x) && x &gt;= \n        1) {\n        if (missing(size)) \n            size &lt;- x\n        sample.int(x, size, replace, prob)\n    }\n    else {\n        if (missing(size)) \n            size &lt;- length(x)\n        x[sample.int(length(x), size, replace, prob)]\n    }\n}\n&lt;bytecode: 0x586014475ba8&gt;\n&lt;environment: namespace:base&gt;\n\n\nThe source shows you the arguments, their default values, and the expression defining the function. You can also look at the help file for the documentation:\n\nhelp(\"sample\")\n# or\n?sample"
   },
   {
     "objectID": "lectures/functions.html#using-functions-arguments",
@@ -312,14 +312,14 @@
     "href": "lectures/functions.html#operators",
     "title": "Functions",
     "section": "Operators",
-    "text": "Operators\nOperators are symbols like +, &lt;-, %*%, [.\nThese are functions! To treat them like functions instead of operators, use backticks:\n\n2 + 2\n\n[1] 4\n\n`+`(2, 2)\n\n[1] 4\n\n\nYou can then treat operators as you would any other function, using them in apply or otherwise\nYou can also define your own operators:\n\n`% %` &lt;- function(a, b) {\n    \n    paste(a, b)\n    \n}\n\n\"my\" % % \"name\"\n\n[1] \"my name\"\n\n\"my\" % % \"name\" % % \"is\" % % \"Mike\"\n\n[1] \"my name is Mike\"\n\n\nAssignment operators have a special syntax:\n\n`second&lt;-` &lt;- function(x, value){\n    \n    x[2] &lt;- value\n    x\n    \n}\n\nx &lt;- 1:10\nsecond(x) &lt;- 11\nx\n\n [1]  1 11  3  4  5  6  7  8  9 10"
+    "text": "Operators\nOperators are symbols like +, &lt;-, %*%, [.\nThese are functions! To treat them like functions instead of operators, use backticks:\n\n\n\n\n\n\n\n\nYou can then treat operators as you would any other function, using them in apply or otherwise\nYou can also define your own operators:\n\n\n\n\n\n\n\n\nAssignment operators have a special syntax:"
   },
   {
     "objectID": "lectures/functions.html#generic-methodsfunctions",
     "href": "lectures/functions.html#generic-methodsfunctions",
     "title": "Functions",
     "section": "Generic methods/functions",
-    "text": "Generic methods/functions\nLook at the function print\n\nprint\n\nfunction (x, ...) \nUseMethod(\"print\")\n&lt;bytecode: 0x64c66e0e2690&gt;\n&lt;environment: namespace:base&gt;\n\n\nIt is a generic function. UseMethod says depending on the class of argument object, R will call a suitable method (a function) that does something designed for whatever object is.\nYou can find all the special methods by running methods(\"print\") (try it now).\nThe class of the object is a simple attribute and the method is defined by appending the class name after the function name separated by a dot. This is called the S3 class system:"
+    "text": "Generic methods/functions\nLook at the function print\n\nprint\n\nfunction (x, ...) \nUseMethod(\"print\")\n&lt;bytecode: 0x586013aa86a0&gt;\n&lt;environment: namespace:base&gt;\n\n\nIt is a generic function. UseMethod says depending on the class of argument object, R will call a suitable method (a function) that does something designed for whatever object is.\nYou can find all the special methods by running methods(\"print\") (try it now).\nThe class of the object is a simple attribute and the method is defined by appending the class name after the function name separated by a dot. This is called the S3 class system:"
   },
   {
     "objectID": "lectures/functions.html#summary",
@@ -361,7 +361,7 @@
     "href": "lectures/functions.html#global-assigment-operator",
     "title": "Functions",
     "section": "Global assigment operator",
-    "text": "Global assigment operator\nThere is the &lt;&lt;- operator, which is used in functions and does (re)assignment outside the function. It searches the parent environments and reassigns where found, if not found it assigns in the global environment.\nThis is generally considered to be a bad idea, but now you know about it.\n\nname2 &lt;- \"Billie\"\nname2\n\n[1] \"Billie\"\n\nhello &lt;- function(name) {\n  \n  name2 &lt;&lt;- \"Mike\"\n  paste(\"Hello\", name, \"meet\", name2)\n  \n}\nhello(\"Jim\")\n\n[1] \"Hello Jim meet Mike\"\n\nname2\n\n[1] \"Mike\""
+    "text": "Global assigment operator\nThere is the &lt;&lt;- operator, which is used in functions and does (re)assignment outside the function. It searches the parent environments and reassigns where found, if not found it assigns in the global environment.\nThis is generally considered to be a bad idea, but now you know about it."
   },
   {
     "objectID": "lectures/functions.html#recursive-functions",
@@ -382,21 +382,21 @@
     "href": "lectures/tidy-data.html#our-mean_sd-function",
     "title": "Tidy data",
     "section": "Our mean_sd function",
-    "text": "Our mean_sd function\n\nlibrary(palmerpenguins)\nlibrary(dplyr)\n\nmean_sd &lt;- function(x, na.rm = TRUE) {\n  c(mean = mean(x, na.rm = na.rm), \n    sd = sd(x, na.rm = na.rm))\n}\n\n\npenguins |&gt; group_by(species, sex) |&gt;\n  summarize(mean_sd(body_mass_g))\n\n# A tibble: 16 × 3\n# Groups:   species, sex [8]\n   species   sex    `mean_sd(body_mass_g)`\n   &lt;fct&gt;     &lt;fct&gt;                   &lt;dbl&gt;\n 1 Adelie    female                  3369.\n 2 Adelie    female                   269.\n 3 Adelie    male                    4043.\n 4 Adelie    male                     347.\n 5 Adelie    &lt;NA&gt;                    3540 \n 6 Adelie    &lt;NA&gt;                     477.\n 7 Chinstrap female                  3527.\n 8 Chinstrap female                   285.\n 9 Chinstrap male                    3939.\n10 Chinstrap male                     362.\n11 Gentoo    female                  4680.\n12 Gentoo    female                   282.\n13 Gentoo    male                    5485.\n14 Gentoo    male                     313.\n15 Gentoo    &lt;NA&gt;                    4588.\n16 Gentoo    &lt;NA&gt;                     338.\n\n\nThis is not so nice to work with because we cannot see which row is the mean and which is the sd."
+    "text": "Our mean_sd function\n\n\n\n\n\n\n\n\nThis is not so nice to work with because we cannot see which row is the mean and which is the sd."
   },
   {
     "objectID": "lectures/tidy-data.html#alternative-1",
     "href": "lectures/tidy-data.html#alternative-1",
     "title": "Tidy data",
     "section": "Alternative 1",
-    "text": "Alternative 1\nReturn a data frame instead\n\nmean_sd_df &lt;- function(x, na.rm = TRUE) {\n  data.frame(\n    variable = deparse1(substitute(x)),\n    mean = mean(x, na.rm = na.rm), \n    sd = sd(x, na.rm = na.rm))\n}\n\npenguins |&gt; group_by(species, sex) |&gt;\n  summarize(mean_sd_df(body_mass_g))\n\n# A tibble: 8 × 5\n# Groups:   species [3]\n  species   sex    variable     mean    sd\n  &lt;fct&gt;     &lt;fct&gt;  &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;\n1 Adelie    female body_mass_g 3369.  269.\n2 Adelie    male   body_mass_g 4043.  347.\n3 Adelie    &lt;NA&gt;   body_mass_g 3540   477.\n4 Chinstrap female body_mass_g 3527.  285.\n5 Chinstrap male   body_mass_g 3939.  362.\n6 Gentoo    female body_mass_g 4680.  282.\n7 Gentoo    male   body_mass_g 5485.  313.\n8 Gentoo    &lt;NA&gt;   body_mass_g 4588.  338."
+    "text": "Alternative 1\nReturn a data frame instead"
   },
   {
     "objectID": "lectures/tidy-data.html#alternative-2",
     "href": "lectures/tidy-data.html#alternative-2",
     "title": "Tidy data",
     "section": "Alternative 2",
-    "text": "Alternative 2\n\nmean_sd_ldf &lt;- function(x, na.rm = TRUE) {\n  data.frame(\n    variable = deparse1(substitute(x)),\n    stat = c(\"mean\", \"sd\"), \n    value = c(mean(x, na.rm = na.rm), \n             sd(x, na.rm = na.rm)))\n}\n\npenguins |&gt; group_by(species, sex) |&gt;\n  summarize(mean_sd_ldf(body_mass_g))\n\n# A tibble: 16 × 5\n# Groups:   species, sex [8]\n   species   sex    variable    stat  value\n   &lt;fct&gt;     &lt;fct&gt;  &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt;\n 1 Adelie    female body_mass_g mean  3369.\n 2 Adelie    female body_mass_g sd     269.\n 3 Adelie    male   body_mass_g mean  4043.\n 4 Adelie    male   body_mass_g sd     347.\n 5 Adelie    &lt;NA&gt;   body_mass_g mean  3540 \n 6 Adelie    &lt;NA&gt;   body_mass_g sd     477.\n 7 Chinstrap female body_mass_g mean  3527.\n 8 Chinstrap female body_mass_g sd     285.\n 9 Chinstrap male   body_mass_g mean  3939.\n10 Chinstrap male   body_mass_g sd     362.\n11 Gentoo    female body_mass_g mean  4680.\n12 Gentoo    female body_mass_g sd     282.\n13 Gentoo    male   body_mass_g mean  5485.\n14 Gentoo    male   body_mass_g sd     313.\n15 Gentoo    &lt;NA&gt;   body_mass_g mean  4588.\n16 Gentoo    &lt;NA&gt;   body_mass_g sd     338."
+    "text": "Alternative 2"
   },
   {
     "objectID": "lectures/tidy-data.html#tidy-data",
@@ -424,7 +424,7 @@
     "href": "lectures/tidy-data.html#the-broom-package",
     "title": "Tidy data",
     "section": "The broom package",
-    "text": "The broom package\n\nlibrary(broom)\n\nBroom provides a tidy function, which is a generic, it can be applied to lots of different objects:\n\nmethods(\"tidy\")\n\n  [1] tidy.aareg*                    tidy.acf*                     \n  [3] tidy.anova*                    tidy.aov*                     \n  [5] tidy.aovlist*                  tidy.Arima*                   \n  [7] tidy.betamfx*                  tidy.betareg*                 \n  [9] tidy.biglm*                    tidy.binDesign*               \n [11] tidy.binWidth*                 tidy.boot*                    \n [13] tidy.btergm*                   tidy.cch*                     \n [15] tidy.character*                tidy.cld*                     \n [17] tidy.clm*                      tidy.clmm*                    \n [19] tidy.coeftest*                 tidy.confint.glht*            \n [21] tidy.confusionMatrix*          tidy.coxph*                   \n [23] tidy.crr*                      tidy.cv.glmnet*               \n [25] tidy.data.frame*               tidy.default*                 \n [27] tidy.density*                  tidy.dgCMatrix*               \n [29] tidy.dgTMatrix*                tidy.dist*                    \n [31] tidy.drc*                      tidy.durbinWatsonTest*        \n [33] tidy.emmGrid*                  tidy.epi.2by2*                \n [35] tidy.ergm*                     tidy.factanal*                \n [37] tidy.felm*                     tidy.fitdistr*                \n [39] tidy.fixest*                   tidy.ftable*                  \n [41] tidy.gam*                      tidy.Gam*                     \n [43] tidy.garch*                    tidy.geeglm*                  \n [45] tidy.glht*                     tidy.glm*                     \n [47] tidy.glmnet*                   tidy.glmrob*                  \n [49] tidy.glmRob*                   tidy.gmm*                     \n [51] tidy.htest*                    tidy.ivreg*                   \n [53] tidy.kappa*                    tidy.kde*                     \n [55] tidy.Kendall*                  tidy.kmeans*                  \n [57] tidy.lavaan*                   tidy.leveneTest*              \n [59] tidy.Line*                     tidy.Lines*                   \n [61] tidy.list*                     tidy.lm*                      \n [63] tidy.lm.beta*                  tidy.lmodel2*                 \n [65] tidy.lmrob*                    tidy.lmRob*                   \n [67] tidy.logical*                  tidy.logitmfx*                \n [69] tidy.lsmobj*                   tidy.manova*                  \n [71] tidy.map*                      tidy.margins*                 \n [73] tidy.Mclust*                   tidy.mediate*                 \n [75] tidy.mfx*                      tidy.mjoint*                  \n [77] tidy.mle2*                     tidy.mlm*                     \n [79] tidy.mlogit*                   tidy.muhaz*                   \n [81] tidy.multinom*                 tidy.negbin*                  \n [83] tidy.negbinmfx*                tidy.nlrq*                    \n [85] tidy.nls*                      tidy.NULL*                    \n [87] tidy.numeric*                  tidy.orcutt*                  \n [89] tidy.pairwise.htest*           tidy.pam*                     \n [91] tidy.plm*                      tidy.poissonmfx*              \n [93] tidy.poLCA*                    tidy.polr*                    \n [95] tidy.Polygon*                  tidy.Polygons*                \n [97] tidy.power.htest*              tidy.prcomp*                  \n [99] tidy.probitmfx*                tidy.pyears*                  \n[101] tidy.rcorr*                    tidy.ref.grid*                \n[103] tidy.regsubsets*               tidy.ridgelm*                 \n[105] tidy.rlm*                      tidy.rma*                     \n[107] tidy.roc*                      tidy.rq*                      \n[109] tidy.rqs*                      tidy.sarlm*                   \n[111] tidy.Sarlm*                    tidy.sparseMatrix*            \n[113] tidy.SpatialLinesDataFrame*    tidy.SpatialPolygons*         \n[115] tidy.SpatialPolygonsDataFrame* tidy.spec*                    \n[117] tidy.speedglm*                 tidy.speedlm*                 \n[119] tidy.summary_emm*              tidy.summary.glht*            \n[121] tidy.summary.lm*               tidy.summary.plm*             \n[123] tidy.summaryDefault*           tidy.survdiff*                \n[125] tidy.survexp*                  tidy.survfit*                 \n[127] tidy.survreg*                  tidy.svyglm*                  \n[129] tidy.svyolr*                   tidy.systemfit*               \n[131] tidy.table*                    tidy.tobit*                   \n[133] tidy.ts*                       tidy.TukeyHSD*                \n[135] tidy.varest*                   tidy.zoo*                     \nsee '?methods' for accessing help and source code\n\n\nIt attempts to do organize statistical output into a tidy tibble.\n\nlmfit &lt;- lm(flipper_length_mm ~ body_mass_g + species + sex, \n            data = penguins)\nlmfit\n\n\nCall:\nlm(formula = flipper_length_mm ~ body_mass_g + species + sex, \n    data = penguins)\n\nCoefficients:\n     (Intercept)       body_mass_g  speciesChinstrap     speciesGentoo  \n       164.58872           0.00655           5.54444          18.02132  \n         sexmale  \n         2.47772  \n\ntidy(lmfit)\n\n# A tibble: 5 × 5\n  term              estimate std.error statistic   p.value\n  &lt;chr&gt;                &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;\n1 (Intercept)      165.       3.18         51.7  1.01e-159\n2 body_mass_g        0.00655  0.000931      7.04 1.15e- 11\n3 speciesChinstrap   5.54     0.785         7.06 9.92e- 12\n4 speciesGentoo     18.0      1.44         12.5  1.46e- 29\n5 sexmale            2.48     0.854         2.90 3.97e-  3"
+    "text": "The broom package\n\n\n\n\n\n\n\n\nBroom provides a tidy function, which is a generic, it can be applied to lots of different objects:\n\n\n\n\n\n\n\n\nIt attempts to do organize statistical output into a tidy tibble."
   },
   {
     "objectID": "lectures/tidy-data.html#more-functions-from-broom",
@@ -445,28 +445,28 @@
     "href": "lectures/tidy-data.html#messy-data-example",
     "title": "Tidy data",
     "section": "Messy data example",
-    "text": "Messy data example\nReal data is often messy, and we want that to be tidy as well for easier analysis. Example of messy data:\n\nlibrary(tidyr)\nbillboard &lt;- tribble(\n  ~artist, ~wk1, ~wk2,\n   \"2 Pac\",     1,     2,\n   \"Creed\",     3,     4,\n   \"Mos Def\",     5,     6,\n  \"Aaliyah\", 2, NA\n)\nbillboard\n\n# A tibble: 4 × 3\n  artist    wk1   wk2\n  &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;\n1 2 Pac       1     2\n2 Creed       3     4\n3 Mos Def     5     6\n4 Aaliyah     2    NA\n\n\n\nA variable is encoded in columns (week)\nThis is also called “wide format”"
+    "text": "Messy data example\nReal data is often messy, and we want that to be tidy as well for easier analysis. Example of messy data:\n\n\n\n\n\n\n\n\n\nA variable is encoded in columns (week)\nThis is also called “wide format”"
   },
   {
     "objectID": "lectures/tidy-data.html#pivoting-data",
     "href": "lectures/tidy-data.html#pivoting-data",
     "title": "Tidy data",
     "section": "Pivoting data",
-    "text": "Pivoting data\nConverting from wide to long (tidyr package):\n\nbillboard |&gt; \n    pivot_longer(\n    cols = starts_with(\"wk\"), \n    names_to = \"week\", \n    values_to = \"rank\",\n    values_drop_na = TRUE\n  )\n\n# A tibble: 7 × 3\n  artist  week   rank\n  &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt;\n1 2 Pac   wk1       1\n2 2 Pac   wk2       2\n3 Creed   wk1       3\n4 Creed   wk2       4\n5 Mos Def wk1       5\n6 Mos Def wk2       6\n7 Aaliyah wk1       2\n\n\nBase R\n\nlongbb &lt;- as.data.frame(billboard) |&gt;\n  reshape(direction = \"long\", \n          varying = colnames(billboard)[-c(1)], \n          timevar = \"week\", sep = \"\",\n          v.names = \"rank\",\n          idvar = \"artist\")\nsubset(longbb, !is.na(rank))\n\n           artist week rank\n2 Pac.1     2 Pac    1    1\nCreed.1     Creed    1    3\nMos Def.1 Mos Def    1    5\nAaliyah.1 Aaliyah    1    2\n2 Pac.2     2 Pac    2    2\nCreed.2     Creed    2    4\nMos Def.2 Mos Def    2    6"
+    "text": "Pivoting data\nConverting from wide to long (tidyr package):\n\n\n\n\n\n\n\n\nBase R"
   },
   {
     "objectID": "lectures/tidy-data.html#melting-data.table-and-old-tidyverse",
     "href": "lectures/tidy-data.html#melting-data.table-and-old-tidyverse",
     "title": "Tidy data",
     "section": "Melting (data.table and old tidyverse)",
-    "text": "Melting (data.table and old tidyverse)\n\nlibrary(data.table)\n\ndata.table(billboard) |&gt;\n  melt(measure.vars = patterns(\"^wk\"),\n       variable.name = \"week\", \n       value.name = \"rank\", \n       na.rm = TRUE)\n\n    artist week rank\n1:   2 Pac  wk1    1\n2:   Creed  wk1    3\n3: Mos Def  wk1    5\n4: Aaliyah  wk1    2\n5:   2 Pac  wk2    2\n6:   Creed  wk2    4\n7: Mos Def  wk2    6\n\n\nThis makes it easier to compute summary statistics, or make figures of ranks by artist.\nMost longitudinal data analyses will expect data in “long” format."
+    "text": "Melting (data.table and old tidyverse)\n\n\n\n\n\n\n\n\nThis makes it easier to compute summary statistics, or make figures of ranks by artist.\nMost longitudinal data analyses will expect data in “long” format."
   },
   {
     "objectID": "lectures/tidy-data.html#pivoting-from-long-to-wide",
     "href": "lectures/tidy-data.html#pivoting-from-long-to-wide",
     "title": "Tidy data",
     "section": "Pivoting from long to wide",
-    "text": "Pivoting from long to wide\nThis also has its uses. Examples include computing correlation matrices, doing derived variable analysis, and tables are often more readable in wide or partial wide format.\n\ndfw &lt;- tribble(\n  ~id, ~time, ~value,\n  \"A\", 1, 8.6,\n  \"A\", 3, 4.5,\n  \"B\", 1, 1.01,\n  \"B\", 2, 3.3, \n  \"C\", 1, 4.1,\n  \"C\", 2, 5.2,\n  \"C\", 3, 3.2\n)\n\ntidyr\n\ndfw |&gt; pivot_wider(names_from = \"time\", \n                   names_prefix = \"time\",\n                   values_from = \"value\")\n\n# A tibble: 3 × 4\n  id    time1 time3 time2\n  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1 A      8.6    4.5  NA  \n2 B      1.01  NA     3.3\n3 C      4.1    3.2   5.2\n\n\nbase R\n\nas.data.frame(dfw) |&gt;\n  reshape(direction = \"wide\", \n          idvar = \"id\" ,\n          timevar = \"time\"\n          )\n\n  id value.1 value.3 value.2\n1  A    8.60     4.5      NA\n3  B    1.01      NA     3.3\n5  C    4.10     3.2     5.2\n\n\ndata.table\n\ndata.table(dfw) |&gt;\n  dcast(id ~ time, value.var = \"value\")\n\n   id    1   2   3\n1:  A 8.60  NA 4.5\n2:  B 1.01 3.3  NA\n3:  C 4.10 5.2 3.2"
+    "text": "Pivoting from long to wide\nThis also has its uses. Examples include computing correlation matrices, doing derived variable analysis, and tables are often more readable in wide or partial wide format.\n\n\n\n\n\n\n\n\ntidyr\n\n\n\n\n\n\n\n\nbase R\n\n\n\n\n\n\n\n\ndata.table"
   },
   {
     "objectID": "lectures/tidy-data.html#real-data",
@@ -494,14 +494,14 @@
     "href": "lectures/dates-and-strings.html#combining-strings",
     "title": "Strings and dates",
     "section": "Combining strings",
-    "text": "Combining strings\nYou know about paste and paste0. I like to use sprintf(&lt;format&gt;, ...)\nThe format contains special characters starting with “%” to determine how the character should look, and data passed to the ... gets inserted into the format:\n\nlibrary(palmerpenguins)\nsprintf(\"mean and sd of %s: %.2f (%.2f)\", \"bill depth (mm)\", \n        mean(penguins$bill_depth_mm, na.rm = TRUE), \n        sd(penguins$bill_depth_mm, na.rm = TRUE))\n\n[1] \"mean and sd of bill depth (mm): 17.15 (1.97)\"\n\n\n“%s” means string, “%.2f” means a float with 2 digits after the decimal\nUse “%%” to get a literal percent\n\nsprintf(\"n and percent male: %.0f (%.1f%%)\", \n        sum(penguins$sex == \"male\", na.rm = TRUE), \n        100 * sum(penguins$sex == \"male\", na.rm = TRUE) / nrow(penguins) )\n\n[1] \"n and percent male: 168 (48.8%)\"\n\n\nSee also the glue package for a different way to do this."
+    "text": "Combining strings\nYou know about paste and paste0. I like to use sprintf(&lt;format&gt;, ...)\nThe format contains special characters starting with “%” to determine how the character should look, and data passed to the ... gets inserted into the format:\n\n\n\n\n\n\n\n\n“%s” means string, “%.2f” means a float with 2 digits after the decimal\nUse “%%” to get a literal percent\n\n\n\n\n\n\n\n\nSee also the glue package for a different way to do this."
   },
   {
     "objectID": "lectures/dates-and-strings.html#glue",
     "href": "lectures/dates-and-strings.html#glue",
     "title": "Strings and dates",
     "section": "glue",
-    "text": "glue\nglue is a package that allows you to insert R code into strings\n\nlibrary(glue)\n\nglue(\"n and percent male: {round(nmale)} ({round(percentmale, 1)}%)\", \n        nmale = sum(penguins$sex == \"male\", na.rm = TRUE), \n        percentmale = 100 * sum(penguins$sex == \"male\", na.rm = TRUE) / nrow(penguins)            )\n\nn and percent male: 168 (48.8%)\n\n\nIt is quite flexible and works well with data frames as well\n\nlibrary(dplyr)\npenguins |&gt; group_by(species) |&gt; \n  summarize(mean_bill = mean(bill_length_mm, na.rm = TRUE)) |&gt;\n  glue_data(\"The mean bill length for {species} is {round(mean_bill, 1)}mm\")\n\nThe mean bill length for Adelie is 38.8mm\nThe mean bill length for Chinstrap is 48.8mm\nThe mean bill length for Gentoo is 47.5mm"
+    "text": "glue\nglue is a package that allows you to insert R code into strings\n\n\n\n\n\n\n\n\nIt is quite flexible and works well with data frames as well"
   },
   {
     "objectID": "lectures/dates-and-strings.html#register-example",
@@ -515,7 +515,7 @@
     "href": "lectures/dates-and-strings.html#character-matching",
     "title": "Strings and dates",
     "section": "Character matching",
-    "text": "Character matching\nRegular expressions are abstract patterns of characters that describe a text sequence\nYou can use them with grep and related functions in base R. Also see the stringr package.\nExample “starts with”\n\ngrepl(pattern= \"^D15\", \n      c(\"D150\", \"D152\", \"D159\", \n        \"A250\", \"Z149\"))\n\n[1]  TRUE  TRUE  TRUE FALSE FALSE"
+    "text": "Character matching\nRegular expressions are abstract patterns of characters that describe a text sequence\nYou can use them with grep and related functions in base R. Also see the stringr package.\nExample “starts with”"
   },
   {
     "objectID": "lectures/dates-and-strings.html#regexp-operators",
@@ -550,7 +550,7 @@
     "href": "lectures/dates-and-strings.html#register-example-1",
     "title": "Strings and dates",
     "section": "Register example",
-    "text": "Register example\n\nas.Date(\"2010-01-01\")\n\n[1] \"2010-01-01\"\n\nas.Date(\"2010-05-10\") ## ambiguous!\n\n[1] \"2010-05-10\"\n\nlibrary(lubridate)\n\nymd(\"2010-05-10\")\n\n[1] \"2010-05-10\"\n\nymd(\"2010-05-10\") - ymd(\"2010-01-01\")\n\nTime difference of 129 days\n\nas.numeric(ymd(\"2010-05-10\") - ymd(\"2010-01-01\"))\n\n[1] 129"
+    "text": "Register example"
   },
   {
     "objectID": "lectures/dates-and-strings.html#practical",
@@ -697,7 +697,7 @@
     "href": "exercises/solutions/flow-and-loops.html#loops-for-statistical-analysis",
     "title": "Flow control and loops – exercise solutions",
     "section": "Loops for statistical analysis",
-    "text": "Loops for statistical analysis\n\nlibrary(palmerpenguins)\n\n\nWrite a loop that calculates and prints out the mean for each numeric variable in the penguins dataset\n\n\nfor(i in 1:ncol(penguins)) {\n  ## cat prints to the console without quotes\n  cat(names(penguins)[i], \" - \", sep = \"\")\n  vari &lt;- penguins[[i]] ## this iterates through the columns of penguins\n  if(is.numeric(vari)) { ## check whether it is numeric\n    cat(\"Mean:\", mean(vari, na.rm = TRUE))\n  } else {\n    cat(\"not numeric\")\n  }\n  cat(\"\\n\") # new line\n}\n\nspecies - not numeric\nisland - not numeric\nbill_length_mm - Mean: 43.92193\nbill_depth_mm - Mean: 17.15117\nflipper_length_mm - Mean: 200.9152\nbody_mass_g - Mean: 4201.754\nsex - not numeric\nyear - Mean: 2008.029\n\n\n\nModify your loop in 1 so that it prints out the mean, standard deviation, median, and interquartile range for each numeric variable in penguins.\n\n\nf.names &lt;- c(\"mean\", \"std dev\", \"median\", \"interquartile range\")\nfunctions &lt;- list(mean, sd, median, IQR)\n## we will add an inner loop that iterates through these function and names\n\nfor(i in 1:ncol(penguins)) {\n  cat(names(penguins)[i], \":\\n\", sep = \"\")\n  vari &lt;- penguins[[i]]\n  \n  if(is.numeric(vari)) { \n    for(fn in 1:length(f.names)) {\n      cat(f.names[fn], functions[[fn]](vari, na.rm = TRUE), \"\\n\")\n    }\n  } else {\n    cat(\"not numeric\\n\")\n  }\n  cat(\"--------\\n\") # new line\n}\n\nspecies:\nnot numeric\n--------\nisland:\nnot numeric\n--------\nbill_length_mm:\nmean 43.92193 \nstd dev 5.459584 \nmedian 44.45 \ninterquartile range 9.275 \n--------\nbill_depth_mm:\nmean 17.15117 \nstd dev 1.974793 \nmedian 17.3 \ninterquartile range 3.1 \n--------\nflipper_length_mm:\nmean 200.9152 \nstd dev 14.06171 \nmedian 197 \ninterquartile range 23 \n--------\nbody_mass_g:\nmean 4201.754 \nstd dev 801.9545 \nmedian 4050 \ninterquartile range 1200 \n--------\nsex:\nnot numeric\n--------\nyear:\nmean 2008.029 \nstd dev 0.8183559 \nmedian 2008 \ninterquartile range 2 \n--------\n\n\n\nWrite a loop to compute 500 bootstrap replicates of the means of bill length, bill depth, and flipper length. Remember to pre-allocate a data structure to store the 500 times 3 values. Provide an estimate of the correlation of the sample means.\n\n\nbootmeans &lt;- matrix(NA, nrow = 500, ncol = 3, \n                    dimnames = list(NULL, c(\"bill_length\", \"bill_depth\", \"flipper_length\")))\nfor(i in 1:nrow(bootmeans)){\n  bootindex &lt;- sample(1:nrow(penguins), replace = TRUE)\n  peng.star &lt;- penguins[bootindex, ]\n  \n  bootmeans[i, 1] &lt;- mean(peng.star$bill_length_mm, na.rm = TRUE)\n  bootmeans[i, 2] &lt;- mean(peng.star$bill_depth_mm, na.rm = TRUE)\n  bootmeans[i, 3] &lt;- mean(peng.star$flipper_length_mm, na.rm = TRUE)\n}\n\nsummary(bootmeans)\n\n  bill_length      bill_depth    flipper_length \n Min.   :43.08   Min.   :16.81   Min.   :198.1  \n 1st Qu.:43.72   1st Qu.:17.07   1st Qu.:200.4  \n Median :43.92   Median :17.15   Median :201.0  \n Mean   :43.92   Mean   :17.15   Mean   :200.9  \n 3rd Qu.:44.12   3rd Qu.:17.22   3rd Qu.:201.4  \n Max.   :44.76   Max.   :17.48   Max.   :203.0  \n\ncor(bootmeans)\n\n               bill_length bill_depth flipper_length\nbill_length      1.0000000 -0.3074187      0.6660174\nbill_depth      -0.3074187  1.0000000     -0.5854712\nflipper_length   0.6660174 -0.5854712      1.0000000"
+    "text": "Loops for statistical analysis\n\nlibrary(palmerpenguins)\n\n\nWrite a loop that calculates and prints out the mean for each numeric variable in the penguins dataset\n\n\nfor(i in 1:ncol(penguins)) {\n  ## cat prints to the console without quotes\n  cat(names(penguins)[i], \" - \", sep = \"\")\n  vari &lt;- penguins[[i]] ## this iterates through the columns of penguins\n  if(is.numeric(vari)) { ## check whether it is numeric\n    cat(\"Mean:\", mean(vari, na.rm = TRUE))\n  } else {\n    cat(\"not numeric\")\n  }\n  cat(\"\\n\") # new line\n}\n\nspecies - not numeric\nisland - not numeric\nbill_length_mm - Mean: 43.92193\nbill_depth_mm - Mean: 17.15117\nflipper_length_mm - Mean: 200.9152\nbody_mass_g - Mean: 4201.754\nsex - not numeric\nyear - Mean: 2008.029\n\n\n\nModify your loop in 1 so that it prints out the mean, standard deviation, median, and interquartile range for each numeric variable in penguins.\n\n\nf.names &lt;- c(\"mean\", \"std dev\", \"median\", \"interquartile range\")\nfunctions &lt;- list(mean, sd, median, IQR)\n## we will add an inner loop that iterates through these function and names\n\nfor(i in 1:ncol(penguins)) {\n  cat(names(penguins)[i], \":\\n\", sep = \"\")\n  vari &lt;- penguins[[i]]\n  \n  if(is.numeric(vari)) { \n    for(fn in 1:length(f.names)) {\n      cat(f.names[fn], functions[[fn]](vari, na.rm = TRUE), \"\\n\")\n    }\n  } else {\n    cat(\"not numeric\\n\")\n  }\n  cat(\"--------\\n\") # new line\n}\n\nspecies:\nnot numeric\n--------\nisland:\nnot numeric\n--------\nbill_length_mm:\nmean 43.92193 \nstd dev 5.459584 \nmedian 44.45 \ninterquartile range 9.275 \n--------\nbill_depth_mm:\nmean 17.15117 \nstd dev 1.974793 \nmedian 17.3 \ninterquartile range 3.1 \n--------\nflipper_length_mm:\nmean 200.9152 \nstd dev 14.06171 \nmedian 197 \ninterquartile range 23 \n--------\nbody_mass_g:\nmean 4201.754 \nstd dev 801.9545 \nmedian 4050 \ninterquartile range 1200 \n--------\nsex:\nnot numeric\n--------\nyear:\nmean 2008.029 \nstd dev 0.8183559 \nmedian 2008 \ninterquartile range 2 \n--------\n\n\n\nWrite a loop to compute 500 bootstrap replicates of the means of bill length, bill depth, and flipper length. Remember to pre-allocate a data structure to store the 500 times 3 values. Provide an estimate of the correlation of the sample means.\n\n\nbootmeans &lt;- matrix(NA, nrow = 500, ncol = 3, \n                    dimnames = list(NULL, c(\"bill_length\", \"bill_depth\", \"flipper_length\")))\nfor(i in 1:nrow(bootmeans)){\n  bootindex &lt;- sample(1:nrow(penguins), replace = TRUE)\n  peng.star &lt;- penguins[bootindex, ]\n  \n  bootmeans[i, 1] &lt;- mean(peng.star$bill_length_mm, na.rm = TRUE)\n  bootmeans[i, 2] &lt;- mean(peng.star$bill_depth_mm, na.rm = TRUE)\n  bootmeans[i, 3] &lt;- mean(peng.star$flipper_length_mm, na.rm = TRUE)\n}\n\nsummary(bootmeans)\n\n  bill_length      bill_depth    flipper_length \n Min.   :43.11   Min.   :16.78   Min.   :198.1  \n 1st Qu.:43.72   1st Qu.:17.07   1st Qu.:200.4  \n Median :43.92   Median :17.14   Median :200.9  \n Mean   :43.92   Mean   :17.15   Mean   :200.9  \n 3rd Qu.:44.12   3rd Qu.:17.22   3rd Qu.:201.4  \n Max.   :44.88   Max.   :17.49   Max.   :203.1  \n\ncor(bootmeans)\n\n               bill_length bill_depth flipper_length\nbill_length      1.0000000 -0.2786473      0.6238246\nbill_depth      -0.2786473  1.0000000     -0.6494218\nflipper_length   0.6238246 -0.6494218      1.0000000"
   },
   {
     "objectID": "exercises/solutions/flow-and-loops.html#loops-for-numeric-calculation",
@@ -795,7 +795,7 @@
     "href": "exercises/tidy-and-reshape.html#tidying-our-mean-sd-function",
     "title": "Tidying and reshaping – exercises",
     "section": "Tidying our mean sd function",
-    "text": "Tidying our mean sd function\nLoad the broom package and look at the source code for tidy.lm\n\nbroom:::tidy.lm\n\nfunction (x, conf.int = FALSE, conf.level = 0.95, ...) \n{\n    warn_on_subclass(x)\n    ret &lt;- as_tibble(summary(x)$coefficients, rownames = \"term\")\n    colnames(ret) &lt;- c(\"term\", \"estimate\", \"std.error\", \"statistic\", \n        \"p.value\")\n    coefs &lt;- tibble::enframe(stats::coef(x), name = \"term\", value = \"estimate\")\n    ret &lt;- left_join(coefs, ret, by = c(\"term\", \"estimate\"))\n    if (conf.int) {\n        ci &lt;- broom_confint_terms(x, level = conf.level)\n        ret &lt;- dplyr::left_join(ret, ci, by = \"term\")\n    }\n    ret\n}\n&lt;bytecode: 0x632f01455fd0&gt;\n&lt;environment: namespace:broom&gt;\n\n\n\nWrite a tidy method for our mean_sd function and try it out on the penguins dataset.\nApply the mean_sd function to the penguins body mass in grams by species and sex. Organize the results into a table suitable for publication, where it is easy to compare the two sexes."
+    "text": "Tidying our mean sd function\nLoad the broom package and look at the source code for tidy.lm\n\nbroom:::tidy.lm\n\nfunction (x, conf.int = FALSE, conf.level = 0.95, ...) \n{\n    warn_on_subclass(x)\n    ret &lt;- as_tibble(summary(x)$coefficients, rownames = \"term\")\n    colnames(ret) &lt;- c(\"term\", \"estimate\", \"std.error\", \"statistic\", \n        \"p.value\")\n    coefs &lt;- tibble::enframe(stats::coef(x), name = \"term\", value = \"estimate\")\n    ret &lt;- left_join(coefs, ret, by = c(\"term\", \"estimate\"))\n    if (conf.int) {\n        ci &lt;- broom_confint_terms(x, level = conf.level)\n        ret &lt;- dplyr::left_join(ret, ci, by = \"term\")\n    }\n    ret\n}\n&lt;bytecode: 0x58a990881060&gt;\n&lt;environment: namespace:broom&gt;\n\n\n\nWrite a tidy method for our mean_sd function and try it out on the penguins dataset.\nApply the mean_sd function to the penguins body mass in grams by species and sex. Organize the results into a table suitable for publication, where it is easy to compare the two sexes."
   },
   {
     "objectID": "exercises/tidy-and-reshape.html#tidying-the-national-patient-register-dataset",
@@ -1078,11 +1078,11 @@
     "text": "Course feedback\n\nWhat did you like about the course?\nWhat did you dislike about the course?\nDid you knowledge about R programming improve during the course?\nAre there topics you wanted to be covered but were not?"
   },
   {
-    "objectID": "lectures/conclusion.html#book-a-time",
-    "href": "lectures/conclusion.html#book-a-time",
+    "objectID": "lectures/conclusion.html#last-chance",
+    "href": "lectures/conclusion.html#last-chance",
     "title": "Summary and conclusion",
-    "section": "Book a time",
-    "text": "Book a time\nTo ask about R, get help on the exam, or anything else\nMy office is 10.2.25"
+    "section": "Last chance",
+    "text": "Last chance\nTo ask about R, or anything else\nMy office is 10.2.25\nYou can also use our consulting services – Look under “Statistical Advisory Services” on the Biostat homepage."
   },
   {
     "objectID": "resources.html",
@@ -1355,7 +1355,7 @@
     "href": "lectures/dynamic-documents.html#code-chunks",
     "title": "Dynamic Documents",
     "section": "Code chunks",
-    "text": "Code chunks\nLook like this, and the output is below\n\n```{r}\nrnorm(1)\n```\n\n[1] 0.2484773\n\n\nIn quarto, chunk options are inside the fence after #|, e.g., #| echo: fenced, each on their own line\nIn rmarkdown, chunk options are inside the brackets (this is compatible with quarto for now)\nYou can also have code inline:\n\nFor example this `r rnorm(1)` will show up inline\n\nwhich will put the output -0.7404764 without showing the code."
+    "text": "Code chunks\nLook like this, and the output is below\n\n```{r}\nrnorm(1)\n```\n\n[1] 1.202232\n\n\nIn quarto, chunk options are inside the fence after #|, e.g., #| echo: fenced, each on their own line\nIn rmarkdown, chunk options are inside the brackets (this is compatible with quarto for now)\nYou can also have code inline:\n\nFor example this `r rnorm(1)` will show up inline\n\nwhich will put the output -0.3477475 without showing the code."
   },
   {
     "objectID": "lectures/dynamic-documents.html#rendering",
@@ -1502,35 +1502,35 @@
     "href": "lectures/merging-data.html#left-join",
     "title": "Merging/joining data",
     "section": "Left join",
-    "text": "Left join\n\nlibrary(dplyr)\nlibrary(data.table)\nx &lt;- tribble(\n  ~key, ~val_x,\n     1, \"x1\",\n     2, \"x2\",\n     3, \"x3\"\n)\ny &lt;- tribble(\n  ~key, ~val_y,\n     1, \"y1\",\n     2, \"y2\",\n     4, \"y3\"\n)\nx\n\n# A tibble: 3 × 2\n    key val_x\n  &lt;dbl&gt; &lt;chr&gt;\n1     1 x1   \n2     2 x2   \n3     3 x3   \n\ny\n\n# A tibble: 3 × 2\n    key val_y\n  &lt;dbl&gt; &lt;chr&gt;\n1     1 y1   \n2     2 y2   \n3     4 y3"
+    "text": "Left join"
   },
   {
     "objectID": "lectures/merging-data.html#section",
     "href": "lectures/merging-data.html#section",
     "title": "Merging/joining data",
     "section": "",
-    "text": "Tidyverse\n\nx |&gt; left_join(y, by = \"key\")\n\n# A tibble: 3 × 3\n    key val_x val_y\n  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;\n1     1 x1    y1   \n2     2 x2    y2   \n3     3 x3    &lt;NA&gt; \n\n\nBase R\n\nmerge(x, y, by = \"key\", all.x = TRUE)\n\n  key val_x val_y\n1   1    x1    y1\n2   2    x2    y2\n3   3    x3  &lt;NA&gt;\n\n\ndata.table\nsame as base R.\nSlightly different (right join):\n\nxdt &lt;- data.table(x)\nydt &lt;- data.table(y)\n\nydt[xdt, on = .(key)]\n\n   key val_y val_x\n1:   1    y1    x1\n2:   2    y2    x2\n3:   3  &lt;NA&gt;    x3"
+    "text": "Tidyverse\n\n\n\n\n\n\n\n\nBase R\n\n\n\n\n\n\n\n\ndata.table\nsame as base R.\nSlightly different (right join):"
   },
   {
     "objectID": "lectures/merging-data.html#many-to-one",
     "href": "lectures/merging-data.html#many-to-one",
     "title": "Merging/joining data",
     "section": "Many-to-one",
-    "text": "Many-to-one\n\nx &lt;- tribble(\n  ~key, ~val_x,\n     1, \"x1\",\n     2, \"x2\",\n     3, \"x3\"\n)\ny &lt;- tribble(\n  ~key, ~val_y,\n     1, \"y1\",\n     1, \"y1b\",\n     2, \"y2\",\n     4, \"y3\"\n)\n\nmerge(x, y, by = \"key\", all.x = TRUE)\n\n  key val_x val_y\n1   1    x1    y1\n2   1    x1   y1b\n3   2    x2    y2\n4   3    x3  &lt;NA&gt;"
+    "text": "Many-to-one"
   },
   {
     "objectID": "lectures/merging-data.html#one-to-many",
     "href": "lectures/merging-data.html#one-to-many",
     "title": "Merging/joining data",
     "section": "One-to-many",
-    "text": "One-to-many\n\nx &lt;- tribble(\n  ~key, ~val_x,\n     1, \"x1\",\n     1, \"x1b\",\n     2, \"x2\",\n     3, \"x3\"\n)\ny &lt;- tribble(\n  ~key, ~val_y,\n     1, \"y1\",\n     2, \"y2\",\n     4, \"y3\"\n)\n\nmerge(x, y, by = \"key\", all.x = TRUE)\n\n  key val_x val_y\n1   1    x1    y1\n2   1   x1b    y1\n3   2    x2    y2\n4   3    x3  &lt;NA&gt;"
+    "text": "One-to-many"
   },
   {
     "objectID": "lectures/merging-data.html#many-to-many",
     "href": "lectures/merging-data.html#many-to-many",
     "title": "Merging/joining data",
     "section": "Many-to-many",
-    "text": "Many-to-many\n\nx &lt;- tribble(\n  ~key, ~val_x,\n     1, \"x1\",\n     1, \"x1b\",\n     2, \"x2\",\n     3, \"x3\"\n)\ny &lt;- tribble(\n  ~key, ~val_y,\n     1, \"y1\",\n     1, \"y1b\",\n     2, \"y2\",\n     4, \"y3\"\n)\n\nmerge(x, y, by = \"key\", all.x = TRUE)\n\n  key val_x val_y\n1   1    x1    y1\n2   1    x1   y1b\n3   1   x1b    y1\n4   1   x1b   y1b\n5   2    x2    y2\n6   3    x3  &lt;NA&gt;"
+    "text": "Many-to-many"
   },
   {
     "objectID": "lectures/merging-data.html#other-merge-types",
@@ -1551,35 +1551,35 @@
     "href": "lectures/merging-data.html#non-exact-joins",
     "title": "Merging/joining data",
     "section": "Non exact joins",
-    "text": "Non exact joins\nI want to merge these two tables where key1 matches exactly, and key2 in y is less than key2 in x\n\nx &lt;- tribble(\n  ~key1, ~key2x, ~val_x,\n     1, 20, \"x1\",\n     1, 50, \"x1b\",\n     2, 35, \"x2\",\n     3, 10, \"x3\"\n)\ny &lt;- tribble(\n  ~key1, ~key2y, ~val_y,\n     1, 10, \"y1\",\n     1, 25, \"y1b\",\n     1, 35, \"y1c\",\n     2, 20, \"y2\",\n     2, 50, \"y2b\",\n     3, 30, \"y3\"\n)"
+    "text": "Non exact joins\nI want to merge these two tables where key1 matches exactly, and key2 in y is less than key2 in x"
   },
   {
     "objectID": "lectures/merging-data.html#base-r-1",
     "href": "lectures/merging-data.html#base-r-1",
     "title": "Merging/joining data",
     "section": "Base R",
-    "text": "Base R\nMulti step process in base R\n\nmerge(x, y, by = \"key1\", all = FALSE) |&gt;\n  subset(key2y &lt;= key2x)\n\n  key1 key2x val_x key2y val_y\n1    1    20    x1    10    y1\n4    1    50   x1b    10    y1\n5    1    50   x1b    25   y1b\n6    1    50   x1b    35   y1c\n7    2    35    x2    20    y2\n\n## merge allows multiple keys, but only exact matching\nmerge(x, y, \n      by.x = c(\"key1\", \"key2x\"), \n      by.y = c(\"key1\", \"key2y\"), all = FALSE)\n\n[1] key1  key2x val_x val_y\n&lt;0 rows&gt; (or 0-length row.names)"
+    "text": "Base R\nMulti step process in base R"
   },
   {
     "objectID": "lectures/merging-data.html#data.table-1",
     "href": "lectures/merging-data.html#data.table-1",
     "title": "Merging/joining data",
     "section": "data.table",
-    "text": "data.table\n\nxdt &lt;- data.table(x, key = \"key1\")\nydt &lt;- data.table(y, key = \"key1\")\n\nydt[xdt, on = .(key1, key2y &lt;= key2x), nomatch = NULL]\n\n   key1 key2y val_y val_x\n1:    1    20    y1    x1\n2:    1    50    y1   x1b\n3:    1    50   y1b   x1b\n4:    1    50   y1c   x1b\n5:    2    35    y2    x2"
+    "text": "data.table"
   },
   {
     "objectID": "lectures/merging-data.html#rolling-joins-with-data.table",
     "href": "lectures/merging-data.html#rolling-joins-with-data.table",
     "title": "Merging/joining data",
     "section": "Rolling joins with data.table",
-    "text": "Rolling joins with data.table\nThe previous example returns all matches satisfying the inequality, what if we only want the closest one?\n\n## return all \nydt[xdt, on = .(key1, key2y &lt;= key2x), nomatch = NULL]\n\n   key1 key2y val_y val_x\n1:    1    20    y1    x1\n2:    1    50    y1   x1b\n3:    1    50   y1b   x1b\n4:    1    50   y1c   x1b\n5:    2    35    y2    x2\n\n## only closest match\nydt[xdt, on = .(key1, key2y == key2x), roll = TRUE, nomatch = NULL]\n\n   key1 key2y val_y val_x\n1:    1    20    y1    x1\n2:    1    50   y1c   x1b\n3:    2    35    y2    x2"
+    "text": "Rolling joins with data.table\nThe previous example returns all matches satisfying the inequality, what if we only want the closest one?"
   },
   {
     "objectID": "lectures/merging-data.html#tidyverse-1",
     "href": "lectures/merging-data.html#tidyverse-1",
     "title": "Merging/joining data",
     "section": "Tidyverse",
-    "text": "Tidyverse\nThis is available in dplyr since version 1.1.0\n\nx |&gt; left_join(y, join_by(key2 &lt;= key2))"
+    "text": "Tidyverse\nThis is available in dplyr since version 1.1.0\n\n\n\n\n\n\n\n\nAlso can keep only the closest.\n\n\n\n\n\n\n\n\nI prefer the dplyr in this case, because it is easier to communicate and inspect what is going on."
   },
   {
     "objectID": "lectures/merging-data.html#remember",
@@ -1642,7 +1642,7 @@
     "href": "lectures/flow-and-loops.html#related-functions",
     "title": "Flow control and loops",
     "section": "Related functions",
-    "text": "Related functions\n\nswitch: evaluates its first argument, and chooses one of the subsequent arguments by name (unnamed the “default”)\n\n\n\n\n\n\n\n\n\n\ncut: Divides a numeric vector into intervals and produces a factor.\n\n\n(x1 &lt;- rnorm(5))\n\n[1] -0.7897748 -0.3675012  0.8325025  1.0777121  0.6012301\n\ncut(x1, breaks = c(-Inf, -1, 0, 1, Inf), \n    labels = c(\"&lt;-1\", \"-1 to 0\", \"0 to 1\", \"&gt; 1\"))\n\n[1] -1 to 0 -1 to 0 0 to 1  &gt; 1     0 to 1 \nLevels: &lt;-1 -1 to 0 0 to 1 &gt; 1"
+    "text": "Related functions\n\nswitch: evaluates its first argument, and chooses one of the subsequent arguments by name (unnamed the “default”)\n\n\n\n\n\n\n\n\n\n\ncut: Divides a numeric vector into intervals and produces a factor.\n\n\n(x1 &lt;- rnorm(5))\n\n[1]  0.9837219 -2.2257240  1.0458217  2.6846840 -0.2748699\n\ncut(x1, breaks = c(-Inf, -1, 0, 1, Inf), \n    labels = c(\"&lt;-1\", \"-1 to 0\", \"0 to 1\", \"&gt; 1\"))\n\n[1] 0 to 1  &lt;-1     &gt; 1     &gt; 1     -1 to 0\nLevels: &lt;-1 -1 to 0 0 to 1 &gt; 1"
   },
   {
     "objectID": "lectures/flow-and-loops.html#logical-operators",
@@ -1726,7 +1726,7 @@
     "href": "lectures/flow-and-loops.html#note-on-speed",
     "title": "Flow control and loops",
     "section": "Note on speed",
-    "text": "Note on speed\nYou may see people warn you not to use for loops in R, “because they are slow”.\nThat is partially true, but speed is not the only thing, for loops can be much clearer and more understandable than the alternatives.\nBut, the slow thing in R is changing the size of an object, so you can avoid that by creating a vector/matrix/array of the correct size to hold the results of the loop:\n\nsystem.time({\nA1 &lt;- NULL\nfor(i in 1:100000) {\n  A1 &lt;- c(A1, rnorm(1))\n}\n})\n\n   user  system elapsed \n 14.206   0.194  14.472 \n\nsystem.time({\nA2 &lt;- numeric(100000)\nfor(i in 1:length(A2)) {\n  A2[i] &lt;- rnorm(1)\n}\n})\n\n   user  system elapsed \n  0.077   0.000   0.076"
+    "text": "Note on speed\nYou may see people warn you not to use for loops in R, “because they are slow”.\nThat is partially true, but speed is not the only thing, for loops can be much clearer and more understandable than the alternatives.\nBut, the slow thing in R is changing the size of an object, so you can avoid that by creating a vector/matrix/array of the correct size to hold the results of the loop:\n\nsystem.time({\nA1 &lt;- NULL\nfor(i in 1:100000) {\n  A1 &lt;- c(A1, rnorm(1))\n}\n})\n\n   user  system elapsed \n 12.513   0.222  12.807 \n\nsystem.time({\nA2 &lt;- numeric(100000)\nfor(i in 1:length(A2)) {\n  A2[i] &lt;- rnorm(1)\n}\n})\n\n   user  system elapsed \n  0.073   0.000   0.073"
   },
   {
     "objectID": "lectures/flow-and-loops.html#practical",
@@ -1824,7 +1824,7 @@
     "href": "lectures/dataviz.html#notes-and-details",
     "title": "Data visualization",
     "section": "Notes and details",
-    "text": "Notes and details\n\nLayers/components of the plot are distinct functions\nLayers are combined with the +\nThe plot can be saved as an object (what class?)\nThe plot is displayed/rendered when printed\n\nHow does the adding of layers work?\n\npgeom &lt;- geom_point()\nclass(pgeom)\n\n[1] \"LayerInstance\" \"Layer\"         \"ggproto\"       \"gg\"           \n\nclass(step1)\n\n[1] \"gg\"     \"ggplot\"\n\nggplot2:::`+.gg`\n\nfunction (e1, e2) \n{\n    if (missing(e2)) {\n        abort(\"Cannot use `+.gg()` with a single argument. Did you accidentally put + on a new line?\")\n    }\n    e2name &lt;- deparse(substitute(e2))\n    if (is.theme(e1)) \n        add_theme(e1, e2, e2name)\n    else if (is.ggplot(e1)) \n        add_ggplot(e1, e2, e2name)\n    else if (is.ggproto(e1)) {\n        abort(\"Cannot add ggproto objects together. Did you forget to add this object to a ggplot object?\")\n    }\n}\n&lt;bytecode: 0x5e58a364a4a0&gt;\n&lt;environment: namespace:ggplot2&gt;"
+    "text": "Notes and details\n\nLayers/components of the plot are distinct functions\nLayers are combined with the +\nThe plot can be saved as an object (what class?)\nThe plot is displayed/rendered when printed\n\nHow does the adding of layers work?\n\npgeom &lt;- geom_point()\nclass(pgeom)\n\n[1] \"LayerInstance\" \"Layer\"         \"ggproto\"       \"gg\"           \n\nclass(step1)\n\n[1] \"gg\"     \"ggplot\"\n\nggplot2:::`+.gg`\n\nfunction (e1, e2) \n{\n    if (missing(e2)) {\n        abort(\"Cannot use `+.gg()` with a single argument. Did you accidentally put + on a new line?\")\n    }\n    e2name &lt;- deparse(substitute(e2))\n    if (is.theme(e1)) \n        add_theme(e1, e2, e2name)\n    else if (is.ggplot(e1)) \n        add_ggplot(e1, e2, e2name)\n    else if (is.ggproto(e1)) {\n        abort(\"Cannot add ggproto objects together. Did you forget to add this object to a ggplot object?\")\n    }\n}\n&lt;bytecode: 0x62abfe3f5b90&gt;\n&lt;environment: namespace:ggplot2&gt;"
   },
   {
     "objectID": "lectures/dataviz.html#more-complex-plots",

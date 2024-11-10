@@ -2,12 +2,22 @@
 title: "Merging/joining data"
 subtitle: "Day 3, B"
 author: "Michael C Sachs"
-format: 
-    revealjs:
-      scrollable: true
+format:
+  live-revealjs:
+    theme: default
+    scrollable: true
+engine: knitr
 execute:
   echo: true
+webr:
+  cell-options:
+    autorun: true
+    echo: true
+    fig-width: 11
+    fig-height: 5
 image: "../images/merging.png"
+editor_options: 
+  chunk_output_type: console
 ---
 
 ## Register data example
@@ -66,9 +76,9 @@ Example, given a table of hospitalization diagnoses, I want to know the drug dis
 
 ## Left join
 
-```{r}
-library(dplyr)
-library(data.table)
+```{webr}
+library(dplyr) |> suppressPackageStartupMessages()
+library(data.table) |> suppressPackageStartupMessages()
 x <- tribble(
   ~key, ~val_x,
      1, "x1",
@@ -89,13 +99,13 @@ y
 
 ### Tidyverse
 
-```{r}
+```{webr}
 x |> left_join(y, by = "key")
 ```
 
 ### Base R
 
-```{r}
+```{webr}
 merge(x, y, by = "key", all.x = TRUE)
 ```
 
@@ -104,7 +114,7 @@ merge(x, y, by = "key", all.x = TRUE)
 same as base R.
 
 Slightly different (right join): 
-```{r}
+```{webr}
 xdt <- data.table(x)
 ydt <- data.table(y)
 
@@ -114,7 +124,7 @@ ydt[xdt, on = .(key)]
 
 
 ## Many-to-one 
-```{r}
+```{webr}
 x <- tribble(
   ~key, ~val_x,
      1, "x1",
@@ -134,7 +144,7 @@ merge(x, y, by = "key", all.x = TRUE)
 
 
 ## One-to-many
-```{r}
+```{webr}
 x <- tribble(
   ~key, ~val_x,
      1, "x1",
@@ -155,7 +165,7 @@ merge(x, y, by = "key", all.x = TRUE)
 
 
 ## Many-to-many
-```{r}
+```{webr}
 x <- tribble(
   ~key, ~val_x,
      1, "x1",
@@ -193,7 +203,7 @@ merge(x, y, by = "key", all.x = TRUE)
 
 I want to merge these two tables where `key1` matches exactly, and `key2` in `y` is less than `key2` in `x`
 
-```{r}
+```{webr}
 x <- tribble(
   ~key1, ~key2x, ~val_x,
      1, 20, "x1",
@@ -216,7 +226,7 @@ y <- tribble(
 ## Base R
 
 Multi step process in base R
-```{r}
+```{webr}
 merge(x, y, by = "key1", all = FALSE) |>
   subset(key2y <= key2x)
 
@@ -229,7 +239,7 @@ merge(x, y,
 
 ## data.table
 
-```{r}
+```{webr}
 xdt <- data.table(x, key = "key1")
 ydt <- data.table(y, key = "key1")
 
@@ -240,7 +250,7 @@ ydt[xdt, on = .(key1, key2y <= key2x), nomatch = NULL]
 
 The previous example returns all matches satisfying the inequality, what if we only want the _closest_ one? 
 
-```{r}
+```{webr}
 ## return all 
 ydt[xdt, on = .(key1, key2y <= key2x), nomatch = NULL]
 
@@ -254,11 +264,16 @@ ydt[xdt, on = .(key1, key2y == key2x), roll = TRUE, nomatch = NULL]
 
 This is available in `dplyr` since version 1.1.0
 
-```{r}
-#| eval: false
-x |> left_join(y, join_by(key2 <= key2))
+```{webr}
+x |> inner_join(y, join_by(key1, key2x >= key2y))
 ```
 
+Also can keep only the closest. 
+```{webr}
+x |> inner_join(y, join_by(key1, closest(key2x >= key2y)))
+```
+
+I prefer the dplyr in this case, because it is easier to communicate and inspect what is going on. 
 
 ## Remember
 

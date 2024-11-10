@@ -2,11 +2,18 @@
 title: "Strings and dates"
 subtitle: "Day 3, A"
 author: "Michael C Sachs"
-format: 
-    revealjs:
-      scrollable: true
+format:
+  live-revealjs:
+    theme: default
+    scrollable: true
 execute:
   echo: true
+webr:
+  cell-options:
+    autorun: true
+    echo: true
+    fig-width: 11
+    fig-height: 5
 image: "../images/dates.jpeg"
 ---
 
@@ -28,7 +35,7 @@ image: "../images/dates.jpeg"
 You know about `paste` and `paste0`. I like to use `sprintf(<format>, ...)`
 
 The format contains special characters starting with "%" to determine how the character should look, and data passed to the `...` gets inserted into the format: 
-```{r}
+```{webr}
 library(palmerpenguins)
 sprintf("mean and sd of %s: %.2f (%.2f)", "bill depth (mm)", 
         mean(penguins$bill_depth_mm, na.rm = TRUE), 
@@ -38,7 +45,7 @@ sprintf("mean and sd of %s: %.2f (%.2f)", "bill depth (mm)",
 "%s" means string, "%.2f" means a float with 2 digits after the decimal
 
 Use "%%" to get a literal percent
-```{r}
+```{webr}
 sprintf("n and percent male: %.0f (%.1f%%)", 
         sum(penguins$sex == "male", na.rm = TRUE), 
         100 * sum(penguins$sex == "male", na.rm = TRUE) / nrow(penguins) )
@@ -51,7 +58,7 @@ See also the `glue` package for a different way to do this.
 
 `glue` is a package that allows you to insert R code into strings
 
-```{r}
+```{webr}
 library(glue)
 
 glue("n and percent male: {round(nmale)} ({round(percentmale, 1)}%)", 
@@ -61,7 +68,7 @@ glue("n and percent male: {round(nmale)} ({round(percentmale, 1)}%)",
 
 It is quite flexible and works well with data frames as well
 
-```{r}
+```{webr}
 library(dplyr)
 penguins |> group_by(species) |> 
   summarize(mean_bill = mean(bill_length_mm, na.rm = TRUE)) |>
@@ -93,7 +100,7 @@ _Regular expressions_ are abstract patterns of characters that describe a text s
 You can use them with `grep` and related functions in base R. Also see the `stringr` package.
 
 Example "starts with"
-```{r}
+```{webr}
 grepl(pattern= "^D15", 
       c("D150", "D152", "D159", 
         "A250", "Z149"))
@@ -150,7 +157,7 @@ Write and double-check your pattern:
 
 ## Register example
 
-```{r}
+```{webr}
 as.Date("2010-01-01")
 as.Date("2010-05-10") ## ambiguous!
 

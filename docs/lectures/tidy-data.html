@@ -7,7 +7,9 @@
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Michael C Sachs">
@@ -386,6 +388,8 @@
       margin-right: 0; 
     }
   </style>
+  <script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+  <link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -412,38 +416,13 @@ Michael C Sachs
 <section id="our-mean_sd-function" class="slide level2">
 <h2>Our <code>mean_sd</code> function</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(palmerpenguins)</span>
-<span id="cb1-2"><a></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-3"><a></a></span>
-<span id="cb1-4"><a></a>mean_sd <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) {</span>
-<span id="cb1-5"><a></a>  <span class="fu">c</span>(<span class="at">mean =</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> na.rm), </span>
-<span id="cb1-6"><a></a>    <span class="at">sd =</span> <span class="fu">sd</span>(x, <span class="at">na.rm =</span> na.rm))</span>
-<span id="cb1-7"><a></a>}</span>
-<span id="cb1-8"><a></a></span>
-<span id="cb1-9"><a></a></span>
-<span id="cb1-10"><a></a>penguins <span class="sc">|&gt;</span> <span class="fu">group_by</span>(species, sex) <span class="sc">|&gt;</span></span>
-<span id="cb1-11"><a></a>  <span class="fu">summarize</span>(<span class="fu">mean_sd</span>(body_mass_g))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 16 × 3
-# Groups:   species, sex [8]
-   species   sex    `mean_sd(body_mass_g)`
-   &lt;fct&gt;     &lt;fct&gt;                   &lt;dbl&gt;
- 1 Adelie    female                  3369.
- 2 Adelie    female                   269.
- 3 Adelie    male                    4043.
- 4 Adelie    male                     347.
- 5 Adelie    &lt;NA&gt;                    3540 
- 6 Adelie    &lt;NA&gt;                     477.
- 7 Chinstrap female                  3527.
- 8 Chinstrap female                   285.
- 9 Chinstrap male                    3939.
-10 Chinstrap male                     362.
-11 Gentoo    female                  4680.
-12 Gentoo    female                   282.
-13 Gentoo    male                    5485.
-14 Gentoo    male                     313.
-15 Gentoo    &lt;NA&gt;                    4588.
-16 Gentoo    &lt;NA&gt;                     338.</code></pre>
+<div>
+<div id="webr-1" class="exercise-cell">
+
+</div>
+<script type="webr-1-contents">
+eyJjb2RlIjoibGlicmFyeShwYWxtZXJwZW5ndWlucylcbmxpYnJhcnkoZHBseXIpXG5cbm1lYW5fc2QgPC0gZnVuY3Rpb24oeCwgbmEucm0gPSBUUlVFKSB7XG4gIGMobWVhbiA9IG1lYW4oeCwgbmEucm0gPSBuYS5ybSksIFxuICAgIHNkID0gc2QoeCwgbmEucm0gPSBuYS5ybSkpXG59XG5cblxucGVuZ3VpbnMgfD4gZ3JvdXBfYnkoc3BlY2llcywgc2V4KSB8PlxuICBzdW1tYXJpemUobWVhbl9zZChib2R5X21hc3NfZykpIiwiYXR0ciI6eyJmaWctd2lkdGgiOiIxMSIsImVjaG8iOnRydWUsImV2YWwiOnRydWUsImZpZy1oZWlnaHQiOiI1IiwiYXV0b3J1biI6dHJ1ZSwiZWRpdCI6dHJ1ZX19
+</script>
 </div>
 </div>
 <p>This is not so nice to work with because we cannot see which row is the mean and which is the sd.</p>
@@ -452,65 +431,26 @@ Michael C Sachs
 <h2>Alternative 1</h2>
 <p>Return a data frame instead</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>mean_sd_df <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) {</span>
-<span id="cb3-2"><a></a>  <span class="fu">data.frame</span>(</span>
-<span id="cb3-3"><a></a>    <span class="at">variable =</span> <span class="fu">deparse1</span>(<span class="fu">substitute</span>(x)),</span>
-<span id="cb3-4"><a></a>    <span class="at">mean =</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> na.rm), </span>
-<span id="cb3-5"><a></a>    <span class="at">sd =</span> <span class="fu">sd</span>(x, <span class="at">na.rm =</span> na.rm))</span>
-<span id="cb3-6"><a></a>}</span>
-<span id="cb3-7"><a></a></span>
-<span id="cb3-8"><a></a>penguins <span class="sc">|&gt;</span> <span class="fu">group_by</span>(species, sex) <span class="sc">|&gt;</span></span>
-<span id="cb3-9"><a></a>  <span class="fu">summarize</span>(<span class="fu">mean_sd_df</span>(body_mass_g))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 8 × 5
-# Groups:   species [3]
-  species   sex    variable     mean    sd
-  &lt;fct&gt;     &lt;fct&gt;  &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;
-1 Adelie    female body_mass_g 3369.  269.
-2 Adelie    male   body_mass_g 4043.  347.
-3 Adelie    &lt;NA&gt;   body_mass_g 3540   477.
-4 Chinstrap female body_mass_g 3527.  285.
-5 Chinstrap male   body_mass_g 3939.  362.
-6 Gentoo    female body_mass_g 4680.  282.
-7 Gentoo    male   body_mass_g 5485.  313.
-8 Gentoo    &lt;NA&gt;   body_mass_g 4588.  338.</code></pre>
+<div>
+<div id="webr-2" class="exercise-cell">
+
+</div>
+<script type="webr-2-contents">
+eyJjb2RlIjoibWVhbl9zZF9kZiA8LSBmdW5jdGlvbih4LCBuYS5ybSA9IFRSVUUpIHtcbiAgZGF0YS5mcmFtZShcbiAgICB2YXJpYWJsZSA9IGRlcGFyc2UxKHN1YnN0aXR1dGUoeCkpLFxuICAgIG1lYW4gPSBtZWFuKHgsIG5hLnJtID0gbmEucm0pLCBcbiAgICBzZCA9IHNkKHgsIG5hLnJtID0gbmEucm0pKVxufVxuXG5wZW5ndWlucyB8PiBncm91cF9ieShzcGVjaWVzLCBzZXgpIHw+XG4gIHN1bW1hcml6ZShtZWFuX3NkX2RmKGJvZHlfbWFzc19nKSkiLCJhdHRyIjp7ImZpZy13aWR0aCI6IjExIiwiZWNobyI6dHJ1ZSwiZXZhbCI6dHJ1ZSwiZmlnLWhlaWdodCI6IjUiLCJhdXRvcnVuIjp0cnVlLCJlZGl0Ijp0cnVlfX0=
+</script>
 </div>
 </div>
 </section>
 <section id="alternative-2" class="slide level2">
 <h2>Alternative 2</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>mean_sd_ldf <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) {</span>
-<span id="cb5-2"><a></a>  <span class="fu">data.frame</span>(</span>
-<span id="cb5-3"><a></a>    <span class="at">variable =</span> <span class="fu">deparse1</span>(<span class="fu">substitute</span>(x)),</span>
-<span id="cb5-4"><a></a>    <span class="at">stat =</span> <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"sd"</span>), </span>
-<span id="cb5-5"><a></a>    <span class="at">value =</span> <span class="fu">c</span>(<span class="fu">mean</span>(x, <span class="at">na.rm =</span> na.rm), </span>
-<span id="cb5-6"><a></a>             <span class="fu">sd</span>(x, <span class="at">na.rm =</span> na.rm)))</span>
-<span id="cb5-7"><a></a>}</span>
-<span id="cb5-8"><a></a></span>
-<span id="cb5-9"><a></a>penguins <span class="sc">|&gt;</span> <span class="fu">group_by</span>(species, sex) <span class="sc">|&gt;</span></span>
-<span id="cb5-10"><a></a>  <span class="fu">summarize</span>(<span class="fu">mean_sd_ldf</span>(body_mass_g))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 16 × 5
-# Groups:   species, sex [8]
-   species   sex    variable    stat  value
-   &lt;fct&gt;     &lt;fct&gt;  &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt;
- 1 Adelie    female body_mass_g mean  3369.
- 2 Adelie    female body_mass_g sd     269.
- 3 Adelie    male   body_mass_g mean  4043.
- 4 Adelie    male   body_mass_g sd     347.
- 5 Adelie    &lt;NA&gt;   body_mass_g mean  3540 
- 6 Adelie    &lt;NA&gt;   body_mass_g sd     477.
- 7 Chinstrap female body_mass_g mean  3527.
- 8 Chinstrap female body_mass_g sd     285.
- 9 Chinstrap male   body_mass_g mean  3939.
-10 Chinstrap male   body_mass_g sd     362.
-11 Gentoo    female body_mass_g mean  4680.
-12 Gentoo    female body_mass_g sd     282.
-13 Gentoo    male   body_mass_g mean  5485.
-14 Gentoo    male   body_mass_g sd     313.
-15 Gentoo    &lt;NA&gt;   body_mass_g mean  4588.
-16 Gentoo    &lt;NA&gt;   body_mass_g sd     338.</code></pre>
+<div>
+<div id="webr-3" class="exercise-cell">
+
+</div>
+<script type="webr-3-contents">
+eyJjb2RlIjoibWVhbl9zZF9sZGYgPC0gZnVuY3Rpb24oeCwgbmEucm0gPSBUUlVFKSB7XG4gIGRhdGEuZnJhbWUoXG4gICAgdmFyaWFibGUgPSBkZXBhcnNlMShzdWJzdGl0dXRlKHgpKSxcbiAgICBzdGF0ID0gYyhcIm1lYW5cIiwgXCJzZFwiKSwgXG4gICAgdmFsdWUgPSBjKG1lYW4oeCwgbmEucm0gPSBuYS5ybSksIFxuICAgICAgICAgICAgIHNkKHgsIG5hLnJtID0gbmEucm0pKSlcbn1cblxucGVuZ3VpbnMgfD4gZ3JvdXBfYnkoc3BlY2llcywgc2V4KSB8PlxuICBzdW1tYXJpemUobWVhbl9zZF9sZGYoYm9keV9tYXNzX2cpKSIsImF0dHIiOnsiZmlnLXdpZHRoIjoiMTEiLCJlY2hvIjp0cnVlLCJldmFsIjp0cnVlLCJmaWctaGVpZ2h0IjoiNSIsImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWV9fQ==
+</script>
 </div>
 </div>
 </section></section>
@@ -562,110 +502,35 @@ Michael C Sachs
 <section id="the-broom-package" class="slide level2">
 <h2>The <code>broom</code> package</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">library</span>(broom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div>
+<div id="webr-4" class="exercise-cell">
+
+</div>
+<script type="webr-4-contents">
+eyJjb2RlIjoibGlicmFyeShicm9vbSkiLCJhdHRyIjp7ImZpZy13aWR0aCI6IjExIiwiZWNobyI6dHJ1ZSwiZXZhbCI6dHJ1ZSwiZmlnLWhlaWdodCI6IjUiLCJhdXRvcnVuIjp0cnVlLCJlZGl0Ijp0cnVlfX0=
+</script>
+</div>
 </div>
 <p>Broom provides a <code>tidy</code> function, which is a generic, it can be applied to lots of different objects:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">methods</span>(<span class="st">"tidy"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  [1] tidy.aareg*                    tidy.acf*                     
-  [3] tidy.anova*                    tidy.aov*                     
-  [5] tidy.aovlist*                  tidy.Arima*                   
-  [7] tidy.betamfx*                  tidy.betareg*                 
-  [9] tidy.biglm*                    tidy.binDesign*               
- [11] tidy.binWidth*                 tidy.boot*                    
- [13] tidy.btergm*                   tidy.cch*                     
- [15] tidy.character*                tidy.cld*                     
- [17] tidy.clm*                      tidy.clmm*                    
- [19] tidy.coeftest*                 tidy.confint.glht*            
- [21] tidy.confusionMatrix*          tidy.coxph*                   
- [23] tidy.crr*                      tidy.cv.glmnet*               
- [25] tidy.data.frame*               tidy.default*                 
- [27] tidy.density*                  tidy.dgCMatrix*               
- [29] tidy.dgTMatrix*                tidy.dist*                    
- [31] tidy.drc*                      tidy.durbinWatsonTest*        
- [33] tidy.emmGrid*                  tidy.epi.2by2*                
- [35] tidy.ergm*                     tidy.factanal*                
- [37] tidy.felm*                     tidy.fitdistr*                
- [39] tidy.fixest*                   tidy.ftable*                  
- [41] tidy.gam*                      tidy.Gam*                     
- [43] tidy.garch*                    tidy.geeglm*                  
- [45] tidy.glht*                     tidy.glm*                     
- [47] tidy.glmnet*                   tidy.glmrob*                  
- [49] tidy.glmRob*                   tidy.gmm*                     
- [51] tidy.htest*                    tidy.ivreg*                   
- [53] tidy.kappa*                    tidy.kde*                     
- [55] tidy.Kendall*                  tidy.kmeans*                  
- [57] tidy.lavaan*                   tidy.leveneTest*              
- [59] tidy.Line*                     tidy.Lines*                   
- [61] tidy.list*                     tidy.lm*                      
- [63] tidy.lm.beta*                  tidy.lmodel2*                 
- [65] tidy.lmrob*                    tidy.lmRob*                   
- [67] tidy.logical*                  tidy.logitmfx*                
- [69] tidy.lsmobj*                   tidy.manova*                  
- [71] tidy.map*                      tidy.margins*                 
- [73] tidy.Mclust*                   tidy.mediate*                 
- [75] tidy.mfx*                      tidy.mjoint*                  
- [77] tidy.mle2*                     tidy.mlm*                     
- [79] tidy.mlogit*                   tidy.muhaz*                   
- [81] tidy.multinom*                 tidy.negbin*                  
- [83] tidy.negbinmfx*                tidy.nlrq*                    
- [85] tidy.nls*                      tidy.NULL*                    
- [87] tidy.numeric*                  tidy.orcutt*                  
- [89] tidy.pairwise.htest*           tidy.pam*                     
- [91] tidy.plm*                      tidy.poissonmfx*              
- [93] tidy.poLCA*                    tidy.polr*                    
- [95] tidy.Polygon*                  tidy.Polygons*                
- [97] tidy.power.htest*              tidy.prcomp*                  
- [99] tidy.probitmfx*                tidy.pyears*                  
-[101] tidy.rcorr*                    tidy.ref.grid*                
-[103] tidy.regsubsets*               tidy.ridgelm*                 
-[105] tidy.rlm*                      tidy.rma*                     
-[107] tidy.roc*                      tidy.rq*                      
-[109] tidy.rqs*                      tidy.sarlm*                   
-[111] tidy.Sarlm*                    tidy.sparseMatrix*            
-[113] tidy.SpatialLinesDataFrame*    tidy.SpatialPolygons*         
-[115] tidy.SpatialPolygonsDataFrame* tidy.spec*                    
-[117] tidy.speedglm*                 tidy.speedlm*                 
-[119] tidy.summary_emm*              tidy.summary.glht*            
-[121] tidy.summary.lm*               tidy.summary.plm*             
-[123] tidy.summaryDefault*           tidy.survdiff*                
-[125] tidy.survexp*                  tidy.survfit*                 
-[127] tidy.survreg*                  tidy.svyglm*                  
-[129] tidy.svyolr*                   tidy.systemfit*               
-[131] tidy.table*                    tidy.tobit*                   
-[133] tidy.ts*                       tidy.TukeyHSD*                
-[135] tidy.varest*                   tidy.zoo*                     
-see '?methods' for accessing help and source code</code></pre>
+<div>
+<div id="webr-5" class="exercise-cell">
+
+</div>
+<script type="webr-5-contents">
+eyJjb2RlIjoibWV0aG9kcyhcInRpZHlcIikiLCJhdHRyIjp7ImZpZy13aWR0aCI6IjExIiwiZWNobyI6dHJ1ZSwiZXZhbCI6dHJ1ZSwiZmlnLWhlaWdodCI6IjUiLCJhdXRvcnVuIjp0cnVlLCJlZGl0Ijp0cnVlfX0=
+</script>
 </div>
 </div>
 <p>It attempts to do organize statistical output into a tidy tibble.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>lmfit <span class="ot">&lt;-</span> <span class="fu">lm</span>(flipper_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> species <span class="sc">+</span> sex, </span>
-<span id="cb10-2"><a></a>            <span class="at">data =</span> penguins)</span>
-<span id="cb10-3"><a></a>lmfit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = flipper_length_mm ~ body_mass_g + species + sex, 
-    data = penguins)
+<div>
+<div id="webr-6" class="exercise-cell">
 
-Coefficients:
-     (Intercept)       body_mass_g  speciesChinstrap     speciesGentoo  
-       164.58872           0.00655           5.54444          18.02132  
-         sexmale  
-         2.47772  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">tidy</span>(lmfit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 5
-  term              estimate std.error statistic   p.value
-  &lt;chr&gt;                &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-1 (Intercept)      165.       3.18         51.7  1.01e-159
-2 body_mass_g        0.00655  0.000931      7.04 1.15e- 11
-3 speciesChinstrap   5.54     0.785         7.06 9.92e- 12
-4 speciesGentoo     18.0      1.44         12.5  1.46e- 29
-5 sexmale            2.48     0.854         2.90 3.97e-  3</code></pre>
+<script type="webr-6-contents">
+eyJjb2RlIjoibG1maXQgPC0gbG0oZmxpcHBlcl9sZW5ndGhfbW0gfiBib2R5X21hc3NfZyArIHNwZWNpZXMgKyBzZXgsIFxuICAgICAgICAgICAgZGF0YSA9IHBlbmd1aW5zKVxubG1maXRcbnRpZHkobG1maXQpIiwiYXR0ciI6eyJmaWctd2lkdGgiOiIxMSIsImVjaG8iOnRydWUsImV2YWwiOnRydWUsImZpZy1oZWlnaHQiOiI1IiwiYXV0b3J1biI6dHJ1ZSwiZWRpdCI6dHJ1ZX19
+</script>
 </div>
 </div>
 </section>
@@ -696,23 +561,13 @@ Coefficients:
 <h2>Messy data example</h2>
 <p>Real data is often messy, and we want that to be tidy as well for easier analysis. Example of messy data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb14-2"><a></a>billboard <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb14-3"><a></a>  <span class="sc">~</span>artist, <span class="sc">~</span>wk1, <span class="sc">~</span>wk2,</span>
-<span id="cb14-4"><a></a>   <span class="st">"2 Pac"</span>,     <span class="dv">1</span>,     <span class="dv">2</span>,</span>
-<span id="cb14-5"><a></a>   <span class="st">"Creed"</span>,     <span class="dv">3</span>,     <span class="dv">4</span>,</span>
-<span id="cb14-6"><a></a>   <span class="st">"Mos Def"</span>,     <span class="dv">5</span>,     <span class="dv">6</span>,</span>
-<span id="cb14-7"><a></a>  <span class="st">"Aaliyah"</span>, <span class="dv">2</span>, <span class="cn">NA</span></span>
-<span id="cb14-8"><a></a>)</span>
-<span id="cb14-9"><a></a>billboard</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 3
-  artist    wk1   wk2
-  &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
-1 2 Pac       1     2
-2 Creed       3     4
-3 Mos Def     5     6
-4 Aaliyah     2    NA</code></pre>
+<div>
+<div id="webr-7" class="exercise-cell">
+
+</div>
+<script type="webr-7-contents">
+eyJjb2RlIjoibGlicmFyeSh0aWR5cilcbmJpbGxib2FyZCA8LSB0cmliYmxlKFxuICB+YXJ0aXN0LCB+d2sxLCB+d2syLFxuICAgXCIyIFBhY1wiLCAgICAgMSwgICAgIDIsXG4gICBcIkNyZWVkXCIsICAgICAzLCAgICAgNCxcbiAgIFwiTW9zIERlZlwiLCAgICAgNSwgICAgIDYsXG4gIFwiQWFsaXlhaFwiLCAyLCBOQVxuKVxuYmlsbGJvYXJkIiwiYXR0ciI6eyJmaWctd2lkdGgiOiIxMSIsImVjaG8iOnRydWUsImV2YWwiOnRydWUsImZpZy1oZWlnaHQiOiI1IiwiYXV0b3J1biI6dHJ1ZSwiZWRpdCI6dHJ1ZX19
+</script>
 </div>
 </div>
 <ul>
@@ -724,66 +579,37 @@ Coefficients:
 <h2>Pivoting data</h2>
 <p>Converting from wide to long (<code>tidyr</code> package):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>billboard <span class="sc">|&gt;</span> </span>
-<span id="cb16-2"><a></a>    <span class="fu">pivot_longer</span>(</span>
-<span id="cb16-3"><a></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"wk"</span>), </span>
-<span id="cb16-4"><a></a>    <span class="at">names_to =</span> <span class="st">"week"</span>, </span>
-<span id="cb16-5"><a></a>    <span class="at">values_to =</span> <span class="st">"rank"</span>,</span>
-<span id="cb16-6"><a></a>    <span class="at">values_drop_na =</span> <span class="cn">TRUE</span></span>
-<span id="cb16-7"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 7 × 3
-  artist  week   rank
-  &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt;
-1 2 Pac   wk1       1
-2 2 Pac   wk2       2
-3 Creed   wk1       3
-4 Creed   wk2       4
-5 Mos Def wk1       5
-6 Mos Def wk2       6
-7 Aaliyah wk1       2</code></pre>
+<div>
+<div id="webr-8" class="exercise-cell">
+
+</div>
+<script type="webr-8-contents">
+eyJjb2RlIjoiYmlsbGJvYXJkIHw+IFxuICAgIHBpdm90X2xvbmdlcihcbiAgICBjb2xzID0gc3RhcnRzX3dpdGgoXCJ3a1wiKSwgXG4gICAgbmFtZXNfdG8gPSBcIndlZWtcIiwgXG4gICAgdmFsdWVzX3RvID0gXCJyYW5rXCIsXG4gICAgdmFsdWVzX2Ryb3BfbmEgPSBUUlVFXG4gICkiLCJhdHRyIjp7ImZpZy13aWR0aCI6IjExIiwiZWNobyI6dHJ1ZSwiZXZhbCI6dHJ1ZSwiZmlnLWhlaWdodCI6IjUiLCJhdXRvcnVuIjp0cnVlLCJlZGl0Ijp0cnVlfX0=
+</script>
 </div>
 </div>
 <p>Base R</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>longbb <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(billboard) <span class="sc">|&gt;</span></span>
-<span id="cb18-2"><a></a>  <span class="fu">reshape</span>(<span class="at">direction =</span> <span class="st">"long"</span>, </span>
-<span id="cb18-3"><a></a>          <span class="at">varying =</span> <span class="fu">colnames</span>(billboard)[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>)], </span>
-<span id="cb18-4"><a></a>          <span class="at">timevar =</span> <span class="st">"week"</span>, <span class="at">sep =</span> <span class="st">""</span>,</span>
-<span id="cb18-5"><a></a>          <span class="at">v.names =</span> <span class="st">"rank"</span>,</span>
-<span id="cb18-6"><a></a>          <span class="at">idvar =</span> <span class="st">"artist"</span>)</span>
-<span id="cb18-7"><a></a><span class="fu">subset</span>(longbb, <span class="sc">!</span><span class="fu">is.na</span>(rank))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>           artist week rank
-2 Pac.1     2 Pac    1    1
-Creed.1     Creed    1    3
-Mos Def.1 Mos Def    1    5
-Aaliyah.1 Aaliyah    1    2
-2 Pac.2     2 Pac    2    2
-Creed.2     Creed    2    4
-Mos Def.2 Mos Def    2    6</code></pre>
+<div>
+<div id="webr-9" class="exercise-cell">
+
+</div>
+<script type="webr-9-contents">
+eyJjb2RlIjoibG9uZ2JiIDwtIGFzLmRhdGEuZnJhbWUoYmlsbGJvYXJkKSB8PlxuICByZXNoYXBlKGRpcmVjdGlvbiA9IFwibG9uZ1wiLCBcbiAgICAgICAgICB2YXJ5aW5nID0gY29sbmFtZXMoYmlsbGJvYXJkKVstYygxKV0sIFxuICAgICAgICAgIHRpbWV2YXIgPSBcIndlZWtcIiwgc2VwID0gXCJcIixcbiAgICAgICAgICB2Lm5hbWVzID0gXCJyYW5rXCIsXG4gICAgICAgICAgaWR2YXIgPSBcImFydGlzdFwiKVxuc3Vic2V0KGxvbmdiYiwgIWlzLm5hKHJhbmspKSIsImF0dHIiOnsiZmlnLXdpZHRoIjoiMTEiLCJlY2hvIjp0cnVlLCJldmFsIjp0cnVlLCJmaWctaGVpZ2h0IjoiNSIsImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWV9fQ==
+</script>
 </div>
 </div>
 </section>
 <section id="melting-data.table-and-old-tidyverse" class="slide level2">
 <h2>Melting (data.table and old tidyverse)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">library</span>(data.table)</span>
-<span id="cb20-2"><a></a></span>
-<span id="cb20-3"><a></a><span class="fu">data.table</span>(billboard) <span class="sc">|&gt;</span></span>
-<span id="cb20-4"><a></a>  <span class="fu">melt</span>(<span class="at">measure.vars =</span> <span class="fu">patterns</span>(<span class="st">"^wk"</span>),</span>
-<span id="cb20-5"><a></a>       <span class="at">variable.name =</span> <span class="st">"week"</span>, </span>
-<span id="cb20-6"><a></a>       <span class="at">value.name =</span> <span class="st">"rank"</span>, </span>
-<span id="cb20-7"><a></a>       <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>    artist week rank
-1:   2 Pac  wk1    1
-2:   Creed  wk1    3
-3: Mos Def  wk1    5
-4: Aaliyah  wk1    2
-5:   2 Pac  wk2    2
-6:   Creed  wk2    4
-7: Mos Def  wk2    6</code></pre>
+<div>
+<div id="webr-10" class="exercise-cell">
+
+</div>
+<script type="webr-10-contents">
+eyJjb2RlIjoibGlicmFyeShkYXRhLnRhYmxlKVxuXG5kYXRhLnRhYmxlKGJpbGxib2FyZCkgfD5cbiAgbWVsdChtZWFzdXJlLnZhcnMgPSBwYXR0ZXJucyhcIl53a1wiKSxcbiAgICAgICB2YXJpYWJsZS5uYW1lID0gXCJ3ZWVrXCIsIFxuICAgICAgIHZhbHVlLm5hbWUgPSBcInJhbmtcIiwgXG4gICAgICAgbmEucm0gPSBUUlVFKSIsImF0dHIiOnsiZmlnLXdpZHRoIjoiMTEiLCJlY2hvIjp0cnVlLCJldmFsIjp0cnVlLCJmaWctaGVpZ2h0IjoiNSIsImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWV9fQ==
+</script>
 </div>
 </div>
 <p>This makes it easier to compute summary statistics, or make figures of ranks by artist.</p>
@@ -793,54 +619,46 @@ Mos Def.2 Mos Def    2    6</code></pre>
 <h2>Pivoting from long to wide</h2>
 <p>This also has its uses. Examples include computing correlation matrices, doing derived variable analysis, and tables are often more readable in wide or partial wide format.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>dfw <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb22-2"><a></a>  <span class="sc">~</span>id, <span class="sc">~</span>time, <span class="sc">~</span>value,</span>
-<span id="cb22-3"><a></a>  <span class="st">"A"</span>, <span class="dv">1</span>, <span class="fl">8.6</span>,</span>
-<span id="cb22-4"><a></a>  <span class="st">"A"</span>, <span class="dv">3</span>, <span class="fl">4.5</span>,</span>
-<span id="cb22-5"><a></a>  <span class="st">"B"</span>, <span class="dv">1</span>, <span class="fl">1.01</span>,</span>
-<span id="cb22-6"><a></a>  <span class="st">"B"</span>, <span class="dv">2</span>, <span class="fl">3.3</span>, </span>
-<span id="cb22-7"><a></a>  <span class="st">"C"</span>, <span class="dv">1</span>, <span class="fl">4.1</span>,</span>
-<span id="cb22-8"><a></a>  <span class="st">"C"</span>, <span class="dv">2</span>, <span class="fl">5.2</span>,</span>
-<span id="cb22-9"><a></a>  <span class="st">"C"</span>, <span class="dv">3</span>, <span class="fl">3.2</span></span>
-<span id="cb22-10"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div>
+<div id="webr-11" class="exercise-cell">
+
+</div>
+<script type="webr-11-contents">
+eyJjb2RlIjoiZGZ3IDwtIHRyaWJibGUoXG4gIH5pZCwgfnRpbWUsIH52YWx1ZSxcbiAgXCJBXCIsIDEsIDguNixcbiAgXCJBXCIsIDMsIDQuNSxcbiAgXCJCXCIsIDEsIDEuMDEsXG4gIFwiQlwiLCAyLCAzLjMsIFxuICBcIkNcIiwgMSwgNC4xLFxuICBcIkNcIiwgMiwgNS4yLFxuICBcIkNcIiwgMywgMy4yXG4pIiwiYXR0ciI6eyJmaWctd2lkdGgiOiIxMSIsImVjaG8iOnRydWUsImV2YWwiOnRydWUsImZpZy1oZWlnaHQiOiI1IiwiYXV0b3J1biI6dHJ1ZSwiZWRpdCI6dHJ1ZX19
+</script>
+</div>
 </div>
 <p><code>tidyr</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>dfw <span class="sc">|&gt;</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"time"</span>, </span>
-<span id="cb23-2"><a></a>                   <span class="at">names_prefix =</span> <span class="st">"time"</span>,</span>
-<span id="cb23-3"><a></a>                   <span class="at">values_from =</span> <span class="st">"value"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 4
-  id    time1 time3 time2
-  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 A      8.6    4.5  NA  
-2 B      1.01  NA     3.3
-3 C      4.1    3.2   5.2</code></pre>
+<div>
+<div id="webr-12" class="exercise-cell">
+
+</div>
+<script type="webr-12-contents">
+eyJjb2RlIjoiZGZ3IHw+IHBpdm90X3dpZGVyKG5hbWVzX2Zyb20gPSBcInRpbWVcIiwgXG4gICAgICAgICAgICAgICAgICAgbmFtZXNfcHJlZml4ID0gXCJ0aW1lXCIsXG4gICAgICAgICAgICAgICAgICAgdmFsdWVzX2Zyb20gPSBcInZhbHVlXCIpIiwiYXR0ciI6eyJmaWctd2lkdGgiOiIxMSIsImVjaG8iOnRydWUsImV2YWwiOnRydWUsImZpZy1oZWlnaHQiOiI1IiwiYXV0b3J1biI6dHJ1ZSwiZWRpdCI6dHJ1ZX19
+</script>
 </div>
 </div>
 <p>base R</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">as.data.frame</span>(dfw) <span class="sc">|&gt;</span></span>
-<span id="cb25-2"><a></a>  <span class="fu">reshape</span>(<span class="at">direction =</span> <span class="st">"wide"</span>, </span>
-<span id="cb25-3"><a></a>          <span class="at">idvar =</span> <span class="st">"id"</span> ,</span>
-<span id="cb25-4"><a></a>          <span class="at">timevar =</span> <span class="st">"time"</span></span>
-<span id="cb25-5"><a></a>          )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  id value.1 value.3 value.2
-1  A    8.60     4.5      NA
-3  B    1.01      NA     3.3
-5  C    4.10     3.2     5.2</code></pre>
+<div>
+<div id="webr-13" class="exercise-cell">
+
+</div>
+<script type="webr-13-contents">
+eyJjb2RlIjoiYXMuZGF0YS5mcmFtZShkZncpIHw+XG4gIHJlc2hhcGUoZGlyZWN0aW9uID0gXCJ3aWRlXCIsIFxuICAgICAgICAgIGlkdmFyID0gXCJpZFwiICxcbiAgICAgICAgICB0aW1ldmFyID0gXCJ0aW1lXCJcbiAgICAgICAgICApIiwiYXR0ciI6eyJmaWctd2lkdGgiOiIxMSIsImVjaG8iOnRydWUsImV2YWwiOnRydWUsImZpZy1oZWlnaHQiOiI1IiwiYXV0b3J1biI6dHJ1ZSwiZWRpdCI6dHJ1ZX19
+</script>
 </div>
 </div>
 <p><code>data.table</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">data.table</span>(dfw) <span class="sc">|&gt;</span></span>
-<span id="cb27-2"><a></a>  <span class="fu">dcast</span>(id <span class="sc">~</span> time, <span class="at">value.var =</span> <span class="st">"value"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   id    1   2   3
-1:  A 8.60  NA 4.5
-2:  B 1.01 3.3  NA
-3:  C 4.10 5.2 3.2</code></pre>
+<div>
+<div id="webr-14" class="exercise-cell">
+
+</div>
+<script type="webr-14-contents">
+eyJjb2RlIjoiZGF0YS50YWJsZShkZncpIHw+XG4gIGRjYXN0KGlkIH4gdGltZSwgdmFsdWUudmFyID0gXCJ2YWx1ZVwiKSIsImF0dHIiOnsiZmlnLXdpZHRoIjoiMTEiLCJlY2hvIjp0cnVlLCJldmFsIjp0cnVlLCJmaWctaGVpZ2h0IjoiNSIsImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWV9fQ==
+</script>
 </div>
 </div>
 </section>
@@ -848,8 +666,8 @@ Mos Def.2 Mos Def    2    6</code></pre>
 <h2>Real data</h2>
 <p>Are often much more complex, and can be messier. Here is one example we will use in the lesson:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">library</span>(here)</span>
-<span id="cb29-2"><a></a><span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"lpr-ex.rds"</span>)) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(here)</span>
+<span id="cb1-2"><a></a><span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"lpr-ex.rds"</span>)) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    pid  age sex      indat visit hdia diag1 diag2 diag3 diag4 diag5 diag6
 1  A001 72.5   f 2010-01-27     1 H560  B632  H180  J050  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;
@@ -878,6 +696,23 @@ Mos Def.2 Mos Def    2    6</code></pre>
 
 </div>
 </div>
+<script type="webr-data">
+eyJvcHRpb25zIjp7ImJhc2VVcmwiOiJodHRwczovL3dlYnIuci13YXNtLm9yZy92MC40LjEvIn0sInBhY2thZ2VzIjp7InBrZ3MiOlsiZXZhbHVhdGUiLCJrbml0ciIsImh0bWx0b29scyJdLCJyZXBvcyI6W119LCJyZW5kZXJfZGYiOiJkZWZhdWx0In0=
+</script>
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8xNDtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsImNlbGxOYW1lIjoid2Vici13aWRnZXQtMTQifSx7InNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfMTQgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0xNC1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGB3ZWJyLTE0LWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl93ZWJyX3ZhbHVlXzE0ID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8xNCwge30pO1xuIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoid2Vici0xNCJ9LHsic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8xMztcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsImNlbGxOYW1lIjoid2Vici13aWRnZXQtMTMifSx7InNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfMTMgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0xMy1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGB3ZWJyLTEzLWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl93ZWJyX3ZhbHVlXzEzID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8xMywge30pO1xuIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoid2Vici0xMyJ9LHsic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8xMjtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsImNlbGxOYW1lIjoid2Vici13aWRnZXQtMTIifSx7InNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfMTIgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0xMi1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGB3ZWJyLTEyLWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl93ZWJyX3ZhbHVlXzEyID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8xMiwge30pO1xuIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoid2Vici0xMiJ9LHsic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8xMTtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsImNlbGxOYW1lIjoid2Vici13aWRnZXQtMTEifSx7InNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfMTEgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0xMS1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGB3ZWJyLTExLWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl93ZWJyX3ZhbHVlXzExID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8xMSwge30pO1xuIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoid2Vici0xMSJ9LHsic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8xMDtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsImNlbGxOYW1lIjoid2Vici13aWRnZXQtMTAifSx7InNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfMTAgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0xMC1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGB3ZWJyLTEwLWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl93ZWJyX3ZhbHVlXzEwID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8xMCwge30pO1xuIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoid2Vici0xMCJ9LHsic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV85O1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0IiwiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC05In0seyJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzkgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici05LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHdlYnItOS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV85ID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl85LCB7fSk7XG4iLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJ3ZWJyLTkifSx7InNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfODtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsImNlbGxOYW1lIjoid2Vici13aWRnZXQtOCJ9LHsic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl84ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItOC1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGB3ZWJyLTgtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3dlYnJfdmFsdWVfOCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfOCwge30pO1xuIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoid2Vici04In0seyJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzc7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4iLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTcifSx7InNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfNyA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTctY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici03LWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl93ZWJyX3ZhbHVlXzcgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzcsIHt9KTtcbiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6IndlYnItNyJ9LHsic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV82O1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0IiwiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC02In0seyJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzYgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici02LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHdlYnItNi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV82ID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl82LCB7fSk7XG4iLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJ3ZWJyLTYifSx7InNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfNTtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsImNlbGxOYW1lIjoid2Vici13aWRnZXQtNSJ9LHsic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl81ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItNS1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGB3ZWJyLTUtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3dlYnJfdmFsdWVfNSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfNSwge30pO1xuIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoid2Vici01In0seyJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzQ7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4iLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTQifSx7InNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfNCA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTQtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici00LWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl93ZWJyX3ZhbHVlXzQgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzQsIHt9KTtcbiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6IndlYnItNCJ9LHsic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8zO1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0IiwiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zIn0seyJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzMgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0zLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHdlYnItMy1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8zID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8zLCB7fSk7XG4iLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJ3ZWJyLTMifSx7InNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsImNlbGxOYW1lIjoid2Vici13aWRnZXQtMiJ9LHsic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl8yID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMi1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGB3ZWJyLTItY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3dlYnJfdmFsdWVfMiA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMiwge30pO1xuIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoid2Vici0yIn0seyJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzE7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4iLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTEifSx7InNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfMSA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTEtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xLWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl93ZWJyX3ZhbHVlXzEgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzEsIHt9KTtcbiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6IndlYnItMSJ9LHsic291cmNlIjoid2ViUk9qcyA9IHtcbiAgY29uc3QgeyBXZWJSIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lLldlYlI7XG4gIGNvbnN0IHtcbiAgICBXZWJSRXZhbHVhdG9yLFxuICAgIFdlYlJFbnZpcm9ubWVudE1hbmFnZXIsXG4gICAgc2V0dXBSLFxuICAgIGI2NERlY29kZSxcbiAgICBjb2xsYXBzZVBhdGhcbiAgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc3RhdHVzQ29udGFpbmVyID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJleGVyY2lzZS1sb2FkaW5nLXN0YXR1c1wiKTtcbiAgY29uc3QgaW5kaWNhdG9yQ29udGFpbmVyID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJleGVyY2lzZS1sb2FkaW5nLWluZGljYXRvclwiKTtcbiAgaW5kaWNhdG9yQ29udGFpbmVyLmNsYXNzTGlzdC5yZW1vdmUoXCJkLW5vbmVcIik7XG5cbiAgbGV0IHN0YXR1c1RleHQgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpXG4gIHN0YXR1c1RleHQuY2xhc3NMaXN0ID0gXCJleGVyY2lzZS1sb2FkaW5nLWRldGFpbHNcIjtcbiAgc3RhdHVzVGV4dCA9IHN0YXR1c0NvbnRhaW5lci5hcHBlbmRDaGlsZChzdGF0dXNUZXh0KTtcbiAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBJbml0aWFsaXNlYDtcblxuICAvLyBIb2lzdCBpbmRpY2F0b3Igb3V0IGZyb20gZmluYWwgc2xpZGUgd2hlbiBydW5uaW5nIHVuZGVyIHJldmVhbFxuICBjb25zdCByZXZlYWxTdGF0dXMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKFwiLnJldmVhbCAuZXhlcmNpc2UtbG9hZGluZy1pbmRpY2F0b3JcIik7XG4gIGlmIChyZXZlYWxTdGF0dXMpIHtcbiAgICByZXZlYWxTdGF0dXMucmVtb3ZlKCk7XG4gICAgZG9jdW1lbnQucXVlcnlTZWxlY3RvcihcIi5yZXZlYWwgPiAuc2xpZGVzXCIpLmFwcGVuZENoaWxkKHJldmVhbFN0YXR1cyk7XG4gIH1cblxuICAvLyBNYWtlIGFueSByZXZlYWwgc2xpZGVzIHdpdGggbGl2ZSBjZWxscyBzY3JvbGxhYmxlXG4gIGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3JBbGwoXCIucmV2ZWFsIC5leGVyY2lzZS1jZWxsXCIpLmZvckVhY2goKGVsKSA9PiB7XG4gICAgZWwuY2xvc2VzdCgnc2VjdGlvbi5zbGlkZScpLmNsYXNzTGlzdC5hZGQoXCJzY3JvbGxhYmxlXCIpO1xuICB9KVxuXG4gIC8vIHdlYlIgc3VwcGxlbWVudGFsIGRhdGEgYW5kIG9wdGlvbnNcbiAgY29uc3QgZGF0YUNvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici1kYXRhXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgZGF0YSA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKGRhdGFDb250ZW50KSk7XG5cbiAgLy8gR3JhYiBsaXN0IG9mIHJlc291cmNlcyB0byBiZSBkb3dubG9hZGVkXG4gIGNvbnN0IGZpbGVzQ29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ2ZnMtZmlsZVxcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGZpbGVzID0gSlNPTi5wYXJzZShiNjREZWNvZGUoZmlsZXNDb250ZW50KSk7XG5cbiAgLy8gSW5pdGlhbGlzZSB3ZWJSIGFuZCBzZXR1cCBmb3IgUiBjb2RlIGV2YWx1YXRpb25cbiAgbGV0IHdlYlJQcm9taXNlID0gKGFzeW5jICh3ZWJSKSA9PiB7XG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyB3ZWJSYDtcbiAgICBhd2FpdCB3ZWJSLmluaXQoKTtcblxuICAgIC8vIEluc3RhbGwgcHJvdmlkZWQgbGlzdCBvZiBwYWNrYWdlc1xuICAgIC8vIEVuc3VyZSB3ZWJSIGRlZmF1bHQgcmVwbyBpcyBpbmNsdWRlZFxuICAgIGRhdGEucGFja2FnZXMucmVwb3MucHVzaChcImh0dHBzOi8vcmVwby5yLXdhc20ub3JnXCIpXG4gICAgYXdhaXQgZGF0YS5wYWNrYWdlcy5wa2dzLm1hcCgocGtnKSA9PiAoKSA9PiB7XG4gICAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHBhY2thZ2U6ICR7cGtnfWA7XG4gICAgICByZXR1cm4gd2ViUi5ldmFsUlZvaWQoYFxuICAgICAgICB3ZWJyOjppbnN0YWxsKHBrZywgcmVwb3MgPSByZXBvcylcbiAgICAgICAgbGlicmFyeShwa2csIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSlcbiAgICAgIGAsIHsgZW52OiB7XG4gICAgICAgIHBrZzogcGtnLFxuICAgICAgICByZXBvczogZGF0YS5wYWNrYWdlcy5yZXBvcyxcbiAgICAgIH19KTtcbiAgICB9KS5yZWR1Y2UoKGN1ciwgbmV4dCkgPT4gY3VyLnRoZW4obmV4dCksIFByb21pc2UucmVzb2x2ZSgpKTtcblxuICAgIC8vIERvd25sb2FkIGFuZCBpbnN0YWxsIHJlc291cmNlc1xuICAgIGF3YWl0IGZpbGVzLm1hcCgoZmlsZSkgPT4gYXN5bmMgKCkgPT4ge1xuICAgICAgY29uc3QgbmFtZSA9IGZpbGUuc3Vic3RyaW5nKGZpbGUubGFzdEluZGV4T2YoJy8nKSArIDEpO1xuICAgICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyByZXNvdXJjZTogJHtuYW1lfWA7XG4gICAgICBjb25zdCByZXNwb25zZSA9IGF3YWl0IGZldGNoKGZpbGUpO1xuICAgICAgaWYgKCFyZXNwb25zZS5vaykge1xuICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYENhbid0IGRvd25sb2FkIFxcYCR7ZmlsZX1cXGAuIEVycm9yICR7cmVzcG9uc2Uuc3RhdHVzfTogXCIke3Jlc3BvbnNlLnN0YXR1c1RleHR9XCIuYCk7XG4gICAgICB9XG4gICAgICBjb25zdCBkYXRhID0gYXdhaXQgcmVzcG9uc2UuYXJyYXlCdWZmZXIoKTtcblxuICAgICAgLy8gU3RvcmUgVVJMcyBpbiB0aGUgY3dkIHdpdGhvdXQgYW55IHN1YmRpcmVjdG9yeSBzdHJ1Y3R1cmVcbiAgICAgIGlmIChmaWxlLmluY2x1ZGVzKFwiOi8vXCIpKSB7XG4gICAgICAgIGZpbGUgPSBuYW1lO1xuICAgICAgfVxuXG4gICAgICAvLyBDb2xsYXBzZSBoaWdoZXIgZGlyZWN0b3J5IHN0cnVjdHVyZVxuICAgICAgZmlsZSA9IGNvbGxhcHNlUGF0aChmaWxlKTtcblxuICAgICAgLy8gQ3JlYXRlIGRpcmVjdG9yeSB0cmVlLCBpZ25vcmluZyBcImRpcmVjdG9yeSBleGlzdHNcIiBWRlMgZXJyb3JzXG4gICAgICBjb25zdCBwYXJ0cyA9IGZpbGUuc3BsaXQoJy8nKS5zbGljZSgwLCAtMSk7XG4gICAgICBsZXQgcGF0aCA9ICcnO1xuICAgICAgd2hpbGUgKHBhcnRzLmxlbmd0aCA+IDApIHtcbiAgICAgICAgcGF0aCArPSBwYXJ0cy5zaGlmdCgpICsgJy8nO1xuICAgICAgICB0cnkge1xuICAgICAgICAgIGF3YWl0IHdlYlIuRlMubWtkaXIocGF0aCk7XG4gICAgICAgIH0gY2F0Y2ggKGUpIHtcbiAgICAgICAgICBpZiAoIWUubWVzc2FnZS5pbmNsdWRlcyhcIkZTIGVycm9yXCIpKSB7XG4gICAgICAgICAgICB0aHJvdyBlO1xuICAgICAgICAgIH1cbiAgICAgICAgfVxuICAgICAgfVxuXG4gICAgICAvLyBXcml0ZSB0aGlzIGZpbGUgdG8gdGhlIFZGU1xuICAgICAgcmV0dXJuIGF3YWl0IHdlYlIuRlMud3JpdGVGaWxlKGZpbGUsIG5ldyBVaW50OEFycmF5KGRhdGEpKTtcbiAgICB9KS5yZWR1Y2UoKGN1ciwgbmV4dCkgPT4gY3VyLnRoZW4obmV4dCksIFByb21pc2UucmVzb2x2ZSgpKTtcblxuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgSW5zdGFsbGluZyB3ZWJSIHNoaW1zYDtcbiAgICBhd2FpdCB3ZWJSLmV2YWxSVm9pZChgd2Vicjo6c2hpbV9pbnN0YWxsKClgKTtcblxuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgV2ViUiBlbnZpcm9ubWVudCBzZXR1cGA7XG4gICAgYXdhaXQgc2V0dXBSKHdlYlIsIGRhdGEpO1xuXG4gICAgc3RhdHVzVGV4dC5yZW1vdmUoKTtcbiAgICBpZiAoc3RhdHVzQ29udGFpbmVyLmNoaWxkcmVuLmxlbmd0aCA9PSAwKSB7XG4gICAgICBzdGF0dXNDb250YWluZXIucGFyZW50Tm9kZS5yZW1vdmUoKTtcbiAgICB9XG4gICAgcmV0dXJuIHdlYlI7XG4gIH0pKG5ldyBXZWJSKGRhdGEub3B0aW9ucykpO1xuXG4gIC8vIEtlZXAgdHJhY2sgb2YgaW5pdGlhbCBPSlMgYmxvY2sgcmVuZGVyXG4gIGNvbnN0IHJlbmRlcmVkT2pzID0ge307XG5cbiAgY29uc3QgcHJvY2VzcyA9IGFzeW5jIChjb250ZXh0LCBpbnB1dHMpID0+IHtcbiAgICBjb25zdCB3ZWJSID0gYXdhaXQgd2ViUlByb21pc2U7XG4gICAgY29uc3QgZXZhbHVhdG9yID0gbmV3IFdlYlJFdmFsdWF0b3Iod2ViUiwgY29udGV4dClcbiAgICBhd2FpdCBldmFsdWF0b3IucHJvY2VzcyhpbnB1dHMpO1xuICAgIHJldHVybiBldmFsdWF0b3IuY29udGFpbmVyO1xuICB9XG5cbiAgcmV0dXJuIHtcbiAgICBwcm9jZXNzLFxuICAgIHdlYlJQcm9taXNlLFxuICAgIHJlbmRlcmVkT2pzLFxuICB9O1xufVxuIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0IiwiY2VsbE5hbWUiOiJ3ZWJyLXByZWx1ZGUifV19
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
 </section></section>
     </div>
   </div>
@@ -1088,6 +923,17 @@ Mos Def.2 Mos Def    2    6</code></pre>
           RevealZoom
         ]
       });
+    </script>
+    <script type="ojs-module-contents">
+    eyJjb250ZW50cyI6W119
+    </script>
+    <script type="module">
+    if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+    window._ojs.paths.runtimeToDoc = "../../lectures";
+    window._ojs.paths.runtimeToRoot = "../..";
+    window._ojs.paths.docToRoot = "..";
+    window._ojs.selfContained = false;
+    window._ojs.runtime.interpretFromScriptTags();
     </script>
     
     <script>

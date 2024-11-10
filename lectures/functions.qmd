@@ -366,7 +366,7 @@ summary(bootmeans)
 Operators are symbols like `+`, `<-`, `%*%`, `[`. 
 
 These are functions! To treat them like functions instead of operators, use backticks:
-```{r}
+```{webr}
 2 + 2
 `+`(2, 2)
 ```
@@ -375,7 +375,7 @@ You can then treat operators as you would any other function, using them in appl
 
 You can also define your own operators: 
 
-```{r}
+```{webr}
 `% %` <- function(a, b) {
     
     paste(a, b)
@@ -389,7 +389,7 @@ You can also define your own operators:
 
 Assignment operators have a special syntax: 
 
-```{r}
+```{webr}
 `second<-` <- function(x, value){
     
     x[2] <- value
@@ -538,7 +538,7 @@ There is the `<<-` operator, which is used in functions and does (re)assignment 
 
 This is generally considered to be a bad idea, but now you know about it. 
 
-```{r}
+```{webr}
 name2 <- "Billie"
 name2
 hello <- function(name) {
