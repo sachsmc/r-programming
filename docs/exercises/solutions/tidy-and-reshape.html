@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,10 +70,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-d5895b94042feb4d31160f912950367e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -289,11 +289,14 @@ Gentoo.female    313.1586               61</code></pre>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dcast</span>(peng_summary[<span class="sc">!</span><span class="fu">is.na</span>(sex)], species <span class="sc">+</span> variable <span class="sc">~</span> sex, </span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">value.var =</span> <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"sample.size"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     species    variable mean_female mean_male sd_female  sd_male
+<pre><code>Key: &lt;species, variable&gt;
+     species    variable mean_female mean_male sd_female  sd_male
+      &lt;fctr&gt;      &lt;char&gt;       &lt;num&gt;     &lt;num&gt;     &lt;num&gt;    &lt;num&gt;
 1:    Adelie body_mass_g    3368.836  4043.493  269.3801 346.8116
 2: Chinstrap body_mass_g    3527.206  3938.971  285.3339 362.1376
 3:    Gentoo body_mass_g    4679.741  5484.836  281.5783 313.1586
    sample.size_female sample.size_male
+                &lt;int&gt;            &lt;int&gt;
 1:                 73               73
 2:                 34               34
 3:                 58               61</code></pre>
@@ -455,18 +458,33 @@ Attaching package: 'dplyr'</code></pre>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dcast</span>(lprdt[, .(pid, indat, visit, hdia)], </span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>      pid <span class="sc">~</span> visit, <span class="at">value.var =</span> <span class="st">"hdia"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      pid    1    2    3    4    5    6    7    8    9   10   11   12   13
-  1: A001 H560 C871 C040 F412 F622 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
-  2: A002 B481 K959 G902 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
-  3: A003 E841 E071 H189 B090 C031 E179 E950 A100 K429 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
-  4: A004 D921 B401 B491 G172 E161 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
-  5: A005 J751 B101 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+<pre><code>Key: &lt;pid&gt;
+        pid      1      2      3      4      5      6      7      8      9
+     &lt;char&gt; &lt;char&gt; &lt;char&gt; &lt;char&gt; &lt;char&gt; &lt;char&gt; &lt;char&gt; &lt;char&gt; &lt;char&gt; &lt;char&gt;
+  1:   A001   H560   C871   C040   F412   F622   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;
+  2:   A002   B481   K959   G902   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;
+  3:   A003   E841   E071   H189   B090   C031   E179   E950   A100   K429
+  4:   A004   D921   B401   B491   G172   E161   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;
+  5:   A005   J751   B101   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;
  ---                                                                      
-396: A396 G791 G580 A291 E282 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
-397: A397 K931 K922 G219 J462 I250 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
-398: A398 D551 C280 F540 K249 D360 G181 I889 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
-399: A399 E761 E262 G000 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
-400: A400 I291 E461 F581 D282 J149 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;</code></pre>
+396:   A396   G791   G580   A291   E282   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;
+397:   A397   K931   K922   G219   J462   I250   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;
+398:   A398   D551   C280   F540   K249   D360   G181   I889   &lt;NA&gt;   &lt;NA&gt;
+399:   A399   E761   E262   G000   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;
+400:   A400   I291   E461   F581   D282   J149   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;
+         10     11     12     13
+     &lt;char&gt; &lt;char&gt; &lt;char&gt; &lt;char&gt;
+  1:   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;
+  2:   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;
+  3:   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;
+  4:   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;
+  5:   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;
+ ---                            
+396:   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;
+397:   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;
+398:   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;
+399:   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;
+400:   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. </span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>lprlong <span class="ot">&lt;-</span> <span class="fu">melt</span>(lprdt, <span class="at">id.vars =</span> <span class="fu">c</span>(<span class="st">"pid"</span>, <span class="st">"age"</span>, <span class="st">"sex"</span>, <span class="st">"indat"</span>, <span class="st">"visit"</span>), </span>
@@ -476,34 +494,36 @@ Attaching package: 'dplyr'</code></pre>
 <span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>lprlong</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>       pid  age sex      indat visit diagtype diag main_diag
-   1: A001 72.5   f 2010-01-27     1     hdia H560      TRUE
-   2: A001 72.5   f 2010-06-26     2     hdia C871      TRUE
-   3: A001 72.5   f 2010-07-20     3     hdia C040      TRUE
-   4: A001 72.5   f 2011-03-06     4     hdia F412      TRUE
-   5: A001 72.5   f 2011-12-23     5     hdia F622      TRUE
-  ---                                                       
-8042: A390 50.0   m 2014-05-29     8    diag6 B329     FALSE
-8043: A390 50.0   m 2014-12-31     9    diag6 H441     FALSE
-8044: A391 50.0   m 2008-11-26     4    diag6 H381     FALSE
-8045: A393 63.5   m 2015-06-08     7    diag6 I372     FALSE
-8046: A398 63.5   m 2009-09-12     3    diag6 J671     FALSE</code></pre>
+<pre><code>         pid   age    sex      indat visit diagtype   diag main_diag
+      &lt;char&gt; &lt;num&gt; &lt;char&gt;     &lt;Date&gt; &lt;int&gt;   &lt;fctr&gt; &lt;char&gt;    &lt;lgcl&gt;
+   1:   A001  72.5      f 2010-01-27     1     hdia   H560      TRUE
+   2:   A001  72.5      f 2010-06-26     2     hdia   C871      TRUE
+   3:   A001  72.5      f 2010-07-20     3     hdia   C040      TRUE
+   4:   A001  72.5      f 2011-03-06     4     hdia   F412      TRUE
+   5:   A001  72.5      f 2011-12-23     5     hdia   F622      TRUE
+  ---                                                               
+8042:   A390  50.0      m 2014-05-29     8    diag6   B329     FALSE
+8043:   A390  50.0      m 2014-12-31     9    diag6   H441     FALSE
+8044:   A391  50.0      m 2008-11-26     4    diag6   H381     FALSE
+8045:   A393  63.5      m 2015-06-08     7    diag6   I372     FALSE
+8046:   A398  63.5      m 2009-09-12     3    diag6   J671     FALSE</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setorder</span>(lprlong, pid, indat)</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>lprlong</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>       pid  age sex      indat visit diagtype diag main_diag
-   1: A001 72.5   f 2010-01-27     1     hdia H560      TRUE
-   2: A001 72.5   f 2010-01-27     1    diag1 B632     FALSE
-   3: A001 72.5   f 2010-01-27     1    diag2 H180     FALSE
-   4: A001 72.5   f 2010-01-27     1    diag3 J050     FALSE
-   5: A001 72.5   f 2010-06-26     2     hdia C871      TRUE
-  ---                                                       
-8042: A400 72.5   f 2011-10-26     4    diag2 C010     FALSE
-8043: A400 72.5   f 2013-09-01     5     hdia J149      TRUE
-8044: A400 72.5   f 2013-09-01     5    diag1 A920     FALSE
-8045: A400 72.5   f 2013-09-01     5    diag2 F452     FALSE
-8046: A400 72.5   f 2013-09-01     5    diag3 K301     FALSE</code></pre>
+<pre><code>         pid   age    sex      indat visit diagtype   diag main_diag
+      &lt;char&gt; &lt;num&gt; &lt;char&gt;     &lt;Date&gt; &lt;int&gt;   &lt;fctr&gt; &lt;char&gt;    &lt;lgcl&gt;
+   1:   A001  72.5      f 2010-01-27     1     hdia   H560      TRUE
+   2:   A001  72.5      f 2010-01-27     1    diag1   B632     FALSE
+   3:   A001  72.5      f 2010-01-27     1    diag2   H180     FALSE
+   4:   A001  72.5      f 2010-01-27     1    diag3   J050     FALSE
+   5:   A001  72.5      f 2010-06-26     2     hdia   C871      TRUE
+  ---                                                               
+8042:   A400  72.5      f 2011-10-26     4    diag2   C010     FALSE
+8043:   A400  72.5      f 2013-09-01     5     hdia   J149      TRUE
+8044:   A400  72.5      f 2013-09-01     5    diag1   A920     FALSE
+8045:   A400  72.5      f 2013-09-01     5    diag2   F452     FALSE
+8046:   A400  72.5      f 2013-09-01     5    diag3   K301     FALSE</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. </span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -541,9 +561,14 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>lprdt[pid <span class="sc">==</span> <span class="st">"A048"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    pid age sex      indat visit hdia diag1 diag2 diag3 diag4 diag5 diag6
-1: A048  86   f 2006-08-20     1 I162  E439  D152  F851  C230  E249  I801
-2: A048  86   f 2008-03-30     2 A981  D069  C472  E720  G119  B912  K901</code></pre>
+<pre><code>      pid   age    sex      indat visit   hdia  diag1  diag2  diag3  diag4
+   &lt;char&gt; &lt;num&gt; &lt;char&gt;     &lt;Date&gt; &lt;int&gt; &lt;char&gt; &lt;char&gt; &lt;char&gt; &lt;char&gt; &lt;char&gt;
+1:   A048    86      f 2006-08-20     1   I162   E439   D152   F851   C230
+2:   A048    86      f 2008-03-30     2   A981   D069   C472   E720   G119
+    diag5  diag6
+   &lt;char&gt; &lt;char&gt;
+1:   E249   I801
+2:   B912   K901</code></pre>
 </div>
 </div>
 </div>
@@ -713,8 +738,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -825,7 +848,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

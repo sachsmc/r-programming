@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,10 +71,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d5895b94042feb4d31160f912950367e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -777,114 +777,117 @@ Attaching package: 'data.table'</code></pre>
 <span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>peng_dt[<span class="sc">!</span><span class="fu">is.na</span>(body_mass_g)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       species    island bill_length_mm bill_depth_mm flipper_length_mm
+        &lt;fctr&gt;    &lt;fctr&gt;          &lt;num&gt;         &lt;num&gt;             &lt;int&gt;
   1:    Adelie Torgersen           39.1          18.7               181
   2:    Adelie Torgersen           39.5          17.4               186
   3:    Adelie Torgersen           40.3          18.0               195
   4:    Adelie Torgersen           36.7          19.3               193
   5:    Adelie Torgersen           39.3          20.6               190
- ---                                                                   
-     body_mass_g    sex year
-  1:        3750   male 2007
-  2:        3800 female 2007
-  3:        3250 female 2007
-  4:        3450 female 2007
-  5:        3650   male 2007
- ---                        
- [ reached getOption("max.print") -- omitted 5 rows ]</code></pre>
+     body_mass_g    sex  year
+           &lt;int&gt; &lt;fctr&gt; &lt;int&gt;
+  1:        3750   male  2007
+  2:        3800 female  2007
+  3:        3250 female  2007
+  4:        3450 female  2007
+  5:        3650   male  2007
+ [ reached getOption("max.print") -- omitted 6 rows ]</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>peng_dt[sex <span class="sc">==</span> <span class="st">"male"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       species    island bill_length_mm bill_depth_mm flipper_length_mm
+        &lt;fctr&gt;    &lt;fctr&gt;          &lt;num&gt;         &lt;num&gt;             &lt;int&gt;
   1:    Adelie Torgersen           39.1          18.7               181
   2:    Adelie Torgersen           39.3          20.6               190
   3:    Adelie Torgersen           39.2          19.6               195
   4:    Adelie Torgersen           38.6          21.2               191
   5:    Adelie Torgersen           34.6          21.1               198
- ---                                                                   
-     body_mass_g  sex year
-  1:        3750 male 2007
-  2:        3650 male 2007
-  3:        4675 male 2007
-  4:        3800 male 2007
-  5:        4400 male 2007
- ---                      
- [ reached getOption("max.print") -- omitted 5 rows ]</code></pre>
+     body_mass_g    sex  year
+           &lt;int&gt; &lt;fctr&gt; &lt;int&gt;
+  1:        3750   male  2007
+  2:        3650   male  2007
+  3:        4675   male  2007
+  4:        3800   male  2007
+  5:        4400   male  2007
+ [ reached getOption("max.print") -- omitted 6 rows ]</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>peng_dt[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   species    island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+    &lt;fctr&gt;    &lt;fctr&gt;          &lt;num&gt;         &lt;num&gt;             &lt;int&gt;       &lt;int&gt;
 1:  Adelie Torgersen           39.1          18.7               181        3750
 2:  Adelie Torgersen           39.5          17.4               186        3800
 3:  Adelie Torgersen           40.3          18.0               195        3250
 4:  Adelie Torgersen             NA            NA                NA          NA
 5:  Adelie Torgersen           36.7          19.3               193        3450
-6:  Adelie Torgersen           39.3          20.6               190        3650
-      sex year
-1:   male 2007
-2: female 2007
-3: female 2007
-4:   &lt;NA&gt; 2007
-5: female 2007
-6:   male 2007</code></pre>
+      sex  year
+   &lt;fctr&gt; &lt;int&gt;
+1:   male  2007
+2: female  2007
+3: female  2007
+4:   &lt;NA&gt;  2007
+5: female  2007
+ [ reached getOption("max.print") -- omitted 1 row ]</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="do">## sort</span></span>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setorder</span>(peng_dt, year) <span class="co"># doesn't return anything but modifies the table</span></span>
 <span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>peng_dt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       species    island bill_length_mm bill_depth_mm flipper_length_mm
+        &lt;fctr&gt;    &lt;fctr&gt;          &lt;num&gt;         &lt;num&gt;             &lt;int&gt;
   1:    Adelie Torgersen           39.1          18.7               181
   2:    Adelie Torgersen           39.5          17.4               186
   3:    Adelie Torgersen           40.3          18.0               195
   4:    Adelie Torgersen             NA            NA                NA
   5:    Adelie Torgersen           36.7          19.3               193
- ---                                                                   
-     body_mass_g    sex year
-  1:        3750   male 2007
-  2:        3800 female 2007
-  3:        3250 female 2007
-  4:          NA   &lt;NA&gt; 2007
-  5:        3450 female 2007
- ---                        
- [ reached getOption("max.print") -- omitted 5 rows ]</code></pre>
+     body_mass_g    sex  year
+           &lt;int&gt; &lt;fctr&gt; &lt;int&gt;
+  1:        3750   male  2007
+  2:        3800 female  2007
+  3:        3250 female  2007
+  4:          NA   &lt;NA&gt;  2007
+  5:        3450 female  2007
+ [ reached getOption("max.print") -- omitted 6 rows ]</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setorder</span>(peng_dt, <span class="sc">-</span>year)</span>
 <span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>peng_dt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       species island bill_length_mm bill_depth_mm flipper_length_mm
+        &lt;fctr&gt; &lt;fctr&gt;          &lt;num&gt;         &lt;num&gt;             &lt;int&gt;
   1:    Adelie Biscoe           35.0          17.9               192
   2:    Adelie Biscoe           41.0          20.0               203
   3:    Adelie Biscoe           37.7          16.0               183
   4:    Adelie Biscoe           37.8          20.0               190
   5:    Adelie Biscoe           37.9          18.6               193
- ---                                                                
-     body_mass_g    sex year
-  1:        3725 female 2009
-  2:        4725   male 2009
-  3:        3075 female 2009
-  4:        4250   male 2009
-  5:        2925 female 2009
- ---                        
- [ reached getOption("max.print") -- omitted 5 rows ]</code></pre>
+     body_mass_g    sex  year
+           &lt;int&gt; &lt;fctr&gt; &lt;int&gt;
+  1:        3725 female  2009
+  2:        4725   male  2009
+  3:        3075 female  2009
+  4:        4250   male  2009
+  5:        2925 female  2009
+ [ reached getOption("max.print") -- omitted 6 rows ]</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="do">## select columns</span></span>
 <span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>peng_dt[, .(species, sex, year)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>       species    sex year
-  1:    Adelie female 2009
-  2:    Adelie   male 2009
-  3:    Adelie female 2009
-  4:    Adelie   male 2009
-  5:    Adelie female 2009
- ---                      
-340: Chinstrap   male 2007
-341: Chinstrap female 2007
-342: Chinstrap   male 2007
-343: Chinstrap female 2007
-344: Chinstrap   male 2007</code></pre>
+<pre><code>       species    sex  year
+        &lt;fctr&gt; &lt;fctr&gt; &lt;int&gt;
+  1:    Adelie female  2009
+  2:    Adelie   male  2009
+  3:    Adelie female  2009
+  4:    Adelie   male  2009
+  5:    Adelie female  2009
+ ---                       
+340: Chinstrap   male  2007
+341: Chinstrap female  2007
+342: Chinstrap   male  2007
+343: Chinstrap female  2007
+344: Chinstrap   male  2007</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>peng_dt[, <span class="fu">grep</span>(<span class="st">"^bill"</span>, <span class="fu">names</span>(peng_dt)), with <span class="ot">=</span> <span class="cn">FALSE</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     bill_length_mm bill_depth_mm
+              &lt;num&gt;         &lt;num&gt;
   1:           35.0          17.9
   2:           41.0          20.0
   3:           37.7          16.0
@@ -900,6 +903,7 @@ Attaching package: 'data.table'</code></pre>
 <div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>peng_dt[, bill_length_mm<span class="sc">:</span>body_mass_g]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+              &lt;num&gt;         &lt;num&gt;             &lt;int&gt;       &lt;int&gt;
   1:           35.0          17.9               192        3725
   2:           41.0          20.0               203        4725
   3:           37.7          16.0               183        3075
@@ -917,23 +921,24 @@ Attaching package: 'data.table'</code></pre>
 <span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>peng_dt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       species island bill_length_mm bill_depth_mm flipper_length_mm
+        &lt;fctr&gt; &lt;fctr&gt;          &lt;num&gt;         &lt;num&gt;             &lt;int&gt;
   1:    Adelie Biscoe           35.0          17.9               192
   2:    Adelie Biscoe           41.0          20.0               203
   3:    Adelie Biscoe           37.7          16.0               183
   4:    Adelie Biscoe           37.8          20.0               190
-  5:    Adelie Biscoe           37.9          18.6               193
-     body_mass_g    sex year bill_ratio
-  1:        3725 female 2009   1.955307
-  2:        4725   male 2009   2.050000
-  3:        3075 female 2009   2.356250
-  4:        4250   male 2009   1.890000
-  5:        2925 female 2009   2.037634
- [ reached getOption("max.print") -- omitted 6 rows ]</code></pre>
+     body_mass_g    sex  year bill_ratio
+           &lt;int&gt; &lt;fctr&gt; &lt;int&gt;      &lt;num&gt;
+  1:        3725 female  2009   1.955307
+  2:        4725   male  2009   2.050000
+  3:        3075 female  2009   2.356250
+  4:        4250   male  2009   1.890000
+ [ reached getOption("max.print") -- omitted 7 rows ]</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># transform but doesn't modify the dt</span></span>
 <span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>peng_dt[, .(<span class="at">bill_ratio =</span> bill_length_mm <span class="sc">/</span> bill_depth_mm)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     bill_ratio
+          &lt;num&gt;
   1:   1.955307
   2:   2.050000
   3:   2.356250
@@ -964,18 +969,18 @@ Attaching package: 'data.table'</code></pre>
 <span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a>peng_dt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       species island bill_length_mm bill_depth_mm bill_ratio flipper_length_mm
+        &lt;fctr&gt; &lt;fctr&gt;          &lt;num&gt;         &lt;num&gt;      &lt;num&gt;             &lt;int&gt;
   1:    Adelie Biscoe           35.0          17.9   1.955307               192
   2:    Adelie Biscoe           41.0          20.0   2.050000               203
   3:    Adelie Biscoe           37.7          16.0   2.356250               183
   4:    Adelie Biscoe           37.8          20.0   1.890000               190
-  5:    Adelie Biscoe           37.9          18.6   2.037634               193
-     body_mass_g    sex year
-  1:        3725 female 2009
-  2:        4725   male 2009
-  3:        3075 female 2009
-  4:        4250   male 2009
-  5:        2925 female 2009
- [ reached getOption("max.print") -- omitted 6 rows ]</code></pre>
+     body_mass_g    sex  year
+           &lt;int&gt; &lt;fctr&gt; &lt;int&gt;
+  1:        3725 female  2009
+  2:        4725   male  2009
+  3:        3075 female  2009
+  4:        4250   male  2009
+ [ reached getOption("max.print") -- omitted 7 rows ]</code></pre>
 </div>
 </div>
 </div>
@@ -1074,8 +1079,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1186,7 +1189,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

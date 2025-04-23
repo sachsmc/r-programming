@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -35,10 +35,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-d5895b94042feb4d31160f912950367e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -123,7 +123,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#link-to-padlet-for-ongoing-class" id="toc-link-to-padlet-for-ongoing-class" class="nav-link active" data-scroll-target="#link-to-padlet-for-ongoing-class">Link to padlet for ongoing class:</a></li>
+  <li><a href="#link-to-shared-notes-document-for-ongoing-class" id="toc-link-to-shared-notes-document-for-ongoing-class" class="nav-link active" data-scroll-target="#link-to-shared-notes-document-for-ongoing-class">Link to shared notes document for ongoing class:</a></li>
   <li><a href="#course-description" id="toc-course-description" class="nav-link" data-scroll-target="#course-description">COURSE DESCRIPTION</a>
   <ul class="collapse">
   <li><a href="#course-title" id="toc-course-title" class="nav-link" data-scroll-target="#course-title">Course title</a></li>
@@ -164,9 +164,9 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="link-to-padlet-for-ongoing-class" class="level2">
-<h2 class="anchored" data-anchor-id="link-to-padlet-for-ongoing-class">Link to padlet for ongoing class:</h2>
-<p><a href="https://padlet.com/sachsmc/rprogs24">https://padlet.com/sachsmc/rprogs24</a></p>
+<section id="link-to-shared-notes-document-for-ongoing-class" class="level2">
+<h2 class="anchored" data-anchor-id="link-to-shared-notes-document-for-ongoing-class">Link to shared notes document for ongoing class:</h2>
+<p><a href="https://leaflet.pub/ba70ae31-c031-4b23-ae9f-86e9e99637b5">Leaflet link</a></p>
 </section>
 <section id="course-description" class="level1">
 <h1>COURSE DESCRIPTION</h1>
@@ -216,11 +216,11 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="dates" class="level2">
 <h2 class="anchored" data-anchor-id="dates">Dates</h2>
-<p>4, 7, 11, 14, November 2024 all days from 8.00-14.00, with breaks for coffee and lunch.</p>
+<p>[See course email]</p>
 </section>
 <section id="course-location" class="level2">
 <h2 class="anchored" data-anchor-id="course-location">Course location</h2>
-<p>CSS [See course email for location]</p>
+<p>CSS [See course email for location] Øster Farimagsgade 5</p>
 </section>
 <section id="course-credit" class="level2">
 <h2 class="anchored" data-anchor-id="course-credit">Course credit</h2>
@@ -313,8 +313,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -425,7 +423,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
