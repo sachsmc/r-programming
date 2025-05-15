@@ -322,12 +322,12 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVjaG8iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUs
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>(x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1]  0.6191804 -0.2551612  0.1438513 -0.2328281  0.1754429</code></pre>
+<pre><code>[1] -0.1177850  0.5015018  0.4408236  1.0306684 -0.7734546</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">cut</span>(x1, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="cn">Inf</span>), </span>
 <span id="cb5-2"><a></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"&lt;-1"</span>, <span class="st">"-1 to 0"</span>, <span class="st">"0 to 1"</span>, <span class="st">"&gt; 1"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0 to 1  -1 to 0 0 to 1  -1 to 0 0 to 1 
+<pre><code>[1] -1 to 0 0 to 1  0 to 1  &gt; 1     -1 to 0
 Levels: &lt;-1 -1 to 0 0 to 1 &gt; 1</code></pre>
 </div>
 </div>
@@ -554,7 +554,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVjaG8iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUs
 <span id="cb10-6"><a></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
- 12.423   0.278  12.764 </code></pre>
+ 12.837   0.207  13.118 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">system.time</span>({</span>
 <span id="cb12-2"><a></a>A2 <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="dv">100000</span>)</span>
@@ -564,7 +564,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVjaG8iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUs
 <span id="cb12-6"><a></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.073   0.000   0.073 </code></pre>
+  0.074   0.000   0.074 </code></pre>
 </div>
 </div>
 </section>

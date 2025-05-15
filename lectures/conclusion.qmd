@@ -69,6 +69,7 @@ image: "../images/outro.png"
 2. What did you dislike about the course? 
 3. Did you knowledge about R programming improve during the course? 
 4. Are there topics you wanted to be covered but were not?
+5. Would you have preferred a longer course that started from the basics? Or two courses, Intro and Advanced? 
 
 # Office hours
 

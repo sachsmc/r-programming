@@ -96,13 +96,6 @@ demoplot(desaturate(sequential_hcl(99, "Purple-Blue")), type = "heatmap")
 ```
 
 
-## Deciding what to plot is often more difficult than making the plot itself
-
-```{r}
-#| echo: false
-knitr::include_graphics("decline.png")
-```
-
 
 ## Graphics in R
 
