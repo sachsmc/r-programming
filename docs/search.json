@@ -158,14 +158,14 @@
     "href": "lectures/introduction.html#overview-of-this-course",
     "title": "Introduction and Overview",
     "section": "Overview of this course",
-    "text": "Overview of this course\nLectures\nLessons\nWork through a problem together, learn tools and strategies\nSticky note system\n = “I need help!”\n = “Good to go!”\nNo sticky = still working\nShare solutions/questions/responses on padlet:\nhttps://padlet.com/sachsmc/rprogs24/\nCourse website:\nhttps://sachsmc.github.io/r-programming/"
+    "text": "Overview of this course\nLectures\nLessons\nWork through a problem together, learn tools and strategies\nShare solutions/questions/responses on padlet:\nhttps://leaflet.pub/ba70ae31-c031-4b23-ae9f-86e9e99637b5\nCourse website:\nhttps://sachsmc.github.io/r-programming/"
   },
   {
     "objectID": "lectures/introduction.html#schedule-of-topics",
     "href": "lectures/introduction.html#schedule-of-topics",
     "title": "Introduction and Overview",
     "section": "Schedule of topics",
-    "text": "Schedule of topics\n\n\nToday\n\nReporting, dynamic documents\nData structures and indexing\n\nThursday\n\nFlow control and loops\nCreating and using functions\n\n\nNext Monday\n\nFunctions continued\nWorking with data, merging and reshaping\n\nNext Thursday\n\nData visualization\nWorking with data, dates and characters"
+    "text": "Schedule of topics\n\n\nToday\n\nReporting, dynamic documents\nData structures and indexing\n\nDay 2\n\nFlow control and loops\nCreating and using functions\n\n\nDay 3\n\nFunctions continued\nWorking with data, merging and reshaping\n\nDay 4\n\nData visualization\nWorking with data, dates and characters"
   },
   {
     "objectID": "lectures/introduction.html#what-i-do",

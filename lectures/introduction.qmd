@@ -110,21 +110,13 @@ Through automated testing
 
 Work through a problem together, learn tools and strategies
 
-#### Sticky note system
-
-![red note](redsticky.png){width=10%} = "I need help!"
-
-![green note](greensticky.png){width=10%} = "Good to go!"
-
-No sticky = still working
-
 Share solutions/questions/responses on padlet: 
 
-https://padlet.com/sachsmc/rprogs24/
+<https://leaflet.pub/ba70ae31-c031-4b23-ae9f-86e9e99637b5>
 
 Course website: 
 
-https://sachsmc.github.io/r-programming/
+<https://sachsmc.github.io/r-programming/>
 
 ## Schedule of topics
 
@@ -138,7 +130,7 @@ https://sachsmc.github.io/r-programming/
 1. Reporting, dynamic documents
 2. Data structures and indexing
 
-### Thursday
+### Day 2
 
 1. Flow control and loops
 2. Creating and using functions
@@ -147,12 +139,12 @@ https://sachsmc.github.io/r-programming/
 
 ::: {.column width="45%"}
 
-### Next Monday
+### Day 3
 
 1. Functions continued
 2. Working with data, merging and reshaping
 
-### Next Thursday
+### Day 4
 
 1. Data visualization
 2. Working with data, dates and characters
@@ -199,16 +191,6 @@ I encourage you to work on the exercises and take notes as we proceed.
 2. Demonstrate mastery of at least 3 out of the 4 learning objectives. 
 3. Review the previous day's material and build on it in the next day.
 
-
-
-## Office hours and independent study
-
-- This is the condensed version of the course. Lectures and lessons from 8 - 12 each day. Sometimes it will seem fast.  
-- You will need to spend some time on your own reviewing the material and practicing
-
-Every day after class (from 12 - 14), I will hold office hours where you can come ask questions and get help on any R topic
-
-My office is CSS 10.2.25
 
 ## Interactive slides
 
