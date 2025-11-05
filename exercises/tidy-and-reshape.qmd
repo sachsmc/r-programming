@@ -17,14 +17,10 @@ In this lesson you will
 
 ## Tidying our mean sd function
 
-Load the `broom` package and look at the source code for `tidy.lm`
-```{r}
-broom:::tidy.lm
-```
-
-
-1. Write a tidy method for our `mean_sd` function and try it out on the penguins dataset. 
-2. Apply the `mean_sd` function to the penguins body mass in grams by species and sex. Organize the results into a table suitable for publication, where it is easy to compare the two sexes.
+1. Look at the `mean_sd` function and especially the output. Is it tidy? In what ways is it tidy or not?  
+2. Make a new version of the function that is tidier. Extend it to include more statistics, for example, the sample size. 
+3. Apply the new `mean_sd` function to the penguins body mass in grams by species and sex. Organize the results into a table suitable for publication, where it is easy to compare the two sexes.
+4. Check out the `broom` package, and see what other types of objects can be tidied. 
 
 
 ## Tidying the national patient register dataset
