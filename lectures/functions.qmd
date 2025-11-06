@@ -463,6 +463,30 @@ When should you write a function? How should it be designed?
   + Default arguments and error checking -- you can't prevent all errors, ultimately it is the users' responsibility to use the tools correctly
 
 
+## Documenting functions
+
+The R help for functions must include a title, short description, arguments, return value, and examples (self-contained). Use this structure to document your functions: 
+
+```{r}
+#' Construct a greeting
+#' 
+#' Introduce someone to Mike
+#' 
+#' @param name A character string of the person to be greeted
+#'
+#' @return A character string with the greeting
+#' @examples
+#' hello("Laura")
+hello <- function(name) {
+  name2 <- "Mike"
+  paste("Hello", name, "meet", name2)
+}
+```
+
+The is [roxygen2](https://roxygen2.r-lib.org/) format
+
+Or if you are using quarto, use section headings and lists.
+
 # Some more advanced topics
 
 ## `get` and `assign`

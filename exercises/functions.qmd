@@ -15,15 +15,21 @@ In this lesson you will
 2. Practice writing and reusing your own functions
 
 
+## Modifying the greeting function
+
+1. Start with the basic hello function from the lecture. Modify it so that users have the option of greeting in a different language (e.g., choosing English or Danish). Provide defaults for the new arguments and use the `match.arg` inside the function body. 
+2. Document the function using quarto or roxygen2 comments
+
 ## Iterating over data with functions
 
-1. Load the Palmer penguins dataset. 
-2. Write a function to compute the mean and standard deviation of a numeric vector. We will apply this function to the numeric variables in `penguins`, and also by different subgroups
+1. Write a function to compute the mean and standard deviation of a numeric vector. We will apply this function to the numeric variables in `penguins`, and also by different subgroups
+2. Document your function using quarto or roxygen2 comments
     
 ### Stop and think {.alert .alert-info}    
 a. What are the components of a function? 
 b. Do I have to worry about missing data? How can I deal with it? 
 c. What sort of data structure should I return? 
+d. Should I do any exception handling? 
     
 
 ## Using the function

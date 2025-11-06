@@ -214,7 +214,7 @@
     "href": "lectures/functions.html#a-function-and-its-components",
     "title": "Functions",
     "section": "A function and its components",
-    "text": "A function and its components\nAlmost everything you do in R involves functions. You call a function by typing its name with its arguments (inputs) inside the parentheses:\n\n\n\n\n\n\n\n\nThe function takes the arguments you provide, does something, and then returns an object. To see what a function does, you can type its name without parentheses to see the source:\n\nsample\n\nfunction (x, size, replace = FALSE, prob = NULL) \n{\n    if (length(x) == 1L && is.numeric(x) && is.finite(x) && x &gt;= \n        1) {\n        if (missing(size)) \n            size &lt;- x\n        sample.int(x, size, replace, prob)\n    }\n    else {\n        if (missing(size)) \n            size &lt;- length(x)\n        x[sample.int(length(x), size, replace, prob)]\n    }\n}\n&lt;bytecode: 0x59f5c1849938&gt;\n&lt;environment: namespace:base&gt;\n\n\nThe source shows you the arguments, their default values, and the expression defining the function. You can also look at the help file for the documentation:\n\nhelp(\"sample\")\n# or\n?sample"
+    "text": "A function and its components\nAlmost everything you do in R involves functions. You call a function by typing its name with its arguments (inputs) inside the parentheses:\n\n\n\n\n\n\n\n\nThe function takes the arguments you provide, does something, and then returns an object. To see what a function does, you can type its name without parentheses to see the source:\n\nsample\n\nfunction (x, size, replace = FALSE, prob = NULL) \n{\n    if (length(x) == 1L && is.numeric(x) && is.finite(x) && x &gt;= \n        1) {\n        if (missing(size)) \n            size &lt;- x\n        sample.int(x, size, replace, prob)\n    }\n    else {\n        if (missing(size)) \n            size &lt;- length(x)\n        x[sample.int(length(x), size, replace, prob)]\n    }\n}\n&lt;bytecode: 0x5821bd04e940&gt;\n&lt;environment: namespace:base&gt;\n\n\nThe source shows you the arguments, their default values, and the expression defining the function. You can also look at the help file for the documentation:\n\nhelp(\"sample\")\n# or\n?sample"
   },
   {
     "objectID": "lectures/functions.html#using-functions-arguments",
@@ -347,7 +347,7 @@
     "href": "lectures/functions.html#generic-methodsfunctions",
     "title": "Functions",
     "section": "Generic methods/functions",
-    "text": "Generic methods/functions\nLook at the function print\n\nprint\n\nfunction (x, ...) \nUseMethod(\"print\")\n&lt;bytecode: 0x59f5bf5ecf78&gt;\n&lt;environment: namespace:base&gt;\n\n\nIt is a generic function. UseMethod says depending on the class of argument object, R will call a suitable method (a function) that does something designed for whatever object is.\nYou can find all the special methods by running methods(\"print\") (try it now).\nThe class of the object is a simple attribute and the method is defined by appending the class name after the function name separated by a dot. This is called the S3 class system:"
+    "text": "Generic methods/functions\nLook at the function print\n\nprint\n\nfunction (x, ...) \nUseMethod(\"print\")\n&lt;bytecode: 0x5821ba672670&gt;\n&lt;environment: namespace:base&gt;\n\n\nIt is a generic function. UseMethod says depending on the class of argument object, R will call a suitable method (a function) that does something designed for whatever object is.\nYou can find all the special methods by running methods(\"print\") (try it now).\nThe class of the object is a simple attribute and the method is defined by appending the class name after the function name separated by a dot. This is called the S3 class system:"
   },
   {
     "objectID": "lectures/functions.html#summary",
@@ -1012,7 +1012,7 @@
     "href": "exercises/functions.html#iterating-over-data-with-functions",
     "title": "Functions – exercises",
     "section": "Iterating over data with functions",
-    "text": "Iterating over data with functions\n\nLoad the Palmer penguins dataset.\nWrite a function to compute the mean and standard deviation of a numeric vector. We will apply this function to the numeric variables in penguins, and also by different subgroups\n\n\nStop and think\n\nWhat are the components of a function?\nDo I have to worry about missing data? How can I deal with it?\nWhat sort of data structure should I return?"
+    "text": "Iterating over data with functions\n\nWrite a function to compute the mean and standard deviation of a numeric vector. We will apply this function to the numeric variables in penguins, and also by different subgroups\nDocument your function using quarto or roxygen2 comments\n\n\nStop and think\n\nWhat are the components of a function?\nDo I have to worry about missing data? How can I deal with it?\nWhat sort of data structure should I return?\nShould I do any exception handling?"
   },
   {
     "objectID": "exercises/functions.html#using-the-function",
@@ -1909,5 +1909,19 @@
     "title": "Tidy data",
     "section": "Practical",
     "text": "Practical\nWe will practice creating tidy data continuing with our mean sd function, and using the register data example to practice pivoting and doing grouped analyses.\nLink to lesson\nLink home"
+  },
+  {
+    "objectID": "lectures/functions.html#documenting-functions",
+    "href": "lectures/functions.html#documenting-functions",
+    "title": "Functions",
+    "section": "Documenting functions",
+    "text": "Documenting functions\nThe R help for functions must include a title, short description, arguments, return value, and examples (self-contained). Use this structure to document your functions:\n\n#' Construct a greeting\n#' \n#' Introduce someone to Mike\n#' \n#' @param name A character string of the person to be greeted\n#'\n#' @return A character string with the greeting\n#' @examples\n#' hello(\"Laura\")\nhello &lt;- function(name) {\n  name2 &lt;- \"Mike\"\n  paste(\"Hello\", name, \"meet\", name2)\n}\n\nThe is roxygen2 format\nOr if you are using quarto, use section headings and lists."
+  },
+  {
+    "objectID": "exercises/functions.html#modifying-the-greeting-function",
+    "href": "exercises/functions.html#modifying-the-greeting-function",
+    "title": "Functions – exercises",
+    "section": "Modifying the greeting function",
+    "text": "Modifying the greeting function\n\nStart with the basic hello function from the lecture. Modify it so that users have the option of greeting in a different language (e.g., choosing English or Danish). Provide defaults for the new arguments and use the match.arg inside the function body.\nDocument the function using quarto or roxygen2 comments"
   }
 ]

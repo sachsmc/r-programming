@@ -189,6 +189,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning objectives</a></li>
+  <li><a href="#modifying-the-greeting-function" id="toc-modifying-the-greeting-function" class="nav-link" data-scroll-target="#modifying-the-greeting-function">Modifying the greeting function</a></li>
   <li><a href="#iterating-over-data-with-functions" id="toc-iterating-over-data-with-functions" class="nav-link" data-scroll-target="#iterating-over-data-with-functions">Iterating over data with functions</a>
   <ul class="collapse">
   <li><a href="#stop-and-think" id="toc-stop-and-think" class="nav-link" data-scroll-target="#stop-and-think">Stop and think</a></li>
@@ -245,11 +246,18 @@ window.Quarto = {
 <li>Practice writing and reusing your own functions</li>
 </ol>
 </section>
+<section id="modifying-the-greeting-function" class="level2">
+<h2 class="anchored" data-anchor-id="modifying-the-greeting-function">Modifying the greeting function</h2>
+<ol type="1">
+<li>Start with the basic hello function from the lecture. Modify it so that users have the option of greeting in a different language (e.g., choosing English or Danish). Provide defaults for the new arguments and use the <code>match.arg</code> inside the function body.</li>
+<li>Document the function using quarto or roxygen2 comments</li>
+</ol>
+</section>
 <section id="iterating-over-data-with-functions" class="level2">
 <h2 class="anchored" data-anchor-id="iterating-over-data-with-functions">Iterating over data with functions</h2>
 <ol type="1">
-<li>Load the Palmer penguins dataset.</li>
 <li>Write a function to compute the mean and standard deviation of a numeric vector. We will apply this function to the numeric variables in <code>penguins</code>, and also by different subgroups</li>
+<li>Document your function using quarto or roxygen2 comments</li>
 </ol>
 <section id="stop-and-think" class="level3 alert alert-info">
 <h3 class="alert alert-info anchored" data-anchor-id="stop-and-think">Stop and think</h3>
@@ -257,6 +265,7 @@ window.Quarto = {
 <li>What are the components of a function?</li>
 <li>Do I have to worry about missing data? How can I deal with it?</li>
 <li>What sort of data structure should I return?</li>
+<li>Should I do any exception handling?</li>
 </ol>
 </section>
 </section>

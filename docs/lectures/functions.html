@@ -245,7 +245,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVjaG8iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUs
         x[sample.int(length(x), size, replace, prob)]
     }
 }
-&lt;bytecode: 0x59f5c1849938&gt;
+&lt;bytecode: 0x5821bd04e940&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -646,7 +646,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVjaG8iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUs
 <div class="cell-output cell-output-stdout">
 <pre><code>function (x, ...) 
 UseMethod("print")
-&lt;bytecode: 0x59f5bf5ecf78&gt;
+&lt;bytecode: 0x5821ba672670&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -710,6 +710,27 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVjaG8iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUs
 <li>Reuse or build? Dependencies (using functions from other packages) may change in unpredictable ways</li>
 <li>Default arguments and error checking – you can’t prevent all errors, ultimately it is the users’ responsibility to use the tools correctly</li>
 </ul>
+</section>
+<section id="documenting-functions" class="slide level2">
+<h2>Documenting functions</h2>
+<p>The R help for functions must include a title, short description, arguments, return value, and examples (self-contained). Use this structure to document your functions:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="co">#' Construct a greeting</span></span>
+<span id="cb6-2"><a></a><span class="co">#' </span></span>
+<span id="cb6-3"><a></a><span class="co">#' Introduce someone to Mike</span></span>
+<span id="cb6-4"><a></a><span class="co">#' </span></span>
+<span id="cb6-5"><a></a><span class="co">#' @param name A character string of the person to be greeted</span></span>
+<span id="cb6-6"><a></a><span class="co">#'</span></span>
+<span id="cb6-7"><a></a><span class="co">#' @return A character string with the greeting</span></span>
+<span id="cb6-8"><a></a><span class="co">#' @examples</span></span>
+<span id="cb6-9"><a></a><span class="co">#' hello("Laura")</span></span>
+<span id="cb6-10"><a></a>hello <span class="ot">&lt;-</span> <span class="cf">function</span>(name) {</span>
+<span id="cb6-11"><a></a>  name2 <span class="ot">&lt;-</span> <span class="st">"Mike"</span></span>
+<span id="cb6-12"><a></a>  <span class="fu">paste</span>(<span class="st">"Hello"</span>, name, <span class="st">"meet"</span>, name2)</span>
+<span id="cb6-13"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The is <a href="https://roxygen2.r-lib.org/">roxygen2</a> format</p>
+<p>Or if you are using quarto, use section headings and lists.</p>
 </section></section>
 <section>
 <section id="some-more-advanced-topics" class="title-slide slide level1 center">
