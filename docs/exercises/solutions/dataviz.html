@@ -205,17 +205,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>mytheme <span class="ot">&lt;-</span> <span class="fu">theme</span>(<span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>), </span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Comic sans"</span>), </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"grey81"</span>), </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="cn">NA</span>), </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"bottom"</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        ) </span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> bill_length_mm, <span class="at">color =</span> species)) <span class="sc">+</span> </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span> year) <span class="sc">+</span> mytheme</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'palmerpenguins'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:datasets':
+
+    penguins, penguins_raw</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mytheme <span class="ot">&lt;-</span> <span class="fu">theme</span>(<span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>), </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Comic sans"</span>), </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"grey81"</span>), </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="cn">NA</span>), </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"bottom"</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        ) </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> bill_length_mm, <span class="at">color =</span> species)) <span class="sc">+</span> </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span> year) <span class="sc">+</span> mytheme</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
 (`geom_point()`).</code></pre>
@@ -227,9 +235,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> bill_length_mm, <span class="at">color =</span> species)) <span class="sc">+</span> </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span> year) <span class="sc">+</span> mytheme</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> bill_length_mm, <span class="at">color =</span> species)) <span class="sc">+</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span> year) <span class="sc">+</span> mytheme</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
 (`geom_point()`).</code></pre>
@@ -246,10 +254,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>To make a fully custom theme, start with an existing one, and modify it</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>my_fulltheme <span class="ot">&lt;-</span> <span class="fu">theme_grey</span>() <span class="sc">+</span> mytheme</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> bill_length_mm, <span class="at">color =</span> species)) <span class="sc">+</span> </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span> year) <span class="sc">+</span> my_fulltheme</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>my_fulltheme <span class="ot">&lt;-</span> <span class="fu">theme_grey</span>() <span class="sc">+</span> mytheme</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> bill_length_mm, <span class="at">color =</span> species)) <span class="sc">+</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span> year) <span class="sc">+</span> my_fulltheme</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
 (`geom_point()`).</code></pre>
@@ -266,17 +274,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Save your favorite color scales as a function for easy reuse. Use <code>discrete_scale</code> or <code>continuous_scale</code>.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>my_qual_scale <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">discrete_scale</span>(<span class="st">"color"</span>, <span class="at">scale_name =</span> <span class="st">"OI"</span>, </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">palette =</span> <span class="cf">function</span>(x) {</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                   res <span class="ot">&lt;-</span> <span class="fu">palette.colors</span>(x, <span class="st">"Okabe-Ito"</span>)[<span class="dv">1</span><span class="sc">:</span>x]</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">names</span>(res) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                   res</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                 }, ...)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> bill_length_mm, <span class="at">color =</span> species)) <span class="sc">+</span> </span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span> year) <span class="sc">+</span> my_fulltheme <span class="sc">+</span> <span class="fu">my_qual_scale</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>my_qual_scale <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">discrete_scale</span>(<span class="st">"color"</span>, <span class="at">scale_name =</span> <span class="st">"OI"</span>, </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">palette =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                   res <span class="ot">&lt;-</span> <span class="fu">palette.colors</span>(x, <span class="st">"Okabe-Ito"</span>)[<span class="dv">1</span><span class="sc">:</span>x]</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">names</span>(res) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                   res</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                 }, ...)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> bill_length_mm, <span class="at">color =</span> species)) <span class="sc">+</span> </span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span> year) <span class="sc">+</span> my_fulltheme <span class="sc">+</span> <span class="fu">my_qual_scale</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: The `scale_name` argument of `discrete_scale()` is deprecated as of ggplot2
 3.5.0.</code></pre>
@@ -299,7 +307,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="complex-figures-with-base-graphics">Complex figures with base graphics</h2>
 <p>Check out this violin plot</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span> <span class="fu">geom_violin</span>() <span class="sc">+</span> <span class="fu">geom_jitter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span> <span class="fu">geom_violin</span>() <span class="sc">+</span> <span class="fu">geom_jitter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 2 rows containing non-finite outside the scale range
 (`stat_ydensity()`).</code></pre>
@@ -319,22 +327,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>How would you produce a similar plot using base graphics? After doing so, reflect, do you appreciate to convenience and flexibility of <code>ggplot2</code>?</p>
 <p>Use the <code>density</code> function to calculate the densities by species. The results are stored in a list with elements <code>x</code> and <code>y</code>. Then transform by rotating 90 degrees and mirroring. Plot the result using the <code>polygon</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>dens_by_species <span class="ot">&lt;-</span> <span class="fu">split</span>(penguins<span class="sc">$</span>body_mass_g, penguins<span class="sc">$</span>species) <span class="sc">|&gt;</span> </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(density, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">cut =</span> <span class="dv">0</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(body_mass_g <span class="sc">~</span> <span class="fu">jitter</span>(<span class="fu">as.numeric</span>(<span class="fu">as.factor</span>(species))), </span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">data =</span> penguins, <span class="at">xaxt =</span> <span class="st">"n"</span>, <span class="at">xlab =</span> <span class="st">"species"</span>)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(dens_by_species)) {</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  den <span class="ot">&lt;-</span> dens_by_species[[i]]</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  newx <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.2</span> <span class="sc">*</span> (den<span class="sc">$</span>y <span class="sc">/</span> <span class="fu">max</span>(den<span class="sc">$</span>y)) <span class="sc">+</span> i, </span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>            <span class="fu">rev</span>(<span class="sc">-</span><span class="fl">0.2</span> <span class="sc">*</span> (den<span class="sc">$</span>y <span class="sc">/</span> <span class="fu">max</span>(den<span class="sc">$</span>y)) <span class="sc">+</span> i))</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  newy <span class="ot">&lt;-</span> <span class="fu">c</span>(den<span class="sc">$</span>x, <span class="fu">rev</span>(den<span class="sc">$</span>x))</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">polygon</span>(newx,  newy)</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">at =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">labels =</span> <span class="fu">levels</span>(<span class="fu">as.factor</span>(penguins<span class="sc">$</span>species)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>dens_by_species <span class="ot">&lt;-</span> <span class="fu">split</span>(penguins<span class="sc">$</span>body_mass_g, penguins<span class="sc">$</span>species) <span class="sc">|&gt;</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(density, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">cut =</span> <span class="dv">0</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(body_mass_g <span class="sc">~</span> <span class="fu">jitter</span>(<span class="fu">as.numeric</span>(<span class="fu">as.factor</span>(species))), </span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">data =</span> penguins, <span class="at">xaxt =</span> <span class="st">"n"</span>, <span class="at">xlab =</span> <span class="st">"species"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(dens_by_species)) {</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  den <span class="ot">&lt;-</span> dens_by_species[[i]]</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  newx <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.2</span> <span class="sc">*</span> (den<span class="sc">$</span>y <span class="sc">/</span> <span class="fu">max</span>(den<span class="sc">$</span>y)) <span class="sc">+</span> i, </span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>            <span class="fu">rev</span>(<span class="sc">-</span><span class="fl">0.2</span> <span class="sc">*</span> (den<span class="sc">$</span>y <span class="sc">/</span> <span class="fu">max</span>(den<span class="sc">$</span>y)) <span class="sc">+</span> i))</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  newy <span class="ot">&lt;-</span> <span class="fu">c</span>(den<span class="sc">$</span>x, <span class="fu">rev</span>(den<span class="sc">$</span>x))</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">polygon</span>(newx,  newy)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">at =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">labels =</span> <span class="fu">levels</span>(<span class="fu">as.factor</span>(penguins<span class="sc">$</span>species)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">

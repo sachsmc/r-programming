@@ -12,6 +12,8 @@ format:
 execute:
   echo: true
 image: "../images/datavis.png"
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -257,7 +259,7 @@ pgeom <- geom_point()
 class(pgeom)
 class(step1)
 
-ggplot2:::`+.gg`
+add_gg
 ```
 
 

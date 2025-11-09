@@ -238,22 +238,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="loops-for-statistical-analysis">Loops for statistical analysis</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'palmerpenguins'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:datasets':
+
+    penguins, penguins_raw</code></pre>
+</div>
 </div>
 <ol type="1">
 <li>Write a loop that calculates and prints out the mean for each numeric variable in the <code>penguins</code> dataset</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(penguins)) {</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="do">## cat prints to the console without quotes</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">names</span>(penguins)[i], <span class="st">" - "</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  vari <span class="ot">&lt;-</span> penguins[[i]] <span class="do">## this iterates through the columns of penguins</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">is.numeric</span>(vari)) { <span class="do">## check whether it is numeric</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"Mean:"</span>, <span class="fu">mean</span>(vari, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"not numeric"</span>)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>) <span class="co"># new line</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(penguins)) {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="do">## cat prints to the console without quotes</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">names</span>(penguins)[i], <span class="st">" - "</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  vari <span class="ot">&lt;-</span> penguins[[i]] <span class="do">## this iterates through the columns of penguins</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">is.numeric</span>(vari)) { <span class="do">## check whether it is numeric</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"Mean:"</span>, <span class="fu">mean</span>(vari, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"not numeric"</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>) <span class="co"># new line</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>species - not numeric
 island - not numeric
@@ -269,23 +278,23 @@ year - Mean: 2008.029</code></pre>
 <li>Modify your loop in 1 so that it prints out the mean, standard deviation, median, and interquartile range for each numeric variable in <code>penguins</code>.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>f.names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"std dev"</span>, <span class="st">"median"</span>, <span class="st">"interquartile range"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>functions <span class="ot">&lt;-</span> <span class="fu">list</span>(mean, sd, median, IQR)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="do">## we will add an inner loop that iterates through these function and names</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(penguins)) {</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">names</span>(penguins)[i], <span class="st">":</span><span class="sc">\n</span><span class="st">"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  vari <span class="ot">&lt;-</span> penguins[[i]]</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">is.numeric</span>(vari)) { </span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(fn <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(f.names)) {</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cat</span>(f.names[fn], functions[[fn]](vari, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"not numeric</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"--------</span><span class="sc">\n</span><span class="st">"</span>) <span class="co"># new line</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>f.names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"std dev"</span>, <span class="st">"median"</span>, <span class="st">"interquartile range"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>functions <span class="ot">&lt;-</span> <span class="fu">list</span>(mean, sd, median, IQR)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="do">## we will add an inner loop that iterates through these function and names</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(penguins)) {</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">names</span>(penguins)[i], <span class="st">":</span><span class="sc">\n</span><span class="st">"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  vari <span class="ot">&lt;-</span> penguins[[i]]</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">is.numeric</span>(vari)) { </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(fn <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(f.names)) {</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cat</span>(f.names[fn], functions[[fn]](vari, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"not numeric</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"--------</span><span class="sc">\n</span><span class="st">"</span>) <span class="co"># new line</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>species:
 not numeric
@@ -332,33 +341,33 @@ interquartile range 2
 <li>Write a loop to compute 500 bootstrap replicates of the means of bill length, bill depth, and flipper length. Remember to pre-allocate a data structure to store the 500 times 3 values. Provide an estimate of the correlation of the sample means.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>bootmeans <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="dv">500</span>, <span class="at">ncol =</span> <span class="dv">3</span>, </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="cn">NULL</span>, <span class="fu">c</span>(<span class="st">"bill_length"</span>, <span class="st">"bill_depth"</span>, <span class="st">"flipper_length"</span>)))</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(bootmeans)){</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  bootindex <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(penguins), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  peng.star <span class="ot">&lt;-</span> penguins[bootindex, ]</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  bootmeans[i, <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(peng.star<span class="sc">$</span>bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  bootmeans[i, <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(peng.star<span class="sc">$</span>bill_depth_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  bootmeans[i, <span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(peng.star<span class="sc">$</span>flipper_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bootmeans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>bootmeans <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="dv">500</span>, <span class="at">ncol =</span> <span class="dv">3</span>, </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="cn">NULL</span>, <span class="fu">c</span>(<span class="st">"bill_length"</span>, <span class="st">"bill_depth"</span>, <span class="st">"flipper_length"</span>)))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(bootmeans)){</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  bootindex <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(penguins), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  peng.star <span class="ot">&lt;-</span> penguins[bootindex, ]</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  bootmeans[i, <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(peng.star<span class="sc">$</span>bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  bootmeans[i, <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(peng.star<span class="sc">$</span>bill_depth_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  bootmeans[i, <span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(peng.star<span class="sc">$</span>flipper_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bootmeans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  bill_length      bill_depth    flipper_length 
- Min.   :43.01   Min.   :16.88   Min.   :198.9  
- 1st Qu.:43.73   1st Qu.:17.08   1st Qu.:200.4  
- Median :43.91   Median :17.15   Median :200.9  
- Mean   :43.92   Mean   :17.15   Mean   :200.9  
- 3rd Qu.:44.14   3rd Qu.:17.23   3rd Qu.:201.4  
- Max.   :44.73   Max.   :17.48   Max.   :203.0  </code></pre>
+ Min.   :43.08   Min.   :16.76   Min.   :198.9  
+ 1st Qu.:43.75   1st Qu.:17.08   1st Qu.:200.5  
+ Median :43.92   Median :17.15   Median :201.0  
+ Mean   :43.93   Mean   :17.15   Mean   :200.9  
+ 3rd Qu.:44.12   3rd Qu.:17.22   3rd Qu.:201.4  
+ Max.   :44.80   Max.   :17.43   Max.   :203.3  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(bootmeans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(bootmeans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               bill_length bill_depth flipper_length
-bill_length      1.0000000 -0.1557287      0.6507648
-bill_depth      -0.1557287  1.0000000     -0.5538837
-flipper_length   0.6507648 -0.5538837      1.0000000</code></pre>
+bill_length      1.0000000 -0.2129786      0.6781363
+bill_depth      -0.2129786  1.0000000     -0.5540020
+flipper_length   0.6781363 -0.5540020      1.0000000</code></pre>
 </div>
 </div>
 </section>
@@ -367,25 +376,25 @@ flipper_length   0.6507648 -0.5538837      1.0000000</code></pre>
 <p>Loops are sometimes unavoidable if a calculation depends on the value at one or more of the previous iterations.</p>
 <p>One way to compute the <a href="https://en.wikipedia.org/wiki/Kaplan%E2%80%93Meier_estimator">Kaplan-Meier curve for right censored data</a> is to loop through the death times and accumulate the product of 1 minus the number of deaths at each time over the number at risk at that time. Complete the following code to compute the KM curve and compare to the result from the survival package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>amldat <span class="ot">&lt;-</span> survival<span class="sc">::</span>aml</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>deathtimes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">sort</span>(<span class="fu">unique</span>(amldat<span class="sc">$</span>time[amldat<span class="sc">$</span>status <span class="sc">==</span> <span class="dv">1</span>])))</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>surv <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">numeric</span>(<span class="fu">length</span>(deathtimes) <span class="sc">-</span> <span class="dv">1</span>))</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(deathtimes)) {</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  atrisk <span class="ot">&lt;-</span> <span class="fu">subset</span>(amldat, time <span class="sc">&gt;</span> deathtimes[i <span class="sc">-</span> <span class="dv">1</span>])</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  deaths_at_ti <span class="ot">&lt;-</span> <span class="fu">sum</span>(atrisk<span class="sc">$</span>status[atrisk<span class="sc">$</span>time <span class="sc">==</span> deathtimes[i]] <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  surv[i] <span class="ot">&lt;-</span> surv[i <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> (deaths_at_ti <span class="sc">/</span> </span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>                                     <span class="fu">nrow</span>(atrisk)))</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(surv <span class="sc">~</span> deathtimes)</span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> amldat))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>amldat <span class="ot">&lt;-</span> survival<span class="sc">::</span>aml</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>deathtimes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">sort</span>(<span class="fu">unique</span>(amldat<span class="sc">$</span>time[amldat<span class="sc">$</span>status <span class="sc">==</span> <span class="dv">1</span>])))</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>surv <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">numeric</span>(<span class="fu">length</span>(deathtimes) <span class="sc">-</span> <span class="dv">1</span>))</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(deathtimes)) {</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  atrisk <span class="ot">&lt;-</span> <span class="fu">subset</span>(amldat, time <span class="sc">&gt;</span> deathtimes[i <span class="sc">-</span> <span class="dv">1</span>])</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  deaths_at_ti <span class="ot">&lt;-</span> <span class="fu">sum</span>(atrisk<span class="sc">$</span>status[atrisk<span class="sc">$</span>time <span class="sc">==</span> deathtimes[i]] <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  surv[i] <span class="ot">&lt;-</span> surv[i <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> (deaths_at_ti <span class="sc">/</span> </span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>                                     <span class="fu">nrow</span>(atrisk)))</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(surv <span class="sc">~</span> deathtimes)</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> amldat))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -401,31 +410,31 @@ flipper_length   0.6507648 -0.5538837      1.0000000</code></pre>
 <li>Write a loop that contains an <code>if</code> then <code>else</code> statement that goes through the variables in <code>penguins</code> and replaces missing values with the mean for numeric double variables, and the most frequent value for characters or factors.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>my_mode <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  converter <span class="ot">&lt;-</span> <span class="fu">get</span>(<span class="fu">paste0</span>(<span class="st">"as."</span>, <span class="fu">class</span>(x)))</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  tab <span class="ot">&lt;-</span> <span class="fu">table</span>(x) <span class="sc">|&gt;</span> <span class="fu">sort</span>(<span class="at">decreasing =</span> <span class="cn">TRUE</span>) </span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(tab)[<span class="dv">1</span>] <span class="sc">|&gt;</span> <span class="fu">converter</span>()</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(colnum <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(penguins)){</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  thiscol <span class="ot">&lt;-</span> penguins[[colnum]]</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">is.double</span>(thiscol)) {</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    thismean <span class="ot">&lt;-</span> <span class="fu">mean</span>(thiscol, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    penguins[<span class="fu">is.na</span>(thiscol), colnum] <span class="ot">&lt;-</span> thismean</span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    penguins[<span class="fu">is.na</span>(thiscol), colnum] <span class="ot">&lt;-</span> <span class="fu">my_mode</span>(thiscol)</span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>  } </span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>my_mode <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  converter <span class="ot">&lt;-</span> <span class="fu">get</span>(<span class="fu">paste0</span>(<span class="st">"as."</span>, <span class="fu">class</span>(x)))</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  tab <span class="ot">&lt;-</span> <span class="fu">table</span>(x) <span class="sc">|&gt;</span> <span class="fu">sort</span>(<span class="at">decreasing =</span> <span class="cn">TRUE</span>) </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(tab)[<span class="dv">1</span>] <span class="sc">|&gt;</span> <span class="fu">converter</span>()</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(colnum <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(penguins)){</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  thiscol <span class="ot">&lt;-</span> penguins[[colnum]]</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">is.double</span>(thiscol)) {</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    thismean <span class="ot">&lt;-</span> <span class="fu">mean</span>(thiscol, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    penguins[<span class="fu">is.na</span>(thiscol), colnum] <span class="ot">&lt;-</span> thismean</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    penguins[<span class="fu">is.na</span>(thiscol), colnum] <span class="ot">&lt;-</span> <span class="fu">my_mode</span>(thiscol)</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>  } </span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      species          island    bill_length_mm  bill_depth_mm  
  Adelie   :152   Biscoe   :168   Min.   :32.10   Min.   :13.10  

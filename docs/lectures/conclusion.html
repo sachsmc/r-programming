@@ -28,6 +28,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-bbe7401fe57d4b791b917637bb662036.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -141,6 +206,95 @@ Michael C Sachs
 
 </section>
 <section>
+<section id="using-copilot-and-other-llms" class="title-slide slide level1 center">
+<h1>Using copilot and other LLMs</h1>
+<p>Purpose:</p>
+<blockquote>
+<p>GitHub Copilot acts as an AI pair programmer, providing real-time, context-aware code completions (“ghost text”) as you type in R scripts.</p>
+</blockquote>
+<p>Getting started:</p>
+<ul>
+<li><a href="https://github.com/education/students" class="uri">https://github.com/education/students</a></li>
+<li><a href="https://docs.posit.co/ide/user/ide/guide/tools/copilot.html" class="uri">https://docs.posit.co/ide/user/ide/guide/tools/copilot.html</a></li>
+</ul>
+<p>How?</p>
+<ul>
+<li>LLMs work by predicting text given a context (i.e., preceding text, instructions)</li>
+<li>The predictions are based on a model that was trained on a <em>corpus</em>, a body of text that was fed to the model during training. Copilot’s corpus is all the code on Github.</li>
+<li>The predictions are stochastic, and they are only as good as the corpus the model was trained on</li>
+</ul>
+</section>
+<section id="how-to-use-it" class="slide level2">
+<h2>How to use it</h2>
+<p>Generating code</p>
+<ul>
+<li>Works as a sort of autocomplete, making suggestions based on the <strong>context</strong></li>
+<li>The context includes the current script and comments, but can be set to include everything in an <strong>Rstudio project</strong></li>
+<li>They pop up automatically when you start typing, e.g., a function/object name</li>
+</ul>
+<p>Answering questions</p>
+<ul>
+<li>Use a comment with a <code># q:</code> at the beginning and a question mark at the end. Copilot’s completion should be an “answer” comment <code># a:</code>.</li>
+</ul>
+<p>For example, the below will be completed with an <code>a:</code> followed by an answer:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="co"># q: What is the definition of standard error?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="best-practices" class="slide level2">
+<h2>Best practices</h2>
+<ul>
+<li>Communicate clearly to Copilot so it generates the right code. <strong>Use the vocabulary you learned in this class</strong></li>
+<li>Review and understand suggestions before accepting them (especially important in R where statistical correctness matters). <strong>Nobody wants to help you fix LLM-generated code</strong>: it is your job to make sure that it works.</li>
+<li>Make sure your project context (file structure, naming conventions, data types) is clear so Copilot can leverage context.</li>
+<li>AI-generated code isn’t guaranteed bug- or bias-free.</li>
+<li>Check the current KU guidelines on reporting the use of LLMs/AI</li>
+</ul>
+</section>
+<section id="tips-for-getting-good-results" class="slide level2">
+<h2>Tips for getting good results</h2>
+<blockquote>
+<p>Think about the overall goal and break it down into smaller subtasks. Write down those subtasks using the language of programming.</p>
+</blockquote>
+<ul>
+<li>Start broad, then narrow
+<ul>
+<li>Begin with a description of the overall goal or scenario.</li>
+<li>Then specify details: subtasks, inputs, outputs, constraints, edge-cases.</li>
+</ul></li>
+<li>Provide examples
+<ul>
+<li>Example inputs and expected outputs.</li>
+<li>Example implementations or comments to give Copilot context.</li>
+</ul></li>
+<li>Make your intent clear
+<ul>
+<li>Mention libraries/frameworks you want to use (e.g., tidyverse, ggplot2, loops, functions).</li>
+<li>State any style or performance requirements.</li>
+</ul></li>
+<li>Use high-quality comments
+<ul>
+<li>A well written comment above an R function like <code># This function takes a data frame and returns a tidy summary of each numeric column</code></li>
+<li>Explain edge cases like missing data, factor levels, grouping, etc.</li>
+</ul></li>
+<li>Iterate and refine
+<ul>
+<li>Use the suggestions as a draft rather than final code.</li>
+<li>Be specific about “how” not just “what”: <code>Use dplyr’s group_by() + summarise(); handle NA values; return a tibble.</code></li>
+<li>Consider instruction-style prompts: <code># Write an R function named summarise_numeric() that ...</code> gives a specific action.</li>
+</ul></li>
+</ul>
+</section>
+<section id="try-it-out" class="slide level2">
+<h2>Try it out</h2>
+<ul>
+<li>Try using copilot to solve one of the exercises</li>
+<li>Does it solve it correctly? Can you explain what it does and fix it if needed?</li>
+<li>Does it suggest using some functions that are new to you?</li>
+<li>Is it faster than doing it yourself?</li>
+</ul>
+</section></section>
+<section>
 <section id="what-did-we-learn" class="title-slide slide level1 center">
 <h1>What did we learn?</h1>
 
@@ -212,7 +366,7 @@ Michael C Sachs
 <li>Keep learning on your own, remember that things change</li>
 <li>Use the linked resources to get some background</li>
 <li>CRAN task views, help files, vignettes</li>
-<li>Google “how do I do x in R”, or the exact error message</li>
+<li>Google “how do I do x in R”, or Search the exact error message</li>
 <li>Stackoverflow, Rstudio forums, R mailing lists</li>
 </ul>
 </section></section>
@@ -228,19 +382,7 @@ Michael C Sachs
 <li>What did you dislike about the course?</li>
 <li>Did you knowledge about R programming improve during the course?</li>
 <li>Are there topics you wanted to be covered but were not?</li>
-<li>Would you have preferred a longer course that started from the basics? Or two courses, Intro and Advanced?</li>
 </ol>
-</section></section>
-<section>
-<section id="office-hours" class="title-slide slide level1 center">
-<h1>Office hours</h1>
-
-</section>
-<section id="last-chance" class="slide level2">
-<h2>Last chance</h2>
-<p>To ask about R, or anything else</p>
-<p>My office is 10.2.25</p>
-<p>You can also use our consulting services – Look under “Statistical Advisory Services” on the Biostat homepage.</p>
 
 
 </section></section>
@@ -459,6 +601,44 @@ Michael C Sachs
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

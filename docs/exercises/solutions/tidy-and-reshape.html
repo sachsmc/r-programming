@@ -160,6 +160,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#tidying-our-mean-sd-function" id="toc-tidying-our-mean-sd-function" class="nav-link active" data-scroll-target="#tidying-our-mean-sd-function">Tidying our mean sd function</a></li>
   <li><a href="#tidying-the-national-patient-register-dataset" id="toc-tidying-the-national-patient-register-dataset" class="nav-link" data-scroll-target="#tidying-the-national-patient-register-dataset">Tidying the national patient register dataset</a></li>
+  <li><a href="#merging-and-manipulation" id="toc-merging-and-manipulation" class="nav-link" data-scroll-target="#merging-and-manipulation">Merging and manipulation</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/sachsmc/r-programming/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -198,53 +199,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Write a tidy method for our <code>mean_sd</code> function and try it out on the penguins dataset.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Write a tidy method for our mean_sd function and try it out on the penguins dataset.</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>mean_sd <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) {</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  xname <span class="ot">&lt;-</span> <span class="fu">deparse1</span>(<span class="fu">substitute</span>(x))  <span class="co"># gets the name of the variable</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">mean =</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> na.rm), </span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">sd =</span> <span class="fu">sd</span>(x, <span class="at">na.rm =</span> na.rm))</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">class</span>(res) <span class="ot">&lt;-</span> <span class="st">"meansd"</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">attr</span>(res, <span class="st">"variable"</span>) <span class="ot">&lt;-</span> xname</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">attr</span>(res, <span class="st">"sampsize"</span>) <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  res</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>print.meansd <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">digits =</span> <span class="dv">2</span>) {</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">attr</span>(x, <span class="st">"variable"</span>), <span class="st">": "</span>,</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste0</span>(</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        <span class="fu">round</span>(x[<span class="st">"mean"</span>], <span class="at">digits =</span> digits), </span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">" ("</span>, </span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        <span class="fu">round</span>(x[<span class="st">"sd"</span>], <span class="at">digits =</span> digits), </span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">")</span><span class="sc">\n</span><span class="st">"</span>))</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>tidy.meansd <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">variable =</span> <span class="fu">attr</span>(x, <span class="st">"variable"</span>), </span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>             <span class="at">mean =</span> x[<span class="st">"mean"</span>], </span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>             <span class="at">sd =</span> x[<span class="st">"sd"</span>], </span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>             <span class="at">sample.size =</span> <span class="fu">attr</span>(x, <span class="st">"sampsize"</span>)</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>             )</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="fu">mean_sd</span>(penguins<span class="sc">$</span>body_mass_g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'palmerpenguins'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:datasets':
+
+    penguins, penguins_raw</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Write a tidy method for our mean_sd function and try it out on the penguins dataset.</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>mean_sd <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  xname <span class="ot">&lt;-</span> <span class="fu">deparse1</span>(<span class="fu">substitute</span>(x))  <span class="co"># gets the name of the variable</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">mean =</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> na.rm), </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">sd =</span> <span class="fu">sd</span>(x, <span class="at">na.rm =</span> na.rm))</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">class</span>(res) <span class="ot">&lt;-</span> <span class="st">"meansd"</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">attr</span>(res, <span class="st">"variable"</span>) <span class="ot">&lt;-</span> xname</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">attr</span>(res, <span class="st">"sampsize"</span>) <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  res</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>print.meansd <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">digits =</span> <span class="dv">2</span>) {</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">attr</span>(x, <span class="st">"variable"</span>), <span class="st">": "</span>,</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste0</span>(</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        <span class="fu">round</span>(x[<span class="st">"mean"</span>], <span class="at">digits =</span> digits), </span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">" ("</span>, </span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        <span class="fu">round</span>(x[<span class="st">"sd"</span>], <span class="at">digits =</span> digits), </span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">")</span><span class="sc">\n</span><span class="st">"</span>))</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>tidy.meansd <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">variable =</span> <span class="fu">attr</span>(x, <span class="st">"variable"</span>), </span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>             <span class="at">mean =</span> x[<span class="st">"mean"</span>], </span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>             <span class="at">sd =</span> x[<span class="st">"sd"</span>], </span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>             <span class="at">sample.size =</span> <span class="fu">attr</span>(x, <span class="st">"sampsize"</span>)</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>             )</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="fu">mean_sd</span>(penguins<span class="sc">$</span>body_mass_g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>penguins$body_mass_g :  4201.75 (801.95)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(<span class="fu">mean_sd</span>(penguins<span class="sc">$</span>body_mass_g))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(<span class="fu">mean_sd</span>(penguins<span class="sc">$</span>body_mass_g))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 variable     mean       sd sample.size
 mean penguins$body_mass_g 4201.754 801.9545         344</code></pre>
@@ -258,14 +268,14 @@ mean penguins$body_mass_g 4201.754 801.9545         344</code></pre>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>reslist <span class="ot">&lt;-</span> <span class="fu">split</span>(penguins<span class="sc">$</span>body_mass_g, <span class="fu">list</span>(penguins<span class="sc">$</span>species, penguins<span class="sc">$</span>sex)) <span class="sc">|&gt;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(<span class="at">FUN =</span> \(x) <span class="fu">tidy</span>(<span class="fu">mean_sd</span>(x))) </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>resdf <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">do.call</span>(rbind, reslist), </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">do.call</span>(rbind, <span class="fu">names</span>(reslist)<span class="sc">|&gt;</span> <span class="fu">strsplit</span>(<span class="at">split=</span><span class="st">"</span><span class="sc">\\</span><span class="st">."</span>)))</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(resdf)[<span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"species"</span>, <span class="st">"sex"</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">reshape</span>(resdf[, <span class="sc">-</span><span class="dv">1</span>], <span class="at">direction =</span> <span class="st">"wide"</span>, <span class="at">idvar =</span> <span class="st">"species"</span>, <span class="at">timevar =</span> <span class="st">"sex"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>reslist <span class="ot">&lt;-</span> <span class="fu">split</span>(penguins<span class="sc">$</span>body_mass_g, <span class="fu">list</span>(penguins<span class="sc">$</span>species, penguins<span class="sc">$</span>sex)) <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(<span class="at">FUN =</span> \(x) <span class="fu">tidy</span>(<span class="fu">mean_sd</span>(x))) </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>resdf <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">do.call</span>(rbind, reslist), </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">do.call</span>(rbind, <span class="fu">names</span>(reslist)<span class="sc">|&gt;</span> <span class="fu">strsplit</span>(<span class="at">split=</span><span class="st">"</span><span class="sc">\\</span><span class="st">."</span>)))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(resdf)[<span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"species"</span>, <span class="st">"sex"</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">reshape</span>(resdf[, <span class="sc">-</span><span class="dv">1</span>], <span class="at">direction =</span> <span class="st">"wide"</span>, <span class="at">idvar =</span> <span class="st">"species"</span>, <span class="at">timevar =</span> <span class="st">"sex"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   species mean.female sd.female sample.size.female mean.male
 Adelie.female       Adelie    3368.836  269.3801                 73  4043.493
@@ -280,14 +290,14 @@ Gentoo.female    313.1586               61</code></pre>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>pengdt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(penguins)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>peng_summary <span class="ot">&lt;-</span> pengdt[, (<span class="fu">tidy</span>(<span class="fu">mean_sd</span>(body_mass_g))), </span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                       by <span class="ot">=</span> <span class="fu">list</span>(species, sex)]</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dcast</span>(peng_summary[<span class="sc">!</span><span class="fu">is.na</span>(sex)], species <span class="sc">+</span> variable <span class="sc">~</span> sex, </span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">value.var =</span> <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"sample.size"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>pengdt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(penguins)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>peng_summary <span class="ot">&lt;-</span> pengdt[, (<span class="fu">tidy</span>(<span class="fu">mean_sd</span>(body_mass_g))), </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                       by <span class="ot">=</span> <span class="fu">list</span>(species, sex)]</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dcast</span>(peng_summary[<span class="sc">!</span><span class="fu">is.na</span>(sex)], species <span class="sc">+</span> variable <span class="sc">~</span> sex, </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">value.var =</span> <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"sample.size"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Key: &lt;species, variable&gt;
      species    variable mean_female mean_male sd_female  sd_male
@@ -305,7 +315,7 @@ Gentoo.female    313.1586               61</code></pre>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'dplyr'</code></pre>
@@ -325,12 +335,12 @@ Attaching package: 'dplyr'</code></pre>
 
     intersect, setdiff, setequal, union</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> <span class="fu">group_by</span>(species, sex) <span class="sc">|&gt;</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">tidy</span>(<span class="fu">mean_sd</span>(body_mass_g))) <span class="sc">|&gt;</span> </span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"sex"</span>, </span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"sample.size"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> <span class="fu">group_by</span>(species, sex) <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">tidy</span>(<span class="fu">mean_sd</span>(body_mass_g))) <span class="sc">|&gt;</span> </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"sex"</span>, </span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"sample.size"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'species'. You can override using the
 `.groups` argument.</code></pre>
@@ -354,11 +364,11 @@ Attaching package: 'dplyr'</code></pre>
 <h2 class="anchored" data-anchor-id="tidying-the-national-patient-register-dataset">Tidying the national patient register dataset</h2>
 <p>Load the LPR data example from <code>"https://sachsmc.github.io/r-programming/data/lpr-ex.rds"</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>here() starts at /home/micsac/Teaching/Courses/r-programming</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>lpr <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"lpr-ex.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>lpr <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"lpr-ex.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol type="1">
 <li>Reshape the data into wide, where the columns are the primary diagnosis (hdia) at each visit number</li>
@@ -370,12 +380,12 @@ Attaching package: 'dplyr'</code></pre>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 1. </span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>lprwide <span class="ot">&lt;-</span> <span class="fu">subset</span>(lpr, <span class="at">select=</span> <span class="fu">c</span>(pid, age, sex, visit, hdia)) <span class="sc">|&gt;</span> <span class="do">## drop the other diag columns and date</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reshape</span>(<span class="at">direction =</span> <span class="st">"wide"</span>, </span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">idvar =</span> <span class="st">"pid"</span>, <span class="at">timevar =</span> <span class="st">"visit"</span>, </span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">v.names =</span> <span class="fu">c</span>(<span class="st">"hdia"</span>))</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lprwide)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 1. </span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>lprwide <span class="ot">&lt;-</span> <span class="fu">subset</span>(lpr, <span class="at">select=</span> <span class="fu">c</span>(pid, age, sex, visit, hdia)) <span class="sc">|&gt;</span> <span class="do">## drop the other diag columns and date</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reshape</span>(<span class="at">direction =</span> <span class="st">"wide"</span>, </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">idvar =</span> <span class="st">"pid"</span>, <span class="at">timevar =</span> <span class="st">"visit"</span>, </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">v.names =</span> <span class="fu">c</span>(<span class="st">"hdia"</span>))</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lprwide)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    pid  age sex hdia.1 hdia.2 hdia.3 hdia.4 hdia.5 hdia.6 hdia.7 hdia.8 hdia.9
 1  A001 72.5   f   H560   C871   C040   F412   F622   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;
@@ -392,18 +402,18 @@ Attaching package: 'dplyr'</code></pre>
 23    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;
 25    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 2. </span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>lprtmp <span class="ot">&lt;-</span> lpr</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(lprtmp)[<span class="fu">which</span>(<span class="fu">colnames</span>(lprtmp) <span class="sc">==</span> <span class="st">"hdia"</span>)] <span class="ot">&lt;-</span> <span class="st">"diag0"</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>lprlong <span class="ot">&lt;-</span> <span class="fu">reshape</span>(lprtmp, <span class="at">direction =</span> <span class="st">"long"</span>, </span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">varying =</span> <span class="fu">grep</span>(<span class="st">"^diag"</span>, <span class="fu">names</span>(lprtmp)), </span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">sep =</span> <span class="st">""</span>, <span class="at">timevar =</span> <span class="st">"diagnum"</span>)</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>lprlong<span class="sc">$</span>maindiag <span class="ot">&lt;-</span> lprlong<span class="sc">$</span>diagnum <span class="sc">==</span> <span class="dv">0</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>lprlong <span class="ot">&lt;-</span> <span class="fu">subset</span>(lprlong[<span class="fu">order</span>(lprlong<span class="sc">$</span>pid, lprlong<span class="sc">$</span>visit),], </span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>                  <span class="sc">!</span><span class="fu">is.na</span>(diag))</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lprlong)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 2. </span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>lprtmp <span class="ot">&lt;-</span> lpr</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(lprtmp)[<span class="fu">which</span>(<span class="fu">colnames</span>(lprtmp) <span class="sc">==</span> <span class="st">"hdia"</span>)] <span class="ot">&lt;-</span> <span class="st">"diag0"</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>lprlong <span class="ot">&lt;-</span> <span class="fu">reshape</span>(lprtmp, <span class="at">direction =</span> <span class="st">"long"</span>, </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">varying =</span> <span class="fu">grep</span>(<span class="st">"^diag"</span>, <span class="fu">names</span>(lprtmp)), </span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">sep =</span> <span class="st">""</span>, <span class="at">timevar =</span> <span class="st">"diagnum"</span>)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>lprlong<span class="sc">$</span>maindiag <span class="ot">&lt;-</span> lprlong<span class="sc">$</span>diagnum <span class="sc">==</span> <span class="dv">0</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>lprlong <span class="ot">&lt;-</span> <span class="fu">subset</span>(lprlong[<span class="fu">order</span>(lprlong<span class="sc">$</span>pid, lprlong<span class="sc">$</span>visit),], </span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>                  <span class="sc">!</span><span class="fu">is.na</span>(diag))</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lprlong)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     pid  age sex      indat visit diagnum diag id maindiag
 1.0 A001 72.5   f 2010-01-27     1       0 H560  1     TRUE
@@ -413,19 +423,19 @@ Attaching package: 'dplyr'</code></pre>
 2.0 A001 72.5   f 2010-06-26     2       0 C871  2     TRUE
 2.1 A001 72.5   f 2010-06-26     2       1 D422  2    FALSE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 3. </span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>lprlong <span class="ot">&lt;-</span> <span class="fu">split</span>(lprlong, lprlong<span class="sc">$</span>pid) <span class="sc">|&gt;</span> </span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(<span class="at">FUN =</span> \(df) {</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    chk <span class="ot">&lt;-</span> <span class="fu">any</span>(df<span class="sc">$</span>diag[df<span class="sc">$</span>indat <span class="sc">&lt;=</span> <span class="fu">as.Date</span>(<span class="st">"2010-01-01"</span>)] <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"D150"</span>, <span class="st">"D152"</span>, <span class="st">"D159"</span>))</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">length</span>(chk) <span class="sc">==</span> <span class="dv">0</span>) chk <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    df<span class="sc">$</span>ddiag_pre2010 <span class="ot">&lt;-</span> chk</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    df</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  }) <span class="sc">|&gt;</span> </span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unsplit</span>(lprlong<span class="sc">$</span>pid)</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lprlong)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 3. </span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>lprlong <span class="ot">&lt;-</span> <span class="fu">split</span>(lprlong, lprlong<span class="sc">$</span>pid) <span class="sc">|&gt;</span> </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(<span class="at">FUN =</span> \(df) {</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    chk <span class="ot">&lt;-</span> <span class="fu">any</span>(df<span class="sc">$</span>diag[df<span class="sc">$</span>indat <span class="sc">&lt;=</span> <span class="fu">as.Date</span>(<span class="st">"2010-01-01"</span>)] <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"D150"</span>, <span class="st">"D152"</span>, <span class="st">"D159"</span>))</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">length</span>(chk) <span class="sc">==</span> <span class="dv">0</span>) chk <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    df<span class="sc">$</span>ddiag_pre2010 <span class="ot">&lt;-</span> chk</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    df</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  }) <span class="sc">|&gt;</span> </span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unsplit</span>(lprlong<span class="sc">$</span>pid)</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lprlong)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     pid                 age            sex                indat           
  Length:8046        Min.   :36.50   Length:8046        Min.   :2005-01-02  
@@ -453,10 +463,10 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 1.</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>lprdt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(lpr)</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dcast</span>(lprdt[, .(pid, indat, visit, hdia)], </span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>      pid <span class="sc">~</span> visit, <span class="at">value.var =</span> <span class="st">"hdia"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 1.</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>lprdt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(lpr)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dcast</span>(lprdt[, .(pid, indat, visit, hdia)], </span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>      pid <span class="sc">~</span> visit, <span class="at">value.var =</span> <span class="st">"hdia"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Key: &lt;pid&gt;
         pid      1      2      3      4      5      6      7      8      9
@@ -486,13 +496,13 @@ Attaching package: 'dplyr'</code></pre>
 399:   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;
 400:   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. </span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>lprlong <span class="ot">&lt;-</span> <span class="fu">melt</span>(lprdt, <span class="at">id.vars =</span> <span class="fu">c</span>(<span class="st">"pid"</span>, <span class="st">"age"</span>, <span class="st">"sex"</span>, <span class="st">"indat"</span>, <span class="st">"visit"</span>), </span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">variable.name =</span> <span class="st">"diagtype"</span>, <span class="at">value.name =</span> <span class="st">"diag"</span>)</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>lprlong <span class="ot">&lt;-</span> lprlong[<span class="sc">!</span><span class="fu">is.na</span>(diag)]</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>lprlong[, main_diag <span class="sc">:</span><span class="er">=</span> diagtype <span class="sc">==</span> <span class="st">"hdia"</span>]</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>lprlong</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. </span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>lprlong <span class="ot">&lt;-</span> <span class="fu">melt</span>(lprdt, <span class="at">id.vars =</span> <span class="fu">c</span>(<span class="st">"pid"</span>, <span class="st">"age"</span>, <span class="st">"sex"</span>, <span class="st">"indat"</span>, <span class="st">"visit"</span>), </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">variable.name =</span> <span class="st">"diagtype"</span>, <span class="at">value.name =</span> <span class="st">"diag"</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>lprlong <span class="ot">&lt;-</span> lprlong[<span class="sc">!</span><span class="fu">is.na</span>(diag)]</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>lprlong[, main_diag <span class="sc">:</span><span class="er">=</span> diagtype <span class="sc">==</span> <span class="st">"hdia"</span>]</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>lprlong</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         pid   age    sex      indat visit diagtype   diag main_diag
       &lt;char&gt; &lt;num&gt; &lt;char&gt;     &lt;Date&gt; &lt;int&gt;   &lt;fctr&gt; &lt;char&gt;    &lt;lgcl&gt;
@@ -508,8 +518,8 @@ Attaching package: 'dplyr'</code></pre>
 8045:   A393  63.5      m 2015-06-08     7    diag6   I372     FALSE
 8046:   A398  63.5      m 2009-09-12     3    diag6   J671     FALSE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setorder</span>(lprlong, pid, indat)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>lprlong</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setorder</span>(lprlong, pid, indat)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>lprlong</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         pid   age    sex      indat visit diagtype   diag main_diag
       &lt;char&gt; &lt;num&gt; &lt;char&gt;     &lt;Date&gt; &lt;int&gt;   &lt;fctr&gt; &lt;char&gt;    &lt;lgcl&gt;
@@ -525,14 +535,14 @@ Attaching package: 'dplyr'</code></pre>
 8045:   A400  72.5      f 2013-09-01     5    diag2   F452     FALSE
 8046:   A400  72.5      f 2013-09-01     5    diag3   K301     FALSE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. </span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>lprlong <span class="ot">&lt;-</span> lprlong[, ddiag_pre2010 <span class="sc">:</span><span class="er">=</span> <span class="fu">any</span>(diag[indat <span class="sc">&lt;=</span> <span class="fu">as.Date</span>(<span class="st">"2010-01-01"</span>)] <span class="sc">%in%</span> </span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>          <span class="fu">c</span>(<span class="st">"D150"</span>, <span class="st">"D152"</span>, <span class="st">"D159"</span>)), </span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>        by <span class="ot">=</span> .(pid)]</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lprlong)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. </span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>lprlong <span class="ot">&lt;-</span> lprlong[, ddiag_pre2010 <span class="sc">:</span><span class="er">=</span> <span class="fu">any</span>(diag[indat <span class="sc">&lt;=</span> <span class="fu">as.Date</span>(<span class="st">"2010-01-01"</span>)] <span class="sc">%in%</span> </span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>          <span class="fu">c</span>(<span class="st">"D150"</span>, <span class="st">"D152"</span>, <span class="st">"D159"</span>)), </span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>        by <span class="ot">=</span> .(pid)]</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lprlong)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     pid                 age            sex                indat           
  Length:8046        Min.   :36.50   Length:8046        Min.   :2005-01-02  
@@ -559,7 +569,7 @@ Attaching package: 'dplyr'</code></pre>
                 
                 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>lprdt[pid <span class="sc">==</span> <span class="st">"A048"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>lprdt[pid <span class="sc">==</span> <span class="st">"A048"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      pid   age    sex      indat visit   hdia  diag1  diag2  diag3  diag4
    &lt;char&gt; &lt;num&gt; &lt;char&gt;     &lt;Date&gt; &lt;int&gt; &lt;char&gt; &lt;char&gt; &lt;char&gt; &lt;char&gt; &lt;char&gt;
@@ -574,11 +584,11 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>lprtbl <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(lpr)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1. </span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>lprtbl <span class="sc">|&gt;</span> <span class="fu">select</span>(pid, age, sex, visit, hdia) <span class="sc">|&gt;</span> </span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> visit, <span class="at">values_from =</span> hdia, <span class="at">names_prefix =</span> <span class="st">"visit"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>lprtbl <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(lpr)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1. </span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>lprtbl <span class="sc">|&gt;</span> <span class="fu">select</span>(pid, age, sex, visit, hdia) <span class="sc">|&gt;</span> </span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> visit, <span class="at">values_from =</span> hdia, <span class="at">names_prefix =</span> <span class="st">"visit"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 400 × 16
    pid     age sex   visit1 visit2 visit3 visit4 visit5 visit6 visit7 visit8
@@ -597,12 +607,12 @@ Attaching package: 'dplyr'</code></pre>
 # ℹ 5 more variables: visit9 &lt;chr&gt;, visit10 &lt;chr&gt;, visit11 &lt;chr&gt;,
 #   visit12 &lt;chr&gt;, visit13 &lt;chr&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 2. </span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>lprlong <span class="ot">&lt;-</span> lprtbl <span class="sc">|&gt;</span> <span class="fu">pivot_longer</span>(<span class="at">cols =</span> hdia<span class="sc">:</span>diag6, <span class="at">values_to =</span> <span class="st">"diag"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">maindiag =</span> name <span class="sc">==</span> <span class="st">"hdia"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(diag))</span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>lprlong</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 2. </span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>lprlong <span class="ot">&lt;-</span> lprtbl <span class="sc">|&gt;</span> <span class="fu">pivot_longer</span>(<span class="at">cols =</span> hdia<span class="sc">:</span>diag6, <span class="at">values_to =</span> <span class="st">"diag"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">maindiag =</span> name <span class="sc">==</span> <span class="st">"hdia"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(diag))</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>lprlong</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8,046 × 8
    pid     age sex   indat      visit name  diag  maindiag
@@ -619,11 +629,11 @@ Attaching package: 'dplyr'</code></pre>
 10 A001   72.5 f     2010-07-20     3 diag1 B710  FALSE   
 # ℹ 8,036 more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 3. </span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>lprlong <span class="ot">&lt;-</span> lprlong <span class="sc">|&gt;</span> <span class="fu">group_by</span>(pid) <span class="sc">|&gt;</span> </span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ddiag_pre2010 =</span> <span class="fu">any</span>(diag[indat <span class="sc">&lt;=</span> <span class="fu">as.Date</span>(<span class="st">"2010-01-01"</span>)] <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"D150"</span>, <span class="st">"D152"</span>, <span class="st">"D159"</span>)))</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lprlong)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 3. </span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>lprlong <span class="ot">&lt;-</span> lprlong <span class="sc">|&gt;</span> <span class="fu">group_by</span>(pid) <span class="sc">|&gt;</span> </span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ddiag_pre2010 =</span> <span class="fu">any</span>(diag[indat <span class="sc">&lt;=</span> <span class="fu">as.Date</span>(<span class="st">"2010-01-01"</span>)] <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"D150"</span>, <span class="st">"D152"</span>, <span class="st">"D159"</span>)))</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lprlong)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     pid                 age            sex                indat           
  Length:8046        Min.   :36.50   Length:8046        Min.   :2005-01-02  
@@ -646,6 +656,273 @@ Attaching package: 'dplyr'</code></pre>
                 
                 
                 </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="merging-and-manipulation" class="level2">
+<h2 class="anchored" data-anchor-id="merging-and-manipulation">Merging and manipulation</h2>
+<p>The objective of this exercise is to describe the distribution of the number of days between hospitalizations and drug dispensations by age and sex, among people who get drugs dispensed following a hospitalization.</p>
+<ol type="1">
+<li>Import and merge the drug register data with the long version of the hospitalization register from the previous section. What type of join is needed here?</li>
+<li>Create a new variable that counts the number of drug dispensations in the 3 months following a hospitalization.</li>
+<li>Summarize the variable by age and sex. Try making a graphical summary.</li>
+</ol>
+<p>Reading in the data using lapply</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>medsl <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="dv">2005</span><span class="sc">:</span><span class="dv">2010</span>, \(y) {</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="fu">paste0</span>(<span class="st">"med-"</span>, y, <span class="st">"-ex.rds"</span>)))</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>or a loop</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>medsl <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"list"</span>, <span class="at">length =</span> <span class="dv">6</span>)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(medsl) <span class="ot">&lt;-</span> <span class="dv">2005</span><span class="sc">:</span><span class="dv">2010</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(medsl)) {</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  medsl[[i]] <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="fu">paste0</span>(<span class="st">"med-"</span>, <span class="fu">names</span>(medsl)[i], <span class="st">"-ex.rds"</span>)))</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>meds <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, medsl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'lubridate'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:data.table':
+
+    hour, isoweek, mday, minute, month, quarter, second, wday, week,
+    yday, year</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    date, intersect, setdiff, union</code></pre>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">base R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">dplyr</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false">data.table</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>lprmed <span class="ot">&lt;-</span> <span class="fu">merge</span>(<span class="fu">subset</span>(lprlong, maindiag <span class="sc">==</span> <span class="cn">TRUE</span>), meds, <span class="at">by =</span> <span class="st">"pid"</span>)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>lprmed<span class="sc">$</span>days_to_dispensation <span class="ot">&lt;-</span> <span class="fu">with</span>(lprmed, date <span class="sc">-</span> indat)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>lprmed <span class="ot">&lt;-</span> <span class="fu">subset</span>(lprmed, days_to_dispensation <span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> </span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>                   days_to_dispensation <span class="sc">&lt;=</span> <span class="fu">dmonths</span>(<span class="dv">3</span>))</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>lprmed2 <span class="ot">&lt;-</span> <span class="fu">do.call</span>(<span class="st">"rbind"</span>, <span class="fu">split</span>(lprmed, <span class="fu">list</span>(lprmed<span class="sc">$</span>pid, lprmed<span class="sc">$</span>visit), <span class="at">drop =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(\(df) {</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>    df<span class="sc">$</span>num_drugs_3m <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unique</span>(df[, <span class="fu">c</span>(<span class="st">"pid"</span>, <span class="st">"age"</span>, <span class="st">"sex"</span>, <span class="st">"indat"</span>, <span class="st">"visit"</span>, <span class="st">"diag"</span>, <span class="st">"num_drugs_3m"</span>)])</span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>  }))</span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>lprmed2 <span class="ot">&lt;-</span> lprmed2[<span class="fu">order</span>(lprmed2<span class="sc">$</span>pid, lprmed2<span class="sc">$</span>visit),]</span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a>lprmed2<span class="sc">$</span>agecat <span class="ot">&lt;-</span> <span class="fu">cut</span>(lprmed2<span class="sc">$</span>age, <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="dv">80</span>, <span class="dv">100</span>))</span>
+<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a><span class="fu">by</span>(lprmed2<span class="sc">$</span>num_drugs_3m, <span class="fu">list</span>(lprmed2<span class="sc">$</span>sex, </span>
+<span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a>                              lprmed2<span class="sc">$</span>agecat), </span>
+<span id="cb51-18"><a href="#cb51-18" aria-hidden="true" tabindex="-1"></a>   table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>: f
+: (25,40]
+NULL
+------------------------------------------------------------ 
+: m
+: (25,40]
+
+1 2 3 5 
+2 1 1 2 
+------------------------------------------------------------ 
+: f
+: (40,60]
+NULL
+------------------------------------------------------------ 
+: m
+: (40,60]
+
+ 1  2  3  4  5  6  7  8 
+36 56 63 29 17  3  3  2 
+------------------------------------------------------------ 
+: f
+: (60,80]
+
+  1   2   3   4   5   6   7   8   9 
+131 143 116  86  28  14   4   1   2 
+------------------------------------------------------------ 
+: m
+: (60,80]
+
+ 1  2  3  4  5  6  7 
+49 46 35 25 12  7  3 
+------------------------------------------------------------ 
+: f
+: (80,100]
+
+ 1  2  3  4  5  6  7 
+32 24 24 19  7  1  2 
+------------------------------------------------------------ 
+: m
+: (80,100]
+NULL</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>)) </span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(s <span class="cf">in</span> <span class="fu">c</span>(<span class="st">"m"</span>, <span class="st">"f"</span>)) {</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">boxplot</span>(num_drugs_3m <span class="sc">~</span> agecat, <span class="at">data =</span> <span class="fu">subset</span>(lprmed2, sex <span class="sc">==</span> s), </span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="fu">paste0</span>(<span class="st">"Sex: "</span>, s))</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="tidy-and-reshape_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>lprmeddply <span class="ot">&lt;-</span> lprlong <span class="sc">|&gt;</span> <span class="fu">filter</span>(maindiag <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">indat_plus_3m =</span> indat <span class="sc">+</span> <span class="fu">dmonths</span>(<span class="dv">3</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(meds, <span class="fu">join_by</span>(pid, </span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">between</span>(y<span class="sc">$</span>date, x<span class="sc">$</span>indat, x<span class="sc">$</span>indat_plus_3m))) <span class="sc">|&gt;</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pid, visit) <span class="sc">|&gt;</span> </span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sex =</span> sex[<span class="dv">1</span>], <span class="at">age =</span> age[<span class="dv">1</span>], <span class="at">agecat =</span>  <span class="fu">cut</span>(age[<span class="dv">1</span>], <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="dv">80</span>, <span class="dv">100</span>)),</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">n_drugs_3m =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'pid'. You can override using the `.groups`
+argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>lprmeddply <span class="sc">|&gt;</span> <span class="fu">group_by</span>(sex, agecat, n_drugs_3m) <span class="sc">|&gt;</span> </span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">count_ndrugs =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'sex', 'agecat'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 35 × 4
+# Groups:   sex, agecat [5]
+   sex   agecat   n_drugs_3m count_ndrugs
+   &lt;chr&gt; &lt;fct&gt;         &lt;int&gt;        &lt;int&gt;
+ 1 f     (60,80]           1          131
+ 2 f     (60,80]           2          143
+ 3 f     (60,80]           3          116
+ 4 f     (60,80]           4           86
+ 5 f     (60,80]           5           28
+ 6 f     (60,80]           6           14
+ 7 f     (60,80]           7            4
+ 8 f     (60,80]           8            1
+ 9 f     (60,80]           9            2
+10 f     (80,100]          1           32
+# ℹ 25 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(lprmeddply, <span class="fu">by</span>(n_drugs_3m, <span class="fu">list</span>(sex, agecat), table))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>: f
+: (25,40]
+NULL
+------------------------------------------------------------ 
+: m
+: (25,40]
+
+1 2 3 5 
+2 1 1 2 
+------------------------------------------------------------ 
+: f
+: (40,60]
+NULL
+------------------------------------------------------------ 
+: m
+: (40,60]
+
+ 1  2  3  4  5  6  7  8 
+36 56 63 29 17  3  3  2 
+------------------------------------------------------------ 
+: f
+: (60,80]
+
+  1   2   3   4   5   6   7   8   9 
+131 143 116  86  28  14   4   1   2 
+------------------------------------------------------------ 
+: m
+: (60,80]
+
+ 1  2  3  4  5  6  7 
+49 46 35 25 12  7  3 
+------------------------------------------------------------ 
+: f
+: (80,100]
+
+ 1  2  3  4  5  6  7 
+32 24 24 19  7  1  2 
+------------------------------------------------------------ 
+: m
+: (80,100]
+NULL</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>lprdt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(lprlong)[maindiag <span class="sc">==</span> <span class="cn">TRUE</span>]</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>meds <span class="ot">&lt;-</span> <span class="fu">data.table</span>(meds)</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>meds[, drugdate <span class="sc">:</span><span class="er">=</span> date]</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>lprdt[, indate_plus_3m <span class="sc">:</span><span class="er">=</span> indat <span class="sc">+</span> <span class="fu">dmonths</span>(<span class="dv">3</span>)]</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>lprmeds <span class="ot">&lt;-</span> meds[lprdt, , on <span class="ot">=</span> .(pid <span class="sc">==</span> pid, date <span class="sc">&gt;=</span> indat), nomatch <span class="ot">=</span> <span class="cn">NULL</span>][drugdate <span class="sc">&lt;=</span> indate_plus_3m]</span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>lprmeds2 <span class="ot">&lt;-</span> lprmeds[, .(<span class="at">sex =</span> sex[<span class="dv">1</span>], <span class="at">age =</span> age[<span class="dv">1</span>], <span class="at">agecat =</span> <span class="fu">cut</span>(age[<span class="dv">1</span>], <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="dv">80</span>, <span class="dv">100</span>)), </span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">n_drugs_3m =</span> .N), by <span class="ot">=</span> .(pid, visit)]</span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(lprmeds2, <span class="fu">by</span>(n_drugs_3m, <span class="fu">list</span>(sex, agecat), table))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>: f
+: (25,40]
+NULL
+------------------------------------------------------------ 
+: m
+: (25,40]
+
+1 2 3 5 
+2 1 1 2 
+------------------------------------------------------------ 
+: f
+: (40,60]
+NULL
+------------------------------------------------------------ 
+: m
+: (40,60]
+
+ 1  2  3  4  5  6  7  8 
+36 56 63 29 17  3  3  2 
+------------------------------------------------------------ 
+: f
+: (60,80]
+
+  1   2   3   4   5   6   7   8   9 
+131 143 116  86  28  14   4   1   2 
+------------------------------------------------------------ 
+: m
+: (60,80]
+
+ 1  2  3  4  5  6  7 
+49 46 35 25 12  7  3 
+------------------------------------------------------------ 
+: f
+: (80,100]
+
+ 1  2  3  4  5  6  7 
+32 24 24 19  7  1  2 
+------------------------------------------------------------ 
+: m
+: (80,100]
+NULL</code></pre>
 </div>
 </div>
 </div>

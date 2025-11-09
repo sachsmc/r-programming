@@ -237,11 +237,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="merging-and-manipulation" class="level2">
 <h2 class="anchored" data-anchor-id="merging-and-manipulation">Merging and manipulation</h2>
-<p>The objective of this project is to describe the distribution of the number of days between hospitalizations and drug dispensations by age and sex. Your challenge is to do the following:</p>
+<p>The objective of this exercise is to describe the distribution of the number of days between hospitalizations and drug dispensations by age and sex. Your challenge is to do the following:</p>
 <ol type="1">
 <li>Import and merge the drug register data with the hospitalization register.</li>
 <li>Create a new variable that counts the number of drug dispensations in the 3 months following a hospitalization.</li>
-<li>Summarize the variable by age and sex. Try making a graphical summary .</li>
+<li>Summarize the variable by age and sex. Try making a graphical summary.</li>
 </ol>
 <details>
 <summary>
@@ -249,7 +249,7 @@ Hints
 </summary>
 <ul>
 <li>The drug register data are stored in separate files by year. You will need to iterate over these files somehow, maybe using a loop or one of the apply functions.</li>
-<li>The file names can be created programmatically with <code>paste0("med-", 2005:2010, "-ex.rds")</code></li>
+<li>The file names can be created programmatically with, e.g., <code>paste0("med-", 2005, "-ex.rds")</code></li>
 <li>Once they are all read in as objects, you will want to append them by row, using e.g., <code>rbind</code></li>
 <li>Join the hospitalization table to the drug table, by patient id. How to deal with the dates? We want only the most recent prescription since the last hospitalization. This is a <strong>rolling join</strong></li>
 </ul>

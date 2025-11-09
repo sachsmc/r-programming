@@ -2,6 +2,8 @@
 title: "Tidying and reshaping -- exercise solutions"
 author: "Michael C Sachs"
 subtitle: "Day 3, B"
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -216,3 +218,104 @@ summary(lprlong)
 :::
 
 
+## Merging and manipulation
+
+The objective of this exercise is to describe the distribution of the number of days between hospitalizations and drug dispensations by age and sex, among people who get drugs dispensed following a hospitalization. 
+
+1. Import and merge the drug register data with the long version of the hospitalization register from the previous section. What type of join is needed here? 
+2. Create a new variable that counts the number of drug dispensations in the 3 months following a hospitalization. 
+3. Summarize the variable by age and sex. Try making a graphical summary.
+
+
+Reading in the data using lapply
+
+```{r}
+medsl <- lapply(2005:2010, \(y) {
+  readRDS(here("data", paste0("med-", y, "-ex.rds")))
+})
+```
+
+or a loop
+
+```{r}
+medsl <- vector(mode = "list", length = 6)
+names(medsl) <- 2005:2010
+for(i in 1:length(medsl)) {
+  medsl[[i]] <- readRDS(here("data", paste0("med-", names(medsl)[i], "-ex.rds")))
+}
+
+meds <- do.call(rbind, medsl)
+```
+
+```{r}
+library(lubridate)
+```
+
+::: {.panel-tabset}
+## base R
+
+```{r}
+lprmed <- merge(subset(lprlong, maindiag == TRUE), meds, by = "pid")
+lprmed$days_to_dispensation <- with(lprmed, date - indat)
+lprmed <- subset(lprmed, days_to_dispensation >= 0 & 
+                   days_to_dispensation <= dmonths(3))
+
+lprmed2 <- do.call("rbind", split(lprmed, list(lprmed$pid, lprmed$visit), drop = TRUE) |> 
+  lapply(\(df) {
+    df$num_drugs_3m <- nrow(df)
+    unique(df[, c("pid", "age", "sex", "indat", "visit", "diag", "num_drugs_3m")])
+  }))
+
+lprmed2 <- lprmed2[order(lprmed2$pid, lprmed2$visit),]
+
+lprmed2$agecat <- cut(lprmed2$age, c(25, 40, 60, 80, 100))
+
+by(lprmed2$num_drugs_3m, list(lprmed2$sex, 
+                              lprmed2$agecat), 
+   table)
+
+par(mfrow = c(2, 1)) 
+for(s in c("m", "f")) {
+  
+  boxplot(num_drugs_3m ~ agecat, data = subset(lprmed2, sex == s), 
+       main = paste0("Sex: ", s))
+  
+}
+par(mfrow = c(1,1))
+```
+
+
+## dplyr
+
+```{r}
+lprmeddply <- lprlong |> filter(maindiag == TRUE) |> 
+  mutate(indat_plus_3m = indat + dmonths(3)) |> 
+  inner_join(meds, join_by(pid, 
+                           between(y$date, x$indat, x$indat_plus_3m))) |>
+  group_by(pid, visit) |> 
+  summarize(sex = sex[1], age = age[1], agecat =  cut(age[1], c(25, 40, 60, 80, 100)),
+              n_drugs_3m = n())
+  
+lprmeddply |> group_by(sex, agecat, n_drugs_3m) |> 
+  summarize(count_ndrugs = n())
+
+with(lprmeddply, by(n_drugs_3m, list(sex, agecat), table))
+```
+
+
+## data.table
+
+```{r}
+lprdt <- data.table(lprlong)[maindiag == TRUE]
+meds <- data.table(meds)
+meds[, drugdate := date]
+lprdt[, indate_plus_3m := indat + dmonths(3)]
+
+lprmeds <- meds[lprdt, , on = .(pid == pid, date >= indat), nomatch = NULL][drugdate <= indate_plus_3m]
+lprmeds2 <- lprmeds[, .(sex = sex[1], age = age[1], agecat = cut(age[1], c(25, 40, 60, 80, 100)), 
+            n_drugs_3m = .N), by = .(pid, visit)]
+
+with(lprmeds2, by(n_drugs_3m, list(sex, agecat), table))
+```
+
+:::
