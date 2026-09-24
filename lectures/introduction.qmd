@@ -127,6 +127,7 @@ Course website:
 
 ### Today
 
+0. AI and LLMs
 1. Reporting, dynamic documents
 2. Data structures and indexing
 
@@ -201,6 +202,421 @@ Slides will occasionally allow you to interact with the code. Follow along with 
 mod <- lm(mpg ~ cyl, data = mtcars)
 summary(mod)
 ```
+
+# AI and LLMs
+
+
+
+## What is an LLM? A statistician's view
+
+::: {.columns}
+::: {.column width="55%"}
+**A conditional probability model over text**
+
+$$P(\text{next token} \mid \text{text so far})$$
+
+- Text is chopped into **tokens** (~¾ word each)
+- A **context window** is the max tokens it sees at once
+- **Temperature** $\tau$ controls sampling sharpness:
+  $\tau \to 0$ → greedy; $\tau \to \infty$ → uniform
+:::
+::: {.column width="45%"}
+**How it's trained**
+
+1. **Next-token prediction** on massive text corpora
+2. **Instruction tuning** — follow prompts, be helpful
+3. **RLHF / RLAIF** — human (or AI) preference ranking
+
+**Code is a strength**
+
+Code is abundant, structured, and *correct by execution* —
+a uniquely checkable signal in training data.
+:::
+:::
+
+
+## Why they're confident — and sometimes wrong
+
+::: {.columns}
+::: {.column width="58%"}
+**Hallucination**
+
+> The model generates *plausible text*, not *verified truth*.
+
+- Fabricated citations that look real *(always verify)*
+- Confident wrong code that compiles but is subtly incorrect
+- Invented API arguments or package functions
+
+**Reasoning models** (o3, R1, extended thinking) trade
+compute for better multi-step work, but the same failure
+modes apply at higher stakes.
+:::
+::: {.column width="42%"}
+::: {.callout-important icon=false}
+**Always verify**
+
+Every citation · every number
+every derivation · every API call
+
+Treat model output as a
+**hypothesis, not a result.**
+:::
+
+::: {.callout-warning icon=false}
+**Quiet deskilling**
+
+Outsourcing judgement builds
+dependency, not expertise.
+Stay in the loop intentionally.
+:::
+:::
+:::
+
+
+
+## The context window and memory {.smaller}
+
+::: {.columns}
+::: {.column width="50%"}
+**What the model "sees"**
+
+| | Typical range |
+|---|---|
+| Small / fast models | 8k–32k tokens |
+| Standard assistants | 128k–200k tokens |
+| Long-context leaders | 1M+ tokens |
+
+A context window is **not memory** —
+each new conversation starts fresh.
+
+**What counts against it**
+
+- Your prompt
+- The entire conversation so far
+- Any files or code you paste in
+- Tool call results
+:::
+::: {.column width="50%"}
+**How to work within limits**
+
+- **Chunking**: split long documents; summarise sections before sending
+- **System prompts**: keep standing instructions short and reuse across sessions
+- **External memory**: project `.md` files persist context across sessions
+- **Agent memory**: tools like Claude Code maintain a `CLAUDE.md` project file that persists
+
+::: {.callout-tip icon=false}
+**Practical rule**
+
+If the conversation is getting long,
+start fresh — older context degrades
+response quality before it truncates.
+:::
+:::
+:::
+
+
+## Three tiers of tools {.smaller}
+
+Move up the tiers as the task grows in scope and complexity.
+
+::: {.columns}
+::: {.column width="33%"}
+<span class="tier">Tier 1</span> **Chat interfaces**
+
+ChatGPT · Claude · Gemini · Copilot Chat
+
+- Paste code, ask questions
+- One-shot generation
+- No access to your full repo
+- Good for: explaining, drafting snippets, quick checks
+
+:::
+::: {.column width="33%"}
+<span class="tier">Tier 2</span> **In-IDE assistants**
+
+GitHub Copilot · RStudio Copilot
+`ellmer` · `chattr` · `gander` · `chatlas`
+
+- Autocomplete in your editor
+- **`gander` knows your data frame's columns** — context-aware suggestions
+- Good for: writing functions, transforming data, iterative coding
+
+:::
+::: {.column width="33%"}
+<span class="tier">Tier 3</span> **Coding agents**
+
+Claude Code · Codex · Copilot · Pi.dev · NanoClaw
+
+- Repo-aware — reads your whole project
+- Can run code, read errors, iterate
+- Work toward a goal you set
+- Good for: multi-file tasks, test-driven development, simulation scaffolding
+:::
+:::
+
+::: {.callout-tip icon=false}
+**Suggested on-ramp:** start with copilot in RStudio/vscode. It is the lowest-friction step up from copy-pasting to the chat window.
+:::
+
+
+## Coding agents: from autocomplete to delegate {.smaller}
+
+::: {.columns}
+::: {.column width="55%"}
+**What makes agents different**
+
+- **Repo-aware**: they read your `DESCRIPTION`, existing tests, README
+- **Tool-use**: they can run R/Python, call the shell, read error messages
+- **Iterative**: they retry when tests fail — the loop is automated
+- **Transparent**: all changes come as a **diff** you review and commit
+
+**Human-in-the-loop is not optional**
+
+- Read the code before accepting
+- Run your own checks — don't trust "tests pass" without verifying
+
+
+:::
+::: {.column width="45%"}
+**Workflow**
+
+```
+You: "Write a function coverage() that
+      computes CI coverage, with tests"
+
+Agent: reads repo → writes function
+       → writes tests → runs tests
+       → iterates on failures
+       → proposes diff
+
+You:  review diff → run tests yourself
+      → commit if happy
+```
+
+::: {.callout-warning icon=false}
+**The agent proposes; you decide.**
+Never let an agent do something 
+without a human reviewing.
+:::
+:::
+:::
+
+
+
+## Text-based computer skills {.smaller}
+
+**Agents live in the terminal and work with plain text. A little fluency here pays outsized dividends.**
+
+::: {.columns}
+::: {.column width="50%"}
+**Key skills**
+
+- Navigate a project directory from the command line
+- Read and write **plain text files** (`.md`, `.R`, `.py`, `.txt`)
+- Understand what a **project root** looks like:
+  ```
+  my-project/
+  ├── R/              # functions
+  ├── analysis/       # scripts
+  ├── tests/
+  ├── README.md       # what is this project?
+  ├── CLAUDE.md       # instructions for the agent
+  └── renv.lock       # reproducible packages
+  ```
+:::
+::: {.column width="50%"}
+**Markdown files that guide agents**
+
+| File | Purpose |
+|---|---|
+| `README.md` | human-facing project overview |
+| `CLAUDE.md` / `agents.md` | standing instructions for the AI agent |
+| `skills.md` | reusable task templates |
+
+::: {.callout-tip icon=false}
+A well-written `CLAUDE.md` is worth
+hours of re-prompting — the agent
+reads it at the start of every session.
+:::
+:::
+:::
+
+
+
+## git: the safety net that makes agents safe {.smaller}
+
+::: {.columns}
+::: {.column width="52%"}
+**The five operations you need**
+
+| Command | What it does |
+|---|---|
+| `git commit` | checkpoint — a snapshot you can return to |
+| `git branch` | parallel work — experiment without risk |
+| `git diff` | **what changed** — what you review before committing |
+| `git revert` | undo a commit cleanly |
+| pull request | propose changes for review on GitHub/GitLab |
+
+:::
+::: {.column width="48%"}
+**Why git makes agents safe**
+
+> *An agent proposes work as diffs
+> you review and commit —
+> always visible, always reversible.*
+
+**Workflow with an agent:**
+
+```
+agent writes → you diff → you test
+→ you commit → repeat
+```
+
+If anything looks wrong:
+`git checkout -- .` or `git revert`
+puts you back exactly where you were.
+:::
+:::
+
+
+## Unit tests: making "correct" checkable {.smaller}
+
+**A test is a function that runs your code on a known input and asserts the expected output. It turns "I think this is right" into a pass/fail signal.**
+
+::: {.columns}
+::: {.column width="52%"}
+**In R with `testthat`:**
+
+```r
+test_that("my_function is correct", {
+  expect_equal(my_function(input), known_output)
+  expect_error(my_function(bad_input))
+})
+```
+
+**Test-driven development (TDD):**
+
+1. **Red** — write a failing test for the behaviour you want
+2. **Green** — write the code that makes it pass
+3. **Refactor** — clean up; tests still pass
+
+The agent *iterates against your tests* —
+without tests, it has no objective criterion.
+:::
+::: {.column width="48%"}
+**For statisticians: what to test**
+
+- **Correctness**: numbers you can work out by hand (simple DGMs, closed-form results)
+- **Boundary conditions**: edge cases, empty inputs, length-one vectors
+- **Statistical properties**: symmetry, monotonicity, bounds on estimators
+- **Reproducibility**: same seed → same result
+
+::: {.callout-tip icon=false}
+Tests are not bureaucracy —
+they are the contract between
+you and the code.
+:::
+:::
+:::
+
+
+## Illustration (1/2) — Ask: write the function {.smaller}
+
+**Prompt quality determines output quality.**
+
+::: {.columns}
+::: {.column width="55%"}
+**A rigorous prompt:**
+
+> *"Write an R function `coverage(truth, lower, upper)` that computes the empirical coverage probability of a set of confidence intervals. `truth` is a scalar, `lower` and `upper` are equal-length numeric vectors. Return the proportion of intervals that contain `truth`. Validate that `lower` and `upper` have equal length and that `lower <= upper` element-wise. Return a scalar between 0 and 1."*
+
+**Generated output:**
+
+```r
+coverage <- function(truth, lower, upper) {
+  stopifnot(length(lower) == length(upper))
+  stopifnot(all(lower <= upper))
+  mean(lower <= truth & truth <= upper)
+}
+```
+:::
+::: {.column width="45%"}
+::: {.callout-important icon=false}
+**Generated code is a hypothesis,
+not a result.**
+
+Read it · understand it · test it.
+
+Would you submit a simulation result
+without checking the DGM?
+:::
+
+**What made this prompt good?**
+
+- Named the function and arguments
+- Specified the return type
+- Specified validation behaviour
+- Specified the estimand (proportion)
+
+*Vague prompt → vague output*
+:::
+:::
+
+::: notes
+~2 min. Walk through why the prompt is specific. Compare to a lazy prompt: "write a coverage function in R."
+The coverage function is small enough that the audience can read and understand it in 30 seconds — that is the point. With a complex function you still need to understand it before trusting it.
+:::
+
+## Illustration (2/2) — Test it: validity and correctness {.smaller}
+
+**Tests make the agent's loop self-correcting.**
+
+::: {.columns}
+::: {.column width="55%"}
+```r
+library(testthat)
+
+test_that("coverage() is correct", {
+  # Correctness — worked out by hand
+  expect_equal(coverage(0, c(-1, -1), c(1,  1)), 1)   # all cover
+  expect_equal(coverage(0, c( 1,  2), c(3,  4)), 0)   # none cover
+  expect_equal(coverage(0, c(-1,  1), c(1,  2)), 0.5) # half cover
+
+  # Boundary — closed endpoint counts
+  expect_equal(coverage(1, 1, 2), 1)
+
+  # Validity — bad input rejected
+  expect_error(coverage(0, c(1, 2), 3))
+})
+```
+:::
+::: {.column width="45%"}
+**The TDD loop with an agent:**
+
+```
+Write tests → agent writes function
+→ tests FAIL (Red)
+→ agent revises
+→ tests PASS (Green)
+→ you review diff and commit
+```
+
+::: {.callout-tip icon=false}
+The test numbers are **yours** —
+you worked them out by hand.
+The agent cannot fake correctness
+against truth you define.
+:::
+:::
+:::
+
+## Summary
+
+- AI can be a performance booster **if used effectively**
+- Learn and practice with the tools, autocomplete, agents are superior to chat
+- Remember **you are responsible** for the work that is produced, so test, verify, and read
+- Effective prompting and testing requires good knowledge of the R foundations, concepts, and vocabulary
+
 
 # Questions? 
 

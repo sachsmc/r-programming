@@ -35,7 +35,7 @@ Long list of cheatsheets:
 ### Introductory
 
 - [Introduction to R, by the R core team](https://cran.r-project.org/doc/manuals/r-release/R-intro.html)
-- [Introduction to R, by Susanne Rosthøj](http://r.sund.ku.dk/)
+- [Introduction to R, by Susanne Rosthøj](http://biostat.ku.dk/r)
 
 ### Data analysis
 
